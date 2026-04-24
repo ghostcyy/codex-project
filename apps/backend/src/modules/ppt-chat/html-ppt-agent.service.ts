@@ -8,6 +8,8 @@ import { HtmlPptRendererService } from "../html-ppt-renderer/html-ppt-renderer.s
 import type { HtmlPptRenderResult } from "../html-ppt-renderer/html-ppt-renderer.types";
 import { LlmConfigService } from "../llm-config/llm-config.service";
 import type { PptDeckLayout, PptDeckSpec, PptGenerationOrchestration, PptGenerationStep, PptMessageDto } from "./ppt-chat.types";
+import { indexSkillAssets } from "./skill-asset-indexer";
+import type { SkillAssetManifest } from "./skill-asset-indexer";
 
 type ActiveModelConfig = Awaited<ReturnType<LlmConfigService["getActiveConfig"]>>;
 type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
@@ -37,6 +39,7 @@ type SkillPack = {
   layoutNames: string[];
   themeNames: string[];
   referenceSources: Array<{ name: string; index: string; css: string }>;
+  manifest: SkillAssetManifest;
 };
 
 @Injectable()
@@ -135,7 +138,7 @@ export class HtmlPptAgentService {
 
     const skill = await runStep("01 读取 skill 与模板目录", async () => {
       const value = await this.readSkillPack(input.templateId);
-      return { value, detail: `读取完成：${value.layoutNames.length} 个布局、${value.templateNames.length} 个模板、${value.themeNames.length} 个主题。` };
+      return { value, detail: `读取完成：${value.manifest.layouts.length} 个布局、${value.manifest.fullDecks.length} 个模板、${value.manifest.themes.length} 个主题、${value.manifest.animations.length} 个动效、${value.manifest.fxEffects.length} 个 FX（manifest hash ${value.manifest.hash}）。` };
     });
     const research = await runStep("02 主题资料整理", async () => {
       try {
@@ -222,20 +225,27 @@ export class HtmlPptAgentService {
     const layoutNames = (await this.listFiles(singlePageRoot, ".html")).map((name) => basename(name, ".html"));
     const themeNames = (await this.listFiles(join(root, "assets", "themes"), ".css")).map((name) => basename(name, ".css"));
     const referenceNames = Array.from(new Set([templateId, "tech-sharing", "knowledge-arch-blueprint", "pitch-deck"])).filter((name) => templateNames.includes(name)).slice(0, 3);
-    const referenceSources = await Promise.all(referenceNames.map(async (name) => ({
-      name,
-      index: await this.readSnippet(join(fullDeckRoot, name, "index.html"), 8000),
-      css: await this.readSnippet(join(fullDeckRoot, name, "style.css"), 8000)
-    })));
+    const [referenceSources, rules, layouts, fullDecks, manifest] = await Promise.all([
+      Promise.all(referenceNames.map(async (name) => ({
+        name,
+        index: await this.readSnippet(join(fullDeckRoot, name, "index.html"), 8000),
+        css: await this.readSnippet(join(fullDeckRoot, name, "style.css"), 8000)
+      }))),
+      this.readSnippet(join(root, "SKILL.md"), 12000),
+      this.readSnippet(join(root, "references", "layouts.md"), 8000),
+      this.readSnippet(join(root, "references", "full-decks.md"), 8000),
+      indexSkillAssets(root)
+    ]);
     return {
       root,
-      rules: await this.readSnippet(join(root, "SKILL.md"), 12000),
-      layouts: await this.readSnippet(join(root, "references", "layouts.md"), 8000),
-      fullDecks: await this.readSnippet(join(root, "references", "full-decks.md"), 8000),
+      rules,
+      layouts,
+      fullDecks,
       templateNames,
       layoutNames,
       themeNames,
-      referenceSources
+      referenceSources,
+      manifest
     };
   }
 
