@@ -1,0 +1,17 @@
+.git
+.gitignore
+.local-runtime
+.playwright-cli
+.env
+.env.production
+apps/frontend/.env.local
+apps/backend/.env
+node_modules
+**/node_modules
+apps/backend/dist
+apps/frontend/.next
+coverage
+npm-debug.log*
+*.pid
+*.log
+*.tsbuildinfo

@@ -1,0 +1,30 @@
+{
+  "name": "personal-ai-site",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace @codex/backend\" \"npm run dev --workspace @codex/frontend\"",
+    "build": "npm run build --workspace @codex/backend && npm run build --workspace @codex/frontend",
+    "start": "concurrently \"npm run start --workspace @codex/backend\" \"npm run start --workspace @codex/frontend\"",
+    "typecheck": "npm run typecheck --workspace @codex/backend && npm run typecheck --workspace @codex/frontend",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "docker:prod:build": "docker compose --env-file .env.production -f docker-compose.prod.yml build",
+    "docker:prod:up": "docker compose --env-file .env.production -f docker-compose.prod.yml up -d",
+    "docker:prod:down": "docker compose --env-file .env.production -f docker-compose.prod.yml down"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
+  }
+}

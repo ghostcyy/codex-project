@@ -1,0 +1,82 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-personal_ai_site}
+      POSTGRES_USER: ${POSTGRES_USER:-codex}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-codex_dev_password}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-codex} -d ${POSTGRES_DB:-personal_ai_site}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${VIDEO_API_PORT:-4101}:4100"
+    environment:
+      PORT: 4100
+      FRONTEND_ORIGIN: ${APP_ORIGIN:-http://localhost}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-codex}:${POSTGRES_PASSWORD:-codex_dev_password}@postgres:5432/${POSTGRES_DB:-personal_ai_site}
+      ALLOW_IN_MEMORY_DB: "false"
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
+      DEFAULT_ADMIN_USERNAME: ${DEFAULT_ADMIN_USERNAME:-admin}
+      DEFAULT_ADMIN_EMAIL: ${DEFAULT_ADMIN_EMAIL:-admin@example.com}
+      DEFAULT_ADMIN_PASSWORD: ${DEFAULT_ADMIN_PASSWORD:-Admin@123456}
+      DEFAULT_ADMIN_DISPLAY_NAME: ${DEFAULT_ADMIN_DISPLAY_NAME:-Site Admin}
+      LLM_REQUEST_TIMEOUT_MS: ${LLM_REQUEST_TIMEOUT_MS:-600000}
+      LLM_TRANSPORT_TIMEOUT_MS: ${LLM_TRANSPORT_TIMEOUT_MS:-660000}
+      PPT_MODEL_TIMEOUT_MS: ${PPT_MODEL_TIMEOUT_MS:-600000}
+      PPT_RUNNING_HEARTBEAT_STALE_MS: ${PPT_RUNNING_HEARTBEAT_STALE_MS:-600000}
+      VIDEO_UPLOAD_RETENTION_HOURS: ${VIDEO_UPLOAD_RETENTION_HOURS:-24}
+      VIDEO_OUTPUT_RETENTION_HOURS: ${VIDEO_OUTPUT_RETENTION_HOURS:-168}
+      VIDEO_CLEANUP_INTERVAL_MINUTES: ${VIDEO_CLEANUP_INTERVAL_MINUTES:-60}
+      HTML_PPT_OUTPUT_RETENTION_HOURS: ${HTML_PPT_OUTPUT_RETENTION_HOURS:-168}
+      HTML_PPT_CLEANUP_INTERVAL_MINUTES: ${HTML_PPT_CLEANUP_INTERVAL_MINUTES:-60}
+      PYTHON_BIN: /opt/video-tools-venv/bin/python
+      FFMPEG_BIN: /usr/bin/ffmpeg
+      FFPROBE_BIN: /usr/bin/ffprobe
+    volumes:
+      - video-outputs:/app/.local-runtime/video-outputs
+      - html-ppt-decks:/app/.local-runtime/html-ppt-decks
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: /api
+      API_BASE_URL: http://backend:4100/api
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-80}:80"
+    volumes:
+      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  postgres-data:
+  video-outputs:
+  html-ppt-decks:
