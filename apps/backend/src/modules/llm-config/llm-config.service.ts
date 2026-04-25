@@ -5,17 +5,19 @@ import { DatabaseService } from "../database/database.service";
 import type { ActiveLlmConfig, LlmConfigInput, LlmConfigSummary } from "./llm-config.types";
 
 interface LlmConfigRow extends QueryResultRow {
-  id: number;
+  id: string;
+  name: string;
   provider_type: string;
   base_url: string;
   api_key_ciphertext: string;
   model: string;
   enabled: boolean;
   updated_at: Date | string;
+  call_count?: string;
+  total_tokens?: string;
 }
 
 const DEFAULT_PROVIDER_TYPE = "openai-compatible";
-const DEFAULT_CONFIG_ID = 1;
 const DEFAULT_ENCRYPTION_KEY = "local-dev-llm-config-encryption-key-change-me";
 
 @Injectable()
@@ -24,57 +26,67 @@ export class LlmConfigService {
 
   constructor(@Inject(DatabaseService) private readonly databaseService: DatabaseService) {}
 
-  async getConfigSummary(): Promise<LlmConfigSummary> {
-    const row = await this.getConfigRow();
+  async getConfigList(): Promise<LlmConfigSummary[]> {
+    const result = await this.databaseService.query<LlmConfigRow>(
+      `
+        SELECT
+          c.id,
+          c.name,
+          c.provider_type,
+          c.base_url,
+          c.api_key_ciphertext,
+          c.model,
+          c.enabled,
+          c.updated_at,
+          COUNT(l.id) as call_count,
+          SUM(l.total_tokens) as total_tokens
+        FROM llm_provider_settings c
+        LEFT JOIN llm_call_logs l ON c.id = l.config_id
+        GROUP BY c.id
+        ORDER BY c.created_at DESC
+      `
+    );
 
-    if (!row) {
+    return result.rows.map((row) => {
+      const apiKey = row.api_key_ciphertext && row.api_key_ciphertext.trim().length > 0 ? this.decrypt(row.api_key_ciphertext) : "";
       return {
-        providerType: DEFAULT_PROVIDER_TYPE,
-        baseUrl: "",
-        model: "",
-        enabled: false,
-        hasApiKey: false,
-        apiKeyMasked: null,
-        updatedAt: null
+        id: row.id,
+        name: row.name,
+        providerType: row.provider_type,
+        baseUrl: row.base_url,
+        model: row.model,
+        enabled: row.enabled,
+        hasApiKey: apiKey.length > 0,
+        apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
+        updatedAt: new Date(row.updated_at).toISOString(),
+        callCount: Number(row.call_count ?? 0),
+        tokenConsumption: Number(row.total_tokens ?? 0)
       };
-    }
-
-    const apiKey = row.api_key_ciphertext.trim().length > 0 ? this.decrypt(row.api_key_ciphertext) : "";
-
-    return {
-      providerType: row.provider_type,
-      baseUrl: row.base_url,
-      model: row.model,
-      enabled: row.enabled,
-      hasApiKey: apiKey.length > 0,
-      apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
-      updatedAt: new Date(row.updated_at).toISOString()
-    };
+    });
   }
 
-  async updateConfig(input: LlmConfigInput, updatedBy: number): Promise<LlmConfigSummary> {
-    const current = await this.getConfigRow();
-    const providerType = this.normalizeProviderType(input.providerType ?? current?.provider_type ?? DEFAULT_PROVIDER_TYPE);
-    const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? current?.base_url ?? "");
-    const model = this.normalizeRequiredString(input.model ?? current?.model ?? "", "model");
-    const enabled = this.normalizeBoolean(input.enabled, current?.enabled ?? false);
-    const apiKey =
-      typeof input.apiKey === "string" && input.apiKey.trim().length > 0
-        ? input.apiKey.trim()
-        : current
-          ? this.decrypt(current.api_key_ciphertext)
-          : "";
+  async createConfig(input: LlmConfigInput, updatedBy: number): Promise<LlmConfigSummary> {
+    const name = this.normalizeRequiredString(input.name ?? "New Model", "name");
+    const providerType = this.normalizeProviderType(input.providerType ?? DEFAULT_PROVIDER_TYPE);
+    const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? "");
+    const model = this.normalizeRequiredString(input.model ?? "", "model");
+    const enabled = this.normalizeBoolean(input.enabled, false);
+    const apiKey = typeof input.apiKey === "string" ? input.apiKey.trim() : "";
 
     if (!apiKey) {
-      throw new BadRequestException("API Key is required.");
+      throw new BadRequestException("API Key is required for new configurations.");
+    }
+
+    if (enabled) {
+      await this.databaseService.query(`UPDATE llm_provider_settings SET enabled = FALSE`);
     }
 
     const apiKeyCiphertext = this.encrypt(apiKey);
 
-    await this.databaseService.query(
+    const result = await this.databaseService.query<{ id: string }>(
       `
         INSERT INTO llm_provider_settings (
-          id,
+          name,
           provider_type,
           base_url,
           api_key_ciphertext,
@@ -85,27 +97,87 @@ export class LlmConfigService {
           updated_at
         )
         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
-        ON CONFLICT (id) DO UPDATE
-        SET
-          provider_type = EXCLUDED.provider_type,
-          base_url = EXCLUDED.base_url,
-          api_key_ciphertext = EXCLUDED.api_key_ciphertext,
-          model = EXCLUDED.model,
-          enabled = EXCLUDED.enabled,
-          updated_by = EXCLUDED.updated_by,
-          updated_at = NOW()
+        RETURNING id
       `,
-      [DEFAULT_CONFIG_ID, providerType, baseUrl, apiKeyCiphertext, model, enabled, updatedBy]
+      [name, providerType, baseUrl, apiKeyCiphertext, model, enabled, updatedBy]
     );
 
-    return this.getConfigSummary();
+    const newId = result.rows[0]?.id;
+    if (!newId) throw new BadRequestException("Failed to create config.");
+    return this.getConfigSummaryById(newId) as Promise<LlmConfigSummary>;
+  }
+
+  async updateConfig(id: string, input: LlmConfigInput, updatedBy: number): Promise<LlmConfigSummary> {
+    const current = await this.getConfigRowById(id);
+    if (!current) {
+      throw new BadRequestException("Config not found.");
+    }
+
+    const name = this.normalizeRequiredString(input.name ?? current.name, "name");
+    const providerType = this.normalizeProviderType(input.providerType ?? current.provider_type);
+    const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? current.base_url);
+    const model = this.normalizeRequiredString(input.model ?? current.model, "model");
+    const enabled = this.normalizeBoolean(input.enabled, current.enabled);
+    const apiKey =
+      typeof input.apiKey === "string" && input.apiKey.trim().length > 0
+        ? input.apiKey.trim()
+        : this.decrypt(current.api_key_ciphertext);
+
+    if (!apiKey) {
+      throw new BadRequestException("API Key is required.");
+    }
+
+    if (enabled && !current.enabled) {
+      await this.databaseService.query(`UPDATE llm_provider_settings SET enabled = FALSE`);
+    }
+
+    const apiKeyCiphertext = this.encrypt(apiKey);
+
+    await this.databaseService.query(
+      `
+        UPDATE llm_provider_settings
+        SET
+          name = $1,
+          provider_type = $2,
+          base_url = $3,
+          api_key_ciphertext = $4,
+          model = $5,
+          enabled = $6,
+          updated_by = $7,
+          updated_at = NOW()
+        WHERE id = $8
+      `,
+      [name, providerType, baseUrl, apiKeyCiphertext, model, enabled, updatedBy, id]
+    );
+
+    return this.getConfigSummaryById(id);
+  }
+
+  async deleteConfig(id: string): Promise<void> {
+    await this.databaseService.query("DELETE FROM llm_provider_settings WHERE id = $1", [id]);
   }
 
   async getActiveConfig(): Promise<ActiveLlmConfig> {
-    const row = await this.getConfigRow();
+    const result = await this.databaseService.query<LlmConfigRow>(
+      `
+        SELECT
+          id,
+          name,
+          provider_type,
+          base_url,
+          api_key_ciphertext,
+          model,
+          enabled,
+          updated_at
+        FROM llm_provider_settings
+        WHERE enabled = TRUE
+        LIMIT 1
+      `
+    );
+    const row = result.rows[0] ?? null;
 
-    if (!row || !row.enabled) {
-      throw new ServiceUnavailableException("模型配置尚未启用。");
+    if (!row) {
+      throw new ServiceUnavailableException("模型配置尚未启用或不存在。");
     }
 
     const apiKey = this.decrypt(row.api_key_ciphertext);
@@ -114,6 +186,8 @@ export class LlmConfigService {
     }
 
     return {
+      id: row.id,
+      name: row.name,
       providerType: row.provider_type,
       baseUrl: row.base_url,
       apiKey,
@@ -122,11 +196,12 @@ export class LlmConfigService {
     };
   }
 
-  private async getConfigRow() {
+  private async getConfigRowById(id: string) {
     const result = await this.databaseService.query<LlmConfigRow>(
       `
         SELECT
           id,
+          name,
           provider_type,
           base_url,
           api_key_ciphertext,
@@ -135,12 +210,29 @@ export class LlmConfigService {
           updated_at
         FROM llm_provider_settings
         WHERE id = $1
-        LIMIT 1
       `,
-      [DEFAULT_CONFIG_ID]
+      [id]
     );
 
     return result.rows[0] ?? null;
+  }
+
+  private async getConfigSummaryById(id: string): Promise<LlmConfigSummary> {
+    const row = await this.getConfigRowById(id);
+    if (!row) throw new BadRequestException("Config not found.");
+
+    const apiKey = row.api_key_ciphertext.trim().length > 0 ? this.decrypt(row.api_key_ciphertext) : "";
+    return {
+      id: row.id,
+      name: row.name,
+      providerType: row.provider_type,
+      baseUrl: row.base_url,
+      model: row.model,
+      enabled: row.enabled,
+      hasApiKey: apiKey.length > 0,
+      apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
+      updatedAt: new Date(row.updated_at).toISOString()
+    };
   }
 
   private normalizeProviderType(input: unknown) {

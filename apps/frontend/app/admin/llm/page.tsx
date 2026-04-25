@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { getAdminLlmConfig, requireLlmManagerUser } from "../../../lib/server-auth";
-import { updateLlmConfigAction } from "./actions";
+import { getAdminLlmConfigs, getAdminLlmLogs, getAdminLlmStats, requireLlmManagerUser } from "../../../lib/server-auth";
+import { createLlmConfigAction, deleteLlmConfigAction, updateLlmConfigAction } from "./actions";
 
 type PageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
@@ -8,105 +8,230 @@ type PageProps = {
 
 export default async function AdminLlmPage({ searchParams }: PageProps) {
   await requireLlmManagerUser("/admin/llm");
-  const config = await getAdminLlmConfig();
+  const configs = (await getAdminLlmConfigs()) ?? [];
+  const stats = (await getAdminLlmStats()) ?? { totalCalls: 0, totalTokens: 0, todayCalls: 0, todayTokens: 0 };
+  const logs = (await getAdminLlmLogs()) ?? [];
   const params = (await searchParams) ?? {};
   const error = typeof params.error === "string" ? params.error : "";
   const saved = params.saved === "1";
 
   return (
-    <div className="page-shell section-stack pb-12 pt-8">
-      <section className="glass-panel reveal-up rounded-[38px] px-6 py-8 md:px-8">
-        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+    <div className="page-shell section-stack pb-20 pt-8">
+      <section className="glass-panel reveal-up rounded-[40px] px-8 py-10">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <div className="eyebrow">模型配置</div>
-            <h1 className="display-title mt-5 text-4xl font-semibold md:text-6xl">LLM Console</h1>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[var(--muted)] md:text-base">
-              这里用于配置 HTML-PPT 对话转发所使用的模型地址、API Key 和模型名。保存后，所有项目对话都会经由后端代理到该模型。
+            <div className="eyebrow">Intelligence Orchestration</div>
+            <h1 className="display-title mt-4 text-4xl font-semibold tracking-tight md:text-6xl text-[var(--ink)]">LLM Console</h1>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--muted)] opacity-80">
+              Manage multi-model configurations, API keys, and monitor site-wide token consumption with real-time analytics.
             </p>
           </div>
-          <div className="flex flex-wrap gap-3">
-            <Link href="/admin" className="ghost-button text-sm">
-              返回后台总览
+          <div className="flex flex-wrap gap-4">
+            <Link href="/admin" className="ghost-button text-sm px-6 py-3">
+              Admin Overview
             </Link>
           </div>
         </div>
       </section>
 
-      {error ? (
-        <section className="rounded-[28px] border border-rose-200 bg-rose-50 px-6 py-5 text-sm text-rose-700">{error}</section>
-      ) : null}
-
-      {saved ? (
-        <section className="rounded-[28px] border border-emerald-200 bg-emerald-50 px-6 py-5 text-sm text-emerald-700">
-          模型配置已保存。
+      {error && (
+        <section className="reveal-up rounded-[28px] border border-rose-100 bg-rose-50/50 backdrop-blur-sm px-8 py-6 text-sm text-rose-700 flex items-center gap-3">
+          <span className="text-xl">⚠️</span> {error}
         </section>
-      ) : null}
+      )}
 
-      <section className="surface-card reveal-up rounded-[32px] px-6 py-6">
-        <form action={updateLlmConfigAction} className="grid gap-5">
-          <label className="grid gap-2">
-            <span className="text-sm font-medium text-[var(--ink)]">Provider Type</span>
-            <input
-              name="providerType"
-              defaultValue={config?.providerType ?? "openai-compatible"}
-              className="text-input"
-              placeholder="openai-compatible"
-            />
-          </label>
+      {saved && (
+        <section className="reveal-up rounded-[28px] border border-emerald-100 bg-emerald-50/50 backdrop-blur-sm px-8 py-6 text-sm text-emerald-700 flex items-center gap-3">
+          <span className="text-xl">✓</span> Changes saved successfully.
+        </section>
+      )}
 
-          <label className="grid gap-2">
-            <span className="text-sm font-medium text-[var(--ink)]">API Base URL</span>
-            <input
-              name="baseUrl"
-              defaultValue={config?.baseUrl ?? ""}
-              className="text-input"
-              placeholder="https://api.openai.com/v1"
-            />
-          </label>
-
-          <label className="grid gap-2">
-            <span className="text-sm font-medium text-[var(--ink)]">Model</span>
-            <input
-              name="model"
-              defaultValue={config?.model ?? ""}
-              className="text-input"
-              placeholder="gpt-5.4-mini"
-            />
-          </label>
-
-          <label className="grid gap-2">
-            <span className="text-sm font-medium text-[var(--ink)]">API Key</span>
-            {config?.apiKeyMasked ? (
-              <div className="rounded-[16px] border border-[var(--line)] bg-[var(--accent-softer)] px-4 py-3 text-sm text-[var(--ink)]">
-                当前已保存：<span className="font-mono font-semibold tracking-wide">{config.apiKeyMasked}</span>
-              </div>
-            ) : (
-              <div className="rounded-[16px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-                当前尚未保存 API Key。
-              </div>
-            )}
-            <input
-              name="apiKey"
-              type="password"
-              className="text-input"
-              placeholder={config?.hasApiKey ? "已配置，留空则保持不变" : "输入新的 API Key"}
-            />
-          </label>
-
-          <label className="flex items-center gap-3 rounded-[20px] border border-[var(--line)] bg-[var(--accent-softer)] px-4 py-4">
-            <input name="enabled" type="checkbox" defaultChecked={config?.enabled ?? false} />
-            <span className="text-sm text-[var(--ink)]">启用该配置并允许 HTML-PPT 对话调用模型</span>
-          </label>
-
-          <div className="flex flex-wrap items-center gap-4">
-            <button type="submit" className="primary-button text-sm">
-              保存配置
-            </button>
-            <span className="text-sm text-[var(--muted)]">
-              当前状态：{config?.enabled ? "已启用" : "未启用"} {config?.updatedAt ? `· 最近更新 ${new Date(config.updatedAt).toLocaleString("zh-CN")}` : ""}
-            </span>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 reveal-up" style={{ animationDelay: '100ms' }}>
+        {[
+          { label: 'Total Calls', value: stats?.totalCalls, icon: '⚡' },
+          { label: 'Total Tokens', value: stats?.totalTokens, icon: '🪙' },
+          { label: 'Today\'s Calls', value: stats?.todayCalls, icon: '📅' },
+          { label: 'Today\'s Tokens', value: stats?.todayTokens, icon: '📈' },
+        ].map((item, i) => (
+          <div key={i} className="antigravity-card p-8 group">
+            <div className="flex items-center justify-between">
+              <div className="text-sm font-semibold text-[var(--muted)] uppercase letter-spacing-wider">{item.label}</div>
+              <div className="text-xl opacity-40 group-hover:opacity-100 transition-opacity">{item.icon}</div>
+            </div>
+            <div className="mt-4 text-4xl font-semibold text-[var(--ink)]">{(item.value ?? 0).toLocaleString()}</div>
           </div>
-        </form>
+        ))}
+      </div>
+
+      <section className="space-y-8 reveal-up" style={{ animationDelay: '200ms' }}>
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-2xl font-semibold text-[var(--ink)] tracking-tight">Model Configurations</h2>
+          <span className="text-sm font-medium text-[var(--muted)]">{Array.isArray(configs) ? configs.length : 0} Models Active</span>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-2">
+          {Array.isArray(configs) ? configs.map((config: any) => (
+            <div key={config.id} className="glass-panel rounded-[32px] p-8 border border-[var(--line)] bg-white/40 hover:bg-white/80 transition-all duration-500">
+              <form action={updateLlmConfigAction} className="grid gap-6">
+                <input type="hidden" name="id" value={config.id} />
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-semibold text-[var(--ink)]">{config.name}</h3>
+                    <div className="mt-1 flex gap-4 text-xs font-medium text-[var(--muted)]">
+                      <span className="bg-white px-2 py-1 rounded-md shadow-sm">Calls: {(config.callCount ?? 0).toLocaleString()}</span>
+                      <span className="bg-white px-2 py-1 rounded-md shadow-sm">Tokens: {(config.tokenConsumption ?? 0).toLocaleString()}</span>
+                    </div>
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${config.enabled ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
+                    {config.enabled ? 'Active' : 'Disabled'}
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  <label className="grid gap-2">
+                    <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Display Name</span>
+                    <input name="name" defaultValue={config.name} className="text-input text-sm h-12" required />
+                  </label>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <label className="grid gap-2">
+                      <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Provider</span>
+                      <input name="providerType" defaultValue={config.providerType} className="text-input text-sm h-12" />
+                    </label>
+                    <label className="grid gap-2">
+                      <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Model ID</span>
+                      <input name="model" defaultValue={config.model} className="text-input text-sm h-12" />
+                    </label>
+                  </div>
+
+                  <label className="grid gap-2">
+                    <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Endpoint URL</span>
+                    <input name="baseUrl" defaultValue={config.baseUrl} className="text-input text-sm h-12" />
+                  </label>
+
+                  <label className="grid gap-2">
+                    <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">API Authentication</span>
+                    <input
+                      name="apiKey"
+                      type="password"
+                      className="text-input text-sm h-12"
+                      placeholder={config.hasApiKey ? `Encrypted (Masked: ${config.apiKeyMasked})` : "Enter API Key"}
+                    />
+                  </label>
+
+                  <label className="flex items-center gap-4 cursor-pointer group mt-2">
+                    <div className="relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ring-0">
+                      <input name="enabled" type="checkbox" defaultChecked={config.enabled} className="sr-only peer" />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--ink)]"></div>
+                    </div>
+                    <span className="text-sm font-medium text-[var(--ink)]">Enable this model for production traffic</span>
+                  </label>
+                </div>
+
+                <div className="flex items-center justify-between mt-4 pt-6 border-t border-[var(--line)]">
+                  <button formAction={deleteLlmConfigAction} className="text-sm font-semibold text-rose-500 hover:text-rose-600 transition-colors px-2">Remove Provider</button>
+                  <button type="submit" className="primary-button text-sm px-8 h-12 shadow-lg shadow-gray-900/10">Save Configuration</button>
+                </div>
+              </form>
+            </div>
+          )) : (
+            <div className="glass-panel rounded-[32px] p-12 text-center border-dashed">
+              <p className="text-[var(--muted)] font-medium">Failed to load configurations. Please check backend logs.</p>
+            </div>
+          )}
+
+          <div className="antigravity-card p-8 border-dashed border-[var(--line-strong)] bg-transparent flex flex-col justify-center min-h-[400px]">
+            <div className="text-center mb-8">
+              <div className="text-3xl mb-4">➕</div>
+              <h3 className="text-xl font-semibold text-[var(--ink)]">Add New Provider</h3>
+              <p className="text-sm text-[var(--muted)] mt-2">Expand your orchestration pool with another LLM endpoint.</p>
+            </div>
+            <form action={createLlmConfigAction} className="grid gap-6">
+              <label className="grid gap-2">
+                <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Friendly Name</span>
+                <input name="name" className="text-input text-sm h-12 bg-white" placeholder="e.g., GPT-4o Pro" required />
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                <label className="grid gap-2">
+                  <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Provider Type</span>
+                  <input name="providerType" defaultValue="openai-compatible" className="text-input text-sm h-12 bg-white" />
+                </label>
+                <label className="grid gap-2">
+                  <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Model Name</span>
+                  <input name="model" className="text-input text-sm h-12 bg-white" placeholder="gpt-4o" required />
+                </label>
+              </div>
+              <label className="grid gap-2">
+                <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Base URL</span>
+                <input name="baseUrl" className="text-input text-sm h-12 bg-white" placeholder="https://api.openai.com/v1" required />
+              </label>
+              <label className="grid gap-2">
+                <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">API Secret</span>
+                <input name="apiKey" type="password" className="text-input text-sm h-12 bg-white" placeholder="sk-..." required />
+              </label>
+              <button type="submit" className="primary-button w-full h-14 mt-4 bg-[var(--ink)] text-white shadow-xl shadow-gray-900/10">Initialize Provider</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section className="space-y-8 reveal-up" style={{ animationDelay: '300ms' }}>
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-2xl font-semibold text-[var(--ink)] tracking-tight">Recent Execution Logs</h2>
+          <div className="text-sm font-medium text-[var(--muted)] bg-[var(--bg-deep)] px-4 py-2 rounded-full border border-[var(--line)]">Live Activity</div>
+        </div>
+        <div className="glass-panel rounded-[40px] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm whitespace-nowrap">
+              <thead>
+                <tr className="bg-white/60 backdrop-blur-md border-b border-[var(--line)]">
+                  <th className="px-8 py-5 font-bold text-[var(--muted)] uppercase tracking-widest text-[10px]">Timestamp</th>
+                  <th className="px-8 py-5 font-bold text-[var(--muted)] uppercase tracking-widest text-[10px]">Author</th>
+                  <th className="px-8 py-5 font-bold text-[var(--muted)] uppercase tracking-widest text-[10px]">Orchestrator</th>
+                  <th className="px-8 py-5 font-bold text-[var(--muted)] uppercase tracking-widest text-[10px] text-right">Usage</th>
+                  <th className="px-8 py-5 font-bold text-[var(--muted)] uppercase tracking-widest text-[10px] text-right">In / Out</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--line)] bg-white/20">
+                {Array.isArray(logs) && logs.length > 0 ? (
+                  logs.map((log: any) => (
+                    <tr key={log.id} className="hover:bg-white/80 transition-all duration-300">
+                      <td className="px-8 py-5 text-[var(--muted)] font-medium">{new Date(log.createdAt).toLocaleString("zh-CN", { month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' })}</td>
+                      <td className="px-8 py-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-[var(--ink)] border border-[var(--line)] uppercase">
+                            {(log.user?.username ?? 'U')[0]}
+                          </div>
+                          <span className="font-semibold text-[var(--ink)]">{log.user?.username ?? `User ${log.userId}`}</span>
+                        </div>
+                      </td>
+                      <td className="px-8 py-5">
+                        <span className="inline-flex items-center px-3 py-1 text-[11px] font-bold rounded-lg bg-white border border-[var(--line-strong)] text-[var(--ink)] shadow-sm">
+                          {log.config?.name ?? "Default"}
+                        </span>
+                      </td>
+                      <td className="px-8 py-5 text-right">
+                        <div className="text-base font-bold text-[var(--ink)] tracking-tight">{(log.totalTokens ?? 0).toLocaleString()} <span className="text-[10px] text-[var(--muted)] uppercase ml-1">Tokens</span></div>
+                      </td>
+                      <td className="px-8 py-5 text-right font-mono text-[11px] text-[var(--muted)] font-medium">
+                        {log.promptTokens?.toLocaleString()} <span className="mx-1 opacity-30">/</span> {log.completionTokens?.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5} className="px-8 py-20 text-center">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="text-3xl opacity-20">🌫️</div>
+                        <div className="text-base font-semibold text-[var(--muted)]">No execution logs found in the current buffer.</div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </section>
     </div>
   );

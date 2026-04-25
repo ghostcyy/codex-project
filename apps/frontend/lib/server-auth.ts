@@ -99,8 +99,16 @@ export async function getAdminUsers() {
   return requestAuthenticated<AdminUserSummary[]>("/admin/users");
 }
 
-export async function getAdminLlmConfig() {
-  return requestAuthenticated<LlmConfigSummary>("/admin/llm-config");
+export async function getAdminLlmConfigs() {
+  return requestAuthenticated<LlmConfigSummary[]>("/admin/llm-config");
+}
+
+export async function getAdminLlmLogs() {
+  return requestAuthenticated<any>("/admin/llm-logs");
+}
+
+export async function getAdminLlmStats() {
+  return requestAuthenticated<any>("/admin/llm-logs/stats");
 }
 
 export async function getAdminNews(status?: string) {

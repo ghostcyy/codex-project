@@ -85,6 +85,8 @@ export interface NewsMutationResponse {
 }
 
 export interface LlmConfigSummary {
+  id: string;
+  name: string;
   providerType: string;
   baseUrl: string;
   model: string;
@@ -92,6 +94,8 @@ export interface LlmConfigSummary {
   hasApiKey: boolean;
   apiKeyMasked: string | null;
   updatedAt: string | null;
+  callCount?: number;
+  tokenConsumption?: number;
 }
 
 export interface PptProjectSummary {

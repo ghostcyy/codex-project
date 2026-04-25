@@ -13,11 +13,25 @@ export function ParticlesBg() {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let mouse = { x: -1000, y: -1000, rightClickDown: false };
+    let mouse = { x: -1000, y: -1000, rightClickDown: false, active: false };
 
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      
+      // 边界检测：如果鼠标靠近屏幕边缘（30px以内），直接关闭吸引力
+      // 这能彻底解决鼠标移出到滚动条或系统UI时粒子仍被吸引聚集的问题
+      const margin = 5;
+      if (
+        e.clientX < margin || 
+        e.clientX > window.innerWidth - margin || 
+        e.clientY < margin || 
+        e.clientY > window.innerHeight - margin
+      ) {
+        mouse.active = false;
+      } else {
+        mouse.active = true;
+      }
     };
 
     const handleMouseDown = (e: MouseEvent) => {
@@ -35,20 +49,30 @@ export function ParticlesBg() {
     };
 
     const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault(); // 屏蔽右键原生菜单，以便完整体验满屏右键粒子吸引
+      e.preventDefault(); 
     };
 
     const handleMouseLeave = () => {
       mouse.x = -1000;
       mouse.y = -1000;
       mouse.rightClickDown = false;
+      mouse.active = false;
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      // If relatedTarget is null, the mouse completely left the browser document/window
+      if (!e.relatedTarget) {
+        handleMouseLeave();
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
     window.addEventListener("contextmenu", handleContextMenu);
-    window.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseout", handleMouseOut);
+    document.documentElement.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("blur", handleMouseLeave);
 
     let particles: { x: number; y: number; s: number; driftVx: number; driftVy: number; attrVx: number; attrVy: number; }[] = [];
     let shockwaves: { x: number; y: number; age: number; }[] = [];
@@ -142,7 +166,7 @@ export function ParticlesBg() {
         const maxDistance = mouse.rightClickDown ? 500 : 350;
         const pullStrength = mouse.rightClickDown ? 0.4 : 0.10;
 
-        if (distance < maxDistance) {
+        if (mouse.active && distance < maxDistance) {
           const force = (maxDistance - distance) / maxDistance;
           // 累加计算吸引向鼠标的速度
           p.attrVx += (dx / distance) * force * pullStrength;
@@ -184,7 +208,9 @@ export function ParticlesBg() {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("contextmenu", handleContextMenu);
-      window.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseout", handleMouseOut);
+      document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("blur", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

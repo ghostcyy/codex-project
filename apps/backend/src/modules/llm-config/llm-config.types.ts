@@ -1,4 +1,6 @@
 export interface LlmConfigSummary {
+  id: string;
+  name: string;
   providerType: string;
   baseUrl: string;
   model: string;
@@ -6,9 +8,12 @@ export interface LlmConfigSummary {
   hasApiKey: boolean;
   apiKeyMasked: string | null;
   updatedAt: string | null;
+  callCount?: number;
+  tokenConsumption?: number;
 }
 
 export interface LlmConfigInput {
+  name?: string;
   baseUrl?: unknown;
   apiKey?: unknown;
   model?: unknown;
@@ -17,6 +22,8 @@ export interface LlmConfigInput {
 }
 
 export interface ActiveLlmConfig {
+  id: string;
+  name: string;
   providerType: string;
   baseUrl: string;
   apiKey: string;

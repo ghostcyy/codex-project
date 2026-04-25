@@ -644,31 +644,46 @@ export default function HtmlPptPage() {
   return (
     <div style={styles.root}>
       {/* ══ LEFT SIDEBAR ══════════════════════════════════════ */}
-      <aside style={{ ...styles.sidebar, width: sidebarCollapsed ? 64 : 260 }}>
+      <aside style={{ ...styles.sidebar, width: sidebarCollapsed ? 80 : 280 }}>
         {/* Header */}
         <div style={styles.sidebarHeader}>
           {!sidebarCollapsed && (
             <span style={styles.sidebarTitle}>
-              <span style={styles.sidebarTitleIcon}>PPT</span> HTML PPT
+              <div style={styles.sidebarTitleIcon}>PPT</div>
+              Studio
             </span>
           )}
           <button style={styles.iconBtn} onClick={() => setSidebarCollapsed(c => !c)} title="折叠侧栏">
-            {sidebarCollapsed ? '>' : '<'}
+            {sidebarCollapsed ? '→' : '←'}
           </button>
         </div>
 
         {/* New project button */}
-          <button style={{ ...styles.newProjectBtn, justifyContent: sidebarCollapsed ? 'center' : 'flex-start' }}
-            onClick={createProject} title="新建项目">
-          <span style={{ fontSize: 18, lineHeight: 1 }}>+</span>
-          {!sidebarCollapsed && <span>新建项目</span>}
+        <button
+          style={{
+            ...styles.newProjectBtn,
+            justifyContent: sidebarCollapsed ? 'center' : 'flex-start',
+            padding: sidebarCollapsed ? '12px 0' : '12px 16px',
+            margin: sidebarCollapsed ? '12px 10px' : '12px 16px',
+          }}
+          onClick={createProject}
+          title="新建项目"
+        >
+          <span style={{ fontSize: 20 }}>+</span>
+          {!sidebarCollapsed && <span>New Project</span>}
         </button>
 
         {/* Project list */}
         <div style={styles.projectList}>
           {projects.map(p => (
             <div key={p.id}
-              style={{ ...styles.projectItem, background: p.id === activeId ? 'rgba(26,115,232,0.08)' : 'transparent', borderColor: p.id === activeId ? 'rgba(26,115,232,0.2)' : 'transparent' }}
+              className="project-item-row"
+              style={{
+                ...styles.projectItem,
+                background: p.id === activeId ? 'var(--accent-soft)' : 'transparent',
+                borderColor: p.id === activeId ? 'var(--accent-softer)' : 'transparent',
+                boxShadow: p.id === activeId ? 'var(--shadow-base)' : 'none',
+              }}
               onClick={() => setActiveId(p.id)}>
               {editingId === p.id ? (
                 <input autoFocus style={styles.renameInput}
@@ -679,16 +694,20 @@ export default function HtmlPptPage() {
                   onClick={e => e.stopPropagation()} />
               ) : (
                 <>
-                  <span style={styles.projectIcon}>P</span>
+                  <span style={{ ...styles.projectIcon, color: p.id === activeId ? 'var(--accent)' : 'var(--muted)' }}>
+                    {p.id === activeId ? '●' : '○'}
+                  </span>
                   {!sidebarCollapsed && (
-                    <span style={styles.projectName} title={p.name}>{p.name}</span>
+                    <span style={{ ...styles.projectName, color: p.id === activeId ? 'var(--accent)' : 'var(--ink)' }} title={p.name}>
+                      {p.name}
+                    </span>
                   )}
                   {!sidebarCollapsed && p.id === activeId && (
-                    <div style={styles.projectActions}>
+                    <div style={styles.projectActions} className="actions-group">
                       <button style={styles.actionBtn} title="重命名"
-                        onClick={e => { e.stopPropagation(); setEditingId(p.id); setEditName(p.name); }}>改</button>
-                      <button style={{ ...styles.actionBtn, color: '#ea4335' }} title="删除"
-                        onClick={e => { e.stopPropagation(); if (confirm('确认删除此项目？')) void deleteProject(p.id); }}>删</button>
+                        onClick={e => { e.stopPropagation(); setEditingId(p.id); setEditName(p.name); }}>Edit</button>
+                      <button style={{ ...styles.actionBtn, color: 'var(--danger)' }} title="删除"
+                        onClick={e => { e.stopPropagation(); if (confirm('确认删除此项目？')) void deleteProject(p.id); }}>Del</button>
                     </div>
                   )}
                 </>
@@ -700,18 +719,17 @@ export default function HtmlPptPage() {
         {/* Template badge */}
         {!sidebarCollapsed && active?.template && (
           <div style={styles.tplBadge}>
-            <span>{TEMPLATES.find(t => t.id === active.template)?.emoji}</span>
-            <span style={{ fontSize: 11, color: 'var(--muted)', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <span style={{ fontSize: 18 }}>{TEMPLATES.find(t => t.id === active.template)?.emoji}</span>
+            <span style={{ fontSize: 12, color: 'var(--ink)', fontWeight: 600, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {TEMPLATES.find(t => t.id === active.template)?.label}
             </span>
-            <button style={{ ...styles.actionBtn, fontSize: 10 }} title="更换模板" onClick={focusTemplateSelector}>换</button>
           </div>
         )}
 
         {/* Hint */}
         {!sidebarCollapsed && (
           <div style={styles.sidebarHint}>
-            模板选择区位于<br />输入框下方
+            Design with AI Intelligence
           </div>
         )}
       </aside>
@@ -722,102 +740,118 @@ export default function HtmlPptPage() {
         {/* ── Chat header ── */}
         <div style={styles.chatHeader}>
           <div>
-            <div style={styles.chatTitle}>{active?.name ?? '-'}</div>
+            <div style={styles.chatTitle}>{active?.name ?? 'Select Project'}</div>
             {active?.template && (
               <span style={styles.chatSubtitle}>
-                {TEMPLATES.find(t => t.id === active.template)?.emoji}&nbsp;
-                {TEMPLATES.find(t => t.id === active.template)?.label}
+                <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10 }}>{TEMPLATES.find(t => t.id === active.template)?.label}</span>
+                &nbsp;· Active Template
               </span>
             )}
           </div>
-          <button style={styles.ghostBtn} onClick={focusTemplateSelector}>
-            选择模板
+          <button style={styles.ghostBtn} onClick={() => templateSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+            Switch Template
           </button>
         </div>
 
         <div style={styles.mainScrollArea}>
           {requestError ? (
-            <div style={styles.errorBanner}>{requestError}</div>
+            <div style={styles.errorBanner}>
+              <span style={{ marginRight: 8 }}>⚠️</span>
+              {requestError}
+            </div>
           ) : null}
 
           {/* ── Messages ── */}
           <div style={styles.messages}>
           {bootstrapping && !active ? (
             <div style={styles.emptyState}>
-              <div style={styles.emptyIcon}>⏳</div>
-              <div style={styles.emptyTitle}>正在加载 HTML-PPT 项目</div>
-              <div style={styles.emptyHint}>稍候，正在同步项目列表和会话记录。</div>
+              <div className="ppt-typing-dot" style={{ width: 40, height: 40 }} />
+              <div style={styles.emptyTitle}>Synchronizing...</div>
+              <div style={styles.emptyHint}>Preparing your premium authoring environment.</div>
             </div>
           ) : active?.messages.length === 0 ? (
-            <div style={styles.emptyState}>
-              <div style={styles.emptyIcon}>HTML</div>
-              <div style={styles.emptyTitle}>开始创建你的 HTML 幻灯片</div>
+            <div style={styles.emptyState} className="reveal-up">
+              <div style={styles.emptyIcon}>✦</div>
+              <div style={styles.emptyTitle}>Create Professional Deck</div>
               <div style={styles.emptyHint}>
-                描述你的 PPT 主题，或上传 docx / pptx / md 文件，\nAI 将为你生成专业的 HTML 演示文稿。
+                Describe your topic or drop documents. Our AI agent will orchestrate the layout and content for you.
               </div>
               <div style={styles.emptyTips}>
-                {['技术分享：介绍 React Server Components 的原理', '投资人路演：新能源汽车 SaaS 平台', '小红书：2026 年春季穿搭指南'].map(tip => (
-                  <button key={tip} style={styles.tipBtn} onClick={() => setInput(tip)}>{tip}</button>
+                {['Product Launch: Vision for 2026 Space Travel', 'Tech Sharing: Exploring Quantum Computing', 'Pitch Deck: Next-gen Sustainable Energy SaaS'].map(tip => (
+                  <button key={tip} style={styles.tipBtn} className="antigravity-card" onClick={() => setInput(tip)}>{tip}</button>
                 ))}
-              </div>
-              <div style={{ marginTop: 16, fontSize: 12, color: 'var(--muted)', opacity: 0.6 }}>
-                提示：输入区下方可以直接切换模板
               </div>
             </div>
           ) : null}
 
           {active?.messages.map(msg => (
-            <div key={msg.id} style={{ ...styles.msgRow, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }}>
-              <div style={{ ...styles.msgAvatar, background: msg.role === 'user' ? 'var(--accent)' : '#f0f4ff' }}>
-                {msg.role === 'user' ? '我' : 'AI'}
+            <div key={msg.id} style={{ ...styles.msgRow, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }} className="reveal-up">
+              <div style={{
+                ...styles.msgAvatar,
+                background: msg.role === 'user' ? 'var(--accent)' : 'white',
+                color: msg.role === 'user' ? 'white' : 'var(--accent)',
+                boxShadow: msg.role === 'user' ? '0 4px 12px rgba(26, 115, 232, 0.2)' : 'var(--shadow-base)',
+                border: msg.role === 'user' ? 'none' : '1px solid var(--line)',
+              }}>
+                {msg.role === 'user' ? 'U' : 'AI'}
               </div>
-              <div style={{ maxWidth: '70%' }}>
+              <div style={{ maxWidth: '85%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
                 {msg.template && (
                   <div style={styles.filePillsRow}>
                     <span style={styles.templatePill}>
-                      模板：{msg.template.label}
+                      Template: {msg.template.label}
                     </span>
                   </div>
                 )}
                 {msg.files && msg.files.length > 0 && (
                   <div style={styles.filePillsRow}>
                     {msg.files.map((f, i) => (
-                      <span key={i} style={styles.filePill}>文件：{f.name} <span style={{ opacity: 0.6 }}>{fmt(f.size)}</span></span>
+                      <span key={i} style={styles.filePill}>
+                        <span style={{ fontSize: 14 }}>📄</span>
+                        {f.name} ({fmt(f.size)})
+                      </span>
                     ))}
                   </div>
                 )}
-                <div style={{ ...styles.msgBubble, background: msg.role === 'user' ? 'var(--accent)' : 'white', color: msg.role === 'user' ? 'white' : 'var(--ink)', alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                  <div style={{
+                    ...styles.msgBubble,
+                    background: msg.role === 'user' ? 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)' : 'white',
+                    color: msg.role === 'user' ? 'white' : 'var(--ink)',
+                    border: msg.role === 'user' ? 'none' : '1px solid var(--line)',
+                    boxShadow: msg.role === 'user' ? '0 8px 24px rgba(99, 102, 241, 0.2)' : 'var(--shadow-base)',
+                  }}>
                   {visibleMessageContent(msg.content).split('\n').map((line, i) => (
                     <span key={i}>{line.replace(/\*\*(.*?)\*\*/g, '$1')}<br /></span>
                   ))}
                 </div>
                 {msg.role === 'assistant' && msg.deckRender && (
-                  <div style={styles.deckPreviewCard}>
+                  <div style={styles.deckPreviewCard} className="float-effect">
                     <div style={styles.deckPreviewHeader}>
                       <div>
                         <div style={styles.deckPreviewTitle}>{msg.deckRender.title}</div>
                         <div style={styles.deckPreviewMeta}>
-                          {msg.deckSpec?.template ?? 'HTML-PPT'} · {msg.deckSpec?.theme ?? 'theme'} · {msg.deckSpec?.slides.length ?? 0} 页
+                          <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10, background: 'var(--bg-deep)' }}>{msg.deckSpec?.template ?? 'HTML-PPT'}</span>
+                          &nbsp;· {msg.deckSpec?.slides.length ?? 0} Slides Generated
                         </div>
                         {msg.orchestration && (
                           <div style={styles.orchestrationMeta}>
-                            编排器：{msg.orchestration.model} · {msg.orchestration.totalModelCalls} 次模型调用 · {msg.orchestration.steps.length} 步
+                            ✓ Orchestration Complete: {msg.orchestration.totalModelCalls} Calls · {msg.orchestration.steps.length} Steps
                           </div>
                         )}
                       </div>
                       <div style={styles.deckPreviewActions}>
-                        <a style={styles.deckActionLink} href={msg.deckRender.previewUrl} target="_blank" rel="noreferrer">预览</a>
-                        <a style={styles.deckActionLink} href={msg.deckRender.downloadUrl}>下载</a>
+                        <a style={styles.deckActionLink} className="ghost-button" href={msg.deckRender.previewUrl} target="_blank" rel="noreferrer">Full View</a>
+                        <a style={styles.deckActionLink} className="primary-button" href={msg.deckRender.downloadUrl}>Download</a>
                       </div>
                     </div>
                     {msg.orchestration && msg.orchestration.steps.length > 0 && (
                       <div style={styles.orchestrationPanel}>
                         {msg.orchestration.steps.map((step) => (
                           <div key={step.id} style={styles.orchestrationRow}>
-                          <span style={{
-                            ...styles.orchestrationStatus,
+                            <span style={{
+                              ...styles.orchestrationStatus,
                               ...orchestrationStatusStyle(step.status),
-                          }}>
+                            }}>
                               {orchestrationStatusLabel(step.status)}
                             </span>
                             <div style={styles.orchestrationBody}>
@@ -842,24 +876,24 @@ export default function HtmlPptPage() {
                   <div style={styles.orchestrationStandaloneCard}>
                     <div style={styles.orchestrationStandaloneHeader}>
                       <span>
-                        编排器：{msg.orchestration.model} · {msg.orchestration.totalModelCalls} 次模型调用 · {msg.orchestration.steps.length} 步
+                        Orchestrating: {msg.orchestration.model} ({msg.orchestration.steps.length} Steps)
                       </span>
                       {canResumeOrchestration(msg.orchestration) && (
                         <button
                           style={styles.resumeBtn}
                           disabled={Boolean(resumingMessageId)}
                           onClick={() => void resumeGeneration(msg.id)}>
-                          {resumingMessageId === msg.id ? '继续中...' : '继续生成'}
+                          {resumingMessageId === msg.id ? 'Resuming...' : 'Resume Generation'}
                         </button>
                       )}
                     </div>
                     <div style={styles.orchestrationPanel}>
                       {msg.orchestration.steps.map((step) => (
                         <div key={step.id} style={styles.orchestrationRow}>
-                        <span style={{
-                          ...styles.orchestrationStatus,
+                          <span style={{
+                            ...styles.orchestrationStatus,
                             ...orchestrationStatusStyle(step.status),
-                        }}>
+                          }}>
                             {orchestrationStatusLabel(step.status)}
                           </span>
                           <div style={styles.orchestrationBody}>
@@ -882,10 +916,10 @@ export default function HtmlPptPage() {
           ))}
 
           {loading && !hasLiveAssistantProgress && (
-            <div style={{ ...styles.msgRow }}>
-              <div style={{ ...styles.msgAvatar, background: '#f0f4ff' }}>AI</div>
-              <div style={{ ...styles.msgBubble, background: 'white', padding: '12px 16px' }}>
-                <span style={{ display: 'inline-flex', gap: 5, alignItems: 'center' }}>
+            <div style={{ ...styles.msgRow }} className="reveal-up">
+              <div style={{ ...styles.msgAvatar, background: 'white', border: '1px solid var(--line)', color: 'var(--accent)' }}>AI</div>
+              <div style={{ ...styles.msgBubble, background: 'white', border: '1px solid var(--line)', padding: '16px 20px' }}>
+                <span style={styles.typing}>
                   <span className="ppt-typing-dot" />
                   <span className="ppt-typing-dot" />
                   <span className="ppt-typing-dot" />
@@ -898,74 +932,113 @@ export default function HtmlPptPage() {
 
           {/* ── Input area ── */}
           <div style={styles.inputArea}>
-          {/* Attached files */}
-          {files.length > 0 && (
-            <div style={styles.attachedFiles}>
-              {files.map((f, i) => (
-                <div key={i} style={styles.attachedPill}>
-                  <span>{f.name}</span>
-                  <span style={{ opacity: 0.5, fontSize: 11 }}>{fmt(f.size)}</span>
-                  <button style={styles.removeFileBtn} onClick={() => removeFile(i)}>x</button>
+            <div style={{ maxWidth: 900, margin: '0 auto', width: '100%' }}>
+              {files.length > 0 && (
+                <div style={styles.attachedFiles}>
+                  {files.map((f, i) => (
+                    <div key={i} style={styles.attachedPill} className="reveal-up">
+                      <span>📄 {f.name}</span>
+                      <span style={{ opacity: 0.6, fontSize: 11 }}>{fmt(f.size)}</span>
+                      <button style={styles.removeFileBtn} onClick={() => removeFile(i)}>×</button>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
+
+              <div style={{ ...styles.inputRow, borderColor: loading ? 'var(--accent)' : 'var(--line-strong)' }}>
+                {/* Upload button */}
+                <button style={styles.uploadBtn} className="ghost-button" title="Upload files"
+                  onClick={() => fileInputRef.current?.click()}>
+                  +
+                </button>
+                <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES} multiple hidden onChange={onFileChange} />
+
+                {/* Textarea */}
+                <textarea ref={textareaRef}
+                  style={styles.textarea}
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  placeholder="Describe your deck content... (Enter to send, Shift+Enter for new line)"
+                  rows={1}
+                />
+
+                {/* Send button */}
+                <button style={{ ...styles.sendBtn, opacity: (!input.trim() && !files.length) || hasLiveAssistantProgress ? 0.5 : 1 }}
+                  disabled={!activeId || (!input.trim() && !files.length) || loading || hasLiveAssistantProgress || Boolean(resumingMessageId)}
+                  onClick={send}>
+                  {hasLiveAssistantProgress ? '⏳' : '↑'}
+                </button>
+              </div>
+              <div style={styles.inputHint}>
+                AI automatically creates multi-slide HTML presentations from your prompts or documents.
+              </div>
             </div>
-          )}
-
-          <div style={styles.inputRow}>
-            {/* Upload button */}
-            <button style={styles.uploadBtn} title="上传文件 (docx/pptx/txt/md/pdf)"
-              onClick={() => fileInputRef.current?.click()}>
-              +
-            </button>
-            <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES} multiple hidden onChange={onFileChange} />
-
-            {/* Textarea */}
-            <textarea ref={textareaRef}
-              style={styles.textarea}
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="描述你的 PPT 主题...  Shift+Enter 换行，Enter 发送"
-              rows={1}
-            />
-
-            {/* Send button */}
-            <button style={{ ...styles.sendBtn, opacity: (!input.trim() && !files.length) || hasLiveAssistantProgress ? 0.4 : 1 }}
-              disabled={!activeId || (!input.trim() && !files.length) || loading || hasLiveAssistantProgress || Boolean(resumingMessageId)}
-              onClick={send}>
-              {hasLiveAssistantProgress ? '生成中' : 'Send'}
-            </button>
-          </div>
-          <div style={styles.inputHint}>
-            支持上传 .docx / .pptx / .txt / .md / .pdf / Shift+Enter 换行
-          </div>
           </div>
 
           <div ref={templateSectionRef} style={styles.templateSection}>
-            <div style={styles.templateSectionHeader}>
-              <div>
-                <div style={styles.drawerTitle}>选择模板</div>
-                <div style={styles.drawerSubtitle}>模板选择直接固定在输入区下方，不再通过弹层打开。</div>
+            <div style={{ maxWidth: 1000, margin: '0 auto', width: '100%' }}>
+              <div style={styles.templateSectionHeader}>
+                <div>
+                  <div style={styles.drawerTitle}>Visual Templates</div>
+                  <div style={styles.drawerSubtitle}>Select a visual style for your next deck generation.</div>
+                </div>
               </div>
-            </div>
 
-            <div style={styles.tplGrid}>
-              {TEMPLATES.map(tpl => (
-                <button key={tpl.id}
-                  style={{ ...styles.tplCard, outline: selectedTemplate === tpl.id || active?.template === tpl.id ? '2px solid var(--accent)' : 'none', background: selectedTemplate === tpl.id || active?.template === tpl.id ? 'var(--accent-soft)' : 'white' }}
-                  onClick={() => applyTemplate(tpl.id)}>
-                  <div style={styles.tplEmoji}>{tpl.emoji}</div>
-                  <div style={styles.tplLabel}>{tpl.label}</div>
-                  <div style={styles.tplDesc}>{tpl.desc}</div>
-                  {(selectedTemplate === tpl.id || active?.template === tpl.id) && (
-                    <div style={styles.tplCheck}>OK</div>
-                  )}
-                </button>
-              ))}
+              <div style={styles.tplGrid}>
+                {TEMPLATES.map(tpl => (
+                  <button key={tpl.id}
+                    className="antigravity-card"
+                    style={{
+                      ...styles.tplCard,
+                      border: selectedTemplate === tpl.id || active?.template === tpl.id ? '2px solid var(--accent)' : '1px solid var(--line)',
+                      background: selectedTemplate === tpl.id || active?.template === tpl.id ? 'var(--accent-soft)' : 'white'
+                    }}
+                    onClick={() => applyTemplate(tpl.id)}>
+                    <div style={{
+                      ...styles.tplEmoji,
+                      background: selectedTemplate === tpl.id || active?.template === tpl.id ? 'white' : 'var(--bg-deep)'
+                    }}>
+                      {tpl.emoji}
+                    </div>
+                    <div style={styles.tplLabel}>{tpl.label}</div>
+                    <div style={styles.tplDesc}>{tpl.desc}</div>
+                    {(selectedTemplate === tpl.id || active?.template === tpl.id) && (
+                      <div style={styles.tplCheck}>✓</div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx global>{`
+        .project-item-row:hover .actions-group {
+          opacity: 1 !important;
+        }
+        .project-item-row:hover {
+          background: rgba(0,0,0,0.03) !important;
+          transform: translateX(4px);
+        }
+        .html-ppt-route .main-content {
+          background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar {
+          width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.1);
+          border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(0,0,0,0.2);
+        }
+      `}</style>
     </div>
   );
 }
@@ -976,91 +1049,164 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     height: 'calc(100vh - 64px)',
     overflow: 'hidden',
-    background: '#f8f9fb',
+    background: 'var(--bg-deep)',
     position: 'relative',
+    fontFamily: 'inherit',
   },
 
   /* ── Sidebar ── */
   sidebar: {
     display: 'flex',
     flexDirection: 'column',
-    background: 'white',
-    borderRight: '1px solid rgba(0,0,0,0.06)',
-    transition: 'width 0.25s cubic-bezier(0.4,0,0.2,1)',
+    background: 'rgba(255, 255, 255, 0.7)',
+    backdropFilter: 'blur(16px)',
+    borderRight: '1px solid var(--line)',
+    transition: 'width 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     overflow: 'hidden',
     flexShrink: 0,
+    zIndex: 20,
   },
   sidebarHeader: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '16px 14px 10px',
-    borderBottom: '1px solid rgba(0,0,0,0.05)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '24px 16px 12px',
   },
   sidebarTitle: {
-    fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8,
-    whiteSpace: 'nowrap', overflow: 'hidden',
+    fontWeight: 600,
+    fontSize: 16,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    whiteSpace: 'nowrap',
+    color: 'var(--ink)',
+    letterSpacing: '-0.02em',
   },
-  sidebarTitleIcon: { fontSize: 20 },
+  sidebarTitleIcon: {
+    width: 28,
+    height: 28,
+    background: 'var(--accent)',
+    borderRadius: 8,
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 12,
+    fontWeight: 700,
+  },
   iconBtn: {
-    background: 'none', border: 'none', cursor: 'pointer',
-    fontSize: 16, color: 'var(--muted)', padding: '4px 6px', borderRadius: 6,
-    lineHeight: 1, flexShrink: 0,
+    background: 'rgba(0,0,0,0.04)',
+    border: 'none',
+    cursor: 'pointer',
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 12,
+    color: 'var(--muted)',
+    transition: 'background 0.2s',
   },
   newProjectBtn: {
-    display: 'flex', alignItems: 'center', gap: 8,
-    margin: '10px 12px',
-    padding: '8px 12px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    margin: '12px 16px',
+    padding: '12px 16px',
     background: 'var(--accent)',
     color: 'white',
     border: 'none',
-    borderRadius: 10,
+    borderRadius: 14,
     cursor: 'pointer',
-    fontWeight: 600, fontSize: 13,
-    transition: 'opacity 0.2s',
+    fontWeight: 600,
+    fontSize: 14,
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+    boxShadow: '0 8px 16px rgba(99, 102, 241, 0.2)',
   },
   projectList: {
-    flex: 1, overflow: 'hidden', padding: '4px 8px',
+    flex: 1,
+    overflowY: 'auto',
+    padding: '8px 12px',
   },
   projectItem: {
-    display: 'flex', alignItems: 'center', gap: 8,
-    padding: '8px 10px',
-    borderRadius: 8,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    padding: '10px 12px',
+    borderRadius: 12,
     cursor: 'pointer',
     border: '1px solid transparent',
-    marginBottom: 2,
-    transition: 'background 0.15s, border-color 0.15s',
-    minHeight: 36,
+    marginBottom: 4,
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+    minHeight: 44,
   },
-  projectIcon: { fontSize: 14, flexShrink: 0 },
+  projectIcon: {
+    fontSize: 14,
+    opacity: 0.6,
+    flexShrink: 0,
+  },
   projectName: {
-    flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-    fontSize: 13, fontWeight: 500,
+    flex: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    fontSize: 14,
+    fontWeight: 500,
+    color: 'var(--ink)',
   },
-  projectActions: { display: 'flex', gap: 2, flexShrink: 0 },
+  projectActions: {
+    display: 'flex',
+    gap: 4,
+    flexShrink: 0,
+    opacity: 0,
+    transition: 'opacity 0.2s',
+  },
   actionBtn: {
-    background: 'none', border: 'none', cursor: 'pointer',
-    fontSize: 13, padding: '2px 4px', borderRadius: 4,
-    opacity: 0.65,
+    background: 'rgba(0,0,0,0.05)',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: 11,
+    padding: '4px 6px',
+    borderRadius: 6,
+    color: 'var(--muted)',
+    fontWeight: 600,
   },
   renameInput: {
-    flex: 1, border: '1px solid var(--accent)', borderRadius: 6,
-    padding: '2px 6px', fontSize: 13, outline: 'none',
+    flex: 1,
+    border: '1px solid var(--accent)',
+    borderRadius: 8,
+    padding: '4px 8px',
+    fontSize: 13,
+    outline: 'none',
+    background: 'white',
   },
   tplBadge: {
-    display: 'flex', alignItems: 'center', gap: 6,
-    margin: '8px 12px 4px',
-    padding: '6px 10px',
-    background: 'var(--accent-soft)',
-    borderRadius: 8, border: '1px solid rgba(26,115,232,0.12)',
-    fontSize: 13,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    margin: '12px',
+    padding: '10px 12px',
+    background: 'var(--accent-softer)',
+    borderRadius: 14,
+    border: '1px solid var(--line)',
   },
   sidebarHint: {
-    textAlign: 'center', fontSize: 11, color: 'var(--muted)',
-    opacity: 0.5, padding: '8px 12px 16px', lineHeight: 1.6,
+    textAlign: 'center',
+    fontSize: 11,
+    color: 'var(--muted)',
+    opacity: 0.6,
+    padding: '12px 16px 24px',
+    lineHeight: 1.6,
   },
 
   /* ── Main ── */
   mainWrap: {
-    flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    position: 'relative',
   },
   mainScrollArea: {
     flex: 1,
@@ -1069,315 +1215,522 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     minHeight: 0,
+    paddingBottom: 20,
   },
   errorBanner: {
-    margin: '18px 24px 0',
-    border: '1px solid rgba(220,38,38,0.18)',
-    background: 'rgba(254,242,242,0.96)',
+    margin: '20px 28px 0',
+    border: '1px solid rgba(220,38,38,0.1)',
+    background: 'rgba(254,242,242,0.8)',
+    backdropFilter: 'blur(8px)',
     color: '#b91c1c',
-    borderRadius: 16,
-    padding: '12px 16px',
-    fontSize: 13,
-    lineHeight: 1.6,
+    borderRadius: 20,
+    padding: '14px 20px',
+    fontSize: 14,
+    fontWeight: 500,
+    boxShadow: '0 4px 12px rgba(220,38,38,0.05)',
   },
   chatHeader: {
-    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '14px 24px',
-    background: 'white',
-    borderBottom: '1px solid rgba(0,0,0,0.06)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '16px 32px',
+    background: 'rgba(255, 255, 255, 0.8)',
+    backdropFilter: 'blur(12px)',
+    borderBottom: '1px solid var(--line)',
     flexShrink: 0,
+    zIndex: 10,
   },
-  chatTitle: { fontWeight: 700, fontSize: 16 },
-  chatSubtitle: { fontSize: 12, color: 'var(--muted)', marginTop: 2, display: 'block' },
+  chatTitle: {
+    fontWeight: 600,
+    fontSize: 18,
+    color: 'var(--ink)',
+    letterSpacing: '-0.02em',
+  },
+  chatSubtitle: {
+    fontSize: 12,
+    color: 'var(--muted)',
+    marginTop: 4,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
+    fontWeight: 500,
+  },
   ghostBtn: {
-    background: 'transparent', border: '1px solid rgba(0,0,0,0.1)',
-    padding: '7px 16px', borderRadius: 999, cursor: 'pointer',
-    fontSize: 13, fontWeight: 500, color: 'var(--ink)',
-    transition: 'background 0.2s',
+    background: 'white',
+    border: '1px solid var(--line-strong)',
+    padding: '8px 18px',
+    borderRadius: 999,
+    cursor: 'pointer',
+    fontSize: 13,
+    fontWeight: 600,
+    color: 'var(--ink)',
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+    boxShadow: 'var(--shadow-base)',
   },
 
   /* ── Messages ── */
   messages: {
     flex: '1 0 auto',
-    padding: '24px 28px',
-    display: 'flex', flexDirection: 'column', gap: 20,
+    padding: '32px 40px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 32,
+    maxWidth: 900,
+    margin: '0 auto',
+    width: '100%',
   },
   emptyState: {
-    flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center',
-    justifyContent: 'center', textAlign: 'center', padding: '40px 0',
-    gap: 12,
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    padding: '60px 20px',
+    gap: 16,
   },
-  emptyIcon: { fontSize: 52, marginBottom: 4 },
-  emptyTitle: { fontWeight: 700, fontSize: 22, color: 'var(--ink)' },
-  emptyHint: { fontSize: 14, color: 'var(--muted)', maxWidth: 420, lineHeight: 1.7 },
-  emptyTips: { display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 },
+  emptyIcon: {
+    width: 80,
+    height: 80,
+    background: 'var(--accent-soft)',
+    borderRadius: 24,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 32,
+    color: 'var(--accent)',
+    marginBottom: 8,
+  },
+  emptyTitle: {
+    fontWeight: 600,
+    fontSize: 28,
+    color: 'var(--ink)',
+    letterSpacing: '-0.03em',
+  },
+  emptyHint: {
+    fontSize: 16,
+    color: 'var(--muted)',
+    maxWidth: 480,
+    lineHeight: 1.6,
+  },
+  emptyTips: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+    marginTop: 24,
+    width: '100%',
+    maxWidth: 400,
+  },
   tipBtn: {
-    background: 'white', border: '1px solid rgba(0,0,0,0.08)',
-    borderRadius: 10, padding: '10px 18px',
-    cursor: 'pointer', fontSize: 13, color: 'var(--ink)',
-    textAlign: 'left', boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-    transition: 'box-shadow 0.2s, transform 0.2s',
+    background: 'white',
+    border: '1px solid var(--line)',
+    borderRadius: 16,
+    padding: '14px 20px',
+    cursor: 'pointer',
+    fontSize: 14,
+    color: 'var(--ink)',
+    fontWeight: 500,
+    textAlign: 'left',
+    boxShadow: 'var(--shadow-base)',
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
   },
   msgRow: {
-    display: 'flex', gap: 12, alignItems: 'flex-end',
+    display: 'flex',
+    gap: 16,
+    alignItems: 'flex-start',
   },
   msgAvatar: {
-    width: 32, height: 32, borderRadius: '50%',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    fontSize: 16, flexShrink: 0,
+    width: 36,
+    height: 36,
+    borderRadius: 12,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 12,
+    fontWeight: 700,
+    flexShrink: 0,
+    marginTop: 4,
   },
   msgBubble: {
-    padding: '10px 14px',
-    borderRadius: 16,
-    fontSize: 14, lineHeight: 1.65,
-    boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-    maxWidth: '100%', wordBreak: 'break-word',
+    padding: '14px 20px',
+    borderRadius: 20,
+    fontSize: 15,
+    lineHeight: 1.6,
+    boxShadow: 'var(--shadow-base)',
+    maxWidth: '100%',
+    wordBreak: 'break-word',
+    position: 'relative',
   },
-  msgTs: { fontSize: 11, color: 'var(--muted)', opacity: 0.6, marginTop: 4, paddingX: 4 } as React.CSSProperties,
-  filePillsRow: { display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 6 },
+  msgTs: {
+    fontSize: 11,
+    color: 'var(--muted)',
+    opacity: 0.5,
+    marginTop: 6,
+    fontWeight: 500,
+  },
+  filePillsRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 10,
+  },
   filePill: {
-    background: 'rgba(26,115,232,0.08)', border: '1px solid rgba(26,115,232,0.15)',
-    borderRadius: 6, padding: '3px 9px', fontSize: 12, color: 'var(--accent)',
+    background: 'rgba(255,255,255,0.8)',
+    border: '1px solid var(--line)',
+    borderRadius: 10,
+    padding: '6px 12px',
+    fontSize: 12,
+    color: 'var(--muted)',
+    fontWeight: 500,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
   },
   templatePill: {
-    background: 'rgba(15,118,110,0.08)',
-    border: '1px solid rgba(15,118,110,0.18)',
+    background: 'var(--accent-soft)',
+    border: '1px solid var(--accent-softer)',
     borderRadius: 999,
-    padding: '4px 10px',
+    padding: '6px 14px',
     fontSize: 12,
-    color: '#0f766e',
+    color: 'var(--accent)',
     fontWeight: 600,
   },
   deckPreviewCard: {
-    marginTop: 10,
+    marginTop: 16,
     overflow: 'hidden',
-    borderRadius: 14,
-    border: '1px solid rgba(0,0,0,0.08)',
+    borderRadius: 24,
+    border: '1px solid var(--line)',
     background: 'white',
-    boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
+    boxShadow: 'var(--shadow-float)',
   },
   deckPreviewHeader: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 12,
-    padding: '10px 12px',
-    borderBottom: '1px solid rgba(0,0,0,0.06)',
-    background: '#fbfcfd',
+    gap: 16,
+    padding: '16px 20px',
+    borderBottom: '1px solid var(--line)',
+    background: 'rgba(255,255,255,0.5)',
   },
   deckPreviewTitle: {
-    fontSize: 13,
-    fontWeight: 700,
+    fontSize: 15,
+    fontWeight: 600,
     color: 'var(--ink)',
+    letterSpacing: '-0.01em',
   },
   deckPreviewMeta: {
-    marginTop: 2,
-    fontSize: 11,
+    marginTop: 4,
+    fontSize: 12,
     color: 'var(--muted)',
+    fontWeight: 500,
   },
   orchestrationMeta: {
-    marginTop: 4,
+    marginTop: 6,
     fontSize: 11,
-    color: '#0f766e',
+    color: 'var(--success)',
     fontWeight: 600,
+    letterSpacing: '0.02em',
   },
   orchestrationStandaloneCard: {
-    marginTop: 10,
-    border: '1px solid rgba(0,0,0,0.08)',
-    borderRadius: 12,
+    marginTop: 16,
+    border: '1px solid var(--line)',
+    borderRadius: 24,
     overflow: 'hidden',
-    background: '#ffffff',
+    background: 'white',
+    boxShadow: 'var(--shadow-base)',
   },
   orchestrationStandaloneHeader: {
-    padding: '8px 10px',
-    borderBottom: '1px solid rgba(0,0,0,0.06)',
+    padding: '14px 20px',
+    borderBottom: '1px solid var(--line)',
     fontSize: 12,
-    fontWeight: 700,
-    color: '#0f766e',
-    background: '#f8fbff',
+    fontWeight: 600,
+    color: 'var(--muted)',
+    background: 'var(--bg-deep)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 10,
+    gap: 12,
   },
   resumeBtn: {
-    border: '1px solid rgba(180,83,9,0.18)',
-    background: 'rgba(245,158,11,0.12)',
-    color: '#b45309',
+    border: 'none',
+    background: 'var(--warm)',
+    color: 'white',
     borderRadius: 999,
-    padding: '5px 10px',
+    padding: '6px 16px',
     fontSize: 12,
-    fontWeight: 800,
+    fontWeight: 700,
     cursor: 'pointer',
     flexShrink: 0,
+    boxShadow: '0 4px 12px rgba(251, 188, 4, 0.3)',
   },
   orchestrationPanel: {
-    borderBottom: '1px solid rgba(0,0,0,0.06)',
-    background: '#f7fafc',
-    padding: '8px 10px',
+    background: 'white',
+    padding: '12px',
     display: 'grid',
-    gap: 6,
+    gap: 8,
   },
   orchestrationRow: {
     display: 'grid',
-    gridTemplateColumns: '58px 1fr auto',
-    gap: 8,
-    alignItems: 'start',
-    padding: '6px 8px',
-    borderRadius: 8,
-    background: 'white',
-    border: '1px solid rgba(15,23,42,0.06)',
+    gridTemplateColumns: '70px 1fr auto',
+    gap: 12,
+    alignItems: 'center',
+    padding: '10px 12px',
+    borderRadius: 14,
+    background: 'var(--bg-deep)',
+    border: '1px solid var(--line)',
   },
   orchestrationStatus: {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 20,
-    borderRadius: 999,
+    minHeight: 22,
+    borderRadius: 8,
     fontSize: 11,
     fontWeight: 700,
-    padding: '0 8px',
+    padding: '0 10px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
   },
   orchestrationBody: {
     minWidth: 0,
   },
   orchestrationTitle: {
-    fontSize: 12,
-    fontWeight: 700,
-    color: '#111827',
-    lineHeight: 1.35,
+    fontSize: 13,
+    fontWeight: 600,
+    color: 'var(--ink)',
   },
   orchestrationDetail: {
     marginTop: 2,
-    fontSize: 11,
-    color: '#4b5563',
-    lineHeight: 1.4,
-    wordBreak: 'break-word',
+    fontSize: 12,
+    color: 'var(--muted)',
+    lineHeight: 1.5,
   },
   orchestrationDuration: {
     fontSize: 11,
-    color: '#6b7280',
-    fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-    whiteSpace: 'nowrap',
-    marginTop: 2,
+    color: 'var(--muted)',
+    fontFamily: 'ui-monospace, monospace',
+    fontWeight: 500,
   },
   deckPreviewActions: {
     display: 'flex',
-    gap: 8,
+    gap: 10,
     flexShrink: 0,
   },
   deckActionLink: {
-    border: '1px solid rgba(26,115,232,0.16)',
-    background: 'rgba(26,115,232,0.08)',
-    color: 'var(--accent)',
+    border: '1px solid var(--line-strong)',
+    background: 'white',
+    color: 'var(--ink)',
     borderRadius: 999,
-    padding: '5px 10px',
-    fontSize: 12,
-    fontWeight: 700,
+    padding: '8px 16px',
+    fontSize: 13,
+    fontWeight: 600,
+    transition: 'all 0.2s',
+    boxShadow: 'var(--shadow-base)',
     textDecoration: 'none',
   },
   deckPreviewFrame: {
     display: 'block',
-    width: 540,
-    maxWidth: '100%',
+    width: '100%',
     aspectRatio: '16 / 9',
     border: 'none',
     background: '#111',
   },
   typing: {
-    display: 'inline-flex', gap: 4, alignItems: 'center',
+    display: 'inline-flex',
+    gap: 6,
+    alignItems: 'center',
   },
 
   /* ── Input ── */
   inputArea: {
     flexShrink: 0,
-    padding: '12px 20px 16px',
-    background: 'white',
-    borderTop: '1px solid rgba(0,0,0,0.06)',
+    padding: '16px 32px 32px',
+    background: 'rgba(255,255,255,0.7)',
+    backdropFilter: 'blur(20px)',
+    borderTop: '1px solid var(--line)',
+    zIndex: 15,
   },
   attachedFiles: {
-    display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 8,
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 12,
   },
   attachedPill: {
-    display: 'flex', alignItems: 'center', gap: 6,
-    background: 'var(--accent-soft)', borderRadius: 6,
-    padding: '4px 10px', fontSize: 12, color: 'var(--accent)',
-    border: '1px solid rgba(26,115,232,0.15)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    background: 'var(--accent-soft)',
+    borderRadius: 12,
+    padding: '6px 12px',
+    fontSize: 13,
+    color: 'var(--accent)',
+    border: '1px solid var(--accent-softer)',
+    fontWeight: 500,
   },
   removeFileBtn: {
-    background: 'none', border: 'none', cursor: 'pointer',
-    fontSize: 15, lineHeight: 1, color: 'var(--accent)', padding: '0 2px',
+    background: 'rgba(26,115,232,0.1)',
+    border: 'none',
+    cursor: 'pointer',
+    width: 20,
+    height: 20,
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 12,
+    color: 'var(--accent)',
+    transition: 'background 0.2s',
   },
   inputRow: {
-    display: 'flex', alignItems: 'flex-end', gap: 8,
-    background: '#f8f9fb',
-    border: '1px solid rgba(0,0,0,0.1)',
-    borderRadius: 16,
-    padding: '8px',
-    transition: 'border-color 0.2s, box-shadow 0.2s',
+    display: 'flex',
+    alignItems: 'flex-end',
+    gap: 12,
+    background: 'white',
+    border: '1px solid var(--line-strong)',
+    borderRadius: 24,
+    padding: '10px',
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+    boxShadow: 'var(--shadow-base)',
   },
   uploadBtn: {
-    background: 'none', border: 'none', cursor: 'pointer',
-    fontSize: 20, padding: '4px 6px', borderRadius: 8,
-    color: 'var(--muted)', flexShrink: 0, lineHeight: 1,
-    transition: 'color 0.15s',
+    background: 'var(--bg-deep)',
+    border: 'none',
+    cursor: 'pointer',
+    width: 44,
+    height: 44,
+    borderRadius: 18,
+    color: 'var(--muted)',
+    flexShrink: 0,
+    fontSize: 22,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.2s',
   },
   textarea: {
-    flex: 1, border: 'none', background: 'transparent',
-    resize: 'none', outline: 'none',
-    fontSize: 14, color: 'var(--ink)', lineHeight: 1.55,
-    padding: '4px 0', minHeight: 28, maxHeight: 200,
+    flex: 1,
+    border: 'none',
+    background: 'transparent',
+    resize: 'none',
+    outline: 'none',
+    fontSize: 16,
+    color: 'var(--ink)',
+    lineHeight: 1.6,
+    padding: '10px 4px',
+    minHeight: 44,
+    maxHeight: 240,
     fontFamily: 'inherit',
+    fontWeight: 400,
   },
   sendBtn: {
-    width: 36, height: 36, borderRadius: '50%',
-    background: 'var(--accent)', color: 'white',
-    border: 'none', cursor: 'pointer', flexShrink: 0,
-    fontSize: 18, fontWeight: 700, lineHeight: 1,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    transition: 'opacity 0.2s, transform 0.15s',
+    width: 44,
+    height: 44,
+    borderRadius: 18,
+    background: 'var(--accent)',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
+    flexShrink: 0,
+    fontSize: 14,
+    fontWeight: 700,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+    boxShadow: '0 8px 16px rgba(99, 102, 241, 0.2)',
   },
   inputHint: {
-    fontSize: 11, color: 'var(--muted)', opacity: 0.55,
-    marginTop: 8, textAlign: 'center',
+    fontSize: 12,
+    color: 'var(--muted)',
+    opacity: 0.7,
+    marginTop: 12,
+    textAlign: 'center',
+    fontWeight: 500,
   },
 
   /* ── Inline template selector ── */
   templateSection: {
     flexShrink: 0,
-    padding: '12px 20px 16px',
+    padding: '24px 32px 40px',
     background: 'white',
-    borderTop: '1px solid rgba(0,0,0,0.06)',
+    borderTop: '1px solid var(--line)',
   },
   templateSectionHeader: {
-    display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
-    marginBottom: 14,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 24,
   },
-  drawerTitle: { fontWeight: 700, fontSize: 20 },
-  drawerSubtitle: { fontSize: 13, color: 'var(--muted)', marginTop: 4 },
+  drawerTitle: {
+    fontWeight: 600,
+    fontSize: 22,
+    color: 'var(--ink)',
+    letterSpacing: '-0.02em',
+  },
+  drawerSubtitle: {
+    fontSize: 14,
+    color: 'var(--muted)',
+    marginTop: 4,
+    fontWeight: 500,
+  },
   tplGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-    gap: 12,
+    gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+    gap: 16,
   },
   tplCard: {
     position: 'relative',
-    display: 'flex', flexDirection: 'column', alignItems: 'flex-start',
-    padding: '14px 14px 12px',
-    border: '1px solid rgba(0,0,0,0.08)',
-    borderRadius: 14,
-    cursor: 'pointer', textAlign: 'left',
-    transition: 'box-shadow 0.2s, transform 0.2s, outline 0.15s',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    padding: '20px',
+    border: '1px solid var(--line)',
+    borderRadius: 20,
+    cursor: 'pointer',
+    textAlign: 'left',
+    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+    background: 'white',
+    boxShadow: 'var(--shadow-base)',
   },
-  tplEmoji: { fontSize: 26, marginBottom: 8 },
-  tplLabel: { fontWeight: 600, fontSize: 13, color: 'var(--ink)', marginBottom: 3 },
-  tplDesc: { fontSize: 11, color: 'var(--muted)', lineHeight: 1.4 },
+  tplEmoji: {
+    width: 44,
+    height: 44,
+    background: 'var(--bg-deep)',
+    borderRadius: 14,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+    marginBottom: 16,
+    transition: 'transform 0.3s',
+  },
+  tplLabel: {
+    fontWeight: 600,
+    fontSize: 15,
+    color: 'var(--ink)',
+    marginBottom: 6,
+  },
+  tplDesc: {
+    fontSize: 12,
+    color: 'var(--muted)',
+    lineHeight: 1.5,
+    fontWeight: 500,
+  },
   tplCheck: {
-    position: 'absolute', top: 8, right: 10,
-    width: 20, height: 20, borderRadius: '50%',
-    background: 'var(--accent)', color: 'white',
-    fontSize: 11, fontWeight: 700,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    width: 24,
+    height: 24,
+    borderRadius: '50%',
+    background: 'var(--accent)',
+    color: 'white',
+    fontSize: 10,
+    fontWeight: 800,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
   },
 };
