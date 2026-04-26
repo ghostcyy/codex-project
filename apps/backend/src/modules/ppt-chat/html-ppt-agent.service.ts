@@ -361,6 +361,7 @@ export class HtmlPptAgentService {
         if (!plan) {
           throw new ServiceUnavailableException("缺少内容规划，无法继续执行视觉方案。");
         }
+        const lockedTemplateId = this.selectedTemplateId(agentInput, skillPack);
         const prompt = buildPrompt("visual-plan", { input: agentInput, userContextText, skill: skillPack, plan, assetManifest: skillPack.manifest });
         let normalized: VisualPlan;
         let fallbackReason = "";
@@ -374,10 +375,18 @@ export class HtmlPptAgentService {
             countCall,
             { ...modelLogBase, stage: "04-visual-plan" }
           );
-          normalized = this.normalizeVisual(visuals, skillPack, agentInput);
+          normalized = this.normalizeVisual(visuals, skillPack, {
+            templateId: agentInput.templateId,
+            theme: agentInput.theme,
+            lockedTemplateId
+          });
         } catch (error) {
           fallbackReason = this.describeError(error);
-          normalized = this.fallbackVisualPlan(plan, skillPack, agentInput);
+          normalized = this.fallbackVisualPlan(plan, skillPack, {
+            templateId: agentInput.templateId,
+            theme: agentInput.theme,
+            lockedTemplateId
+          });
         }
         const value = this.enrichVisualPlan(normalized, plan, skillPack);
         const animationKinds = new Set(value.slideVisuals.map((item) => item.animation).filter(Boolean)).size;
@@ -685,6 +694,11 @@ export class HtmlPptAgentService {
     if (!state.plan) return "03-content-plan";
     if (stage === "04-visual-plan") return "04-visual-plan";
     if (!state.visual) return "04-visual-plan";
+    if (stage === "08-qa" || stage === "completed") {
+      if (!state.deckRender) return "07-publish";
+      if (!existsSync(state.deckRender.outputDir)) return "07-publish";
+      return stage === "completed" ? "completed" : "08-qa";
+    }
     if (stage === "05-generate-index") return "05-generate-index";
     if (!state.indexResult) return "05-generate-index";
     if (stage === "06-generate-style") return "06-generate-style";
@@ -1542,6 +1556,7 @@ export class HtmlPptAgentService {
     let localRepairCount = 0;
     let qa: BatchQaResult;
     let modelRepairCalls = 0;
+    const resumeSlideIssues = resumeSnapshot?.slideIssues?.length ? resumeSnapshot.slideIssues : [];
     if (resumeSnapshot && this.isCompatibleBatchSnapshot(resumeSnapshot, batch) && resumeSnapshot.sections.trim()) {
       const resumedSanitized = this.sanitizeSectionBatchMarkup(resumeSnapshot.sections, batch, sectionClassProtocol.allowedClasses);
       sections = resumedSanitized.html;
@@ -1560,6 +1575,32 @@ export class HtmlPptAgentService {
     }
 
     if (qa.issues.length > 0) {
+      if (qa.hardIssues.length > 0 && resumeSlideIssues.length > 0) {
+        const targeted = await this.repairIssueSlidesInBatch({
+          activeConfig,
+          agentInput,
+          plan,
+          visual,
+          research,
+          skill,
+          referenceFullDeck,
+          batch,
+          batchVisuals,
+          sections,
+          issueGroups: this.mergeSlideIssueGroups(batch, resumeSlideIssues, this.groupIssuesBySlide(qa.hardIssues, batch)),
+          sectionClassProtocol,
+          deckStyle,
+          onCall,
+          reserveRepairCall,
+          priorFailures,
+          logContextBase
+        });
+        sections = targeted.sections;
+        localRepairCount += targeted.localRepairCount;
+        modelRepairCalls += targeted.modelRepairCalls;
+        qa = targeted.qa;
+      }
+
       if (qa.hardIssues.length === 0) {
         const truncated = this.truncateBatchSectionsToDensityBudget(sections, batch, skill, plan, deckStyle);
         sections = truncated.sections;
@@ -1601,45 +1642,30 @@ export class HtmlPptAgentService {
         );
 
         if (repairedQa.hardIssues.length > 0) {
-          const repairedSections = this.extractSectionList(repaired);
           issuesBySlide = this.groupIssuesBySlide(repairedQa.hardIssues, batch);
-
-          for (const issueGroup of issuesBySlide) {
-            const slide = batch.find((item) => item.index === issueGroup.slideIndex);
-            if (!slide) continue;
-
-            modelRepairCalls += 1;
-            const singleRaw = await this.repairSingleSlideFromSkeleton({
-              activeConfig,
-              agentInput,
-              plan,
-              visual,
-              research,
-              skill,
-              referenceFullDeck,
-              slide,
-              slideVisual: batchVisuals.find((item) => item.index === slide.index),
-              previousSection: repairedSections[issueGroup.batchOffset] ?? "",
-              issues: issueGroup.issues,
-              allowedClassCatalog: sectionClassProtocol.promptCatalog,
-              onCall,
-              reserveRepairCall,
-              priorFailures,
-              logContextBase
-            });
-            const sanitizedSingle = this.sanitizeSectionBatchMarkup(this.extractSlideSections(singleRaw), [slide], sectionClassProtocol.allowedClasses);
-            localRepairCount += sanitizedSingle.localRepairCount;
-            const singleSections = this.extractSectionList(sanitizedSingle.html);
-            const repairedSection = singleSections[0];
-            if (singleSections.length !== 1 || !repairedSection) continue;
-            const singleQa = this.validateSectionBatch(repairedSection, [slide], skill, plan, deckStyle);
-            if (singleQa.hardIssues.length === 0) {
-              repairedSections[issueGroup.batchOffset] = repairedSection;
-            }
-          }
-
-          repaired = repairedSections.join("\n\n");
-          repairedQa = this.validateSectionBatch(repaired, batch, skill, plan, deckStyle);
+          const targeted = await this.repairIssueSlidesInBatch({
+            activeConfig,
+            agentInput,
+            plan,
+            visual,
+            research,
+            skill,
+            referenceFullDeck,
+            batch,
+            batchVisuals,
+            sections: repaired,
+            issueGroups: issuesBySlide,
+            sectionClassProtocol,
+            deckStyle,
+            onCall,
+            reserveRepairCall,
+            priorFailures,
+            logContextBase
+          });
+          repaired = targeted.sections;
+          repairedQa = targeted.qa;
+          localRepairCount += targeted.localRepairCount;
+          modelRepairCalls += targeted.modelRepairCalls;
         }
 
         if (repairedQa.hardIssues.length === 0 && repairedQa.softIssues.length > 0) {
@@ -1677,6 +1703,124 @@ export class HtmlPptAgentService {
       densityBudget: batch.reduce((sum, slide) => sum + this.slideDensityBudget(slide, skill), 0),
       modelRepairCalls,
       localRepairCount
+    };
+  }
+
+  private mergeSlideIssueGroups(
+    batch: AgentPlan["slides"],
+    primary: HtmlPptAgentFailedSlideIssue[],
+    secondary: HtmlPptAgentFailedSlideIssue[]
+  ): HtmlPptAgentFailedSlideIssue[] {
+    const merged = new Map<number, HtmlPptAgentFailedSlideIssue>();
+    for (const issueGroup of [...primary, ...secondary]) {
+      const batchOffset =
+        Number.isInteger(issueGroup.batchOffset) && issueGroup.batchOffset >= 0
+          ? issueGroup.batchOffset
+          : batch.findIndex((slide) => slide.index === issueGroup.slideIndex);
+      if (batchOffset < 0) continue;
+      const existing = merged.get(issueGroup.slideIndex);
+      if (!existing) {
+        merged.set(issueGroup.slideIndex, {
+          slideIndex: issueGroup.slideIndex,
+          batchOffset,
+          issues: Array.from(new Set(issueGroup.issues))
+        });
+        continue;
+      }
+      existing.batchOffset = batchOffset;
+      existing.issues = Array.from(new Set([...existing.issues, ...issueGroup.issues]));
+    }
+    return Array.from(merged.values()).sort((a, b) => a.batchOffset - b.batchOffset);
+  }
+
+  private async repairIssueSlidesInBatch(input: {
+    activeConfig: ActiveModelConfig;
+    agentInput: {
+      projectName: string;
+      context: { summaryText: string; recentMessages: PptMessageDto[] };
+      pendingUserMessage: PptMessageDto;
+      templateId: string;
+      theme: string;
+    };
+    plan: AgentPlan;
+    visual: VisualPlan;
+    research: ResearchPack;
+    skill: SkillPack;
+    referenceFullDeck?: ReferenceFullDeckSnippet;
+    batch: AgentPlan["slides"];
+    batchVisuals: VisualPlan["slideVisuals"];
+    sections: string;
+    issueGroups: HtmlPptAgentFailedSlideIssue[];
+    sectionClassProtocol: { allowedClasses: Set<string>; promptCatalog: string };
+    deckStyle: DeckStyleProfile;
+    onCall: () => void;
+    reserveRepairCall: (label: string, issues: string[]) => void;
+    priorFailures?: string[];
+    logContextBase?: ModelLogContext;
+  }) {
+    const {
+      activeConfig,
+      agentInput,
+      plan,
+      visual,
+      research,
+      skill,
+      referenceFullDeck,
+      batch,
+      batchVisuals,
+      sections,
+      issueGroups,
+      sectionClassProtocol,
+      deckStyle,
+      onCall,
+      reserveRepairCall,
+      priorFailures = [],
+      logContextBase
+    } = input;
+    const repairedSections = this.extractSectionList(sections);
+    let localRepairCount = 0;
+    let modelRepairCalls = 0;
+
+    for (const issueGroup of issueGroups) {
+      const slide = batch.find((item) => item.index === issueGroup.slideIndex);
+      if (!slide) continue;
+
+      modelRepairCalls += 1;
+      const singleRaw = await this.repairSingleSlideFromSkeleton({
+        activeConfig,
+        agentInput,
+        plan,
+        visual,
+        research,
+        skill,
+        referenceFullDeck,
+        slide,
+        slideVisual: batchVisuals.find((item) => item.index === slide.index),
+        previousSection: repairedSections[issueGroup.batchOffset] ?? "",
+        issues: issueGroup.issues,
+        allowedClassCatalog: sectionClassProtocol.promptCatalog,
+        onCall,
+        reserveRepairCall,
+        priorFailures,
+        logContextBase
+      });
+      const sanitizedSingle = this.sanitizeSectionBatchMarkup(this.extractSlideSections(singleRaw), [slide], sectionClassProtocol.allowedClasses);
+      localRepairCount += sanitizedSingle.localRepairCount;
+      const singleSections = this.extractSectionList(sanitizedSingle.html);
+      const repairedSection = singleSections[0];
+      if (singleSections.length !== 1 || !repairedSection) continue;
+      const singleQa = this.validateSectionBatch(repairedSection, [slide], skill, plan, deckStyle);
+      if (singleQa.hardIssues.length === 0) {
+        repairedSections[issueGroup.batchOffset] = repairedSection;
+      }
+    }
+
+    const nextSections = repairedSections.join("\n\n");
+    return {
+      sections: nextSections,
+      qa: this.validateSectionBatch(nextSections, batch, skill, plan, deckStyle),
+      localRepairCount,
+      modelRepairCalls
     };
   }
 
@@ -3442,7 +3586,7 @@ export class HtmlPptAgentService {
     );
   }
 
-  private sanitizeGeneratedCss(css: string, allowedHtmlClasses?: Set<string>) {
+  private sanitizeGeneratedCss(css: string, allowedHtmlClasses?: Set<string>, protectedDonorClasses?: Set<string>) {
     const withoutUnsupportedAtRules = this.stripUnsupportedCssAtRules(css);
     return withoutUnsupportedAtRules.replace(/([^{}]+)\{([^{}]*)\}/g, (match, selector: string, body: string) => {
       if (this.selectorListTargetsProgressBar(selector)) return "";
@@ -3451,8 +3595,15 @@ export class HtmlPptAgentService {
       if (allowedHtmlClasses && this.selectorListTargetsUnknownHtmlClasses(selector, allowedHtmlClasses)) return "";
 
       let sanitizedBody = body;
+      sanitizedBody = this.stripThemeOwnedTokenDeclarations(sanitizedBody);
+      if (this.selectorListTargetsTemplateRoot(selector)) {
+        sanitizedBody = this.stripTemplateRootThemeOverrides(sanitizedBody);
+      }
       if (this.selectorListTargetsSlideSelf(selector)) {
         sanitizedBody = this.stripDisallowedSlideDeclarations(sanitizedBody);
+      }
+      if (protectedDonorClasses?.size && this.selectorListTargetsProtectedDonorClasses(selector, protectedDonorClasses)) {
+        sanitizedBody = this.stripProtectedDonorStructureDeclarations(sanitizedBody);
       }
 
       const compactBody = sanitizedBody
@@ -3532,9 +3683,151 @@ export class HtmlPptAgentService {
   }
 
   private stripDisallowedSlideDeclarations(body: string) {
-    return body
-      .replace(/\bposition\s*:\s*[^;]+;?/gi, "/* position removed by CSS sanitizer */")
-      .replace(/\boverflow(?:-x|-y)?\s*:\s*[^;]+;?/gi, "/* overflow removed by CSS sanitizer */");
+    return this.stripCssDeclarations(body, new Set(["position", "overflow", "overflow-x", "overflow-y"]));
+  }
+
+  private stripProtectedDonorStructureDeclarations(body: string) {
+    return this.stripCssDeclarations(body, new Set([
+      "position",
+      "display",
+      "width",
+      "height",
+      "min-width",
+      "min-height",
+      "max-width",
+      "max-height",
+      "top",
+      "right",
+      "bottom",
+      "left",
+      "inset",
+      "inset-block",
+      "inset-inline",
+      "inset-block-start",
+      "inset-block-end",
+      "inset-inline-start",
+      "inset-inline-end",
+      "flex",
+      "flex-basis",
+      "flex-direction",
+      "flex-grow",
+      "flex-shrink",
+      "flex-wrap",
+      "grid-template-columns",
+      "grid-template-rows",
+      "grid-auto-flow",
+      "grid-auto-columns",
+      "grid-auto-rows",
+      "justify-content",
+      "align-items",
+      "align-content",
+      "place-items",
+      "place-content",
+      "padding",
+      "padding-top",
+      "padding-right",
+      "padding-bottom",
+      "padding-left",
+      "padding-inline",
+      "padding-inline-start",
+      "padding-inline-end",
+      "padding-block",
+      "padding-block-start",
+      "padding-block-end",
+      "margin",
+      "margin-top",
+      "margin-right",
+      "margin-bottom",
+      "margin-left",
+      "margin-inline",
+      "margin-inline-start",
+      "margin-inline-end",
+      "margin-block",
+      "margin-block-start",
+      "margin-block-end",
+      "gap",
+      "row-gap",
+      "column-gap"
+    ]));
+  }
+
+  private stripThemeOwnedTokenDeclarations(body: string) {
+    return this.stripCssDeclarations(body, new Set(this.themeOwnedCssVars().map((item) => item.toLowerCase())));
+  }
+
+  private stripTemplateRootThemeOverrides(body: string) {
+    return this.stripCssDeclarations(
+      this.stripThemeOwnedTokenDeclarations(body),
+      new Set(["font-family"])
+    );
+  }
+
+  private stripCssDeclarations(body: string, blockedProperties: Set<string>) {
+    const declarations = this.splitCssDeclarations(body);
+    const kept = declarations.filter((declaration) => {
+      const property = this.extractCssDeclarationProperty(declaration);
+      return !property || !blockedProperties.has(property);
+    });
+    return kept
+      .join("; ")
+      .replace(/\s+/g, " ")
+      .replace(/^\s+|\s+$/g, "")
+      .replace(/^;+|;+$|\{\s*\}/g, "");
+  }
+
+  private splitCssDeclarations(body: string) {
+    const declarations: string[] = [];
+    let current = "";
+    let depth = 0;
+    let quote: "'" | "\"" | "" = "";
+
+    for (let index = 0; index < body.length; index += 1) {
+      const char = body[index];
+      const previous = index > 0 ? body[index - 1] : "";
+
+      if (quote) {
+        current += char;
+        if (char === quote && previous !== "\\") {
+          quote = "";
+        }
+        continue;
+      }
+
+      if (char === "'" || char === "\"") {
+        quote = char as "'" | "\"";
+        current += char;
+        continue;
+      }
+
+      if (char === "(") {
+        depth += 1;
+        current += char;
+        continue;
+      }
+
+      if (char === ")") {
+        depth = Math.max(0, depth - 1);
+        current += char;
+        continue;
+      }
+
+      if (char === ";" && depth === 0) {
+        if (current.trim()) declarations.push(current.trim());
+        current = "";
+        continue;
+      }
+
+      current += char;
+    }
+
+    if (current.trim()) declarations.push(current.trim());
+    return declarations;
+  }
+
+  private extractCssDeclarationProperty(declaration: string) {
+    const colonIndex = declaration.indexOf(":");
+    if (colonIndex < 0) return "";
+    return declaration.slice(0, colonIndex).trim().toLowerCase();
   }
 
   private findCssRules(css: string) {
@@ -3582,6 +3875,27 @@ export class HtmlPptAgentService {
       .some((selector) =>
         this.extractClassTokensFromSelector(selector).some((token) => !allowedHtmlClasses.has(token) && !runtimeClasses.has(token))
       );
+  }
+
+  private selectorListTargetsProtectedDonorClasses(selectorList: string, protectedDonorClasses: Set<string>) {
+    return selectorList
+      .split(",")
+      .map((selector) => selector.trim())
+      .some((selector) =>
+        this.extractClassTokensFromSelector(selector).some((token) => protectedDonorClasses.has(token))
+      );
+  }
+
+  private selectorListTargetsTemplateRoot(selectorList: string) {
+    return selectorList
+      .split(",")
+      .map((selector) => selector.trim())
+      .some((selector) => this.selectorTargetsTemplateRoot(selector));
+  }
+
+  private selectorTargetsTemplateRoot(selector: string) {
+    const normalized = selector.replace(/\/\*[\s\S]*?\*\//g, "").trim();
+    return /^body\.tpl-[\w-]+(?:::[\w-]+)?$/i.test(normalized) || /^\.tpl-[\w-]+(?:::[\w-]+)?$/i.test(normalized);
   }
 
   private selectorTargetsSlideSelf(selector: string) {
@@ -3665,12 +3979,12 @@ export class HtmlPptAgentService {
         stage: "06-generate-style"
       });
       if (!value.includes("{") || !value.includes("}")) throw new ServiceUnavailableException("style.css 内容不完整。");
-      const sanitized = this.sanitizeGeneratedCss(value, allowedHtmlClasses);
-      const stabilized = this.appendReferenceSemanticBaseline(sanitized, referenceSemanticBaseline);
+      const sanitized = this.sanitizeGeneratedCss(value, allowedHtmlClasses, referenceSemanticBaseline.protectedClassTokens);
+      const stabilized = this.appendReferenceSemanticBaseline(sanitized, referenceSemanticBaseline.css);
       const guarded = this.appendRuntimeCssGuard(stabilized);
       return { value: guarded, detail: `style.css 生成完成：${guarded.length} 字符。` };
     } catch (error) {
-      const stabilized = this.appendReferenceSemanticBaseline(this.fallbackStyleCss(visual), referenceSemanticBaseline);
+      const stabilized = this.appendReferenceSemanticBaseline(this.fallbackStyleCss(visual), referenceSemanticBaseline.css);
       const guarded = this.appendRuntimeCssGuard(stabilized);
       return {
         value: guarded,
@@ -3686,24 +4000,35 @@ export class HtmlPptAgentService {
 
   private async buildReferenceSemanticBaselineCss(skill: SkillPack, visual: VisualPlan, htmlClasses: Set<string>) {
     const referenceFullDeckName = this.pickReferenceFullDeckName(visual, skill);
-    if (!referenceFullDeckName) return "";
+    if (!referenceFullDeckName) return { css: "", protectedClassTokens: new Set<string>() };
     const referenceCss = await readFile(join(skill.root, "templates", "full-decks", referenceFullDeckName, "style.css"), "utf8").catch(() => "");
-    if (!referenceCss.trim()) return "";
+    if (!referenceCss.trim()) return { css: "", protectedClassTokens: new Set<string>() };
 
     const rules = this.findCssRules(referenceCss);
     const selectedRules: string[] = [];
+    const protectedClassTokens = new Set<string>();
     for (const { selector, body } of rules) {
       const selectorClasses = this.extractClassTokensFromSelector(selector);
       if (selectorClasses.length === 0) continue;
       if (selectorClasses.some((token) => this.runtimeClassTokens().has(token))) continue;
       if (/\.slide\b|\.deck\b|\.progress-bar\b/i.test(selector)) continue;
       if (selectorClasses.every((token) => !htmlClasses.has(token))) continue;
-      const compactBody = body.replace(/\s+/g, " ").trim();
+      selectorClasses
+        .filter((token) => htmlClasses.has(token) && token !== visual.deckClass)
+        .forEach((token) => protectedClassTokens.add(token));
+      const normalizedSelector = this.normalizeReferenceBaselineSelector(selector, visual.deckClass);
+      let compactBody = this.stripThemeOwnedTokenDeclarations(body.replace(/\s+/g, " ").trim());
+      if (this.selectorListTargetsTemplateRoot(normalizedSelector)) {
+        compactBody = this.stripTemplateRootThemeOverrides(compactBody);
+      }
       if (!compactBody) continue;
-      selectedRules.push(`${this.normalizeReferenceBaselineSelector(selector, visual.deckClass)}{${compactBody}}`);
+      selectedRules.push(`${normalizedSelector}{${compactBody}}`);
     }
 
-    return Array.from(new Set(selectedRules)).join("\n");
+    return {
+      css: Array.from(new Set(selectedRules)).join("\n"),
+      protectedClassTokens
+    };
   }
 
   private normalizeReferenceBaselineSelector(selector: string, deckClass: string) {
@@ -3829,6 +4154,36 @@ export class HtmlPptAgentService {
       `body.${deckClass} canvas { width: 100% !important; height: 100% !important; }`,
       `body.${deckClass} .notes { display: none; }`
     ].join("\n");
+  }
+
+  private themeOwnedCssVars() {
+    return [
+      "--bg",
+      "--bg-soft",
+      "--surface",
+      "--surface-2",
+      "--border",
+      "--border-strong",
+      "--text-1",
+      "--text-2",
+      "--text-3",
+      "--accent",
+      "--accent-2",
+      "--accent-3",
+      "--good",
+      "--warn",
+      "--bad",
+      "--grad",
+      "--grad-soft",
+      "--radius",
+      "--radius-sm",
+      "--radius-lg",
+      "--shadow",
+      "--shadow-lg",
+      "--font-sans",
+      "--font-serif",
+      "--font-display"
+    ];
   }
 
   private escapeHtml(input: string) {
@@ -4178,12 +4533,26 @@ export class HtmlPptAgentService {
     return next.map((slide, index) => ({ ...slide, index: index + 1 }));
   }
 
-  private normalizeVisual(input: unknown, skill: SkillPack, fallback: { templateId: string; theme: string }): VisualPlan {
+  private normalizeVisual(
+    input: unknown,
+    skill: SkillPack,
+    fallback: { templateId: string; theme: string; lockedTemplateId?: string }
+  ): VisualPlan {
     const c = input && typeof input === "object" ? input as Record<string, unknown> : {};
     const primaryTheme = skill.themeNames.includes(this.str(c.primaryTheme, "")) ? this.str(c.primaryTheme, "") : (skill.themeNames.includes(fallback.theme) ? fallback.theme : skill.themeNames[0] ?? "gruvbox-dark");
-    const referenceTemplates = this.strings(c.referenceTemplates).filter((item) => skill.templateNames.includes(item)).slice(0, 4);
+    const lockedTemplateId = fallback.lockedTemplateId && skill.templateNames.includes(fallback.lockedTemplateId)
+      ? fallback.lockedTemplateId
+      : undefined;
+    const modelReferenceTemplates = this.strings(c.referenceTemplates).filter((item) => skill.templateNames.includes(item)).slice(0, 4);
+    const referenceTemplates = lockedTemplateId ? [lockedTemplateId] : modelReferenceTemplates;
     const rawDeckClass = this.str(c.deckClass, "tpl-html-ppt-agent").replace(/[^a-z0-9_-]/gi, "-");
-    const deckClass = this.resolveDeckClass(rawDeckClass, referenceTemplates, primaryTheme, skill, fallback.templateId);
+    const deckClass = this.resolveDeckClass(
+      lockedTemplateId ? "" : rawDeckClass,
+      referenceTemplates,
+      primaryTheme,
+      skill,
+      lockedTemplateId ?? fallback.templateId
+    );
     return {
       primaryTheme,
       backupThemes: this.strings(c.backupThemes).filter((item) => skill.themeNames.includes(item) && item !== primaryTheme).slice(0, 8),
@@ -4197,7 +4566,11 @@ export class HtmlPptAgentService {
     };
   }
 
-  private fallbackVisualPlan(plan: AgentPlan, skill: SkillPack, fallback: { templateId: string; theme: string }): VisualPlan {
+  private fallbackVisualPlan(
+    plan: AgentPlan,
+    skill: SkillPack,
+    fallback: { templateId: string; theme: string; lockedTemplateId?: string }
+  ): VisualPlan {
     const audienceSignal = `${plan.audience} ${plan.tone ?? ""} ${plan.format ?? ""}`.toLowerCase();
     const preferredTheme =
       skill.themeNames.find((name) => name === fallback.theme)
@@ -4206,7 +4579,9 @@ export class HtmlPptAgentService {
       ?? skill.themeNames[0]
       ?? "editorial-serif";
     const backupThemes = skill.themeNames.filter((name) => name !== preferredTheme).slice(0, 3);
-    const referenceTemplates = skill.templateNames.includes(fallback.templateId)
+    const referenceTemplates = fallback.lockedTemplateId && skill.templateNames.includes(fallback.lockedTemplateId)
+      ? [fallback.lockedTemplateId]
+      : skill.templateNames.includes(fallback.templateId)
       ? [fallback.templateId]
       : skill.referenceSources.map((item) => item.name).filter((name) => skill.templateNames.includes(name)).slice(0, 2);
     const rawVisual = {
@@ -4221,6 +4596,11 @@ export class HtmlPptAgentService {
       }))
     };
     return this.normalizeVisual(rawVisual, skill, fallback);
+  }
+
+  private selectedTemplateId(input: { pendingUserMessage: PptMessageDto; templateId: string }, skill: SkillPack) {
+    const selected = this.str(input.pendingUserMessage.template?.id, "");
+    return selected && skill.templateNames.includes(selected) ? selected : undefined;
   }
 
   private resolveDeckClass(

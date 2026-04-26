@@ -355,6 +355,14 @@ export function buildPrompt(stage: PromptStage, ctx: ResearchPromptContext | Con
     case "visual-plan":
       {
       const visualCtx = ctx as VisualPlanPromptContext;
+      const lockedTemplateId =
+        visualCtx.skill.templateNames.includes(visualCtx.input.pendingUserMessage.template?.id ?? "")
+          ? visualCtx.input.pendingUserMessage.template?.id ?? ""
+          : "";
+      const lockedDeckClass =
+        lockedTemplateId
+          ? visualCtx.assetManifest?.fullDecks?.find((deck) => deck.id === lockedTemplateId)?.deckClass ?? `tpl-${lockedTemplateId}`
+          : "";
       return {
         system: "You are the visual director for an HTML PPT generator. Return one strict JSON object only.",
         user: [
@@ -367,6 +375,9 @@ export function buildPrompt(stage: PromptStage, ctx: ResearchPromptContext | Con
           `Theme catalog:\n${themeCatalogText(visualCtx.skill, visualCtx.assetManifest)}`,
           `Full deck catalog:\n${fullDeckCatalogText(visualCtx.skill, visualCtx.assetManifest)}`,
           `Reference snippets:\n${compactReferenceText(visualCtx.skill)}`,
+          lockedTemplateId
+            ? `Locked full-deck template:\nThe user explicitly selected template "${lockedTemplateId}". You MUST keep referenceTemplates as ["${lockedTemplateId}"] and MUST use deckClass "${lockedDeckClass}". Do not switch to another full-deck template in this stage.`
+            : "",
           [
             "Theme selection process (apply in order):",
             "1. Find the audience+tone row in the shortlist table above. The primaryTheme MUST come from that row unless no row fits, in which case explain in visualLanguage and pick the closest neighbour row.",
@@ -375,8 +386,12 @@ export function buildPrompt(stage: PromptStage, ctx: ResearchPromptContext | Con
             "4. Do not default to tokyo-night, aurora, dracula, or cyberpunk-neon when audience/tone do not call for cyber, nightlife, sci-fi, or high-energy futuristic aesthetics.",
             "5. Avoid repeating the user's last theme habitually; treat each topic on its own merits.",
             "Reference template selection:",
-            "6. referenceTemplates must list 1-3 full-deck names from the catalog whose deckClass and themesReferenced overlap with the chosen primaryTheme.",
-            "7. Place the strongest match first; the section author downstream uses the first item as the visual-DNA donor.",
+            lockedTemplateId
+              ? `6. Because the user explicitly selected "${lockedTemplateId}", referenceTemplates must contain exactly that one full-deck name and no others.`
+              : "6. referenceTemplates must list 1-3 full-deck names from the catalog whose deckClass and themesReferenced overlap with the chosen primaryTheme.",
+            lockedTemplateId
+              ? `7. deckClass must be "${lockedDeckClass}". The section author downstream will use "${lockedTemplateId}" as the visual-DNA donor.`
+              : "7. Place the strongest match first; the section author downstream uses the first item as the visual-DNA donor.",
             "Slide-level variety:",
             "8. Pick the animation for each slideVisual from the layout-animation hints above for that slide's layoutId. Use one accent animation per slide; everything else stays calm.",
             "9. For 10+ slides, ensure at least 4 distinct animation presets across the deck so the rhythm does not feel monotone.",
@@ -474,21 +489,27 @@ export function buildPrompt(stage: PromptStage, ctx: ResearchPromptContext | Con
             "- Decorative SVG / pseudo-element overlays scoped under body.<deckClass> (corner badges, frames, watermarks).",
             "- @keyframes definitions consumed by your own decorative pseudo-elements (not by .slide itself).",
             "",
+            "THEME OWNERSHIP:",
+            "- `primaryTheme` is the single source of truth for deck-level tokens such as --bg, --surface, --surface-2, --border, --text-1, --text-2, --accent, --accent-2, --accent-3, --grad, --shadow, --radius, and --font-sans.",
+            "- The template may shape composition, typography rhythm, card decoration, and helper-class styling, but it must consume the active theme tokens instead of redefining them.",
+            "",
             "FORBIDDEN — these break the runtime contract; the sanitizer will strip them:",
             "- bare `.slide` rules, `.slide > *` top-level layout, `.deck` size or position rewrites.",
             "- `position` / `overflow` declarations on .slide, .deck, or .progress-bar.",
             "- `.progress-bar` rules of any kind (runtime owns this).",
             "- `@media`, `@supports`, `@container` queries.",
             "- raw hex colour palettes invented from scratch; always reference the selected theme palette tokens or var(--bg), var(--surface), var(--accent), var(--text-1), var(--text-2), var(--border).",
+            "- defining or overriding deck-level theme tokens (`--bg`, `--surface`, `--text-1`, `--accent`, `--grad`, `--shadow`, `--radius`, `--font-sans`, etc.) in `body.<deckClass>`, `.tpl-*`, or component rules.",
             "- column-count rewrites or vertical scrolling layouts; every slide must fit a 16:9 single screen.",
             "- inventing new semantic selectors whose class tokens do not already exist in the index.html class catalog above.",
             "- reinterpreting donor template classes into a different semantic role, for example turning a text-gradient class into a background box class.",
-            "- reinterpreting donor layout helper classes such as `xw-grid-2`, `xw-grid-3`, `xw-topbar`, or `xw-card`; if the donor defines a two-column helper, keep it two columns instead of adding divider rails or extra structural columns.",
+            "- reinterpreting donor layout helper classes such as `xw-grid-2`, `xw-grid-3`, `xw-topbar`, `xp-topbar`, `xp-page`, `xp-grid-2`, `xp-grid-3`, or `xw-card`; if the donor defines a two-column helper, keep it two columns instead of adding divider rails or extra structural columns.",
             "",
             "STRUCTURE:",
             "- Scope every selector under `body.<deckClass>` so the rules do not leak into other decks.",
             "- Only target class names that already exist in index.html. You may combine them, nest them, or add pseudo-elements, but do not mint new class tokens in CSS.",
             "- Keep page titles and section titles visually coherent. Do not rely on partial word styling inside one heading sentence.",
+            "- Let the chosen theme own the palette; template helpers should style components by consuming theme vars, not by acting like a second theme layer.",
             "- Inherit visual DNA from the reference template excerpts above: match its kicker style, card border weight, accent placement, typography scale, decorative motifs.",
             "- Treat the CSS as the deck's visual identity layer; aim for a deck that is recognisably 'this template' at a glance, not a generic look."
           ].join("\n")
