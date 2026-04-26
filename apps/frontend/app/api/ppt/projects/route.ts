@@ -30,7 +30,7 @@ async function withSessionHeaders(init: RequestInit = {}) {
 export async function GET() {
   const init = await withSessionHeaders();
   if (!init) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "请先登录后再访问 HTML-PPT 项目。" }, { status: 401 });
   }
 
   const response = await fetch(`${API_BASE_URL}/ppt/projects`, init).catch(() => null);
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
   });
 
   if (!init) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ message: "请先登录后再访问 HTML-PPT 项目。" }, { status: 401 });
   }
 
   const response = await fetch(`${API_BASE_URL}/ppt/projects`, init).catch(() => null);

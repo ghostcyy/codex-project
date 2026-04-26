@@ -1,17 +1,18 @@
 import { redirect } from "next/navigation";
 import { LoginForm } from "../../components/auth/login-form";
 import { getCurrentUser } from "../../lib/server-auth";
+import { resolveSignedInPath } from "../../lib/auth";
 
 export default async function LoginPage({
   searchParams
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; registered?: string }>;
 }) {
-  const user = await getCurrentUser();
   const resolvedSearchParams = await searchParams;
+  const user = await getCurrentUser();
 
   if (user) {
-    redirect("/admin");
+    redirect(resolveSignedInPath(user, resolvedSearchParams.next));
   }
 
   return (
@@ -32,7 +33,12 @@ export default async function LoginPage({
 
         <div className="surface-card reveal-up rounded-[38px] px-6 py-8 md:px-8">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--muted)]">Sign In</p>
-          <LoginForm nextPath={resolvedSearchParams.next ?? "/admin"} />
+          {resolvedSearchParams.registered === "1" ? (
+            <p className="mt-5 rounded-[18px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+              注册成功，请使用新账号登录。
+            </p>
+          ) : null}
+          <LoginForm nextPath={resolvedSearchParams.next} />
         </div>
       </section>
     </div>

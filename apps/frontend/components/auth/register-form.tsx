@@ -1,48 +1,59 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 export function RegisterForm() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
     setSuccess(null);
-    const formData = new FormData(event.currentTarget);
+    setIsSubmitting(true);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const password = String(formData.get("password") ?? "");
+    const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+    if (password !== confirmPassword) {
+      setError("两次输入的密码不一致，请重新检查。");
+      setIsSubmitting(false);
+      return;
+    }
 
     const payload = {
       username: String(formData.get("username") ?? ""),
       displayName: String(formData.get("displayName") ?? ""),
       email: String(formData.get("email") ?? ""),
-      password: String(formData.get("password") ?? "")
+      password
     };
 
-    const response = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    });
-    const result = (await response.json().catch(() => null)) as { message?: string } | null;
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      const result = (await response.json().catch(() => null)) as { message?: string } | null;
 
-    if (!response.ok) {
-      setError(result?.message ?? "注册失败，请检查输入内容。");
-      return;
+      if (!response.ok) {
+        setError(result?.message ?? "注册失败，请检查输入内容。");
+        return;
+      }
+
+      form.reset();
+      setSuccess("注册成功。新账号默认是普通用户，不会自动进入后台，请前往登录页手动登录。");
+    } catch {
+      setError("注册服务暂时不可用，请稍后重试。");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setSuccess("注册成功，正在跳转到登录页。");
-    startTransition(() => {
-      router.push("/login");
-      router.refresh();
-    });
   }
 
   return (
@@ -64,7 +75,26 @@ export function RegisterForm() {
 
       <label className="block">
         <span className="mb-2 block text-sm font-medium text-[var(--ink)]">密码</span>
-        <input name="password" type="password" className="text-input" autoComplete="new-password" required />
+        <input
+          name="password"
+          type="password"
+          className="text-input"
+          autoComplete="new-password"
+          minLength={8}
+          required
+        />
+      </label>
+
+      <label className="block">
+        <span className="mb-2 block text-sm font-medium text-[var(--ink)]">确认密码</span>
+        <input
+          name="confirmPassword"
+          type="password"
+          className="text-input"
+          autoComplete="new-password"
+          minLength={8}
+          required
+        />
       </label>
 
       {error ? (
@@ -73,7 +103,7 @@ export function RegisterForm() {
       {success ? (
         <p className="rounded-[18px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
           {success}{" "}
-          <Link href="/login" className="font-semibold underline underline-offset-4">
+          <Link href="/login?registered=1" className="font-semibold underline underline-offset-4">
             前往登录
           </Link>
         </p>
@@ -82,9 +112,9 @@ export function RegisterForm() {
       <button
         type="submit"
         className="primary-button w-full py-3.5 text-sm disabled:translate-y-0 disabled:opacity-70"
-        disabled={isPending}
+        disabled={isSubmitting}
       >
-        {isPending ? "提交中..." : "创建账号"}
+        {isSubmitting ? "提交中..." : "创建账号"}
       </button>
     </form>
   );

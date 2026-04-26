@@ -2,7 +2,9 @@ import { createReadStream, existsSync } from "node:fs";
 import { access, cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { basename, extname, join, normalize, relative, resolve, sep } from "node:path";
 import { randomUUID } from "node:crypto";
-import { Injectable, NotFoundException, type OnModuleDestroy, type OnModuleInit } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException, type OnModuleDestroy, type OnModuleInit } from "@nestjs/common";
+import type { QueryResultRow } from "pg";
+import { DatabaseService } from "../database/database.service";
 import type {
   PptDeckBlock,
   PptDeckCreativeSlideStyle,
@@ -201,6 +203,10 @@ const COMPOSITION_PRESET_CATALOG: Record<string, string> = {
 };
 const CRC32_TABLE = createCrc32Table();
 
+interface OwnedDeckRow extends QueryResultRow {
+  project_id: string;
+}
+
 function findWorkspaceRoot(start: string) {
   let current = resolve(start);
 
@@ -225,6 +231,8 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
   private cleanupTimer: NodeJS.Timeout | null = null;
   private readonly retentionHours = this.parsePositiveNumber(process.env.HTML_PPT_OUTPUT_RETENTION_HOURS, 168);
   private readonly cleanupIntervalMinutes = this.parsePositiveNumber(process.env.HTML_PPT_CLEANUP_INTERVAL_MINUTES, 60);
+
+  constructor(@Inject(DatabaseService) private readonly databaseService: DatabaseService) {}
 
   onModuleInit() {
     void mkdir(DECK_OUTPUT_ROOT, { recursive: true });
@@ -364,6 +372,25 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
 
   getStyleStream(deckId: string) {
     return this.getDeckFileStream(deckId, "style.css");
+  }
+
+  async assertDeckOwnership(userId: number, deckId: string) {
+    const result = await this.databaseService.query<OwnedDeckRow>(
+      `
+        SELECT p.id AS project_id
+        FROM ppt_projects p
+        INNER JOIN ppt_messages m ON m.project_id = p.id
+        WHERE p.user_id = $1
+          AND m.role = 'assistant'
+          AND m.meta -> 'deckRender' ->> 'deckId' = $2
+        LIMIT 1
+      `,
+      [userId, deckId]
+    );
+
+    if (!result.rows[0]) {
+      throw new NotFoundException("HTML-PPT deck 不存在。");
+    }
   }
 
   private getDeckFileStream(

@@ -219,6 +219,8 @@ select {
 }
 
 .reveal-up {
+  animation: reveal-up 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* Antigravity Special Float Effect */
 @keyframes continuous-float {
@@ -244,9 +246,6 @@ select {
 
 .float-effect:nth-child(3n) {
   animation-delay: 4s;
-}
-
-animation: reveal-up 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes reveal-up {
@@ -288,4 +287,47 @@ body.html-ppt-route main {
 
 body.html-ppt-route footer {
   display: none;
+}
+
+/* Stellar Custom Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-overlay {
+  animation: fadeInOverlay 0.4s ease-out forwards;
+}
+
+@keyframes fadeInDialog {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up-overlay {
+  animation: fadeInDialog 0.5s ease-out forwards;
+  transform: translate(-50%, -50%);
 }

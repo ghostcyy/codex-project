@@ -28,11 +28,15 @@ async function withSessionHeaders(init: RequestInit = {}) {
 }
 
 export async function POST(
-  _request: Request,
+  request: Request,
   context: { params: Promise<{ id: string; messageId: string }> }
 ) {
   const { id, messageId } = await context.params;
-  const init = await withSessionHeaders({ method: "POST" });
+  const body = await request.json().catch(() => null);
+  const init = await withSessionHeaders({
+    method: "POST",
+    body: JSON.stringify(body ?? {})
+  });
 
   if (!init) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

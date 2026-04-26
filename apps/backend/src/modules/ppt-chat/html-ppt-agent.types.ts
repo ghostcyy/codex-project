@@ -7,6 +7,8 @@ export type AgentPlan = {
   subtitle?: string;
   slideCount: number;
   audience: string;
+  tone?: string;
+  format?: string;
   objective: string;
   slides: Array<{
     index: number;
@@ -16,6 +18,21 @@ export type AgentPlan = {
     goal: string;
     keyPoints: string[];
   }>;
+};
+
+export type ReferenceFullDeckSnippet = {
+  name: string;
+  /**
+   * Up to 5 representative <section> blocks pulled from the chosen full-deck
+   * template's index.html. The model uses these as visual-DNA donors when
+   * authoring the deck's actual sections.
+   */
+  sections: string[];
+  /**
+   * Trimmed excerpt of the template's style.css so the section author can see
+   * the template's class hooks, typography rhythm, and decoration cues.
+   */
+  cssExcerpt: string;
 };
 
 export type VisualPlan = {
@@ -50,6 +67,19 @@ export type ResearchPack = {
   narrativeAngles: string[];
   suggestedSections: string[];
   needVerification: string[];
+  suggestedSlideCount: number;
+  perSlideLengthTargets: Array<{
+    index: number;
+    targetLength: number;
+    purpose: string;
+  }>;
+};
+
+export type DeckRequestRequirements = {
+  requestedSlideCount?: number;
+  requestedNarrativeLength?: number;
+  narrativeLengthUnit?: "chars" | "words";
+  narrativeLengthMode?: "minimum" | "target";
 };
 
 export type SkillAssetManifestLike = {
@@ -76,6 +106,9 @@ export type SkillAssetManifestLike = {
 };
 
 export type HtmlPptAgentInput = {
+  userId?: number;
+  projectId?: string;
+  assistantMessageId?: string;
   projectName: string;
   context: { summaryText: string; recentMessages: PptMessageDto[] };
   pendingUserMessage: PptMessageDto;
@@ -108,6 +141,10 @@ export type HtmlPptAgentIndexResult = {
   concurrency: number;
   repairCalls: number;
   localRepairCount: number;
+  narrativeTargetChineseChars?: number;
+  narrativeActualChineseChars?: number;
+  narrativeExpandedChars?: number;
+  narrativeExpandedSlides?: number[];
   stats: Array<{
     batchIndex: number;
     slideIndexes: number[];
@@ -136,6 +173,8 @@ export type HtmlPptAgentBatchSnapshot = {
 
 export type HtmlPptAgentFailedIndexState = {
   batchSnapshots: HtmlPptAgentBatchSnapshot[];
+  failedBatches?: HtmlPptAgentBatchSnapshot[];
+  // Backward-compatible legacy field; new code writes failedBatches.
   failedBatch?: HtmlPptAgentBatchSnapshot;
 };
 

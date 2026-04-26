@@ -9,6 +9,7 @@ import type {
   PptProjectSummary,
   SessionUser
 } from "./types";
+import { ADMIN_ACCESS_PERMISSION } from "./auth";
 
 const API_BASE_URL =
   process.env.API_BASE_URL ??
@@ -80,7 +81,7 @@ export async function requireUserWithPermission(permission: string, nextPath: st
 }
 
 export async function requireAdminUser(nextPath = "/admin") {
-  return requireUserWithPermission("admin.access", nextPath);
+  return requireUserWithPermission(ADMIN_ACCESS_PERMISSION, nextPath);
 }
 
 export async function requireLlmManagerUser(nextPath = "/admin/llm") {

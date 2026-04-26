@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from "@nestjs/common";
+import { Controller, Get, Inject, Param, Query } from "@nestjs/common";
 import { RequirePermissions } from "../../common/auth/permissions.decorator";
 import { LlmLoggingService } from "./llm-logging.service";
 
@@ -15,5 +15,18 @@ export class LlmLoggingController {
   @Get("stats")
   getStats() {
     return this.llmLoggingService.getStats();
+  }
+
+  @Get("payloads")
+  getRecentPayloadLogs(@Query("limit") limit?: string, @Query("projectId") projectId?: string) {
+    const parsedLimit = Number(limit);
+    const normalizedLimit = Number.isFinite(parsedLimit) ? parsedLimit : 50;
+    const normalizedProjectId = typeof projectId === "string" && projectId.trim().length > 0 ? projectId.trim() : undefined;
+    return this.llmLoggingService.getRecentPayloadLogs(normalizedLimit, normalizedProjectId);
+  }
+
+  @Get("payloads/:id")
+  getPayloadLogDetail(@Param("id") id: string) {
+    return this.llmLoggingService.getPayloadLogDetail(id);
   }
 }

@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, UnauthorizedException } from "@nestjs/common";
+import { Public } from "../../common/auth/public.decorator";
 import { CurrentUser } from "../../common/auth/current-user.decorator";
 import type { AuthenticatedUser } from "../auth/auth.types";
 import { PptChatService } from "./ppt-chat.service";
 import type {
   CreatePptProjectInput,
+  ResumePptMessageInput,
   SendPptMessageInput,
   UpdatePptProjectInput
 } from "./ppt-chat.types";
@@ -54,12 +56,14 @@ export class PptChatController {
   resumeMessageGeneration(
     @CurrentUser() user?: AuthenticatedUser,
     @Param("id") id?: string,
-    @Param("messageId") messageId?: string
+    @Param("messageId") messageId?: string,
+    @Body() body?: ResumePptMessageInput
   ) {
     return this.pptChatService.resumeMessageGeneration(
       this.requireUser(user).id,
       String(id ?? ""),
-      String(messageId ?? "")
+      String(messageId ?? ""),
+      body ?? {}
     );
   }
 

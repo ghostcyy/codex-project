@@ -1,4 +1,6 @@
-import { Controller, Get, Inject, Param, Query, Res, StreamableFile } from "@nestjs/common";
+import { Controller, Get, Inject, Param, Query, Res, StreamableFile, UnauthorizedException } from "@nestjs/common";
+import { CurrentUser } from "../../common/auth/current-user.decorator";
+import type { AuthenticatedUser } from "../auth/auth.types";
 import { HtmlPptRendererService } from "./html-ppt-renderer.service";
 
 @Controller("ppt/decks")
@@ -6,7 +8,12 @@ export class HtmlPptRendererController {
   constructor(@Inject(HtmlPptRendererService) private readonly rendererService: HtmlPptRendererService) {}
 
   @Get(":deckId/index.html")
-  getIndex(@Param("deckId") deckId: string, @Res({ passthrough: true }) response: any) {
+  async getIndex(
+    @CurrentUser() user: AuthenticatedUser | undefined,
+    @Param("deckId") deckId: string,
+    @Res({ passthrough: true }) response: any
+  ) {
+    await this.rendererService.assertDeckOwnership(this.requireUser(user).id, deckId);
     const file = this.rendererService.getIndexStream(deckId);
     response.setHeader("Content-Type", file.contentType);
     response.setHeader("Content-Disposition", `inline; filename="${file.fileName}"`);
@@ -14,7 +21,12 @@ export class HtmlPptRendererController {
   }
 
   @Get(":deckId/preview.html")
-  getPreview(@Param("deckId") deckId: string, @Res({ passthrough: true }) response: any) {
+  async getPreview(
+    @CurrentUser() user: AuthenticatedUser | undefined,
+    @Param("deckId") deckId: string,
+    @Res({ passthrough: true }) response: any
+  ) {
+    await this.rendererService.assertDeckOwnership(this.requireUser(user).id, deckId);
     const file = this.rendererService.getPreviewStream(deckId);
     response.setHeader("Content-Type", file.contentType);
     response.setHeader("Content-Disposition", `inline; filename="${file.fileName}"`);
@@ -22,7 +34,12 @@ export class HtmlPptRendererController {
   }
 
   @Get(":deckId/style.css")
-  getStyle(@Param("deckId") deckId: string, @Res({ passthrough: true }) response: any) {
+  async getStyle(
+    @CurrentUser() user: AuthenticatedUser | undefined,
+    @Param("deckId") deckId: string,
+    @Res({ passthrough: true }) response: any
+  ) {
+    await this.rendererService.assertDeckOwnership(this.requireUser(user).id, deckId);
     const file = this.rendererService.getStyleStream(deckId);
     response.setHeader("Content-Type", file.contentType);
     response.setHeader("Content-Disposition", `inline; filename="${file.fileName}"`);
@@ -30,11 +47,13 @@ export class HtmlPptRendererController {
   }
 
   @Get(":deckId/asset")
-  getAsset(
+  async getAsset(
+    @CurrentUser() user: AuthenticatedUser | undefined,
     @Param("deckId") deckId: string,
     @Query("path") path: string | undefined,
     @Res({ passthrough: true }) response: any
   ) {
+    await this.rendererService.assertDeckOwnership(this.requireUser(user).id, deckId);
     const file = this.rendererService.getAssetStream(deckId, path ?? "");
     response.setHeader("Content-Type", file.contentType);
     response.setHeader("Content-Disposition", `inline; filename="${encodeURIComponent(file.fileName)}"`);
@@ -42,7 +61,12 @@ export class HtmlPptRendererController {
   }
 
   @Get(":deckId/download.html")
-  download(@Param("deckId") deckId: string, @Res({ passthrough: true }) response: any) {
+  async download(
+    @CurrentUser() user: AuthenticatedUser | undefined,
+    @Param("deckId") deckId: string,
+    @Res({ passthrough: true }) response: any
+  ) {
+    await this.rendererService.assertDeckOwnership(this.requireUser(user).id, deckId);
     const file = this.rendererService.getStandaloneStream(deckId);
     response.setHeader("Content-Type", file.contentType);
     response.setHeader("Content-Disposition", `attachment; filename="${file.fileName}"`);
@@ -50,10 +74,23 @@ export class HtmlPptRendererController {
   }
 
   @Get(":deckId/download.zip")
-  downloadZip(@Param("deckId") deckId: string, @Res({ passthrough: true }) response: any) {
+  async downloadZip(
+    @CurrentUser() user: AuthenticatedUser | undefined,
+    @Param("deckId") deckId: string,
+    @Res({ passthrough: true }) response: any
+  ) {
+    await this.rendererService.assertDeckOwnership(this.requireUser(user).id, deckId);
     const file = this.rendererService.getZipStream(deckId);
     response.setHeader("Content-Type", file.contentType);
     response.setHeader("Content-Disposition", "attachment; filename=\"html-ppt-deck.zip\"");
     return new StreamableFile(file.stream);
+  }
+
+  private requireUser(user?: AuthenticatedUser) {
+    if (!user) {
+      throw new UnauthorizedException("Authenticated user context is unavailable.");
+    }
+
+    return user;
   }
 }

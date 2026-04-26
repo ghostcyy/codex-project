@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { ADMIN_ACCESS_PERMISSION, hasPermission } from "../lib/auth";
 import { getCurrentUser } from "../lib/server-auth";
 import { LogoutButton } from "./auth/logout-button";
 import { SmartHeader } from "./smart-header";
 
 export async function SiteHeader() {
   const user = await getCurrentUser();
+  const canAccessAdmin = hasPermission(user, ADMIN_ACCESS_PERMISSION);
 
   return (
     <SmartHeader>
@@ -96,18 +98,31 @@ export async function SiteHeader() {
           <div className="ml-4 flex items-center gap-4">
             {user ? (
               <>
-                <Link href="/admin" className="text-[var(--ink)] hover:text-[var(--accent)] transition-colors">
-                  后台管理
-                </Link>
+                {canAccessAdmin ? (
+                  <Link href="/admin" className="text-[var(--ink)] hover:text-[var(--accent)] transition-colors">
+                    后台管理
+                  </Link>
+                ) : null}
                 <div className="flex items-center gap-3">
                   <span className="text-[var(--ink)] font-semibold">{user.displayName ?? user.username}</span>
                   <LogoutButton />
                 </div>
               </>
             ) : (
-              <Link href="/login" className="text-[var(--accent)] hover:text-[var(--accent-strong)] font-semibold transition-colors">
-                登录
-              </Link>
+              <>
+                <Link
+                  href="/register"
+                  className="text-[var(--ink)] hover:text-[var(--accent)] font-medium transition-colors"
+                >
+                  注册
+                </Link>
+                <Link
+                  href="/login"
+                  className="text-[var(--accent)] hover:text-[var(--accent-strong)] font-semibold transition-colors"
+                >
+                  登录
+                </Link>
+              </>
             )}
           </div>
         </nav>

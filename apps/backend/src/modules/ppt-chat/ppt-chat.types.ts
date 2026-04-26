@@ -186,3 +186,7 @@ export interface SendPptMessageInput {
   files?: unknown;
   template?: unknown;
 }
+
+export interface ResumePptMessageInput {
+  mode?: unknown;
+}

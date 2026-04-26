@@ -46,23 +46,93 @@ interface PptConversationResponse {
 }
 
 /* ─── Template catalog (mirrors skill full-decks) ────────── */
-const TEMPLATES = [
-  { id: 'pitch-deck',             label: 'Pitch Deck',           emoji: 'VC', desc: '投资人路演 / VC风格' },
-  { id: 'product-launch',         label: 'Product Launch',       emoji: 'PL', desc: '产品发布会' },
-  { id: 'tech-sharing',           label: 'Tech Sharing',         emoji: 'TS', desc: '技术分享 / 工程师风格' },
-  { id: 'weekly-report',          label: 'Weekly Report',        emoji: 'WR', desc: '周报 / 数据汇报' },
-  { id: 'xhs-post',               label: '小红书图文',             emoji: 'XHS', desc: '9页 / 3:4比例' },
-  { id: 'course-module',          label: 'Course Module',        emoji: 'EDU', desc: '教学模块' },
-  { id: 'presenter-mode-reveal',  label: 'Presenter Mode',       emoji: 'PM', desc: '带逐字稿 · 演讲者模式' },
-  { id: 'xhs-white-editorial',    label: 'XHS White Editorial',  emoji: 'WE', desc: '小红书白底杂志风' },
-  { id: 'graphify-dark-graph',    label: 'Graphify Dark',        emoji: 'GD', desc: '暗底知识图谱' },
-  { id: 'knowledge-arch-blueprint', label: 'Blueprint',          emoji: 'BP', desc: '蓝图 / 架构图风' },
-  { id: 'hermes-cyber-terminal',  label: 'Cyber Terminal',       emoji: 'CT', desc: '终端 Cyberpunk 风' },
-  { id: 'obsidian-claude-gradient', label: 'Obsidian Gradient', emoji: 'OG', desc: '紫色渐变卡' },
-  { id: 'xhs-pastel-card',        label: 'XHS Pastel',          emoji: 'XP', desc: '柔和马卡龙图文' },
-  { id: 'dir-key-nav-minimal',    label: 'Minimal Nav',         emoji: 'NAV', desc: '方向键极简' },
-  { id: 'testing-safety-alert',   label: 'Safety Alert',        emoji: 'SA', desc: '红色警示风格' },
-];
+interface Template {
+  id: string;
+  label: string;
+  emoji: string;
+  desc: string;
+  previewSlides?: string[];
+  previewCss?: string;
+  deckClass?: string;
+}
+
+const TEMPLATE_METADATA: Record<string, { label: string; emoji: string; desc: string }> = {
+  'pitch-deck': { label: 'Pitch Deck', emoji: 'VC', desc: '投资人路演 / VC风格' },
+  'product-launch': { label: 'Product Launch', emoji: 'PL', desc: '产品发布会' },
+  'tech-sharing': { label: 'Tech Sharing', emoji: 'TS', desc: '技术分享 / 工程师风格' },
+  'weekly-report': { label: 'Weekly Report', emoji: 'WR', desc: '周报 / 数据汇报' },
+  'xhs-post': { label: '小红书图文', emoji: 'XHS', desc: '9页 / 3:4比例' },
+  'course-module': { label: 'Course Module', emoji: 'EDU', desc: '教学模块' },
+  'presenter-mode-reveal': { label: 'Presenter Mode', emoji: 'PM', desc: '带逐字稿 · 演讲者模式' },
+  'xhs-white-editorial': { label: 'XHS White Editorial', emoji: 'WE', desc: '小红书白底杂志风' },
+  'graphify-dark-graph': { label: 'Graphify Dark', emoji: 'GD', desc: '暗底知识图谱' },
+  'knowledge-arch-blueprint': { label: 'Blueprint', emoji: 'BP', desc: '蓝图 / 架构图风' },
+  'hermes-cyber-terminal': { label: 'Cyber Terminal', emoji: 'CT', desc: '终端 Cyberpunk 风' },
+  'obsidian-claude-gradient': { label: 'Obsidian Gradient', emoji: 'OG', desc: '紫色渐变卡' },
+  'xhs-pastel-card': { label: 'XHS Pastel', emoji: 'XP', desc: '柔和马卡龙图文' },
+  'dir-key-nav-minimal': { label: 'Minimal Nav', emoji: 'NAV', desc: '方向键极简' },
+  'testing-safety-alert': { label: 'Safety Alert', emoji: 'SA', desc: '红色警示风格' },
+};
+
+/* ── Shadow Root Wrapper for Previews ── */
+function ShadowPreview({ html, css, deckClass }: { html: string; css: string; deckClass?: string }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const shadowRef = useRef<ShadowRoot | null>(null);
+  const [scale, setScale] = useState(0.1);
+
+  useEffect(() => {
+    if (containerRef.current && !shadowRef.current) {
+      shadowRef.current = containerRef.current.attachShadow({ mode: 'open' });
+    }
+    
+    // Measure actual width and update scale
+    const observer = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const width = entry.contentRect.width;
+        if (width > 0) {
+          setScale(width / 1280);
+        }
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (shadowRef.current) {
+      shadowRef.current.innerHTML = `
+        <style>
+          :host { 
+            display: block; 
+            width: 100%; 
+            aspect-ratio: 16/9;
+            overflow: hidden; 
+            background: white; 
+          }
+          .scaler {
+            transform: scale(${scale});
+            transform-origin: top left;
+            width: 1280px;
+            height: 720px;
+            background: white;
+          }
+          ${css}
+        </style>
+        <div class="scaler">
+          <div class="${deckClass || ''}">
+            ${html}
+          </div>
+        </div>
+      `;
+    }
+  }, [html, css, deckClass, scale]);
+
+  return <div ref={containerRef} style={{ width: '100%' }} />;
+}
 
 const ACCEPTED_TYPES = '.docx,.pptx,.ppt,.txt,.md,.pdf';
 
@@ -121,6 +191,18 @@ function orchestrationStatusStyle(status: PptGenerationOrchestration['steps'][nu
 function canResumeOrchestration(orchestration?: PptGenerationOrchestration) {
   const lastStep = orchestration?.steps.at(-1);
   return Boolean(lastStep && (lastStep.status === 'failed' || lastStep.status === 'timeout'));
+}
+
+function canShowStepActions(
+  orchestration: PptGenerationOrchestration | undefined,
+  step: PptGenerationOrchestration['steps'][number],
+) {
+  if (!orchestration || step.status === 'running' || step.status === 'completed' || step.status === 'skipped') {
+    return false;
+  }
+
+  const lastStep = orchestration.steps.at(-1);
+  return Boolean(lastStep && lastStep.id === step.id && (lastStep.status === 'failed' || lastStep.status === 'timeout'));
 }
 
 function visibleMessageContent(content: string) {
@@ -240,11 +322,80 @@ export default function HtmlPptPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   /* Template selector */
+  const [templates, setTemplates] = useState<Template[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [hoveredTemplateId, setHoveredTemplateId] = useState<string | null>(null);
+  const [hoverProgress, setHoverProgress] = useState(0);
   const templateSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const raw = await requestJson<any[]>('/api/ppt/projects/templates/catalog');
+        const enriched = raw.map(tpl => ({
+          ...tpl,
+          ...(TEMPLATE_METADATA[tpl.id] || { label: tpl.id, emoji: '📄', desc: 'Custom template' })
+        }));
+        setTemplates(enriched);
+      } catch (err) {
+        console.error('Failed to fetch template catalog:', err);
+      }
+    };
+    fetchTemplates();
+  }, []);
+
+  const handleTemplateMouseMove = (e: React.MouseEvent, id: string) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    setHoverProgress(x / rect.width);
+    setHoveredTemplateId(id);
+  };
 
   /* Sidebar */
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [leftSidebarWidth, setLeftSidebarWidth] = useState(280);
+  const [rightSidebarWidth, setRightSidebarWidth] = useState(360);
+  const [isResizing, setIsResizing] = useState(false);
+  const [isResizingLeft, setIsResizingLeft] = useState(false);
+
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizing(true);
+  };
+
+  const startResizingLeft = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsResizingLeft(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isResizing) {
+        const newWidth = window.innerWidth - e.clientX;
+        if (newWidth > 180 && newWidth < 800) {
+          setRightSidebarWidth(newWidth);
+        }
+      } else if (isResizingLeft) {
+        const newWidth = e.clientX;
+        if (newWidth > 150 && newWidth < 500) {
+          setLeftSidebarWidth(newWidth);
+        }
+      }
+    };
+    const handleMouseUp = () => {
+      setIsResizing(false);
+      setIsResizingLeft(false);
+    };
+
+    if (isResizing || isResizingLeft) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing, isResizingLeft]);
 
   /* ── Derived ── */
   const active = projects.find(p => p.id === activeId) ?? null;
@@ -491,13 +642,16 @@ export default function HtmlPptPage() {
       return;
     }
 
+    const isCurrentlySelected = active?.template === templateId;
+    const finalTemplateId = isCurrentlySelected ? null : templateId;
+
     setRequestError('');
-    setSelectedTemplate(templateId);
+    setSelectedTemplate(finalTemplateId);
 
     try {
       const summary = await requestJson<PptProjectSummary>(`/api/ppt/projects/${encodeURIComponent(activeId)}`, {
         method: 'PATCH',
-        body: JSON.stringify({ templateId }),
+        body: JSON.stringify({ templateId: finalTemplateId }),
       });
 
       setProjects(prev =>
@@ -508,7 +662,7 @@ export default function HtmlPptPage() {
     } catch (error) {
       setRequestError(error instanceof Error ? error.message : '切换模板失败。');
     }
-  }, [activeId]);
+  }, [activeId, active?.template]);
 
   /* ── File attach ── */
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -527,7 +681,7 @@ export default function HtmlPptPage() {
     const messageText = input.trim();
     const pendingFiles = [...files];
     const template = active.template
-      ? TEMPLATES.find(t => t.id === active.template) ?? {
+      ? templates.find(t => t.id === active.template) ?? {
           id: active.template,
           label: active.template,
           emoji: 'TPL',
@@ -598,9 +752,9 @@ export default function HtmlPptPage() {
     } finally {
       setLoading(false);
     }
-  }, [input, files, activeId, active, hasLiveAssistantProgress]);
+  }, [input, files, activeId, active, hasLiveAssistantProgress, templates]);
 
-  const resumeGeneration = useCallback(async (messageId: string) => {
+  const resumeGeneration = useCallback(async (messageId: string, mode: 'resume' | 'adopt' = 'resume') => {
     if (!activeId || resumingMessageId) {
       return;
     }
@@ -611,7 +765,7 @@ export default function HtmlPptPage() {
     try {
       const response = await requestJson<PptConversationResponse>(
         `/api/ppt/projects/${encodeURIComponent(activeId)}/messages/${encodeURIComponent(messageId)}/resume`,
-        { method: 'POST' }
+        { method: 'POST', body: JSON.stringify({ mode }) }
       );
 
       setProjects(prev =>
@@ -626,7 +780,7 @@ export default function HtmlPptPage() {
       );
       setSelectedTemplate(response.project.templateId ?? null);
     } catch (error) {
-      setRequestError(error instanceof Error ? error.message : '继续生成失败。');
+      setRequestError(error instanceof Error ? error.message : mode === 'adopt' ? '采用失败。' : '继续生成失败。');
     } finally {
       setResumingMessageId(null);
     }
@@ -644,7 +798,7 @@ export default function HtmlPptPage() {
   return (
     <div style={styles.root}>
       {/* ══ LEFT SIDEBAR ══════════════════════════════════════ */}
-      <aside style={{ ...styles.sidebar, width: sidebarCollapsed ? 80 : 280 }}>
+      <aside style={{ ...styles.sidebar, width: sidebarCollapsed ? 80 : leftSidebarWidth }}>
         {/* Header */}
         <div style={styles.sidebarHeader}>
           {!sidebarCollapsed && (
@@ -719,9 +873,9 @@ export default function HtmlPptPage() {
         {/* Template badge */}
         {!sidebarCollapsed && active?.template && (
           <div style={styles.tplBadge}>
-            <span style={{ fontSize: 18 }}>{TEMPLATES.find(t => t.id === active.template)?.emoji}</span>
+            <span style={{ fontSize: 18 }}>{templates.find(t => t.id === active.template)?.emoji}</span>
             <span style={{ fontSize: 12, color: 'var(--ink)', fontWeight: 600, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {TEMPLATES.find(t => t.id === active.template)?.label}
+              {templates.find(t => t.id === active.template)?.label}
             </span>
           </div>
         )}
@@ -734,284 +888,363 @@ export default function HtmlPptPage() {
         )}
       </aside>
 
-      {/* ══ MAIN ════════════════════════════════════════════════ */}
+      <div 
+        onMouseDown={startResizingLeft}
+        style={{
+          width: '6px',
+          cursor: 'col-resize',
+          background: isResizingLeft ? 'var(--accent)' : 'transparent',
+          zIndex: 100,
+          transition: 'background 0.2s',
+          marginRight: '-3px',
+          marginLeft: '-3px',
+          position: 'relative',
+        }}
+      />
+
       <div style={styles.mainWrap}>
-
-        {/* ── Chat header ── */}
-        <div style={styles.chatHeader}>
-          <div>
-            <div style={styles.chatTitle}>{active?.name ?? 'Select Project'}</div>
-            {active?.template && (
-              <span style={styles.chatSubtitle}>
-                <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10 }}>{TEMPLATES.find(t => t.id === active.template)?.label}</span>
-                &nbsp;· Active Template
-              </span>
-            )}
+        
+        <div style={styles.chatWrap}>
+          {/* ── Chat header ── */}
+          <div style={styles.chatHeader}>
+            <div>
+              <div style={styles.chatTitle}>{active?.name ?? 'Select Project'}</div>
+              {active?.template && (
+                <span style={styles.chatSubtitle}>
+                  <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10 }}>{templates.find(t => t.id === active.template)?.label}</span>
+                  &nbsp;· Active Template
+                </span>
+              )}
+            </div>
+            <button style={styles.ghostBtn} onClick={() => templateSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}>
+              View Templates
+            </button>
           </div>
-          <button style={styles.ghostBtn} onClick={() => templateSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}>
-            Switch Template
-          </button>
-        </div>
 
-        <div style={styles.mainScrollArea}>
-          {requestError ? (
-            <div style={styles.errorBanner}>
-              <span style={{ marginRight: 8 }}>⚠️</span>
-              {requestError}
-            </div>
-          ) : null}
+          <div style={styles.mainScrollArea}>
+            {requestError ? (
+              <div style={styles.errorBanner}>
+                <span style={{ marginRight: 8 }}>⚠️</span>
+                {requestError}
+              </div>
+            ) : null}
 
-          {/* ── Messages ── */}
-          <div style={styles.messages}>
-          {bootstrapping && !active ? (
-            <div style={styles.emptyState}>
-              <div className="ppt-typing-dot" style={{ width: 40, height: 40 }} />
-              <div style={styles.emptyTitle}>Synchronizing...</div>
-              <div style={styles.emptyHint}>Preparing your premium authoring environment.</div>
-            </div>
-          ) : active?.messages.length === 0 ? (
-            <div style={styles.emptyState} className="reveal-up">
-              <div style={styles.emptyIcon}>✦</div>
-              <div style={styles.emptyTitle}>Create Professional Deck</div>
-              <div style={styles.emptyHint}>
-                Describe your topic or drop documents. Our AI agent will orchestrate the layout and content for you.
-              </div>
-              <div style={styles.emptyTips}>
-                {['Product Launch: Vision for 2026 Space Travel', 'Tech Sharing: Exploring Quantum Computing', 'Pitch Deck: Next-gen Sustainable Energy SaaS'].map(tip => (
-                  <button key={tip} style={styles.tipBtn} className="antigravity-card" onClick={() => setInput(tip)}>{tip}</button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          {active?.messages.map(msg => (
-            <div key={msg.id} style={{ ...styles.msgRow, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }} className="reveal-up">
-              <div style={{
-                ...styles.msgAvatar,
-                background: msg.role === 'user' ? 'var(--accent)' : 'white',
-                color: msg.role === 'user' ? 'white' : 'var(--accent)',
-                boxShadow: msg.role === 'user' ? '0 4px 12px rgba(26, 115, 232, 0.2)' : 'var(--shadow-base)',
-                border: msg.role === 'user' ? 'none' : '1px solid var(--line)',
-              }}>
-                {msg.role === 'user' ? 'U' : 'AI'}
-              </div>
-              <div style={{ maxWidth: '85%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-                {msg.template && (
-                  <div style={styles.filePillsRow}>
-                    <span style={styles.templatePill}>
-                      Template: {msg.template.label}
-                    </span>
+            {/* ── Messages ── */}
+            <div style={styles.messages}>
+              {bootstrapping && !active ? (
+                <div style={styles.emptyState}>
+                  <div className="ppt-typing-dot" style={{ width: 40, height: 40 }} />
+                  <div style={styles.emptyTitle}>Synchronizing...</div>
+                  <div style={styles.emptyHint}>Preparing your premium authoring environment.</div>
+                </div>
+              ) : active?.messages.length === 0 ? (
+                <div style={styles.emptyState} className="reveal-up">
+                  <div style={styles.emptyIcon}>✦</div>
+                  <div style={styles.emptyTitle}>Create Professional Deck</div>
+                  <div style={styles.emptyHint}>
+                    Describe your topic or drop documents. Our AI agent will orchestrate the layout and content for you.
                   </div>
-                )}
-                {msg.files && msg.files.length > 0 && (
-                  <div style={styles.filePillsRow}>
-                    {msg.files.map((f, i) => (
-                      <span key={i} style={styles.filePill}>
-                        <span style={{ fontSize: 14 }}>📄</span>
-                        {f.name} ({fmt(f.size)})
-                      </span>
+                  <div style={styles.emptyTips}>
+                    {['Product Launch: Vision for 2026 Space Travel', 'Tech Sharing: Exploring Quantum Computing', 'Pitch Deck: Next-gen Sustainable Energy SaaS'].map(tip => (
+                      <button key={tip} style={styles.tipBtn} className="antigravity-card" onClick={() => setInput(tip)}>{tip}</button>
                     ))}
                   </div>
-                )}
-                  <div style={{
-                    ...styles.msgBubble,
-                    background: msg.role === 'user' ? 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)' : 'white',
-                    color: msg.role === 'user' ? 'white' : 'var(--ink)',
-                    border: msg.role === 'user' ? 'none' : '1px solid var(--line)',
-                    boxShadow: msg.role === 'user' ? '0 8px 24px rgba(99, 102, 241, 0.2)' : 'var(--shadow-base)',
-                  }}>
-                  {visibleMessageContent(msg.content).split('\n').map((line, i) => (
-                    <span key={i}>{line.replace(/\*\*(.*?)\*\*/g, '$1')}<br /></span>
-                  ))}
                 </div>
-                {msg.role === 'assistant' && msg.deckRender && (
-                  <div style={styles.deckPreviewCard} className="float-effect">
-                    <div style={styles.deckPreviewHeader}>
-                      <div>
-                        <div style={styles.deckPreviewTitle}>{msg.deckRender.title}</div>
-                        <div style={styles.deckPreviewMeta}>
-                          <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10, background: 'var(--bg-deep)' }}>{msg.deckSpec?.template ?? 'HTML-PPT'}</span>
-                          &nbsp;· {msg.deckSpec?.slides.length ?? 0} Slides Generated
-                        </div>
-                        {msg.orchestration && (
-                          <div style={styles.orchestrationMeta}>
-                            ✓ Orchestration Complete: {msg.orchestration.totalModelCalls} Calls · {msg.orchestration.steps.length} Steps
-                          </div>
-                        )}
+              ) : null}
+
+              {active?.messages.map(msg => (
+                <div key={msg.id} style={{ ...styles.msgRow, flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }} className="reveal-up">
+                  <div style={{
+                    ...styles.msgAvatar,
+                    background: msg.role === 'user' ? 'var(--accent)' : 'white',
+                    color: msg.role === 'user' ? 'white' : 'var(--accent)',
+                    boxShadow: msg.role === 'user' ? '0 4px 12px rgba(26, 115, 232, 0.2)' : 'var(--shadow-base)',
+                    border: msg.role === 'user' ? 'none' : '1px solid var(--line)',
+                  }}>
+                    {msg.role === 'user' ? 'U' : 'AI'}
+                  </div>
+                  <div style={{ maxWidth: '85%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                    {msg.template && (
+                      <div style={styles.filePillsRow}>
+                        <span style={styles.templatePill}>
+                          Template: {msg.template.label}
+                        </span>
                       </div>
-                      <div style={styles.deckPreviewActions}>
-                        <a style={styles.deckActionLink} className="ghost-button" href={msg.deckRender.previewUrl} target="_blank" rel="noreferrer">Full View</a>
-                        <a style={styles.deckActionLink} className="primary-button" href={msg.deckRender.downloadUrl}>Download</a>
-                      </div>
-                    </div>
-                    {msg.orchestration && msg.orchestration.steps.length > 0 && (
-                      <div style={styles.orchestrationPanel}>
-                        {msg.orchestration.steps.map((step) => (
-                          <div key={step.id} style={styles.orchestrationRow}>
-                            <span style={{
-                              ...styles.orchestrationStatus,
-                              ...orchestrationStatusStyle(step.status),
-                            }}>
-                              {orchestrationStatusLabel(step.status)}
-                            </span>
-                            <div style={styles.orchestrationBody}>
-                              <div style={styles.orchestrationTitle}>{step.name}</div>
-                              <div style={styles.orchestrationDetail}>{step.detail}</div>
-                            </div>
-                            <span style={styles.orchestrationDuration}>
-                              {fmtDuration(step.startedAt, step.endedAt, step.status)}
-                            </span>
-                          </div>
+                    )}
+                    {msg.files && msg.files.length > 0 && (
+                      <div style={styles.filePillsRow}>
+                        {msg.files.map((f, i) => (
+                          <span key={i} style={styles.filePill}>
+                            <span style={{ fontSize: 14 }}>📄</span>
+                            {f.name} ({fmt(f.size)})
+                          </span>
                         ))}
                       </div>
                     )}
-                    <iframe
-                      title={`HTML-PPT Preview ${msg.deckRender.deckId}`}
-                      src={msg.deckRender.previewUrl}
-                      style={styles.deckPreviewFrame}
-                    />
-                  </div>
-                )}
-                {msg.role === 'assistant' && !msg.deckRender && msg.orchestration && msg.orchestration.steps.length > 0 && (
-                  <div style={styles.orchestrationStandaloneCard}>
-                    <div style={styles.orchestrationStandaloneHeader}>
-                      <span>
-                        Orchestrating: {msg.orchestration.model} ({msg.orchestration.steps.length} Steps)
-                      </span>
-                      {canResumeOrchestration(msg.orchestration) && (
-                        <button
-                          style={styles.resumeBtn}
-                          disabled={Boolean(resumingMessageId)}
-                          onClick={() => void resumeGeneration(msg.id)}>
-                          {resumingMessageId === msg.id ? 'Resuming...' : 'Resume Generation'}
-                        </button>
-                      )}
-                    </div>
-                    <div style={styles.orchestrationPanel}>
-                      {msg.orchestration.steps.map((step) => (
-                        <div key={step.id} style={styles.orchestrationRow}>
-                          <span style={{
-                            ...styles.orchestrationStatus,
-                            ...orchestrationStatusStyle(step.status),
-                          }}>
-                            {orchestrationStatusLabel(step.status)}
-                          </span>
-                          <div style={styles.orchestrationBody}>
-                            <div style={styles.orchestrationTitle}>{step.name}</div>
-                            <div style={styles.orchestrationDetail}>{step.detail}</div>
-                          </div>
-                          <span style={styles.orchestrationDuration}>
-                            {fmtDuration(step.startedAt, step.endedAt, step.status)}
-                          </span>
-                        </div>
+                      <div style={{
+                        ...styles.msgBubble,
+                        background: msg.role === 'user' ? 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)' : 'white',
+                        color: msg.role === 'user' ? 'white' : 'var(--ink)',
+                        border: msg.role === 'user' ? 'none' : '1px solid var(--line)',
+                        boxShadow: msg.role === 'user' ? '0 8px 24px rgba(99, 102, 241, 0.2)' : 'var(--shadow-base)',
+                      }}>
+                      {visibleMessageContent(msg.content).split('\n').map((line, i) => (
+                        <span key={i}>{line.replace(/\*\*(.*?)\*\*/g, '$1')}<br /></span>
                       ))}
                     </div>
-                  </div>
-                )}
-                <div style={{ ...styles.msgTs, textAlign: msg.role === 'user' ? 'right' : 'left' }}>
-                  {msg.ts.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {loading && !hasLiveAssistantProgress && (
-            <div style={{ ...styles.msgRow }} className="reveal-up">
-              <div style={{ ...styles.msgAvatar, background: 'white', border: '1px solid var(--line)', color: 'var(--accent)' }}>AI</div>
-              <div style={{ ...styles.msgBubble, background: 'white', border: '1px solid var(--line)', padding: '16px 20px' }}>
-                <span style={styles.typing}>
-                  <span className="ppt-typing-dot" />
-                  <span className="ppt-typing-dot" />
-                  <span className="ppt-typing-dot" />
-                </span>
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-          </div>
-
-          {/* ── Input area ── */}
-          <div style={styles.inputArea}>
-            <div style={{ maxWidth: 900, margin: '0 auto', width: '100%' }}>
-              {files.length > 0 && (
-                <div style={styles.attachedFiles}>
-                  {files.map((f, i) => (
-                    <div key={i} style={styles.attachedPill} className="reveal-up">
-                      <span>📄 {f.name}</span>
-                      <span style={{ opacity: 0.6, fontSize: 11 }}>{fmt(f.size)}</span>
-                      <button style={styles.removeFileBtn} onClick={() => removeFile(i)}>×</button>
+                    {msg.role === 'assistant' && msg.deckRender && (
+                      <div style={styles.deckPreviewCard} className="float-effect">
+                        <div style={styles.deckPreviewHeader}>
+                          <div>
+                            <div style={styles.deckPreviewTitle}>{msg.deckRender.title}</div>
+                            <div style={styles.deckPreviewMeta}>
+                              <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10, background: 'var(--bg-deep)' }}>{msg.deckSpec?.template ?? 'HTML-PPT'}</span>
+                              &nbsp;· {msg.deckSpec?.slides.length ?? 0} Slides Generated
+                            </div>
+                            {msg.orchestration && (
+                              <div style={styles.orchestrationMeta}>
+                                ✓ Orchestration Complete: {msg.orchestration.totalModelCalls} Calls · {msg.orchestration.steps.length} Steps
+                              </div>
+                            )}
+                          </div>
+                          <div style={styles.deckPreviewActions}>
+                            <a style={styles.deckActionLink} className="ghost-button" href={msg.deckRender.previewUrl} target="_blank" rel="noreferrer">Full View</a>
+                            <a style={styles.deckActionLink} className="primary-button" href={msg.deckRender.downloadUrl}>Download</a>
+                          </div>
+                        </div>
+                        {msg.orchestration && msg.orchestration.steps.length > 0 && (
+                          <div style={styles.orchestrationPanel}>
+                            {msg.orchestration.steps.map((step) => (
+                              <div key={step.id} style={styles.orchestrationRow}>
+                                <span style={{
+                                  ...styles.orchestrationStatus,
+                                  ...orchestrationStatusStyle(step.status),
+                                }}>
+                                  {orchestrationStatusLabel(step.status)}
+                                </span>
+                                <div style={styles.orchestrationBody}>
+                                  <div style={styles.orchestrationTitle}>{step.name}</div>
+                                  <div style={styles.orchestrationDetail}>{step.detail}</div>
+                                </div>
+                                <div style={styles.orchestrationRightRail}>
+                                  <span style={styles.orchestrationDuration}>
+                                    {fmtDuration(step.startedAt, step.endedAt, step.status)}
+                                  </span>
+                                  {canShowStepActions(msg.orchestration, step) && (
+                                    <div style={styles.stepActionStack}>
+                                      <button
+                                        style={styles.stepActionBtn}
+                                        disabled={Boolean(resumingMessageId)}
+                                        onClick={() => void resumeGeneration(msg.id, 'resume')}>
+                                        {resumingMessageId === msg.id ? '处理中...' : '重新生成'}
+                                      </button>
+                                      <button
+                                        style={{ ...styles.stepActionBtn, ...styles.stepActionBtnSecondary }}
+                                        disabled={Boolean(resumingMessageId)}
+                                        onClick={() => void resumeGeneration(msg.id, 'adopt')}>
+                                        采用
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        <iframe
+                          title={`HTML-PPT Preview ${msg.deckRender.deckId}`}
+                          src={msg.deckRender.previewUrl}
+                          style={styles.deckPreviewFrame}
+                        />
+                      </div>
+                    )}
+                    {msg.role === 'assistant' && !msg.deckRender && msg.orchestration && msg.orchestration.steps.length > 0 && (
+                      <div style={styles.orchestrationStandaloneCard}>
+                        <div style={styles.orchestrationStandaloneHeader}>
+                          <span>
+                            Orchestrating: {msg.orchestration.model} ({msg.orchestration.steps.length} Steps)
+                          </span>
+                          {canResumeOrchestration(msg.orchestration) && (
+                            <span style={styles.orchestrationHeaderHint}>可在失败步骤右侧使用“重新生成/采用”</span>
+                          )}
+                        </div>
+                        <div style={styles.orchestrationPanel}>
+                          {msg.orchestration.steps.map((step) => (
+                            <div key={step.id} style={styles.orchestrationRow}>
+                              <span style={{
+                                ...styles.orchestrationStatus,
+                                ...orchestrationStatusStyle(step.status),
+                              }}>
+                                {orchestrationStatusLabel(step.status)}
+                              </span>
+                              <div style={styles.orchestrationBody}>
+                                <div style={styles.orchestrationTitle}>{step.name}</div>
+                                <div style={styles.orchestrationDetail}>{step.detail}</div>
+                              </div>
+                              <div style={styles.orchestrationRightRail}>
+                                <span style={styles.orchestrationDuration}>
+                                  {fmtDuration(step.startedAt, step.endedAt, step.status)}
+                                </span>
+                                {canShowStepActions(msg.orchestration, step) && (
+                                  <div style={styles.stepActionStack}>
+                                    <button
+                                      style={styles.stepActionBtn}
+                                      disabled={Boolean(resumingMessageId)}
+                                      onClick={() => void resumeGeneration(msg.id, 'resume')}>
+                                      {resumingMessageId === msg.id ? '处理中...' : '重新生成'}
+                                    </button>
+                                    <button
+                                      style={{ ...styles.stepActionBtn, ...styles.stepActionBtnSecondary }}
+                                      disabled={Boolean(resumingMessageId)}
+                                      onClick={() => void resumeGeneration(msg.id, 'adopt')}>
+                                      采用
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <div style={{ ...styles.msgTs, textAlign: msg.role === 'user' ? 'right' : 'left' }}>
+                      {msg.ts.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })}
                     </div>
-                  ))}
+                  </div>
+                </div>
+              ))}
+
+              {loading && !hasLiveAssistantProgress && (
+                <div style={{ ...styles.msgRow }} className="reveal-up">
+                  <div style={{ ...styles.msgAvatar, background: 'white', border: '1px solid var(--line)', color: 'var(--accent)' }}>AI</div>
+                  <div style={{ ...styles.msgBubble, background: 'white', border: '1px solid var(--line)', padding: '16px 20px' }}>
+                    <span style={styles.typing}>
+                      <span className="ppt-typing-dot" />
+                      <span className="ppt-typing-dot" />
+                      <span className="ppt-typing-dot" />
+                    </span>
+                  </div>
                 </div>
               )}
-
-              <div style={{ ...styles.inputRow, borderColor: loading ? 'var(--accent)' : 'var(--line-strong)' }}>
-                {/* Upload button */}
-                <button style={styles.uploadBtn} className="ghost-button" title="Upload files"
-                  onClick={() => fileInputRef.current?.click()}>
-                  +
-                </button>
-                <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES} multiple hidden onChange={onFileChange} />
-
-                {/* Textarea */}
-                <textarea ref={textareaRef}
-                  style={styles.textarea}
-                  value={input}
-                  onChange={e => setInput(e.target.value)}
-                  onKeyDown={onKeyDown}
-                  placeholder="Describe your deck content... (Enter to send, Shift+Enter for new line)"
-                  rows={1}
-                />
-
-                {/* Send button */}
-                <button style={{ ...styles.sendBtn, opacity: (!input.trim() && !files.length) || hasLiveAssistantProgress ? 0.5 : 1 }}
-                  disabled={!activeId || (!input.trim() && !files.length) || loading || hasLiveAssistantProgress || Boolean(resumingMessageId)}
-                  onClick={send}>
-                  {hasLiveAssistantProgress ? '⏳' : '↑'}
-                </button>
-              </div>
-              <div style={styles.inputHint}>
-                AI automatically creates multi-slide HTML presentations from your prompts or documents.
-              </div>
+              <div ref={messagesEndRef} />
             </div>
-          </div>
 
-          <div ref={templateSectionRef} style={styles.templateSection}>
-            <div style={{ maxWidth: 1000, margin: '0 auto', width: '100%' }}>
-              <div style={styles.templateSectionHeader}>
-                <div>
-                  <div style={styles.drawerTitle}>Visual Templates</div>
-                  <div style={styles.drawerSubtitle}>Select a visual style for your next deck generation.</div>
-                </div>
-              </div>
+            {/* ── Input area ── */}
+            <div style={styles.inputArea}>
+              <div style={{ maxWidth: 900, margin: '0 auto', width: '100%' }}>
+                {files.length > 0 && (
+                  <div style={styles.attachedFiles}>
+                    {files.map((f, i) => (
+                      <div key={i} style={styles.attachedPill} className="reveal-up">
+                        <span>📄 {f.name}</span>
+                        <span style={{ opacity: 0.6, fontSize: 11 }}>{fmt(f.size)}</span>
+                        <button style={styles.removeFileBtn} onClick={() => removeFile(i)}>×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-              <div style={styles.tplGrid}>
-                {TEMPLATES.map(tpl => (
-                  <button key={tpl.id}
-                    className="antigravity-card"
-                    style={{
-                      ...styles.tplCard,
-                      border: selectedTemplate === tpl.id || active?.template === tpl.id ? '2px solid var(--accent)' : '1px solid var(--line)',
-                      background: selectedTemplate === tpl.id || active?.template === tpl.id ? 'var(--accent-soft)' : 'white'
-                    }}
-                    onClick={() => applyTemplate(tpl.id)}>
-                    <div style={{
-                      ...styles.tplEmoji,
-                      background: selectedTemplate === tpl.id || active?.template === tpl.id ? 'white' : 'var(--bg-deep)'
-                    }}>
-                      {tpl.emoji}
-                    </div>
-                    <div style={styles.tplLabel}>{tpl.label}</div>
-                    <div style={styles.tplDesc}>{tpl.desc}</div>
-                    {(selectedTemplate === tpl.id || active?.template === tpl.id) && (
-                      <div style={styles.tplCheck}>✓</div>
-                    )}
+                <div style={{ ...styles.inputRow, borderColor: loading ? 'var(--accent)' : 'var(--line-strong)' }}>
+                  {/* Upload button */}
+                  <button style={styles.uploadBtn} className="ghost-button" title="Upload files"
+                    onClick={() => fileInputRef.current?.click()}>
+                    +
                   </button>
-                ))}
+                  <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES} multiple hidden onChange={onFileChange} />
+
+                  {/* Textarea */}
+                  <textarea ref={textareaRef}
+                    style={styles.textarea}
+                    value={input}
+                    onChange={e => setInput(e.target.value)}
+                    onKeyDown={onKeyDown}
+                    placeholder="Describe your deck content..."
+                    rows={1}
+                  />
+
+                  {/* Send button */}
+                  <button style={{ ...styles.sendBtn, opacity: (!input.trim() && !files.length) || hasLiveAssistantProgress ? 0.5 : 1 }}
+                    disabled={!activeId || (!input.trim() && !files.length) || loading || hasLiveAssistantProgress || Boolean(resumingMessageId)}
+                    onClick={send}>
+                    {hasLiveAssistantProgress ? '⏳' : '↑'}
+                  </button>
+                </div>
+                <div style={styles.inputHint}>
+                  AI automatically creates multi-slide HTML presentations from your prompts or documents.
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div 
+          onMouseDown={startResizing}
+          style={{
+            width: '6px',
+            cursor: 'col-resize',
+            background: isResizing ? 'var(--accent)' : 'transparent',
+            zIndex: 100,
+            transition: 'background 0.2s',
+            marginRight: '-3px',
+            marginLeft: '-3px',
+            position: 'relative',
+          }}
+        />
+
+        <aside ref={templateSectionRef} style={{ ...styles.templateSection, width: rightSidebarWidth }}>
+          <div style={styles.templateSectionHeader}>
+            <div style={styles.drawerTitle}>Templates</div>
+            <div style={styles.drawerSubtitle}>Select a visual style.</div>
+          </div>
+
+          <div style={styles.tplGrid}>
+            {templates.map(tpl => {
+              const isSelected = selectedTemplate === tpl.id || active?.template === tpl.id;
+              const isHovered = hoveredTemplateId === tpl.id;
+              const hasPreviews = tpl.previewSlides && tpl.previewSlides.length > 0;
+
+              return (
+                <button key={tpl.id}
+                  className="antigravity-card"
+                  onMouseMove={(e) => handleTemplateMouseMove(e, tpl.id)}
+                  onMouseLeave={() => { setHoveredTemplateId(null); setHoverProgress(0); }}
+                  style={{
+                    ...styles.tplCard,
+                    border: isSelected ? '2px solid var(--accent)' : '1px solid var(--line)',
+                    background: isSelected ? 'var(--accent-soft)' : 'white',
+                    overflow: 'hidden',
+                  }}
+                  onClick={() => applyTemplate(tpl.id)}>
+                  
+                  {/* Dynamic Slide Projection with Shadow DOM isolation */}
+                  {hasPreviews && (
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      zIndex: 2,
+                      background: 'white',
+                      pointerEvents: 'none',
+                    }}>
+                      <ShadowPreview 
+                        html={tpl.previewSlides?.[isHovered ? Math.min(Math.floor(hoverProgress * tpl.previewSlides.length), tpl.previewSlides.length - 1) : 0] ?? ''}
+                        css={tpl.previewCss || ''}
+                        deckClass={tpl.deckClass}
+                      />
+                    </div>
+                  )}
+
+                   {/* We only show the descriptive Chinese label at the bottom corner now */}
+                   <div style={{ ...styles.tplDesc, position: 'absolute', zIndex: 3 }}>
+                     {tpl.desc}
+                   </div>
+                  {isSelected && (
+                    <div style={{ ...styles.tplCheck, zIndex: 4 }}>✓</div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </aside>
       </div>
 
       <style jsx global>{`
@@ -1204,9 +1437,17 @@ const styles: Record<string, React.CSSProperties> = {
   mainWrap: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     overflow: 'hidden',
     position: 'relative',
+    background: 'var(--bg-deep)',
+  },
+  chatWrap: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+    background: 'var(--bg-deep)',
   },
   mainScrollArea: {
     flex: 1,
@@ -1451,6 +1692,11 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'space-between',
     gap: 12,
   },
+  orchestrationHeaderHint: {
+    fontSize: 11,
+    color: 'var(--muted)',
+    fontWeight: 600,
+  },
   resumeBtn: {
     border: 'none',
     background: 'var(--warm)',
@@ -1510,6 +1756,32 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'var(--muted)',
     fontFamily: 'ui-monospace, monospace',
     fontWeight: 500,
+  },
+  orchestrationRightRail: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 10,
+  },
+  stepActionStack: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 6,
+  },
+  stepActionBtn: {
+    border: '1px solid var(--line-strong)',
+    background: 'white',
+    color: 'var(--ink)',
+    borderRadius: 10,
+    padding: '4px 10px',
+    fontSize: 11,
+    fontWeight: 600,
+    lineHeight: 1.2,
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+  },
+  stepActionBtnSecondary: {
+    background: 'var(--bg-deep)',
   },
   deckPreviewActions: {
     display: 'flex',
@@ -1651,16 +1923,20 @@ const styles: Record<string, React.CSSProperties> = {
 
   /* ── Inline template selector ── */
   templateSection: {
+    width: 320,
     flexShrink: 0,
-    padding: '24px 32px 40px',
+    display: 'flex',
+    flexDirection: 'column',
     background: 'white',
-    borderTop: '1px solid var(--line)',
+    borderLeft: '1px solid var(--line)',
+    overflowY: 'auto',
   },
   templateSectionHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 24,
+    padding: '24px 20px 16px',
+    background: 'white',
+    position: 'sticky',
+    top: 0,
+    zIndex: 5,
   },
   drawerTitle: {
     fontWeight: 600,
@@ -1676,46 +1952,48 @@ const styles: Record<string, React.CSSProperties> = {
   },
   tplGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-    gap: 16,
+    gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))',
+    gap: 10,
+    padding: '0 16px 40px',
   },
   tplCard: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    padding: '20px',
+    padding: '14px',
     border: '1px solid var(--line)',
-    borderRadius: 20,
+    borderRadius: 16,
     cursor: 'pointer',
     textAlign: 'left',
     transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
     background: 'white',
     boxShadow: 'var(--shadow-base)',
+    minHeight: 110,
+    aspectRatio: '16/10',
   },
   tplEmoji: {
-    width: 44,
-    height: 44,
-    background: 'var(--bg-deep)',
-    borderRadius: 14,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 20,
-    marginBottom: 16,
-    transition: 'transform 0.3s',
+    display: 'none',
   },
   tplLabel: {
-    fontWeight: 600,
-    fontSize: 15,
-    color: 'var(--ink)',
-    marginBottom: 6,
+    display: 'none',
   },
   tplDesc: {
-    fontSize: 12,
-    color: 'var(--muted)',
-    lineHeight: 1.5,
-    fontWeight: 500,
+    bottom: 10,
+    right: 10,
+    fontSize: 10,
+    color: 'var(--ink)',
+    fontWeight: 600,
+    padding: '4px 10px',
+    background: 'rgba(255, 255, 255, 0.85)',
+    backdropFilter: 'blur(8px)',
+    borderRadius: 10,
+    border: '1px solid rgba(255, 255, 255, 0.5)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+    maxWidth: '90%',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   tplCheck: {
     position: 'absolute',

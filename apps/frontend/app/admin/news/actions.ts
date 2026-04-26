@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { fetchWithSession } from "../../../lib/server-auth";
+import { fetchWithSession, requireNewsManagerUser } from "../../../lib/server-auth";
 import type { NewsMutationResponse } from "../../../lib/types";
 
 function normalizeErrorMessage(value: unknown, fallback: string) {
@@ -73,6 +73,7 @@ function revalidateNewsPaths(articleId?: string) {
 }
 
 export async function createNewsArticleAction(formData: FormData) {
+  await requireNewsManagerUser("/admin/news/new");
   const result = await forwardJson("/admin/news", {
     method: "POST",
     body: JSON.stringify(serializeNewsForm(formData))
@@ -89,6 +90,7 @@ export async function createNewsArticleAction(formData: FormData) {
 }
 
 export async function updateNewsArticleAction(id: string, formData: FormData) {
+  await requireNewsManagerUser(`/admin/news/${encodeURIComponent(id)}`);
   const result = await forwardJson(`/admin/news/${encodeURIComponent(id)}`, {
     method: "PATCH",
     body: JSON.stringify(serializeNewsForm(formData))
@@ -105,6 +107,7 @@ export async function updateNewsArticleAction(id: string, formData: FormData) {
 }
 
 export async function setNewsStatusAction(id: string, status: string, redirectPath: string) {
+  await requireNewsManagerUser(redirectPath);
   const result = await forwardJson(`/admin/news/${encodeURIComponent(id)}`, {
     method: "PATCH",
     body: JSON.stringify({ status })
@@ -120,6 +123,7 @@ export async function setNewsStatusAction(id: string, status: string, redirectPa
 }
 
 export async function deleteNewsArticleAction(id: string, redirectPath: string) {
+  await requireNewsManagerUser(redirectPath);
   const result = await forwardJson(`/admin/news/${encodeURIComponent(id)}`, {
     method: "DELETE"
   });
@@ -132,4 +136,3 @@ export async function deleteNewsArticleAction(id: string, redirectPath: string) 
   revalidateNewsPaths(id);
   redirect("/admin/news");
 }
-

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { fetchWithSession } from "../../../lib/server-auth";
+import { fetchWithSession, requireLlmManagerUser } from "../../../lib/server-auth";
 
 function normalizeErrorMessage(value: unknown, fallback: string) {
   if (
@@ -19,6 +19,7 @@ function normalizeErrorMessage(value: unknown, fallback: string) {
 }
 
 export async function createLlmConfigAction(formData: FormData) {
+  await requireLlmManagerUser("/admin/llm");
   const payload = {
     name: String(formData.get("name") ?? "New Model"),
     providerType: String(formData.get("providerType") ?? "openai-compatible"),
@@ -43,6 +44,7 @@ export async function createLlmConfigAction(formData: FormData) {
 }
 
 export async function updateLlmConfigAction(formData: FormData) {
+  await requireLlmManagerUser("/admin/llm");
   const id = String(formData.get("id"));
   const payload = {
     name: String(formData.get("name") ?? "New Model"),
@@ -68,6 +70,7 @@ export async function updateLlmConfigAction(formData: FormData) {
 }
 
 export async function deleteLlmConfigAction(formData: FormData) {
+  await requireLlmManagerUser("/admin/llm");
   const id = String(formData.get("id"));
   
   const response = await fetchWithSession(`/admin/llm-config/${id}`, {

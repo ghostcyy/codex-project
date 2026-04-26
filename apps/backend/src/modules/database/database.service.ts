@@ -19,6 +19,10 @@ interface UserLookupRow extends QueryResultRow {
   id: number;
 }
 
+interface LogMarkerRow extends QueryResultRow {
+  id: number;
+}
+
 interface PermissionRow extends QueryResultRow {
   id: number;
 }
@@ -60,7 +64,8 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     this.pool = await this.createPool();
     await this.runInitScripts();
     await this.ensureRolePermissionAssignments();
-    await this.ensureDefaultAdmin();
+    const defaultAdminUserId = await this.ensureDefaultAdmin();
+    await this.backfillLegacyPptProjectsToAdmin(defaultAdminUserId);
   }
 
   private async createPool() {
@@ -174,6 +179,8 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     if (count === 0) {
       this.logger.warn("No news seed data was found after initialization.");
     }
+
+    return userId;
   }
 
   private async ensureRolePermissionAssignments() {
@@ -208,5 +215,54 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
         );
       }
     }
+  }
+
+  private async backfillLegacyPptProjectsToAdmin(adminUserId: number) {
+    const markerAction = "migration.ppt_projects.assign_admin_owner";
+    const markerResult = await this.query<LogMarkerRow>(
+      `
+        SELECT id
+        FROM operation_logs
+        WHERE action = $1
+        LIMIT 1
+      `,
+      [markerAction]
+    );
+
+    if (markerResult.rows[0]) {
+      return;
+    }
+
+    const updateResult = await this.query<CountRow>(
+      `
+        WITH moved AS (
+          UPDATE ppt_projects
+          SET user_id = $1,
+              updated_at = NOW()
+          RETURNING id
+        )
+        SELECT COUNT(*)::text AS count
+        FROM moved
+      `,
+      [adminUserId]
+    );
+    const movedCount = Number(updateResult.rows[0]?.count ?? "0");
+
+    await this.query(
+      `
+        INSERT INTO operation_logs (user_id, action, target_type, target_id, detail)
+        VALUES ($1, $2, 'system', 'ppt-project-ownership', $3::jsonb)
+      `,
+      [
+        adminUserId,
+        markerAction,
+        JSON.stringify({
+          assignedToUserId: adminUserId,
+          movedCount
+        })
+      ]
+    );
+
+    this.logger.log(`HTML-PPT project ownership backfill completed. Assigned ${movedCount} project(s) to admin.`);
   }
 }

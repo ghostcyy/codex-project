@@ -54,6 +54,8 @@ export type FullDeckAsset = {
   animationsUsed: string[];
   indexSnippet: string;
   styleSnippet: string;
+  previewSlides: string[];
+  previewCss: string;
   tags: string[];
 };
 
@@ -188,12 +190,17 @@ export async function indexSkillAssets(skillRoot: string): Promise<SkillAssetMan
     indexAnimations(skillRoot),
   ]);
 
+  // Calibrate layout density budgets against the full-deck templates' actual
+  // body sections so academic / editorial / dense decks no longer fail the
+  // post-publish fit check on content that the skill itself ships.
+  const calibratedLayouts = calibrateLayoutBudgetsAgainstFullDecks(layouts, fullDecks);
+
   const manifest: SkillAssetManifest = {
     hash,
     generatedAt: new Date().toISOString(),
     skillRoot,
     themes,
-    layouts,
+    layouts: calibratedLayouts,
     fullDecks,
     animations: animResult.animations,
     fxEffects: animResult.fxEffects,
@@ -225,14 +232,15 @@ async function computeSkillHash(skillRoot: string): Promise<string> {
     })
   );
 
-  return createHash("sha256").update(parts.join("|")).digest("hex").slice(0, 16);
+  const INDEXER_VERSION = "v3"; // bumped: per-role density multipliers + full-deck calibration
+  return createHash("sha256").update(parts.join("|") + "|" + INDEXER_VERSION).digest("hex").slice(0, 16);
 }
 
 function cacheDir(): string {
   return join(findWorkspaceRoot(), ".local-runtime", "skill-manifests");
 }
 
-function findWorkspaceRoot(): string {
+export function findWorkspaceRoot(): string {
   let current = resolve(process.cwd());
   for (let depth = 0; depth < 6; depth++) {
     if (existsSync(join(current, ".agents", "skills", "html-ppt", "assets"))) {
@@ -380,6 +388,31 @@ function extractSlots(html: string, hasCanvas: boolean): string[] {
   return Array.from(found);
 }
 
+/**
+ * Per-role density multipliers applied on top of each layout's measured
+ * template content. Body / content / divider layouts get more headroom
+ * because real-world decks (academic, editorial, dense product slides)
+ * legitimately push past the demo template's content. Cover / closer / chart
+ * stay tight because their visual contract is "minimal text."
+ */
+const ROLE_BODY_MULTIPLIER: Record<LayoutRole, number> = {
+  cover: 1.0,
+  closer: 1.0,
+  divider: 1.2,
+  chart: 1.0,
+  image: 1.0,
+  content: 2.0
+};
+
+const ROLE_FLOOR_BODY_CHARS: Record<LayoutRole, number> = {
+  cover: 160,
+  closer: 160,
+  divider: 240,
+  chart: 200,
+  image: 200,
+  content: 360
+};
+
 function deriveDensityBudget(id: string, sectionHtml: string, role: LayoutRole): LayoutDensityBudget {
   const visibleText = extractVisibleText(sectionHtml);
   const cardCount = (sectionHtml.match(/class="[^"]*\bcard\b[^"]*"/g) ?? []).length;
@@ -393,12 +426,73 @@ function deriveDensityBudget(id: string, sectionHtml: string, role: LayoutRole):
     return { maxTitleChars, maxBodyCharsTotal: 200, maxItems: Math.max(1, cardCount, liCount), maxCardCount: cardCount };
   }
 
+  const multiplier = ROLE_BODY_MULTIPLIER[role] ?? 1.5;
+  const floor = ROLE_FLOOR_BODY_CHARS[role] ?? 200;
   return {
     maxTitleChars,
-    maxBodyCharsTotal: Math.max(200, Math.round(visibleText.length * 1.5)),
+    maxBodyCharsTotal: Math.max(floor, Math.round(visibleText.length * multiplier)),
     maxItems: Math.max(4, cardCount, liCount),
     maxCardCount: cardCount,
   };
+}
+
+/**
+ * Calibrate per-layout density budgets against the actual full-deck templates
+ * the skill ships. The full-decks are the highest-fidelity ground truth for
+ * publishable density; if their typical body section runs 600 visible chars,
+ * a content layout's 200-char ceiling is too tight regardless of how sparse
+ * the demo single-page template happens to be.
+ *
+ * Strategy:
+ *   1. Walk every full-deck section that exists.
+ *   2. Compute visible-text char count per section, then take the median and
+ *      P90 across all "body" sections (sections that are not the deck's first
+ *      or last slide and not pure-canvas).
+ *   3. For content layouts, raise `maxBodyCharsTotal` to at least the median
+ *      and cap it at the P90 so a single dense outlier cannot blow up the
+ *      ceiling for every layout.
+ *   4. Cover / divider / closer / chart / image layouts keep their existing
+ *      role-derived budgets (calibration is body-density-specific).
+ */
+function calibrateLayoutBudgetsAgainstFullDecks(
+  layouts: LayoutAsset[],
+  fullDecks: FullDeckAsset[]
+): LayoutAsset[] {
+  const bodyCharLengths: number[] = [];
+  for (const deck of fullDecks) {
+    const slides = deck.previewSlides ?? [];
+    if (slides.length === 0) continue;
+    // Drop the first and last preview slide to avoid cover/closer skewing the
+    // body density downward.
+    const candidates = slides.length >= 3 ? slides.slice(1, -1) : slides;
+    for (const section of candidates) {
+      if (/<canvas\b/i.test(section)) continue;
+      const visibleLength = extractVisibleText(section).length;
+      if (visibleLength >= 80) bodyCharLengths.push(visibleLength);
+    }
+  }
+
+  if (bodyCharLengths.length === 0) return layouts;
+
+  bodyCharLengths.sort((a, b) => a - b);
+  const median = bodyCharLengths[Math.floor(bodyCharLengths.length / 2)] ?? 0;
+  const p90Index = Math.min(bodyCharLengths.length - 1, Math.floor(bodyCharLengths.length * 0.9));
+  const p90 = bodyCharLengths[p90Index] ?? median;
+  if (median <= 0) return layouts;
+
+  return layouts.map((layout) => {
+    if (layout.role !== "content") return layout;
+    const current = layout.densityBudget.maxBodyCharsTotal;
+    const calibrated = Math.min(p90, Math.max(current, median));
+    if (calibrated <= current) return layout;
+    return {
+      ...layout,
+      densityBudget: {
+        ...layout.densityBudget,
+        maxBodyCharsTotal: calibrated
+      }
+    };
+  });
 }
 
 function extractVisibleText(html: string): string {
@@ -448,6 +542,14 @@ async function indexFullDeck(dir: string, id: string): Promise<FullDeckAsset> {
 
   const slideCount = (indexHtml.match(/<section\b[^>]*class="[^"]*\bslide\b/g) ?? []).length;
 
+  // Extract first 5 slides
+  const previewSlides: string[] = [];
+  const slideRegex = /<section\b[\s\S]*?<\/section>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = slideRegex.exec(indexHtml)) !== null && previewSlides.length < 5) {
+    previewSlides.push(match[0]);
+  }
+
   // Pull the first extra class on the .deck div that starts with "tpl-"
   const deckDivAttrs = indexHtml.match(/<div[^>]+class="([^"]*deck[^"]*)"[^>]*>/)?.[1] ?? "";
   const deckClass = deckDivAttrs.split(/\s+/).find((c) => c.startsWith("tpl-")) ?? `tpl-${id}`;
@@ -483,6 +585,8 @@ async function indexFullDeck(dir: string, id: string): Promise<FullDeckAsset> {
     animationsUsed,
     indexSnippet: indexHtml.slice(0, 2000),
     styleSnippet: styleCss.slice(0, 2000),
+    previewSlides,
+    previewCss: styleCss,
     tags: inferFullDeckTags(id),
   };
 }

@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
 import { RegisterForm } from "../../components/auth/register-form";
 import { getCurrentUser } from "../../lib/server-auth";
+import { resolveSignedInPath } from "../../lib/auth";
 
 export default async function RegisterPage() {
   const user = await getCurrentUser();
 
   if (user) {
-    redirect("/admin");
+    redirect(resolveSignedInPath(user));
   }
 
   return (

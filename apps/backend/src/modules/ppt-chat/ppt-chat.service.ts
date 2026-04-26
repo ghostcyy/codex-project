@@ -13,8 +13,10 @@ import { HtmlPptRendererService } from "../html-ppt-renderer/html-ppt-renderer.s
 import { LlmConfigService } from "../llm-config/llm-config.service";
 import { LlmLoggingService } from "../llm-logging/llm-logging.service";
 import { HtmlPptAgentService } from "./html-ppt-agent.service";
-import type { HtmlPptAgentCheckpoint, HtmlPptAgentFailureRecord, HtmlPptAgentProgress } from "./html-ppt-agent.types";
+import type { HtmlPptAgentCheckpoint, HtmlPptAgentFailureRecord, HtmlPptAgentProgress, ResearchPack } from "./html-ppt-agent.types";
 import { HTML_PPT_SKILL_PROMPT } from "./html-ppt-skill.prompt";
+import { findWorkspaceRoot, indexSkillAssets } from "./skill-asset-indexer";
+import { join, resolve } from "node:path";
 import type {
   CreatePptProjectInput,
   PptGenerationOrchestration,
@@ -33,6 +35,7 @@ import type {
   PptMessageDto,
   PptMessageTemplate,
   PptProjectSummary,
+  ResumePptMessageInput,
   SendPptMessageInput,
   UpdatePptProjectInput
 } from "./ppt-chat.types";
@@ -109,6 +112,12 @@ type CreativeStyleCatalog = ReturnType<HtmlPptRendererService["getCreativeStyleC
 
 type ActiveModelConfig = Awaited<ReturnType<LlmConfigService["getActiveConfig"]>>;
 type ChatCompletionRequestMessage = { role: "system" | "user" | "assistant"; content: string };
+type ChatCompletionLogContext = {
+  projectId?: string;
+  messageId?: string;
+  stage?: string;
+  source?: string;
+};
 type DeckResumeNextStep = "plan" | "draft" | "localQa" | "style" | "review" | "revise" | "recheck" | "rereview" | "render" | "completed";
 type DeckResumeCheckpoint = {
   version: "checkpoint-v1";
@@ -367,6 +376,13 @@ export class PptChatService {
     return { success: true };
   }
 
+  async listTemplates() {
+    // Resolve skill root using the workspace root helper
+    const skillRoot = join(findWorkspaceRoot(), ".agents/skills/html-ppt");
+    const manifest = await indexSkillAssets(skillRoot);
+    return manifest.fullDecks;
+  }
+
   async listMessages(userId: number, projectId: string): Promise<PptMessageDto[]> {
     await this.getOwnedProject(userId, projectId);
     const result = await this.databaseService.query<MessageRow>(
@@ -440,7 +456,14 @@ export class PptChatService {
       };
     }
 
-    const assistantContent = await this.generateAssistantMessage(userId, project.name, context, pendingUserMessage);
+    const assistantContent = await this.generateAssistantMessage(
+      userId,
+      project.name,
+      context,
+      pendingUserMessage,
+      projectId,
+      assistantMessageId
+    );
     await this.insertAssistantMessage(projectId, assistantMessageId, assistantContent, { generationStatus: "completed" });
 
     await this.databaseService.query("UPDATE ppt_projects SET updated_at = NOW() WHERE id = $1", [projectId]);
@@ -544,6 +567,8 @@ export class PptChatService {
     try {
       const result = await this.orchestrateDeckGeneration(
         job.userId,
+        job.projectId,
+        job.assistantMessageId,
         job.projectName,
         job.context,
         job.pendingUserMessage,
@@ -630,7 +655,12 @@ export class PptChatService {
     return result.rows[0]?.meta ?? null;
   }
 
-  async resumeMessageGeneration(userId: number, projectId: string, messageId: string) {
+  async resumeMessageGeneration(
+    userId: number,
+    projectId: string,
+    messageId: string,
+    input: ResumePptMessageInput = {}
+  ) {
     const project = await this.getOwnedProject(userId, projectId);
     const messageResult = await this.databaseService.query<MessageRow>(
       `
@@ -668,6 +698,25 @@ export class PptChatService {
 
     let generationCheckpoint = this.normalizeStoredGenerationCheckpoint(originalMeta.generationCheckpoint);
     let agentCheckpoint = this.normalizeStoredAgentCheckpoint(originalMeta.agentCheckpoint);
+    const resumeMode = this.normalizeOptionalString(input.mode)?.toLowerCase() === "adopt" ? "adopt" : "resume";
+    let adoptQueueName = "00 采用结果并跳过 QA";
+    let adoptQueueDetail = "已采用当前导出结果，下一步将跳过 QA 继续完成收尾。";
+    let adoptProgressDetail = "已采用当前结果，将跳过 QA 并继续完成编排。";
+    if (resumeMode === "adopt") {
+      if (!agentCheckpoint) {
+        throw new BadRequestException("当前没有可采用的后台编排 checkpoint。");
+      }
+      try {
+        agentCheckpoint = await this.htmlPptAgentService.prepareCheckpointForAdopt(agentCheckpoint);
+      } catch (error) {
+        throw new BadRequestException(error instanceof Error ? error.message : "当前无法采用。");
+      }
+      if (agentCheckpoint.nextStage === "06-generate-style") {
+        adoptQueueName = "00 采用当前 index 草稿";
+        adoptQueueDetail = "已采用当前 05 阶段草稿，下一步将继续生成 style.css。";
+        adoptProgressDetail = "已采用当前 05 阶段草稿，将继续生成 style.css。";
+      }
+    }
     const sourceUserMessage = await this.resolveSourceUserMessage(
       projectId,
       assistantRow,
@@ -677,10 +726,18 @@ export class PptChatService {
     );
     const pendingUserMessage = agentCheckpoint?.pendingUserMessage ?? generationCheckpoint?.pendingUserMessage ?? this.mapMessage(sourceUserMessage);
     const context = await this.buildConversationContextBeforeMessage(userId, projectId, sourceUserMessage);
-    const orchestration = await this.createQueuedDeckOrchestration(existingOrchestration, {
-      name: "00 后台任务恢复排队",
-      detail: "已恢复未完成编排任务，等待后台继续执行。"
-    });
+    const orchestration = await this.createQueuedDeckOrchestration(
+      existingOrchestration,
+      resumeMode === "adopt"
+        ? {
+            name: adoptQueueName,
+            detail: adoptQueueDetail
+          }
+        : {
+            name: "00 后台任务恢复排队",
+            detail: "已恢复未完成编排任务，等待后台继续执行。"
+          }
+    );
     const assistantMeta: Record<string, unknown> = {
       ...originalMeta,
       orchestration,
@@ -697,7 +754,13 @@ export class PptChatService {
 
     await this.updateAssistantMessage(
       messageId,
-      this.formatDeckProgressMessage("已重新进入后台编排队列，页面会自动刷新进度。", orchestration, "running"),
+      this.formatDeckProgressMessage(
+        resumeMode === "adopt"
+          ? adoptProgressDetail
+          : "已重新进入后台编排队列，页面会自动刷新进度。",
+        orchestration,
+        "running"
+      ),
       assistantMeta
     );
     await this.databaseService.query("UPDATE ppt_projects SET updated_at = NOW() WHERE id = $1", [projectId]);
@@ -724,6 +787,8 @@ export class PptChatService {
 
   private async orchestrateDeckGeneration(
     userId: number,
+    projectId: string,
+    assistantMessageId: string,
     projectName: string,
     context: { summaryText: string; recentMessages: PptMessageDto[] },
     pendingUserMessage: PptMessageDto,
@@ -740,6 +805,8 @@ export class PptChatService {
         const result = await this.htmlPptAgentService.generateDeck(
           {
             userId,
+            projectId,
+            assistantMessageId,
             projectName,
             context,
             pendingUserMessage,
@@ -982,6 +1049,12 @@ export class PptChatService {
             theme,
             () => {
               totalModelCalls += 1;
+            },
+            {
+              projectId,
+              messageId: assistantMessageId,
+              stage: "plan",
+              source: "ppt-chat"
             }
           );
           nextStep = "draft";
@@ -1001,6 +1074,12 @@ export class PptChatService {
           const spec = await this.generateDeckSpec(projectName, context, pendingUserMessage, {
             plan,
             userId,
+            logContext: {
+              projectId,
+              messageId: assistantMessageId,
+              stage: "deckspec-draft",
+              source: "ppt-chat"
+            },
             onModelCall: (stage) => {
               totalModelCalls += 1;
               if (currentRunningStep) {
@@ -1052,6 +1131,12 @@ export class PptChatService {
             localQa,
             () => {
               totalModelCalls += 1;
+            },
+            {
+              projectId,
+              messageId: assistantMessageId,
+              stage: "style",
+              source: "ppt-chat"
             }
           );
           deckSpec = this.applyCreativeStyleToDeckSpec(deckSpec, stylePlan);
@@ -1073,9 +1158,20 @@ export class PptChatService {
             throw new ServiceUnavailableException("缺少 DeckSpec 或本地质检结果，无法执行 AI 评审。");
           }
 
-          const aiReview = await this.reviewDeckWithModel(activeConfig, deckSpec, localQa, () => {
-            totalModelCalls += 1;
-          });
+          const aiReview = await this.reviewDeckWithModel(
+            activeConfig,
+            deckSpec,
+            localQa,
+            () => {
+              totalModelCalls += 1;
+            },
+            {
+              projectId,
+              messageId: assistantMessageId,
+              stage: "review",
+              source: "ppt-chat"
+            }
+          );
           nextStep = this.shouldIterateDeck(localQa, aiReview, iteration) ? "revise" : "render";
           if (nextStep === "revise") {
             iteration += 1;
@@ -1105,6 +1201,12 @@ export class PptChatService {
               theme,
               () => {
                 totalModelCalls += 1;
+              },
+              {
+                projectId,
+                messageId: assistantMessageId,
+                stage: "revise",
+                source: "ppt-chat"
               }
             );
             const styledRefined = creativeStyle
@@ -1141,9 +1243,20 @@ export class PptChatService {
               throw new ServiceUnavailableException("缺少 DeckSpec 或本地复检结果，无法执行 AI 复评。");
             }
 
-            const nextReview = await this.reviewDeckWithModel(activeConfig, deckSpec, localQa, () => {
-              totalModelCalls += 1;
-            });
+            const nextReview = await this.reviewDeckWithModel(
+              activeConfig,
+              deckSpec,
+              localQa,
+              () => {
+                totalModelCalls += 1;
+              },
+              {
+                projectId,
+                messageId: assistantMessageId,
+                stage: "rereview",
+                source: "ppt-chat"
+              }
+            );
             nextStep = this.shouldIterateDeck(localQa, nextReview, iteration) ? "revise" : "render";
             if (nextStep === "revise") {
               iteration += 1;
@@ -1194,7 +1307,9 @@ export class PptChatService {
     userId: number,
     projectName: string,
     context: { summaryText: string; recentMessages: PptMessageDto[] },
-    pendingUserMessage: PptMessageDto
+    pendingUserMessage: PptMessageDto,
+    projectId?: string,
+    assistantMessageId?: string
   ) {
     const activeConfig = await this.llmConfigService.getActiveConfig();
     const systemPrompt = this.getHtmlPptSkillPrompt();
@@ -1220,7 +1335,12 @@ export class PptChatService {
       }
     ];
 
-    const response = await this.requestChatCompletion(activeConfig, messages, "模型调用失败。", userId);
+    const response = await this.requestChatCompletion(activeConfig, messages, "模型调用失败。", userId, {
+      projectId,
+      messageId: assistantMessageId,
+      stage: "chat-reply",
+      source: "ppt-chat"
+    });
 
     const payload = (await response.json().catch(() => null)) as ChatCompletionResponse | { error?: { message?: string } } | null;
 
@@ -1251,7 +1371,8 @@ export class PptChatService {
     pendingUserMessage: PptMessageDto,
     templateId: string,
     theme: string,
-    onModelCall?: () => void
+    onModelCall?: () => void,
+    logContext?: ChatCompletionLogContext
   ): Promise<DeckPlan> {
     const systemPrompt = [
       this.getHtmlPptSkillPrompt(),
@@ -1287,6 +1408,7 @@ export class PptChatService {
       "编排规划生成失败。",
       {
         onModelCall,
+        logContext,
         repairHint:
           "必须满足 objective/targetAudience/visualDirection/slidePlan/qualityChecklist 字段，slidePlan 为数组且每项包含 type/title/focus。"
       }
@@ -1298,7 +1420,8 @@ export class PptChatService {
     activeConfig: ActiveModelConfig,
     deckSpec: PptDeckSpec,
     localQa: LocalDeckQa,
-    onModelCall?: () => void
+    onModelCall?: () => void,
+    logContext?: ChatCompletionLogContext
   ): Promise<DeckReview> {
     const systemPrompt = [
       "你是 HTML-PPT 质量评审器。",
@@ -1328,6 +1451,7 @@ export class PptChatService {
 
     const payload = await this.callModelForJson(activeConfig, systemPrompt, userPrompt, "AI 质检失败。", {
       onModelCall,
+      logContext,
       repairHint: "必须满足 pass/score/summary/issues/actions 字段。"
     });
     return this.normalizeDeckReview(payload);
@@ -1340,7 +1464,8 @@ export class PptChatService {
     review: DeckReview,
     templateId: string,
     theme: string,
-    onModelCall?: () => void
+    onModelCall?: () => void,
+    logContext?: ChatCompletionLogContext
   ): Promise<PptDeckSpec> {
     const systemPrompt = [
       this.getHtmlPptSkillPrompt(),
@@ -1364,6 +1489,7 @@ export class PptChatService {
 
     const payload = await this.callModelForJson(activeConfig, systemPrompt, userPrompt, "DeckSpec 修订失败。", {
       onModelCall,
+      logContext,
       repairHint: "必须返回符合 DeckSpec schemaVersion=2.0 的 JSON object，且 template/theme 不变。"
     });
     const v2Issues = this.validateDeckSpecV2Contract(payload);
@@ -1379,7 +1505,8 @@ export class PptChatService {
     plan: DeckPlan,
     deckSpec: PptDeckSpec,
     localQa: LocalDeckQa,
-    onModelCall?: () => void
+    onModelCall?: () => void,
+    logContext?: ChatCompletionLogContext
   ): Promise<PptDeckCreativeStyle> {
     const catalog = this.htmlPptRendererService.getCreativeStyleCatalog();
     const slideInputs = deckSpec.slides.map((slide, index) => ({
@@ -1453,6 +1580,7 @@ export class PptChatService {
 
     const payload = await this.callModelForJson(activeConfig, systemPrompt, userPrompt, "AI 样式创作失败。", {
       onModelCall,
+      logContext,
       repairHint: "必须返回 theme/backupThemes/deckStyle/texture/shape/slides。每页必须包含 composition。slides 必须以 slideId 为 key，所有 value 必须来自 rendererStyleCatalog。"
     });
 
@@ -1745,11 +1873,18 @@ export class PptChatService {
       onModelCall?: () => void;
       repairHint?: string;
       userId?: number;
+      logContext?: ChatCompletionLogContext;
     }
   ) {
     const requestModel = async (messages: ChatCompletionRequestMessage[]) => {
       options?.onModelCall?.();
-      const response = await this.requestChatCompletion(activeConfig, messages, fallbackErrorMessage, options?.userId);
+      const response = await this.requestChatCompletion(
+        activeConfig,
+        messages,
+        fallbackErrorMessage,
+        options?.userId,
+        options?.logContext
+      );
 
       const payload = (await response.json().catch(() => null)) as ChatCompletionResponse | ChatCompletionErrorResponse | null;
       if (!response.ok) {
@@ -1799,7 +1934,8 @@ export class PptChatService {
     activeConfig: ActiveModelConfig,
     messages: ChatCompletionRequestMessage[],
     fallbackErrorMessage: string,
-    userId?: number
+    userId?: number,
+    logContext?: ChatCompletionLogContext
   ) {
     const timeoutMs = this.modelRequestTimeoutMs();
     const controller = new AbortController();
@@ -1812,6 +1948,12 @@ export class PptChatService {
     this.logger.log(
       `LLM request ${requestId} started: model=${activeConfig.model}, host=${providerHost}, messages=${messages.length}, chars=${requestSize}, timeoutMs=${timeoutMs}`
     );
+    const requestPayload = {
+      model: activeConfig.model,
+      messages
+    };
+    const resolvedSource = logContext?.source ?? "ppt-chat";
+    const resolvedStage = logContext?.stage ?? "unspecified";
 
     try {
       const response = await fetch(`${activeConfig.baseUrl}/chat/completions`, {
@@ -1820,43 +1962,90 @@ export class PptChatService {
           "Content-Type": "application/json",
           Authorization: `Bearer ${activeConfig.apiKey}`
         },
-        body: JSON.stringify({
-          model: activeConfig.model,
-          messages
-        }),
+        body: JSON.stringify(requestPayload),
         cache: "no-store",
         signal: controller.signal
       });
       const elapsedMs = Date.now() - startedAt;
+      const rawResponseText = await response.clone().text().catch(() => "");
+      let parsedPayload: ChatCompletionResponse | ChatCompletionErrorResponse | null = null;
+      if (rawResponseText.trim().length > 0) {
+        try {
+          parsedPayload = JSON.parse(rawResponseText) as ChatCompletionResponse | ChatCompletionErrorResponse;
+        } catch {
+          parsedPayload = null;
+        }
+      }
 
       if (response.ok) {
         this.logger.log(`LLM request ${requestId} completed: status=${response.status}, elapsedMs=${elapsedMs}`);
-        if (userId) {
-          response.clone().json().then((payload: any) => {
-             if (payload?.usage) {
-                 this.llmLoggingService.logCall(
-                     activeConfig.id,
-                     userId,
-                     payload.usage.prompt_tokens || 0,
-                     payload.usage.completion_tokens || 0,
-                     payload.usage.total_tokens || 0
-                 ).catch(err => this.logger.warn(`Failed to log usage: ${err.message}`));
-             }
-          }).catch(() => undefined);
+        const usage = parsedPayload && "usage" in parsedPayload ? (parsedPayload as { usage?: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number } }).usage : undefined;
+        if (userId && usage) {
+          this.llmLoggingService.logCall(
+            activeConfig.id,
+            userId,
+            usage.prompt_tokens || 0,
+            usage.completion_tokens || 0,
+            usage.total_tokens || 0
+          ).catch((err) => this.logger.warn(`Failed to log usage: ${err.message}`));
         }
       } else {
-        const errorBody = await response.clone().text().catch(() => "");
         this.logger.warn(
-          `LLM request ${requestId} provider error: status=${response.status}, elapsedMs=${elapsedMs}, body=${this.summarizeLogSnippet(errorBody)}`
+          `LLM request ${requestId} provider error: status=${response.status}, elapsedMs=${elapsedMs}, body=${this.summarizeLogSnippet(rawResponseText)}`
         );
       }
+      this.llmLoggingService.logPayload({
+        configId: activeConfig.id,
+        userId: userId ?? null,
+        projectId: logContext?.projectId ?? null,
+        messageId: logContext?.messageId ?? null,
+        source: resolvedSource,
+        stage: resolvedStage,
+        requestPayload,
+        responsePayload: parsedPayload ?? (rawResponseText || null),
+        status: response.ok ? "success" : "error",
+        errorMessage: response.ok ? null : this.extractProviderErrorMessage(parsedPayload, fallbackErrorMessage),
+        latencyMs: elapsedMs
+      }).catch((error) => {
+        this.logger.warn(`Failed to log llm payload: ${error instanceof Error ? error.message : String(error)}`);
+      });
 
       return response;
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
+        this.llmLoggingService.logPayload({
+          configId: activeConfig.id,
+          userId: userId ?? null,
+          projectId: logContext?.projectId ?? null,
+          messageId: logContext?.messageId ?? null,
+          source: resolvedSource,
+          stage: resolvedStage,
+          requestPayload,
+          responsePayload: null,
+          status: "timeout",
+          errorMessage: `模型请求超过 ${Math.round(timeoutMs / 1000)} 秒未返回。`,
+          latencyMs: Date.now() - startedAt
+        }).catch((payloadError) => {
+          this.logger.warn(`Failed to log timeout payload: ${payloadError instanceof Error ? payloadError.message : String(payloadError)}`);
+        });
         this.logger.warn(`LLM request ${requestId} local timeout: elapsedMs=${Date.now() - startedAt}, timeoutMs=${timeoutMs}`);
         throw new ServiceUnavailableException(`模型请求超过 ${Math.round(timeoutMs / 1000)} 秒未返回。`);
       }
+      this.llmLoggingService.logPayload({
+        configId: activeConfig.id,
+        userId: userId ?? null,
+        projectId: logContext?.projectId ?? null,
+        messageId: logContext?.messageId ?? null,
+        source: resolvedSource,
+        stage: resolvedStage,
+        requestPayload,
+        responsePayload: null,
+        status: "error",
+        errorMessage: error instanceof Error ? error.message : String(error),
+        latencyMs: Date.now() - startedAt
+      }).catch((payloadError) => {
+        this.logger.warn(`Failed to log error payload: ${payloadError instanceof Error ? payloadError.message : String(payloadError)}`);
+      });
 
       this.logger.warn(
         `LLM request ${requestId} transport error: elapsedMs=${Date.now() - startedAt}, error=${
@@ -2038,7 +2227,13 @@ export class PptChatService {
     projectName: string,
     context: { summaryText: string; recentMessages: PptMessageDto[] },
     pendingUserMessage: PptMessageDto,
-    options?: { safetyRetryOnly?: boolean; plan?: DeckPlan | null; onModelCall?: (stage: string) => void; userId?: number }
+    options?: {
+      safetyRetryOnly?: boolean;
+      plan?: DeckPlan | null;
+      onModelCall?: (stage: string) => void;
+      userId?: number;
+      logContext?: ChatCompletionLogContext;
+    }
   ): Promise<PptDeckSpec> {
     const activeConfig = await this.llmConfigService.getActiveConfig();
     const templateId = pendingUserMessage.template?.id ?? "pitch-deck";
@@ -2056,7 +2251,8 @@ export class PptChatService {
         theme,
         plan,
         onModelCall,
-        options?.userId
+        options?.userId,
+        options?.logContext
       );
     }
 
@@ -2080,7 +2276,14 @@ export class PptChatService {
           { role: "user", content: userPrompt }
         ],
         "DeckSpec 生成失败。",
-        options?.userId
+        options?.userId,
+        {
+          ...(options?.logContext ?? {}),
+          source: options?.logContext?.source ?? "ppt-chat",
+          stage: safetyRetry
+            ? `${options?.logContext?.stage ?? "deckspec-draft"}-safety-retry`
+            : options?.logContext?.stage ?? "deckspec-draft"
+        }
       );
 
       const payload = (await response.json().catch(() => null)) as ChatCompletionResponse | ChatCompletionErrorResponse | null;
@@ -2147,7 +2350,8 @@ export class PptChatService {
     theme: string,
     plan: DeckPlan | null,
     onModelCall?: (stage: string) => void,
-    userId?: number
+    userId?: number,
+    logContext?: ChatCompletionLogContext
   ): Promise<PptDeckSpec> {
     if (!plan) {
       throw new ServiceUnavailableException("缺少任务规划，无法分批生成 DeckSpec。");
@@ -2172,7 +2376,12 @@ export class PptChatService {
         "DeckSpec 分批页面生成失败。",
         {
           repairHint: "必须输出 {\"slides\":[...]}，slides 数量必须与本批 slidePlan 数量一致。",
-          userId
+          userId,
+          logContext: {
+            ...(logContext ?? {}),
+            source: logContext?.source ?? "ppt-chat",
+            stage: `deckspec-batch-${first.index + 1}-${last.index + 1}`
+          }
         }
       );
 
@@ -3089,6 +3298,7 @@ export class PptChatService {
 
     const updatedSummary = await this.generateConversationSummary(
       userId,
+      projectId,
       summaryRow?.summary_text ?? "",
       batchResult.rows.map((row) => this.mapMessage(row))
     );
@@ -3096,7 +3306,12 @@ export class PptChatService {
     await this.upsertSummary(projectId, updatedSummary, targetSummarizedCount);
   }
 
-  private async generateConversationSummary(userId: number, previousSummary: string, messages: PptMessageDto[]) {
+  private async generateConversationSummary(
+    userId: number,
+    projectId: string,
+    previousSummary: string,
+    messages: PptMessageDto[]
+  ) {
     const activeConfig = await this.llmConfigService.getActiveConfig();
     const systemPrompt = [
       "你是一个 HTML-PPT 会话摘要器。",
@@ -3123,7 +3338,12 @@ export class PptChatService {
         { role: "user", content: userPrompt }
       ],
       "摘要生成失败。",
-      userId
+      userId,
+      {
+        projectId,
+        stage: "conversation-summary",
+        source: "ppt-chat"
+      }
     );
 
     const payload = (await response.json().catch(() => null)) as ChatCompletionResponse | { error?: { message?: string } } | null;
@@ -3514,16 +3734,37 @@ export class PptChatService {
       return null;
     }
 
-    let research;
+    let research: ResearchPack | undefined;
     if (candidate.research && typeof candidate.research === "object") {
       const value = candidate.research as Record<string, unknown>;
-      research = {
+      const nextResearch: ResearchPack = {
         topicSummary: this.coerceString(value.topicSummary, ""),
         keyFacts: this.coerceStringArray(value.keyFacts),
         narrativeAngles: this.coerceStringArray(value.narrativeAngles),
         suggestedSections: this.coerceStringArray(value.suggestedSections),
-        needVerification: this.coerceStringArray(value.needVerification)
+        needVerification: this.coerceStringArray(value.needVerification),
+        suggestedSlideCount: Number(value.suggestedSlideCount) || 8,
+        perSlideLengthTargets: Array.isArray(value.perSlideLengthTargets)
+          ? value.perSlideLengthTargets
+              .map((item, index) => {
+                const entry = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
+                return {
+                  index: Number(entry.index) || index + 1,
+                  targetLength: Number(entry.targetLength) || 80,
+                  purpose: this.coerceString(entry.purpose, "core body content")
+                };
+              })
+              .filter((item) => item.targetLength > 0)
+          : []
       };
+      if (nextResearch.perSlideLengthTargets.length === 0) {
+        nextResearch.perSlideLengthTargets = Array.from({ length: nextResearch.suggestedSlideCount }, (_, index) => ({
+          index: index + 1,
+          targetLength: 80,
+          purpose: index === 0 ? "opening hook" : index === nextResearch.suggestedSlideCount - 1 ? "closing takeaway" : "core body content"
+        }));
+      }
+      research = nextResearch;
     }
 
     let plan;
@@ -3619,10 +3860,16 @@ export class PptChatService {
             .map((item) => this.normalizeStoredAgentBatchSnapshot(item))
             .filter((item): item is NonNullable<ReturnType<PptChatService["normalizeStoredAgentBatchSnapshot"]>> => Boolean(item))
         : [];
+      const failedBatches = Array.isArray(value.failedBatches)
+        ? value.failedBatches
+            .map((item) => this.normalizeStoredAgentBatchSnapshot(item))
+            .filter((item): item is NonNullable<ReturnType<PptChatService["normalizeStoredAgentBatchSnapshot"]>> => Boolean(item))
+        : [];
       const failedBatch = this.normalizeStoredAgentBatchSnapshot(value.failedBatch);
-      if (batchSnapshots.length > 0 || failedBatch) {
+      if (batchSnapshots.length > 0 || failedBatches.length > 0 || failedBatch) {
         failedIndexState = {
           batchSnapshots,
+          failedBatches,
           failedBatch: failedBatch ?? undefined
         };
       }
