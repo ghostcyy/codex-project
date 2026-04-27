@@ -2,6 +2,7 @@ import type {
   AgentPlan,
   DeckRequestRequirements,
   HtmlPptAgentInput,
+  ReferenceComponentContract,
   ReferenceFullDeckSnippet,
   ResearchPack,
   SkillAssetManifestLike,
@@ -258,6 +259,22 @@ const LAYOUT_FX_HINTS = [
   "Place fx only on the section element or a major decorative container, never on a single number node."
 ].join("\n");
 
+function referenceComponentContractText(contract?: ReferenceComponentContract) {
+  if (!contract) return "";
+  const lines = ["Locked donor component contract:"];
+  if (contract.donorPrefix) lines.push(`- donor class family prefix: ${contract.donorPrefix}-*`);
+  if (contract.coverTitleClass) lines.push(`- cover title treatment: use ${contract.coverTitleClass} on cover / thanks / hero titles`);
+  if (contract.bodyTitleClass) lines.push(`- body title treatment: use ${contract.bodyTitleClass} on body-slide main headings`);
+  if (contract.kickerClass) lines.push(`- kicker / eyebrow treatment: use ${contract.kickerClass} for top labels`);
+  if (contract.sectionLabelClass) lines.push(`- section label treatment: use ${contract.sectionLabelClass} for divider lines / section labels`);
+  if (contract.cardClass) lines.push(`- primary card shell: use ${contract.cardClass} on generic cards / panels so border, fill, and radius stay consistent`);
+  if (contract.footerClass) lines.push(`- footer treatment: use ${contract.footerClass} for slide footer / page label rows`);
+  if (contract.titleTreatment) lines.push(`- title rhythm: ${contract.titleTreatment}`);
+  if (contract.cardTreatment) lines.push(`- card treatment: ${contract.cardTreatment}`);
+  if (contract.accentTreatment) lines.push(`- accent treatment: ${contract.accentTreatment}`);
+  return lines.join("\n");
+}
+
 function referenceFullDeckBlock(reference?: ReferenceFullDeckSnippet) {
   if (!reference || reference.sections.length === 0) return "";
   const sections = reference.sections
@@ -274,9 +291,10 @@ function referenceFullDeckBlock(reference?: ReferenceFullDeckSnippet) {
     "- accent colour placement (where the primary accent appears: pill, underline, number, gradient text),",
     "- spacing density and grid choices,",
     "- decorative motifs that recur (corner badge, frame, ruler, watermark, scanlines, etc).",
+    referenceComponentContractText(reference.contract),
     "Map the reference patterns onto each layout in this batch even when the layoutId differs from the reference section. Do not copy reference text.",
     sections + cssLine
-  ].join("\n\n");
+  ].filter(Boolean).join("\n\n");
 }
 
 export function buildPrompt(stage: "research", ctx: ResearchPromptContext): PromptEnvelope;
@@ -441,6 +459,7 @@ export function buildPrompt(stage: PromptStage, ctx: ResearchPromptContext | Con
             "5. You may add only a small number of semantic classes, and every class token must come from the allowed class catalog above. Do not invent `xp-*`, `hero-*`, `feature-*`, or any other new class family outside that catalog. data-anim, data-fx, data-title, and data-arc are still allowed.",
             "5a. Keep every page title as one visual unit. Do not wrap only part of a heading sentence in styled spans, gradient spans, focus pills, or other intra-heading emphasis fragments.",
             "5b. Keep the donor template class family consistent across the deck. If the reference template provides title / kicker / card classes such as `xw-title-md`, `xw-kicker`, `xw-card`, keep using that family on body slides instead of falling back to generic `.h2`, `.kicker`, or unrelated skeleton naming.",
+            "5c. Treat the donor component contract as mandatory on middle slides: keep the same title treatment, the same card background / border shell, the same kicker / footer / section-label family, and the same accent placement logic unless the layout skeleton truly has no slot for that component.",
             "6. Keep each slide information-dense but still readable in a single 16:9 screen.",
             "7. Do not use remote images and do not output code fences.",
             "8. Do not output notes, speaker notes, transcript content, or hidden presenter copy.",

@@ -33,6 +33,20 @@ export type ReferenceFullDeckSnippet = {
    * the template's class hooks, typography rhythm, and decoration cues.
    */
   cssExcerpt: string;
+  contract?: ReferenceComponentContract;
+};
+
+export type ReferenceComponentContract = {
+  donorPrefix?: string;
+  coverTitleClass?: string;
+  bodyTitleClass?: string;
+  kickerClass?: string;
+  footerClass?: string;
+  sectionLabelClass?: string;
+  cardClass?: string;
+  titleTreatment?: string;
+  cardTreatment?: string;
+  accentTreatment?: string;
 };
 
 export type VisualPlan = {

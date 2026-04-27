@@ -22,6 +22,7 @@ import type {
   HtmlPptAgentInput,
   HtmlPptAgentProgress,
   HtmlPptAgentStage,
+  ReferenceComponentContract,
   ReferenceFullDeckSnippet,
   ResearchPack,
   SkillPack,
@@ -1233,11 +1234,16 @@ export class HtmlPptAgentService {
     return Array.from(content.match(/<section\b[\s\S]*?<\/section>/gi) ?? []);
   }
 
-  private sanitizeSectionBatchMarkup(sectionsHtml: string, batch: AgentPlan["slides"], allowedClasses?: Set<string>) {
+  private sanitizeSectionBatchMarkup(
+    sectionsHtml: string,
+    batch: AgentPlan["slides"],
+    allowedClasses?: Set<string>,
+    referenceContract?: ReferenceComponentContract
+  ) {
     let localRepairCount = 0;
     const sections = this.extractSectionList(sectionsHtml)
       .map((section, index) => {
-        const repaired = this.locallyRepairSectionMarkup(section, batch[index], allowedClasses);
+        const repaired = this.locallyRepairSectionMarkup(section, batch[index], allowedClasses, referenceContract);
         if (repaired !== section.trim()) localRepairCount += 1;
         return repaired;
       })
@@ -1247,13 +1253,19 @@ export class HtmlPptAgentService {
     return { html: sections, localRepairCount };
   }
 
-  private locallyRepairSectionMarkup(section: string, slide?: AgentPlan["slides"][number], allowedClasses?: Set<string>) {
+  private locallyRepairSectionMarkup(
+    section: string,
+    slide?: AgentPlan["slides"][number],
+    allowedClasses?: Set<string>,
+    referenceContract?: ReferenceComponentContract
+  ) {
     let next = section;
     next = this.stripNotesBlocks(next);
     next = this.stripUnsafeMetricFx(next);
     next = this.stripEmptyLeafPlaceholderNodes(next);
     next = this.normalizeHeadingStyledSpans(next);
-    next = this.normalizeTemplateHeadingClasses(next, slide, allowedClasses);
+    next = this.normalizeTemplateHeadingClasses(next, slide, allowedClasses, referenceContract);
+    next = this.normalizeTemplateCardClasses(next, slide, allowedClasses, referenceContract);
     next = this.stripUnknownSectionClasses(next, allowedClasses);
     next = this.ensureSectionDataTitle(next, slide?.title);
     return next.trim();
@@ -1286,7 +1298,8 @@ export class HtmlPptAgentService {
     ]);
     return {
       allowedClasses,
-      promptCatalog: this.renderClassCatalog(allowedClasses)
+      promptCatalog: this.renderClassCatalog(allowedClasses),
+      referenceContract: input.referenceFullDeck?.contract
     };
   }
 
@@ -1354,30 +1367,107 @@ export class HtmlPptAgentService {
     return values.join(", ");
   }
 
-  private normalizeTemplateHeadingClasses(section: string, slide?: AgentPlan["slides"][number], allowedClasses?: Set<string>) {
+  private normalizeTemplateHeadingClasses(
+    section: string,
+    slide?: AgentPlan["slides"][number],
+    allowedClasses?: Set<string>,
+    referenceContract?: ReferenceComponentContract
+  ) {
     if (!allowedClasses || allowedClasses.size === 0) return section;
 
-    const preferredCoverTitle = allowedClasses.has("xw-title") ? "xw-title" : undefined;
-    const preferredBodyTitle = allowedClasses.has("xw-title-md") ? "xw-title-md" : undefined;
-    const preferredKicker = allowedClasses.has("xw-kicker") ? "xw-kicker" : undefined;
+    const preferredCoverTitle =
+      referenceContract?.coverTitleClass && allowedClasses.has(referenceContract.coverTitleClass)
+        ? referenceContract.coverTitleClass
+        : allowedClasses.has("xw-title")
+          ? "xw-title"
+          : undefined;
+    const preferredBodyTitle =
+      referenceContract?.bodyTitleClass && allowedClasses.has(referenceContract.bodyTitleClass)
+        ? referenceContract.bodyTitleClass
+        : allowedClasses.has("xw-title-md")
+          ? "xw-title-md"
+          : undefined;
+    const preferredKicker =
+      referenceContract?.kickerClass && allowedClasses.has(referenceContract.kickerClass)
+        ? referenceContract.kickerClass
+        : allowedClasses.has("xw-kicker")
+          ? "xw-kicker"
+          : undefined;
+    const preferredSectionLabel =
+      referenceContract?.sectionLabelClass && allowedClasses.has(referenceContract.sectionLabelClass)
+        ? referenceContract.sectionLabelClass
+        : undefined;
 
     let next = section;
     if (preferredKicker) {
-      next = next.replace(/<(p|div)\b([^>]*?)class=(["'])kicker\3([^>]*)>/gi, `<$1$2class=$3${preferredKicker}$3$4>`);
+      next = this.rewriteClassAttributes(next, ({ tagName, classes }) => {
+        if (!["p", "div", "span"].includes(tagName)) return classes;
+        if (!classes.some((item) => item === "kicker" || item === "eyebrow")) return classes;
+        return this.prependClassToken(classes.filter((item) => item !== "kicker" && item !== "eyebrow"), preferredKicker);
+      });
+    }
+
+    if (preferredSectionLabel) {
+      next = this.rewriteClassAttributes(next, ({ classes }) => {
+        if (!classes.some((item) => item === "section-label" || item === "section_label")) return classes;
+        return this.prependClassToken(
+          classes.filter((item) => item !== "section-label" && item !== "section_label"),
+          preferredSectionLabel
+        );
+      });
     }
 
     const preferredTitleClass = slide?.layoutId === "cover" ? preferredCoverTitle : preferredBodyTitle;
     if (!preferredTitleClass) return next;
 
-    return next.replace(/<(h1|h2)\b([^>]*?)class=(["'])([^"']+)\3([^>]*)>/gi, (match, tag: string, before: string, quote: string, classValue: string, after: string) => {
-      const classes = classValue.split(/\s+/).filter(Boolean);
-      const hasPreferred = classes.includes(preferredTitleClass);
-      const hasGenericHeading = classes.includes("h1") || classes.includes("h2");
-      if (!hasGenericHeading || hasPreferred) return match;
+    return this.rewriteClassAttributes(next, ({ tagName, classes }) => {
+      if (!["h1", "h2"].includes(tagName)) return classes;
+      if (classes.includes(preferredTitleClass)) return classes;
+      const hasAnyContractTitle =
+        (referenceContract?.coverTitleClass && classes.includes(referenceContract.coverTitleClass)) ||
+        (referenceContract?.bodyTitleClass && classes.includes(referenceContract.bodyTitleClass));
+      if (hasAnyContractTitle) return classes;
       const nextClasses = classes.filter((item) => item !== "h1" && item !== "h2");
-      nextClasses.unshift(preferredTitleClass);
-      return `<${tag}${before}class=${quote}${Array.from(new Set(nextClasses)).join(" ")}${quote}${after}>`;
+      return this.prependClassToken(nextClasses, preferredTitleClass);
     });
+  }
+
+  private normalizeTemplateCardClasses(
+    section: string,
+    _slide?: AgentPlan["slides"][number],
+    allowedClasses?: Set<string>,
+    referenceContract?: ReferenceComponentContract
+  ) {
+    const preferredCardClass =
+      referenceContract?.cardClass && allowedClasses?.has(referenceContract.cardClass)
+        ? referenceContract.cardClass
+        : undefined;
+    if (!preferredCardClass) return section;
+
+    return this.rewriteClassAttributes(section, ({ classes }) => {
+      if (classes.includes(preferredCardClass)) return classes;
+      const genericCardLike = classes.some((item) =>
+        ["card", "card-soft", "card-outline", "card-accent", "panel", "side"].includes(item)
+      );
+      if (!genericCardLike) return classes;
+      return this.prependClassToken(classes, preferredCardClass);
+    });
+  }
+
+  private rewriteClassAttributes(
+    markup: string,
+    transform: (input: { tagName: string; classes: string[] }) => string[]
+  ) {
+    return markup.replace(/<([a-z0-9:-]+)\b([^>]*?)class=(["'])([^"']+)\3([^>]*)>/gi, (match, tagName: string, before: string, quote: string, classValue: string, after: string) => {
+      const classes = classValue.split(/\s+/).filter(Boolean);
+      const nextClasses = Array.from(new Set(transform({ tagName: tagName.toLowerCase(), classes }))).filter(Boolean);
+      if (nextClasses.join(" ") === classes.join(" ")) return match;
+      return `<${tagName}${before}class=${quote}${nextClasses.join(" ")}${quote}${after}>`;
+    });
+  }
+
+  private prependClassToken(classTokens: string[], token: string) {
+    return [token, ...classTokens.filter((item) => item !== token)];
   }
 
   private stripUnknownSectionClasses(section: string, allowedClasses?: Set<string>) {
@@ -1558,7 +1648,12 @@ export class HtmlPptAgentService {
     let modelRepairCalls = 0;
     const resumeSlideIssues = resumeSnapshot?.slideIssues?.length ? resumeSnapshot.slideIssues : [];
     if (resumeSnapshot && this.isCompatibleBatchSnapshot(resumeSnapshot, batch) && resumeSnapshot.sections.trim()) {
-      const resumedSanitized = this.sanitizeSectionBatchMarkup(resumeSnapshot.sections, batch, sectionClassProtocol.allowedClasses);
+      const resumedSanitized = this.sanitizeSectionBatchMarkup(
+        resumeSnapshot.sections,
+        batch,
+        sectionClassProtocol.allowedClasses,
+        sectionClassProtocol.referenceContract
+      );
       sections = resumedSanitized.html;
       localRepairCount = resumedSanitized.localRepairCount;
       qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle);
@@ -1568,7 +1663,12 @@ export class HtmlPptAgentService {
         source: logContextBase?.source ?? "html-ppt-agent",
         stage: `05-generate-index:batch-${batchIndex + 1}-draft`
       });
-      const initialSanitized = this.sanitizeSectionBatchMarkup(this.extractSlideSections(raw), batch, sectionClassProtocol.allowedClasses);
+      const initialSanitized = this.sanitizeSectionBatchMarkup(
+        this.extractSlideSections(raw),
+        batch,
+        sectionClassProtocol.allowedClasses,
+        sectionClassProtocol.referenceContract
+      );
       sections = initialSanitized.html;
       localRepairCount = initialSanitized.localRepairCount;
       qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle);
@@ -1632,7 +1732,12 @@ export class HtmlPptAgentService {
             stage: `05-generate-index:batch-${batchIndex + 1}-repair`
           }
         );
-        const repairedSanitized = this.sanitizeSectionBatchMarkup(this.extractSlideSections(repairRaw), batch, sectionClassProtocol.allowedClasses);
+        const repairedSanitized = this.sanitizeSectionBatchMarkup(
+          this.extractSlideSections(repairRaw),
+          batch,
+          sectionClassProtocol.allowedClasses,
+          sectionClassProtocol.referenceContract
+        );
         let repaired = repairedSanitized.html;
         localRepairCount += repairedSanitized.localRepairCount;
         let repairedQa = this.validateSectionBatch(repaired, batch, skill, plan, deckStyle);
@@ -1751,7 +1856,11 @@ export class HtmlPptAgentService {
     batchVisuals: VisualPlan["slideVisuals"];
     sections: string;
     issueGroups: HtmlPptAgentFailedSlideIssue[];
-    sectionClassProtocol: { allowedClasses: Set<string>; promptCatalog: string };
+    sectionClassProtocol: {
+      allowedClasses: Set<string>;
+      promptCatalog: string;
+      referenceContract?: ReferenceComponentContract;
+    };
     deckStyle: DeckStyleProfile;
     onCall: () => void;
     reserveRepairCall: (label: string, issues: string[]) => void;
@@ -1804,7 +1913,12 @@ export class HtmlPptAgentService {
         priorFailures,
         logContextBase
       });
-      const sanitizedSingle = this.sanitizeSectionBatchMarkup(this.extractSlideSections(singleRaw), [slide], sectionClassProtocol.allowedClasses);
+      const sanitizedSingle = this.sanitizeSectionBatchMarkup(
+        this.extractSlideSections(singleRaw),
+        [slide],
+        sectionClassProtocol.allowedClasses,
+        sectionClassProtocol.referenceContract
+      );
       localRepairCount += sanitizedSingle.localRepairCount;
       const singleSections = this.extractSectionList(sanitizedSingle.html);
       const repairedSection = singleSections[0];
@@ -2002,7 +2116,12 @@ export class HtmlPptAgentService {
       }).catch(() => "");
       if (!expandedRaw) continue;
 
-      const sanitized = this.sanitizeSectionBatchMarkup(this.extractSlideSections(expandedRaw), [candidate.slide], sectionClassProtocol.allowedClasses);
+      const sanitized = this.sanitizeSectionBatchMarkup(
+        this.extractSlideSections(expandedRaw),
+        [candidate.slide],
+        sectionClassProtocol.allowedClasses,
+        sectionClassProtocol.referenceContract
+      );
       const singleSections = this.extractSectionList(sanitized.html);
       const nextSection = singleSections[0];
       if (singleSections.length !== 1 || !nextSection) continue;
@@ -2243,6 +2362,41 @@ export class HtmlPptAgentService {
     );
   }
 
+  private normalizeSectionFxLayers(html: string) {
+    return html.replace(
+      /<section\b([^>]*?)class=(["'])([^"']*\bslide\b[^"']*)\2([^>]*)>/gi,
+      (match, before: string, quote: string, className: string, after: string) => {
+        const attrs = `${before}class=${quote}${className}${quote}${after}`;
+        const fxMatch = attrs.match(/\sdata-fx=(["'])([^"']+)\1/i);
+        if (!fxMatch) return match;
+        const fx = fxMatch[2] ?? "";
+        const fxToMatch = attrs.match(/\sdata-fx-to=(["'])([^"']+)\1/i);
+        const cleanAttrs = attrs
+          .replace(/\sdata-fx=(["'])[^"']+\1/gi, "")
+          .replace(/\sdata-fx-to=(["'])[^"']+\1/gi, "");
+        const fxToAttr = fxToMatch?.[2] ? ` data-fx-to="${this.escapeAttr(fxToMatch[2])}"` : "";
+        return `<section${cleanAttrs}><div class="deck-fx-layer" data-fx="${this.escapeAttr(fx)}"${fxToAttr} aria-hidden="true"></div>`;
+      }
+    );
+  }
+
+  private normalizeLargeStatNumberClasses(html: string) {
+    return html.replace(
+      /<([a-z0-9-]+)\b([^>]*\bclass=(["'])([^"']*\bxw-num\b[^"']*)\3[^>]*\bstyle=(["'])([^"']*font-size\s*:\s*(\d+(?:\.\d+)?)px[^"']*)\5[^>]*)>/gi,
+      (match, tag: string, attrs: string, _classQuote: string, classValue: string, _styleQuote: string, _styleValue: string, rawPx: string) => {
+        const fontSize = Number(rawPx);
+        if (!Number.isFinite(fontSize) || fontSize < 32) return match;
+        const nextClassValue = classValue
+          .split(/\s+/)
+          .filter(Boolean)
+          .map((token) => (token === "xw-num" ? "xw-stat-num" : token))
+          .join(" ");
+        const nextAttrs = attrs.replace(/\bclass=(["'])[^"']+\1/i, `class="${nextClassValue}"`);
+        return `<${tag}${nextAttrs}>`;
+      }
+    );
+  }
+
   private normalizeInitialActiveSlide(html: string) {
     let firstSlide = true;
     return html.replace(
@@ -2322,7 +2476,11 @@ export class HtmlPptAgentService {
   }
 
   private composeIndexHtml(plan: AgentPlan, visual: VisualPlan, sections: string) {
-    const cleanSections = this.normalizeInitialActiveSlide(this.stripUnsafeMetricFx(this.stripNotesBlocks(sections)));
+    const cleanSections = this.normalizeInitialActiveSlide(
+      this.normalizeLargeStatNumberClasses(
+        this.normalizeSectionFxLayers(this.stripUnsafeMetricFx(this.stripNotesBlocks(sections)))
+      )
+    );
     const themes = Array.from(new Set([visual.primaryTheme, ...visual.backupThemes].filter(Boolean)));
     const title = this.escapeHtml(plan.title);
     const subtitle = plan.subtitle ? `<meta name="description" content="${this.escapeAttr(plan.subtitle)}">` : "";
@@ -2609,7 +2767,11 @@ export class HtmlPptAgentService {
   private healPublishedHtml(html: string) {
     return this.ensureRuntimeProgressBar(
       this.normalizeMetricCountPlaceholders(
-        this.normalizeInitialActiveSlide(this.stripUnsafeMetricFx(this.stripNotesBlocks(html)))
+        this.normalizeInitialActiveSlide(
+          this.normalizeLargeStatNumberClasses(
+            this.normalizeSectionFxLayers(this.stripUnsafeMetricFx(this.stripNotesBlocks(html)))
+          )
+        )
       )
     );
   }
@@ -2730,6 +2892,7 @@ export class HtmlPptAgentService {
     const portability = await this.collectPortabilityIssues(outputDir, filesWithStats);
     blockingPortabilityIssues.push(...portability.blocking);
     advisoryPortabilityIssues.push(...portability.advisory);
+    const referenceContract = (await this.readReferenceFullDeck(skill.root, this.pickReferenceFullDeckName(visual, skill) ?? ""))?.contract;
 
     const cascades = buildSlideCascade(indexFile?.html ?? "", styleCss, {
       baseCss,
@@ -2746,6 +2909,7 @@ export class HtmlPptAgentService {
         .join("；");
       consistencyIssues.push(`${finding.property} 与 deck 其他同层页面不一致，建议回归 ${String(finding.canonical)}。${sampleLabels}`);
     }
+    consistencyIssues.push(...this.collectReferenceContractContinuityIssues(indexFile?.html ?? "", plan, referenceContract));
     for (const finding of geometryFindings) {
       if (finding.severity === "block") {
         geometryBlockingIssues.push(`第 ${finding.slideIndex} 页(${finding.layoutId}) ${finding.message}`);
@@ -2778,7 +2942,7 @@ export class HtmlPptAgentService {
         consistency: this.makeQaSignal(
           consistencyIssues,
           false,
-          { outliers: consistencyFindings, groups: Object.keys(ledger.groups).length },
+          { outliers: consistencyFindings, groups: Object.keys(ledger.groups).length, referenceContract },
           consistencyIssues.length > 0 ? "warn" : undefined
         ),
         geometry: this.makeQaSignal(
@@ -2826,6 +2990,41 @@ export class HtmlPptAgentService {
       htmlSummary: `${htmlMatchedByDeckCss}/${htmlTotal}`,
       cssSummary: `${cssMatchedToHtml}/${cssTotal}`
     };
+  }
+
+  private collectReferenceContractContinuityIssues(
+    indexHtml: string,
+    plan: AgentPlan,
+    contract?: ReferenceComponentContract
+  ) {
+    if (!contract) return [];
+    const issues: string[] = [];
+    const sections = this.extractSectionList(indexHtml);
+    const skipLayouts = new Set(["cover", "toc", "section-divider", "thanks", "cta", "big-quote"]);
+    for (const [index, slide] of plan.slides.entries()) {
+      if (skipLayouts.has(slide.layoutId)) continue;
+      const section = sections[index] ?? "";
+      if (!section) continue;
+      if (contract.bodyTitleClass && /<(h1|h2)\b/i.test(section) && !this.sectionHasClassToken(section, contract.bodyTitleClass)) {
+        issues.push(`第 ${slide.index} 页(${slide.layoutId}) 没有沿用 donor 标题类 ${contract.bodyTitleClass}，中段页容易与封面/结尾脱节`);
+      }
+      if (contract.kickerClass && /\bclass=["'][^"']*\b(kicker|eyebrow)\b/i.test(section) && !this.sectionHasClassToken(section, contract.kickerClass)) {
+        issues.push(`第 ${slide.index} 页(${slide.layoutId}) 顶部标签没有沿用 donor kicker 类 ${contract.kickerClass}`);
+      }
+      if (contract.sectionLabelClass && /\bclass=["'][^"']*\b(section-label|section_label)\b/i.test(section) && !this.sectionHasClassToken(section, contract.sectionLabelClass)) {
+        issues.push(`第 ${slide.index} 页(${slide.layoutId}) section label 没有沿用 donor 类 ${contract.sectionLabelClass}`);
+      }
+      if (contract.footerClass && !this.sectionHasClassToken(section, contract.footerClass)) {
+        issues.push(`第 ${slide.index} 页(${slide.layoutId}) 缺少 donor footer 类 ${contract.footerClass}`);
+      }
+      if (contract.cardClass) {
+        const genericCardLikeCount = Array.from(section.matchAll(/\bclass=["'][^"']*\b(card|card-soft|card-outline|card-accent|panel|side)\b[^"']*["']/gi)).length;
+        if (genericCardLikeCount >= 2 && !this.sectionHasClassToken(section, contract.cardClass)) {
+          issues.push(`第 ${slide.index} 页(${slide.layoutId}) 使用了 ${genericCardLikeCount} 个通用卡片壳，但没有沿用 donor card 类 ${contract.cardClass}`);
+        }
+      }
+    }
+    return issues;
   }
 
   private collectClassCoverage(indexHtml: string, baseCss: string, styleCss: string): ClassCoverageReport {
@@ -2890,6 +3089,11 @@ export class HtmlPptAgentService {
 
   private extractClassTokensFromSelector(selector: string) {
     return Array.from(selector.matchAll(/\.([_a-zA-Z][\w-]*)/g)).map((match) => match[1] ?? "");
+  }
+
+  private sectionHasClassToken(section: string, token: string) {
+    const escaped = token.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+    return new RegExp(`\\bclass=["'][^"']*\\b${escaped}\\b[^"']*["']`, "i").test(section);
   }
 
   private collectAssetReferenceIssues(fileName: string, html: string, outputDir: string) {
@@ -3283,7 +3487,12 @@ export class HtmlPptAgentService {
         onCall,
         reserveRepairCall: () => undefined
       });
-      const sanitizedSingle = this.sanitizeSectionBatchMarkup(this.extractSlideSections(singleRaw), [slide], sectionClassProtocol.allowedClasses);
+    const sanitizedSingle = this.sanitizeSectionBatchMarkup(
+      this.extractSlideSections(singleRaw),
+      [slide],
+      sectionClassProtocol.allowedClasses,
+      sectionClassProtocol.referenceContract
+    );
       const singleSections = this.extractSectionList(sanitizedSingle.html);
       const candidate = singleSections[0];
       if (singleSections.length !== 1 || !candidate) continue;
@@ -4352,6 +4561,13 @@ export class HtmlPptAgentService {
       "  background-clip: border-box !important;",
       "  -webkit-text-fill-color: currentColor !important;",
       "  color: var(--text-1) !important;",
+      "}",
+      ".deck > .slide :where(.xw-title:not(.xw-grad), .xw-title-md:not(.xw-grad)) {",
+      "  background: none !important;",
+      "  -webkit-background-clip: border-box !important;",
+      "  background-clip: border-box !important;",
+      "  -webkit-text-fill-color: currentColor !important;",
+      "  color: var(--xw-ink, var(--text-1, inherit)) !important;",
       "}"
     ].join("\n");
   }
@@ -5082,8 +5298,84 @@ export class HtmlPptAgentService {
     return {
       name: templateName,
       sections: picks.slice(0, 5),
-      cssExcerpt: cssText.slice(0, 4000)
+      cssExcerpt: cssText.slice(0, 4000),
+      contract: this.inferReferenceComponentContract(picks.slice(0, 5), cssText)
     };
+  }
+
+  private inferReferenceComponentContract(sections: string[], cssText: string): ReferenceComponentContract | undefined {
+    const markup = sections.join("\n");
+    const classTokens = Array.from(
+      new Set([
+        ...this.extractClassTokensFromMarkup(markup),
+        ...this.extractClassTokensFromCss(cssText)
+      ])
+    );
+    const donorPrefix = this.detectDonorClassPrefix(classTokens);
+    const coverTitleClass = this.findContractHeadingClass(sections[0] ?? "", donorPrefix);
+    const bodyTitleClass = this.findContractHeadingClass(sections.slice(1).join("\n") || markup, donorPrefix) ?? coverTitleClass;
+    const kickerClass = this.findContractClassByHint(markup, classTokens, donorPrefix, ["kicker", "eyebrow"]);
+    const footerClass = this.findContractClassByHint(markup, classTokens, donorPrefix, ["footer"]);
+    const sectionLabelClass = this.findContractClassByHint(markup, classTokens, donorPrefix, ["section-label", "section_label", "label"]);
+    const cardClass = this.findContractClassByHint(markup, classTokens, donorPrefix, ["card", "panel"]);
+
+    const contract: ReferenceComponentContract = {
+      donorPrefix,
+      coverTitleClass,
+      bodyTitleClass,
+      kickerClass,
+      footerClass,
+      sectionLabelClass,
+      cardClass,
+      titleTreatment: bodyTitleClass ? `Keep ${bodyTitleClass} as the default body heading class and reserve accent spans for small inline emphasis only.` : undefined,
+      cardTreatment: cardClass ? `Use ${cardClass} as the primary card shell so border width, radius, and fill stay visually continuous across middle slides.` : undefined,
+      accentTreatment: kickerClass || sectionLabelClass
+        ? `Concentrate accent color on ${kickerClass ?? sectionLabelClass}, section labels, big numbers, and selective highlighted cards rather than inventing new accent widgets.`
+        : undefined
+    };
+
+    if (!contract.donorPrefix && !contract.coverTitleClass && !contract.bodyTitleClass && !contract.kickerClass && !contract.cardClass && !contract.footerClass && !contract.sectionLabelClass) {
+      return undefined;
+    }
+    return contract;
+  }
+
+  private detectDonorClassPrefix(classTokens: string[]) {
+    const genericPrefixes = new Set([
+      "slide", "deck", "grid", "card", "panel", "hero", "visual", "content", "metric", "anim", "timeline", "process",
+      "roadmap", "comparison", "quote", "callout", "stack", "cluster", "stat", "pill", "badge", "tag", "meta", "caption"
+    ]);
+    const counts = new Map<string, number>();
+    for (const token of classTokens) {
+      const match = token.match(/^([a-z]{2,4})-[a-z0-9-]+$/i);
+      if (!match) continue;
+      const prefix = match[1]?.toLowerCase();
+      if (!prefix || genericPrefixes.has(prefix)) continue;
+      counts.set(prefix, (counts.get(prefix) ?? 0) + 1);
+    }
+    return Array.from(counts.entries()).sort((a, b) => b[1] - a[1])[0]?.[0];
+  }
+
+  private findContractHeadingClass(markup: string, donorPrefix?: string) {
+    for (const match of markup.matchAll(/<(h1|h2)\b[^>]*class=["']([^"']+)["'][^>]*>/gi)) {
+      const classes = (match[2] ?? "").split(/\s+/).filter(Boolean);
+      const donorClass = classes.find((token) => donorPrefix && token.startsWith(`${donorPrefix}-`));
+      if (donorClass) return donorClass;
+      const fallback = classes.find((token) => /(title|h1|h2)/i.test(token));
+      if (fallback) return fallback;
+    }
+    return undefined;
+  }
+
+  private findContractClassByHint(markup: string, classTokens: string[], donorPrefix: string | undefined, hints: string[]) {
+    const hintMatchers = hints.map((hint) => new RegExp(hint.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&"), "i"));
+    for (const match of markup.matchAll(/\bclass=["']([^"']+)["']/gi)) {
+      const classes = (match[1] ?? "").split(/\s+/).filter(Boolean);
+      const donorHit = classes.find((token) => donorPrefix && token.startsWith(`${donorPrefix}-`) && hintMatchers.some((re) => re.test(token)));
+      if (donorHit) return donorHit;
+    }
+    return classTokens.find((token) => donorPrefix && token.startsWith(`${donorPrefix}-`) && hintMatchers.some((re) => re.test(token)))
+      ?? classTokens.find((token) => hintMatchers.some((re) => re.test(token)));
   }
 
   private layoutContract() {

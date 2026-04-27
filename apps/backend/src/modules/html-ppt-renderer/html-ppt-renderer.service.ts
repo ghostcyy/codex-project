@@ -3,6 +3,7 @@ import { access, cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:
 import { basename, extname, join, normalize, relative, resolve, sep } from "node:path";
 import { randomUUID } from "node:crypto";
 import { Inject, Injectable, NotFoundException, type OnModuleDestroy, type OnModuleInit } from "@nestjs/common";
+import postcss, { type AtRule } from "postcss";
 import type { QueryResultRow } from "pg";
 import { DatabaseService } from "../database/database.service";
 import type {
@@ -547,21 +548,10 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
       const raw = await readFile(cssPath, "utf8").catch(() => "");
       if (!raw.trim()) return "";
 
-      // Scope each theme so themes don't collide in the cascade.
-      // Bare :root{} and body{} blocks all have the same specificity and source-
-      // order wins, meaning the last inlined theme's variables override all others.
-      // By replacing :root with html[data-theme="name"] and body{} with
-      // html[data-theme="name"] body{}, runtime.js's data-theme attribute
-      // switching correctly activates the right theme at any time.
-      const scoped = raw.trim()
-        // :root { ... } → html[data-theme="name"] { ... }
-        .replace(/^(\s*):root(\s*\{)/gm, `$1html[data-theme="${theme}"]$2`)
-        // bare `body { ... }` → html[data-theme="name"] body { ... }
-        .replace(/^(\s*)body(\s*\{)/gm, `$1html[data-theme="${theme}"] body$2`)
-        // class selectors like `.card { ... }` → `html[data-theme="name"] .card { ... }`
-        .replace(/^(\s*)(\.[\w-]+(?:,\s*\.[\w-]+)*\s*\{)/gm, `$1html[data-theme="${theme}"] $2`)
-        // element+class selectors like `h1.title, ... { ... }` → `html[data-theme="name"] h1.title, ... { ... }`
-        .replace(/^(\s*)([a-z][a-z0-9]*\.[^{]+\{)/gm, `$1html[data-theme="${theme}"] $2`);
+      // Scope every selector in every theme rule so the inline registry can hold
+      // all themes at once without later themes leaking global selectors like
+      // `.h1,.h2` into the active deck.
+      const scoped = this.scopeInlineThemeCss(raw.trim(), theme);
 
       return `/* inline theme: ${theme} */\n${scoped}`;
     }));
@@ -603,6 +593,34 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
     return nextHtml;
   }
 
+  private scopeInlineThemeCss(css: string, theme: string) {
+    const prefix = `html[data-theme="${theme}"]`;
+    const root = postcss.parse(css);
+
+    root.walkRules((rule) => {
+      const parent = rule.parent;
+      if (parent?.type === "atrule" && /keyframes$/i.test((parent as AtRule).name)) {
+        return;
+      }
+
+      rule.selectors = rule.selectors.map((selector) => this.scopeInlineThemeSelector(selector, prefix));
+    });
+
+    return root.toString();
+  }
+
+  private scopeInlineThemeSelector(selector: string, prefix: string) {
+    const normalized = selector.trim();
+    if (!normalized) return normalized;
+    if (normalized === ":root" || normalized === "html") return prefix;
+    if (normalized === "body") return `${prefix} body`;
+    if (normalized.startsWith(prefix) || /^html\[data-theme=["'][^"']+["']\]/i.test(normalized)) {
+      return normalized;
+    }
+    if (/^body\b/i.test(normalized)) return `${prefix} ${normalized}`;
+    return `${prefix} ${normalized}`;
+  }
+
   private toPreviewHtml(indexHtml: string) {
     return indexHtml.replace(/(href|src)=["']\.\/assets\/([^"']+)["']/gi, (_match, attr: string, assetPath: string) => {
       return `${attr}="./asset?path=${encodeURIComponent(assetPath)}"`;
@@ -612,7 +630,11 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
   private sanitizeStaticDeckHtml(html: string) {
     return this.ensureRuntimeProgressBar(
       this.normalizeMetricCountPlaceholders(
-        this.normalizeInitialActiveSlide(this.stripUnsafeMetricFx(this.stripNotesBlocks(html)))
+        this.normalizeInitialActiveSlide(
+          this.normalizeLargeStatNumberClasses(
+            this.normalizeSectionFxLayers(this.stripUnsafeMetricFx(this.stripNotesBlocks(html)))
+          )
+        )
       )
     );
   }
@@ -637,11 +659,46 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
   }
 
   private sanitizeStaticDeckCss(css: string) {
-    return css.replace(/([^{}]+)\{([^{}]*)\}/g, (match, selector: string, body: string) => {
+    const sanitized = css.replace(/([^{}]+)\{([^{}]*)\}/g, (match, selector: string, body: string) => {
       if (!this.selectorListTargetsSlideSelf(selector)) return match;
       const sanitized = body.replace(/\bposition\s*:\s*(relative|static|fixed)\s*(!important)?\s*;?/gi, "/* position: $1 removed by runtime guard */");
       return `${selector}{${sanitized}}`;
     });
+
+    return `${sanitized}
+
+.deck > .slide > .deck-fx-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+}
+
+.deck > .slide > :not(.deck-fx-layer) {
+  position: relative;
+  z-index: 1;
+}
+
+.deck > .slide .xw-stat-num {
+  display: block;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: inherit;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.deck > .slide :where(.xw-title:not(.xw-grad), .xw-title-md:not(.xw-grad)) {
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: var(--xw-ink, var(--text-1, inherit)) !important;
+}
+`;
   }
 
   private selectorListTargetsSlideSelf(selectorList: string) {
@@ -684,6 +741,41 @@ export class HtmlPptRendererService implements OnModuleInit, OnModuleDestroy {
           .replace(/\sdata-fx=["'][^"']+["']/gi, "")
           .replace(/\sdata-fx-to=["'][^"']+["']/gi, "");
         return `<${tag}${safeAttrs}>`;
+      }
+    );
+  }
+
+  private normalizeSectionFxLayers(html: string) {
+    return html.replace(
+      /<section\b([^>]*?)class=(["'])([^"']*\bslide\b[^"']*)\2([^>]*)>/gi,
+      (match, before: string, quote: string, className: string, after: string) => {
+        const attrs = `${before}class=${quote}${className}${quote}${after}`;
+        const fxMatch = attrs.match(/\sdata-fx=(["'])([^"']+)\1/i);
+        if (!fxMatch) return match;
+        const fx = fxMatch[2] ?? "";
+        const fxToMatch = attrs.match(/\sdata-fx-to=(["'])([^"']+)\1/i);
+        const cleanAttrs = attrs
+          .replace(/\sdata-fx=(["'])[^"']+\1/gi, "")
+          .replace(/\sdata-fx-to=(["'])[^"']+\1/gi, "");
+        const fxToAttr = fxToMatch?.[2] ? ` data-fx-to="${this.escapeAttr(fxToMatch[2])}"` : "";
+        return `<section${cleanAttrs}><div class="deck-fx-layer" data-fx="${this.escapeAttr(fx)}"${fxToAttr} aria-hidden="true"></div>`;
+      }
+    );
+  }
+
+  private normalizeLargeStatNumberClasses(html: string) {
+    return html.replace(
+      /<([a-z0-9-]+)\b([^>]*\bclass=(["'])([^"']*\bxw-num\b[^"']*)\3[^>]*\bstyle=(["'])([^"']*font-size\s*:\s*(\d+(?:\.\d+)?)px[^"']*)\5[^>]*)>/gi,
+      (match, tag: string, attrs: string, _classQuote: string, classValue: string, _styleQuote: string, _styleValue: string, rawPx: string) => {
+        const fontSize = Number(rawPx);
+        if (!Number.isFinite(fontSize) || fontSize < 32) return match;
+        const nextClassValue = classValue
+          .split(/\s+/)
+          .filter(Boolean)
+          .map((token) => (token === "xw-num" ? "xw-stat-num" : token))
+          .join(" ");
+        const nextAttrs = attrs.replace(/\bclass=(["'])[^"']+\1/i, `class="${nextClassValue}"`);
+        return `<${tag}${nextAttrs}>`;
       }
     );
   }
