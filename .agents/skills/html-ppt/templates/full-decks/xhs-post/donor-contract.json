@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": ["big-emoji", "bottom-bar"],
+  "decorativeOnlyClasses": ["sticker", "page-dot"],
+  "cssRedactClasses": ["big-emoji", "bottom-bar", "sticker", "page-dot"]
+}

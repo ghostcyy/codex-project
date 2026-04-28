@@ -7,6 +7,17 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   "http://localhost:4000/api";
 
+function shouldUseSecureCookie(request: Request) {
+  const forwardedProto = request.headers.get("x-forwarded-proto");
+  if (forwardedProto) {
+    return forwardedProto
+      .split(",")
+      .some((item) => item.trim().toLowerCase() === "https");
+  }
+
+  return new URL(request.url).protocol === "https:";
+}
+
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
 
@@ -40,7 +51,7 @@ export async function POST(request: Request) {
   nextResponse.cookies.set(getSessionCookieName(), payload.accessToken, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: shouldUseSecureCookie(request),
     path: "/",
     maxAge: 60 * 60 * 24 * 7
   });

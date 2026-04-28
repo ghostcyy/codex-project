@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": ["kb-grid-bg"],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["kb-grid-bg"]
+}

@@ -304,7 +304,16 @@ export class AuthService {
   }
 
   private getJwtSecret(): Secret {
-    return process.env.JWT_SECRET ?? "change-this-in-phase-2";
+    const secret = process.env.JWT_SECRET?.trim();
+    if (secret) {
+      return secret;
+    }
+    if (process.env.NODE_ENV === "production") {
+      throw new Error(
+        "JWT_SECRET environment variable is required in production. Refusing to start with the development default."
+      );
+    }
+    return "change-this-in-phase-2";
   }
 
   private getExpiresIn(): SignOptions["expiresIn"] {

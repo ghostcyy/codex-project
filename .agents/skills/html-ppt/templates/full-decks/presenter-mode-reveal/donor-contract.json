@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": ["notes", "speaker"],
+  "coverOnlyClasses": [],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["notes", "speaker"]
+}

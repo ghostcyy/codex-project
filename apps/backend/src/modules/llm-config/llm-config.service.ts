@@ -2,7 +2,9 @@ import { BadRequestException, Inject, Injectable, Logger, ServiceUnavailableExce
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:crypto";
 import type { QueryResultRow } from "pg";
 import { DatabaseService } from "../database/database.service";
-import type { ActiveLlmConfig, LlmConfigInput, LlmConfigSummary } from "./llm-config.types";
+import type { ActiveLlmConfig, LlmConfigInput, LlmConfigSummary, LlmStageModelOverrides, LlmStageModelRole } from "./llm-config.types";
+
+const STAGE_MODEL_ROLES = ["research", "plan", "visual", "section", "css", "qa"] as const satisfies readonly LlmStageModelRole[];
 
 interface LlmConfigRow extends QueryResultRow {
   id: string;
@@ -11,6 +13,7 @@ interface LlmConfigRow extends QueryResultRow {
   base_url: string;
   api_key_ciphertext: string;
   model: string;
+  stage_model_overrides?: unknown;
   enabled: boolean;
   updated_at: Date | string;
   call_count?: string;
@@ -36,6 +39,7 @@ export class LlmConfigService {
           c.base_url,
           c.api_key_ciphertext,
           c.model,
+          c.stage_model_overrides,
           c.enabled,
           c.updated_at,
           COUNT(l.id) as call_count,
@@ -55,6 +59,7 @@ export class LlmConfigService {
         providerType: row.provider_type,
         baseUrl: row.base_url,
         model: row.model,
+        stageModelOverrides: this.normalizeStageModelOverrides(row.stage_model_overrides),
         enabled: row.enabled,
         hasApiKey: apiKey.length > 0,
         apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
@@ -70,6 +75,7 @@ export class LlmConfigService {
     const providerType = this.normalizeProviderType(input.providerType ?? DEFAULT_PROVIDER_TYPE);
     const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? "");
     const model = this.normalizeRequiredString(input.model ?? "", "model");
+    const stageModelOverrides = this.normalizeStageModelOverrides(input.stageModelOverrides);
     const enabled = this.normalizeBoolean(input.enabled, false);
     const apiKey = typeof input.apiKey === "string" ? input.apiKey.trim() : "";
 
@@ -91,15 +97,16 @@ export class LlmConfigService {
           base_url,
           api_key_ciphertext,
           model,
+          stage_model_overrides,
           enabled,
           updated_by,
           created_at,
           updated_at
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+        VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, NOW(), NOW())
         RETURNING id
       `,
-      [name, providerType, baseUrl, apiKeyCiphertext, model, enabled, updatedBy]
+      [name, providerType, baseUrl, apiKeyCiphertext, model, JSON.stringify(stageModelOverrides), enabled, updatedBy]
     );
 
     const newId = result.rows[0]?.id;
@@ -117,6 +124,7 @@ export class LlmConfigService {
     const providerType = this.normalizeProviderType(input.providerType ?? current.provider_type);
     const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? current.base_url);
     const model = this.normalizeRequiredString(input.model ?? current.model, "model");
+    const stageModelOverrides = this.normalizeStageModelOverrides(input.stageModelOverrides ?? current.stage_model_overrides);
     const enabled = this.normalizeBoolean(input.enabled, current.enabled);
     const apiKey =
       typeof input.apiKey === "string" && input.apiKey.trim().length > 0
@@ -142,12 +150,13 @@ export class LlmConfigService {
           base_url = $3,
           api_key_ciphertext = $4,
           model = $5,
-          enabled = $6,
-          updated_by = $7,
+          stage_model_overrides = $6::jsonb,
+          enabled = $7,
+          updated_by = $8,
           updated_at = NOW()
-        WHERE id = $8
+        WHERE id = $9
       `,
-      [name, providerType, baseUrl, apiKeyCiphertext, model, enabled, updatedBy, id]
+      [name, providerType, baseUrl, apiKeyCiphertext, model, JSON.stringify(stageModelOverrides), enabled, updatedBy, id]
     );
 
     return this.getConfigSummaryById(id);
@@ -167,6 +176,7 @@ export class LlmConfigService {
           base_url,
           api_key_ciphertext,
           model,
+          stage_model_overrides,
           enabled,
           updated_at
         FROM llm_provider_settings
@@ -192,6 +202,7 @@ export class LlmConfigService {
       baseUrl: row.base_url,
       apiKey,
       model: row.model,
+      stageModelOverrides: this.normalizeStageModelOverrides(row.stage_model_overrides),
       enabled: row.enabled
     };
   }
@@ -206,6 +217,7 @@ export class LlmConfigService {
           base_url,
           api_key_ciphertext,
           model,
+          stage_model_overrides,
           enabled,
           updated_at
         FROM llm_provider_settings
@@ -228,6 +240,7 @@ export class LlmConfigService {
       providerType: row.provider_type,
       baseUrl: row.base_url,
       model: row.model,
+      stageModelOverrides: this.normalizeStageModelOverrides(row.stage_model_overrides),
       enabled: row.enabled,
       hasApiKey: apiKey.length > 0,
       apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
@@ -259,6 +272,47 @@ export class LlmConfigService {
     return input.trim();
   }
 
+  private normalizeStageModelOverrides(input: unknown): LlmStageModelOverrides {
+    const source = this.parseStageModelOverrideInput(input);
+    const result: LlmStageModelOverrides = {};
+
+    for (const role of STAGE_MODEL_ROLES) {
+      const value = source[role];
+      if (typeof value !== "string") {
+        continue;
+      }
+      const trimmed = value.trim();
+      if (trimmed.length > 0) {
+        result[role] = trimmed;
+      }
+    }
+
+    return result;
+  }
+
+  private parseStageModelOverrideInput(input: unknown): Record<string, unknown> {
+    if (!input) {
+      return {};
+    }
+
+    if (typeof input === "string") {
+      try {
+        const parsed = JSON.parse(input) as unknown;
+        return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+          ? parsed as Record<string, unknown>
+          : {};
+      } catch {
+        return {};
+      }
+    }
+
+    if (typeof input === "object" && !Array.isArray(input)) {
+      return input as Record<string, unknown>;
+    }
+
+    return {};
+  }
+
   private normalizeBoolean(input: unknown, fallback: boolean) {
     if (typeof input === "boolean") {
       return input;
@@ -272,7 +326,13 @@ export class LlmConfigService {
   }
 
   private getEncryptionKey() {
-    const value = process.env.LLM_CONFIG_ENCRYPTION_KEY?.trim() || DEFAULT_ENCRYPTION_KEY;
+    const raw = process.env.LLM_CONFIG_ENCRYPTION_KEY?.trim();
+    if (!raw && process.env.NODE_ENV === "production") {
+      throw new Error(
+        "LLM_CONFIG_ENCRYPTION_KEY environment variable is required in production. Refusing to encrypt LLM credentials with the development default."
+      );
+    }
+    const value = raw || DEFAULT_ENCRYPTION_KEY;
     if (value === DEFAULT_ENCRYPTION_KEY) {
       this.logger.warn("LLM_CONFIG_ENCRYPTION_KEY is using the development default.");
     }

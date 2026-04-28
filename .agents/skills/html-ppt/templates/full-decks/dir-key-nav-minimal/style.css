@@ -1,4 +1,4 @@
-/* dir-key-nav-minimal — 方向键极简 · 8 种 mono-background 切换 */
+
 .tpl-dir-key-nav-minimal{
   --dk-font:'Inter','Noto Sans SC','PingFang SC',-apple-system,sans-serif;
   --dk-mono:'JetBrains Mono',monospace;
@@ -7,7 +7,7 @@
   font-family:var(--dk-font);
 }
 .tpl-dir-key-nav-minimal .slide{padding:80px 104px;overflow:hidden;position:absolute;inset:0}
-/* 8 background themes */
+
 .tpl-dir-key-nav-minimal .t-indigo{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);color:#fff}
 .tpl-dir-key-nav-minimal .t-cream{background:#F5F0E8;color:#1a1a1a}
 .tpl-dir-key-nav-minimal .t-crimson{background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 100%);color:#fff}
@@ -55,6 +55,4 @@
 .tpl-dir-key-nav-minimal .dk-code{font-family:var(--dk-mono);font-size:16px;line-height:1.9;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:24px 28px;margin-top:24px;white-space:pre}
 .tpl-dir-key-nav-minimal .t-cream .dk-code,
 .tpl-dir-key-nav-minimal .t-white .dk-code{background:rgba(0,0,0,.05);border-color:rgba(0,0,0,.1)}
-.tpl-dir-key-nav-minimal .dk-keyhint{position:absolute;bottom:34px;left:104px;font-family:var(--dk-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;opacity:.45}
-.tpl-dir-key-nav-minimal .dk-keyhint kbd{display:inline-block;padding:2px 10px;margin:0 3px;border:1px solid currentColor;border-radius:4px;font-size:12px}
 .tpl-dir-key-nav-minimal .dk-page{position:absolute;bottom:34px;right:48px;font-family:var(--dk-mono);font-size:12px;letter-spacing:2px;opacity:.45}

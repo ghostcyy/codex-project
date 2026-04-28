@@ -6,7 +6,7 @@ export const QA_PATCH_SENTINEL = "/* layer-4 consistency patch v1 */";
 export type CssPatchInstruction = {
   slideIndex: number;
   role: string;
-  property: ConsistencyFinding["property"];
+  property: ConsistencyFinding["property"] | string;
   currentValue: number | string;
   canonicalValue: number | string;
   selector: string;
@@ -77,12 +77,91 @@ export function validateCssPatchOutput(input: {
     if (!selector.startsWith(`body.${input.deckClass} `)) {
       return { ok: false as const, reason: `CSS patch 选择器未作用域到 body.${input.deckClass}：${selector}` };
     }
-    if (/\b(?:^|[\s>+~])(?:\.deck|\.progress-bar)\b/i.test(selector)) {
-      return { ok: false as const, reason: `CSS patch 不允许操作 .deck 或 .progress-bar：${selector}` };
+    if (/(?:^|[\s>+~])(?:\.deck|\.progress-bar|\.deck-fx-layer|\.is-active|\.is-prev)\b/i.test(selector)) {
+      return { ok: false as const, reason: `CSS patch 不允许操作 runtime 选择器：${selector}` };
+    }
+    if (/\.anim-[\w-]+/i.test(selector)) {
+      return { ok: false as const, reason: `CSS patch 不允许操作动画类，避免元素永久隐藏：${selector}` };
     }
     if (/body\.[\w-]+\s+\.slide(?:\s*$|[^\w-])/i.test(selector) && !/\.slide:nth-child\(\d+\)\s+/.test(selector)) {
       return { ok: false as const, reason: `CSS patch 必须定位到具体页和具体节点，不能只写裸 .slide：${selector}` };
     }
+  }
+
+  const disallowedDeclarations = new Set([
+    "animation",
+    "animation-name",
+    "animation-duration",
+    "animation-delay",
+    "animation-fill-mode",
+    "transition",
+    "transition-property",
+    "opacity",
+    "transform",
+    "translate",
+    "scale",
+    "rotate",
+    "position",
+    "inset",
+    "top",
+    "right",
+    "bottom",
+    "left",
+    "z-index",
+    "pointer-events",
+    "visibility",
+    "content"
+  ]);
+  const allowedDeclarations = new Set([
+    "font-size",
+    "line-height",
+    "font-weight",
+    "font-family",
+    "letter-spacing",
+    "color",
+    "background",
+    "background-color",
+    "background-image",
+    "border",
+    "border-color",
+    "border-width",
+    "border-style",
+    "border-radius",
+    "padding",
+    "padding-top",
+    "padding-right",
+    "padding-bottom",
+    "padding-left",
+    "margin",
+    "margin-top",
+    "margin-right",
+    "margin-bottom",
+    "margin-left",
+    "gap",
+    "display",
+    "grid-template-columns",
+    "grid-template-rows",
+    "align-items",
+    "justify-content",
+    "flex-direction",
+    "flex-wrap",
+    "width",
+    "max-width",
+    "min-width",
+    "height",
+    "max-height",
+    "min-height"
+  ]);
+
+  let invalidDeclaration = "";
+  root.walkDecls((decl) => {
+    const prop = decl.prop.trim().toLowerCase();
+    if (disallowedDeclarations.has(prop) || !allowedDeclarations.has(prop)) {
+      invalidDeclaration = invalidDeclaration || `${decl.prop}: ${decl.value}`;
+    }
+  });
+  if (invalidDeclaration) {
+    return { ok: false as const, reason: `CSS patch 包含不安全或不在白名单内的声明：${invalidDeclaration}` };
   }
 
   return { ok: true as const, css: sanitized };

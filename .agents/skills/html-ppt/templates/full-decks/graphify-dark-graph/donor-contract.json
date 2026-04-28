@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": ["gd-ambient", "gd-orb", "gd-orb-1", "gd-orb-2", "gd-orb-3"],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["gd-ambient", "gd-orb", "gd-orb-1", "gd-orb-2", "gd-orb-3"]
+}

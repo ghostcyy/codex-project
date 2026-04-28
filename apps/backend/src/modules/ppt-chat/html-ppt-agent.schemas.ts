@@ -1,5 +1,27 @@
 import { z } from "zod";
 
+export const PLAN_TONES = [
+  "clinical",
+  "playful",
+  "editorial",
+  "cyber",
+  "enterprise",
+  "documentary",
+  "lifestyle",
+  "energetic",
+  "academic",
+  "friendly"
+] as const;
+
+export const PLAN_FORMATS = [
+  "live-talk",
+  "pdf-handout",
+  "xhs-image",
+  "web-share",
+  "keynote",
+  "internal-memo"
+] as const;
+
 export const researchSchema = z.object({
   topicSummary: z.string().min(1).max(4000),
   keyFacts: z.array(z.string().min(1)).max(24),
@@ -19,8 +41,8 @@ export const planSchema = z.object({
   subtitle: z.string().max(200).optional(),
   slideCount: z.number().int().min(1).max(30),
   audience: z.string().min(1).max(200),
-  tone: z.string().max(80).optional(),
-  format: z.string().max(80).optional(),
+  tone: z.enum(PLAN_TONES),
+  format: z.enum(PLAN_FORMATS),
   objective: z.string().min(1).max(300),
   slides: z.array(z.object({
     index: z.number().int().min(1).max(50),
@@ -46,6 +68,30 @@ export const visualSchema = z.object({
   })).max(30)
 });
 
+export const sectionContentSchema = z.object({
+  slides: z.array(z.object({
+    index: z.number().int().min(1).max(50),
+    title: z.string().min(1).max(120),
+    layoutId: z.string().min(1).max(80),
+    kicker: z.string().max(80).optional(),
+    h1: z.string().max(120).optional(),
+    h2: z.string().max(120).optional(),
+    lede: z.string().max(260).optional(),
+    bullets: z.array(z.string().min(1).max(180)).max(10).default([]),
+    cards: z.array(z.object({
+      title: z.string().min(1).max(80),
+      body: z.string().min(1).max(220),
+      tag: z.string().max(40).optional()
+    })).max(8).default([]),
+    metrics: z.array(z.object({
+      label: z.string().min(1).max(60),
+      value: z.string().min(1).max(40),
+      note: z.string().max(120).optional()
+    })).max(8).default([]),
+    footer: z.string().max(100).optional()
+  })).min(1).max(8)
+});
+
 export const structuredOutputSchemaHints = {
   research: [
     "Return one JSON object only.",
@@ -55,15 +101,21 @@ export const structuredOutputSchemaHints = {
   plan: [
     "Return one JSON object only.",
     "Schema:",
-    '{ "title": "string", "subtitle": "string?", "slideCount": 8, "audience": "string", "tone": "string?", "format": "string?", "objective": "string", "slides": [{ "index": 1, "title": "string", "type": "string", "layoutId": "string", "goal": "string", "keyPoints": ["string"] }] }'
+    '{ "title": "string", "subtitle": "string?", "slideCount": 8, "audience": "string", "tone": "clinical|playful|editorial|cyber|enterprise|documentary|lifestyle|energetic|academic|friendly", "format": "live-talk|pdf-handout|xhs-image|web-share|keynote|internal-memo", "objective": "string", "slides": [{ "index": 1, "title": "string", "type": "string", "layoutId": "string", "goal": "string", "keyPoints": ["string"] }] }'
   ].join("\n"),
   visual: [
     "Return one JSON object only.",
     "Schema:",
     '{ "primaryTheme": "string", "backupThemes": ["string"], "referenceTemplates": ["string"], "deckClass": "string", "visualLanguage": "string", "slideVisuals": [{ "index": 1, "composition": "string", "animation": "string?", "fx": "string?" }] }'
+  ].join("\n"),
+  sectionContent: [
+    "Return one JSON object only.",
+    "Schema:",
+    '{ "slides": [{ "index": 1, "title": "string", "layoutId": "string", "kicker": "string?", "h1": "string?", "h2": "string?", "lede": "string?", "bullets": ["string"], "cards": [{ "title": "string", "body": "string", "tag": "string?" }], "metrics": [{ "label": "string", "value": "string", "note": "string?" }], "footer": "string?" }] }'
   ].join("\n")
 };
 
 export type ResearchSchema = z.infer<typeof researchSchema>;
 export type PlanSchema = z.infer<typeof planSchema>;
 export type VisualSchema = z.infer<typeof visualSchema>;
+export type SectionContentSchema = z.infer<typeof sectionContentSchema>;

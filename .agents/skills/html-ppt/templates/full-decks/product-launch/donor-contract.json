@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": ["Halo v2", "halo.audio", "Meet Halo v2"],
+  "forbiddenTextPatterns": ["Halo\\s*v2", "halo\\.audio", "Meet\\s+Halo"],
+  "forbiddenClasses": ["hero-shot"],
+  "coverOnlyClasses": [],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["hero-shot"]
+}

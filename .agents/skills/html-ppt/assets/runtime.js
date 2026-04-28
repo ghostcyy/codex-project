@@ -25,6 +25,51 @@
 
   function ready(fn){ if(document.readyState!='loading')fn(); else document.addEventListener('DOMContentLoaded',fn);}
 
+  function resetAutoFitBlock(block) {
+    block.style.transform = '';
+    block.style.transformOrigin = '';
+    block.style.setProperty('--auto-fit-scale', '1');
+    delete block.dataset.autoFitScale;
+  }
+
+  function fitResponsiveBlocks(slide) {
+    if (!slide) return;
+    const blocks = Array.from(slide.querySelectorAll('.arch'));
+    if (!blocks.length) return;
+
+    blocks.forEach(resetAutoFitBlock);
+
+    requestAnimationFrame(function () {
+      const slideRect = slide.getBoundingClientRect();
+      if (!slideRect.width || !slideRect.height) return;
+
+      const bottomSafe = slideRect.bottom - Math.max(52, slideRect.height * 0.075);
+      const rightSafe = slideRect.right - Math.max(32, slideRect.width * 0.03);
+
+      blocks.forEach(function (block) {
+        const rect = block.getBoundingClientRect();
+        if (!rect.width || !rect.height) return;
+
+        const availableHeight = bottomSafe - rect.top;
+        const availableWidth = rightSafe - rect.left;
+        if (availableHeight <= 0 || availableWidth <= 0) return;
+
+        const scale = Math.min(1, availableHeight / rect.height, availableWidth / rect.width);
+        if (scale >= 0.985) return;
+
+        slide.querySelectorAll('.dk-keyhint').forEach(function (el) {
+          el.style.display = 'none';
+        });
+
+        const nextScale = Math.max(0.72, Math.floor(scale * 1000) / 1000);
+        block.style.transformOrigin = 'top left';
+        block.style.transform = 'scale(' + nextScale + ')';
+        block.style.setProperty('--auto-fit-scale', String(nextScale));
+        block.dataset.autoFitScale = String(nextScale);
+      });
+    });
+  }
+
   /* ========== Parse URL for preview-only mode ==========
    * When loaded as iframe.src = "index.html?preview=3", runtime enters a
    * locked single-slide mode: only slide N is visible, no chrome, no keys,
@@ -59,6 +104,7 @@
             s.style.pointerEvents = 'auto';
           }
         });
+        fitResponsiveBlocks(slides[i]);
       }
       showSlide(previewOnlyIdx);
       /* Hide chrome that the presenter shouldn't see in preview */
@@ -195,6 +241,8 @@
         }
         requestAnimationFrame(tick);
       });
+
+      fitResponsiveBlocks(slides[n]);
 
       // Broadcast to other window (audience ↔ presenter)
       if (!fromRemote && bc) {
@@ -873,6 +921,9 @@
       if (m) go(Math.max(0, parseInt(m[1],10)-1));
     }
     window.addEventListener('hashchange', fromHash);
+    window.addEventListener('resize', function () {
+      fitResponsiveBlocks(slides[idx]);
+    });
     fromHash();
     go(idx);
   });

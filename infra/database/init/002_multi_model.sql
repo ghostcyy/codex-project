@@ -2,6 +2,10 @@
 ALTER TABLE llm_provider_settings
 ADD COLUMN IF NOT EXISTS name VARCHAR(128) NOT NULL DEFAULT 'Default Model';
 
+-- HTML-PPT 编排可按阶段覆盖模型 ID；未配置的阶段回退到主 model 字段。
+ALTER TABLE llm_provider_settings
+ADD COLUMN IF NOT EXISTS stage_model_overrides JSONB NOT NULL DEFAULT '{}'::JSONB;
+
 -- 记录每次调用大模型消耗情况的日志表
 CREATE TABLE IF NOT EXISTS llm_call_logs (
   id BIGSERIAL PRIMARY KEY,

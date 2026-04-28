@@ -90,6 +90,7 @@ export interface LlmConfigSummary {
   providerType: string;
   baseUrl: string;
   model: string;
+  stageModelOverrides?: Partial<Record<"research" | "plan" | "visual" | "section" | "css" | "qa", string>>;
   enabled: boolean;
   hasApiKey: boolean;
   apiKeyMasked: string | null;

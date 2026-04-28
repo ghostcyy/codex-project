@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="../assets/base.css">
 <link rel="stylesheet" href="../assets/animations/animations.css">
 <style>
-  /* NOTE: theme isolation via <iframe srcdoc> per slide. Each slide loads base.css
-     + its OWN theme.css, so pressing → actually shows a different look. */
   html,body{background:#0b0c10;color:#e8ebf4}
   .deck{background:#0b0c10}
   .slide{padding:0;background:transparent}
@@ -27,7 +25,6 @@
 <div class="deck"></div>
 
 <script>
-/* 36 themes total (24 v1 + 12 v2). Each rendered in its OWN iframe so CSS is isolated. */
 const THEMES = [
   ['minimal-white',      '极简白 · clean restraint'],
   ['editorial-serif',    '杂志衬线 · high editorial'],
@@ -53,7 +50,6 @@ const THEMES = [
   ['aurora',             'Aurora 极光'],
   ['blueprint',          'Blueprint 蓝图'],
   ['memphis-pop',        'Memphis Pop'],
-  /* v2 additions */
   ['cyberpunk-neon',     'Cyberpunk Neon 霓虹'],
   ['y2k-chrome',         'Y2K Chrome 镜面'],
   ['retro-tv',           'Retro TV CRT 扫描线'],
@@ -68,8 +64,6 @@ const THEMES = [
   ['engineering-whiteprint','Engineering Whiteprint']
 ];
 
-/* The demo content that each iframe will render. Uses tokens only, so it picks up
-   whatever theme the iframe loads. Self-contained — no external references. */
 function demoHTML(themeName, label){
   return `<!doctype html><html><head><meta charset="utf-8">
 <link rel="stylesheet" href="../assets/fonts.css">
@@ -111,9 +105,9 @@ function demoHTML(themeName, label){
     </div>
     <div class="card">
       <h4>Code · 令牌</h4>
-      <pre class="mini-code">:root {
-  --accent: /* theme */;
-  --radius: /* theme */;
+<pre class="mini-code">:root {
+  --accent: theme-token;
+  --radius: theme-token;
 }</pre>
     </div>
   </div>
@@ -137,8 +131,6 @@ function demoHTML(themeName, label){
     const iframe = document.createElement('iframe');
     iframe.className = 'theme-frame';
     iframe.setAttribute('loading','eager');
-    // Use src via data URL for the inline demo HTML so relative paths still resolve from the templates/ dir.
-    // Easier: use srcdoc but set <base href> to the templates dir so relative ../assets paths work.
     const base = `<base href="${location.href}">`;
     iframe.srcdoc = demoHTML(t[0], t[1]).replace('<head>','<head>'+base);
     s.innerHTML = chrome;

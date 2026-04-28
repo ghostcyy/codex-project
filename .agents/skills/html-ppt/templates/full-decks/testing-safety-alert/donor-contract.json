@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": ["ts-stripe", "ts-stripe-b"],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["ts-stripe", "ts-stripe-b"]
+}

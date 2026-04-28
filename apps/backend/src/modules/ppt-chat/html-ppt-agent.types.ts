@@ -1,4 +1,4 @@
-import type { SkillAssetManifest } from "./skill-asset-indexer";
+import type { DonorTemplateContract, SkillAssetManifest } from "./skill-asset-indexer";
 import type { HtmlPptRenderResult } from "../html-ppt-renderer/html-ppt-renderer.types";
 import type { PptGenerationOrchestration, PptMessageDto } from "./ppt-chat.types";
 
@@ -34,6 +34,7 @@ export type ReferenceFullDeckSnippet = {
    */
   cssExcerpt: string;
   contract?: ReferenceComponentContract;
+  donorContract?: DonorTemplateContract;
 };
 
 export type ReferenceComponentContract = {
@@ -89,6 +90,30 @@ export type ResearchPack = {
   }>;
 };
 
+export type SectionContentPlan = {
+  slides: Array<{
+    index: number;
+    title: string;
+    layoutId: string;
+    kicker?: string;
+    h1?: string;
+    h2?: string;
+    lede?: string;
+    bullets: string[];
+    cards: Array<{
+      title: string;
+      body: string;
+      tag?: string;
+    }>;
+    metrics: Array<{
+      label: string;
+      value: string;
+      note?: string;
+    }>;
+    footer?: string;
+  }>;
+};
+
 export type DeckRequestRequirements = {
   requestedSlideCount?: number;
   requestedNarrativeLength?: number;
@@ -108,6 +133,20 @@ export type SkillAssetManifestLike = {
     role?: string;
     tags?: string[];
     densityBudget?: Record<string, number>;
+    sanity?: {
+      minCards?: number;
+      maxCards?: number;
+      minBullets?: number;
+      maxBullets?: number;
+      minMetrics?: number;
+      maxMetrics?: number;
+      wantsCardTitle?: boolean;
+      wantsCardBody?: boolean;
+      horizontal?: boolean;
+      columns?: number;
+      requiresCanvas?: boolean;
+      notes?: string;
+    };
     canvasRequired?: boolean;
   }>;
   fullDecks?: Array<{
@@ -116,6 +155,7 @@ export type SkillAssetManifestLike = {
     tags?: string[];
     themesReferenced?: string[];
     animationsUsed?: string[];
+    donorContract?: DonorTemplateContract;
   }>;
 };
 

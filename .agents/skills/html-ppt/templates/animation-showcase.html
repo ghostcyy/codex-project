@@ -100,7 +100,6 @@ const CSS_ANIMS = [
 const deck = document.querySelector('.deck');
 const total = FX.length + CSS_ANIMS.length;
 
-// Build FX slides (1..20)
 FX.forEach((f, i) => {
   const idx = i + 1;
   const [name, desc] = f;
@@ -126,18 +125,16 @@ FX.forEach((f, i) => {
       <button class="fx-replay" type="button">Replay</button>
       <div class="fx-host" style="position:absolute;inset:0;" data-fx="${name}" ${extraAttrs}></div>
     </div>
-    <div class="deck-footer"><span class="dim2">Press → for next slide</span><span class="slide-number" data-current="${idx}" data-total="${total}"></span></div>
+    <div class="deck-footer"><span class="dim2">FX demo</span><span class="slide-number" data-current="${idx}" data-total="${total}"></span></div>
   `;
   deck.appendChild(sec);
 
-  // Wire Replay button
   sec.querySelector('.fx-replay').addEventListener('click', () => {
     const host = sec.querySelector('.fx-host');
     const name2 = host.getAttribute('data-fx');
     const attrs = {};
     for (const a of host.attributes) attrs[a.name] = a.value;
     const parent = host.parentNode;
-    // stop existing
     if (window.__hpxActive && window.__hpxActive.has(host)){
       try{ window.__hpxActive.get(host).stop(); }catch(e){}
       window.__hpxActive.delete(host);
@@ -150,7 +147,6 @@ FX.forEach((f, i) => {
   });
 });
 
-// Build CSS animation slides (legacy, kept for completeness)
 CSS_ANIMS.forEach((a, i) => {
   const idx = FX.length + i + 1;
   const sec = document.createElement('section');
@@ -162,7 +158,7 @@ CSS_ANIMS.forEach((a, i) => {
     <h1 class="h1"><span class="gradient-text">${a[0]}</span></h1>
     <p class="lede">${a[1]}</p>
     <div class="anim-box anim-${a[0]}" data-anim="${a[0]}" data-anim-target>${a[0]}</div>
-    <div class="deck-footer"><span class="dim2">Press A to cycle</span><span class="slide-number" data-current="${idx}" data-total="${total}"></span></div>
+    <div class="deck-footer"><span class="dim2">CSS animation demo</span><span class="slide-number" data-current="${idx}" data-total="${total}"></span></div>
   `;
   deck.appendChild(sec);
 });

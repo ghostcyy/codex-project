@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { existsSync } from "node:fs";
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { basename, join, resolve } from "node:path";
 import { Inject, Injectable, Logger, ServiceUnavailableException } from "@nestjs/common";
 import { Agent as UndiciAgent, fetch as undiciFetch } from "undici";
@@ -8,8 +8,9 @@ import type { ZodType } from "zod";
 import { HtmlPptRendererService } from "../html-ppt-renderer/html-ppt-renderer.service";
 import type { HtmlPptRenderResult } from "../html-ppt-renderer/html-ppt-renderer.types";
 import { LlmConfigService } from "../llm-config/llm-config.service";
+import type { ActiveLlmConfig, LlmStageModelRole } from "../llm-config/llm-config.types";
 import { LlmLoggingService } from "../llm-logging/llm-logging.service";
-import { planSchema, researchSchema, structuredOutputSchemaHints, visualSchema } from "./html-ppt-agent.schemas";
+import { PLAN_FORMATS, PLAN_TONES, planSchema, researchSchema, sectionContentSchema, structuredOutputSchemaHints, visualSchema } from "./html-ppt-agent.schemas";
 import type {
   AgentPlan,
   DeckRequestRequirements,
@@ -25,6 +26,7 @@ import type {
   ReferenceComponentContract,
   ReferenceFullDeckSnippet,
   ResearchPack,
+  SectionContentPlan,
   SkillPack,
   VisualPlan
 } from "./html-ppt-agent.types";
@@ -33,12 +35,13 @@ import { buildPrompt } from "./prompt-builder";
 import { buildSlideCascade } from "./qa/css-cascade";
 import { buildLedger, detectOutliers } from "./qa/consistency-ledger";
 import { appendCssPatch, buildCssPatchInstructions, validateCssPatchOutput } from "./qa/css-patch-repair";
+import type { CssPatchInstruction } from "./qa/css-patch-repair";
 import { estimateGeometryIssues } from "./qa/geometry-estimator";
 import type { ConsistencyFinding } from "./qa/qa-types";
 import { indexSkillAssets } from "./skill-asset-indexer";
-import type { SkillAssetManifest } from "./skill-asset-indexer";
+import type { DonorTemplateContract, LayoutSanityContract, SkillAssetManifest } from "./skill-asset-indexer";
 
-type ActiveModelConfig = Awaited<ReturnType<LlmConfigService["getActiveConfig"]>>;
+type ActiveModelConfig = ActiveLlmConfig;
 type ChatMessage = { role: "system" | "user" | "assistant"; content: string };
 type ChatResponse = { choices?: Array<{ message?: { content?: string | Array<{ text?: string }> } }> };
 type QaSignalStatus = "passed" | "healed" | "failed" | "warn";
@@ -46,6 +49,32 @@ type QaSignalReport = { status: QaSignalStatus; issues: string[]; details?: Reco
 type QaSlideFitIssue = { slideIndex: number; planOffset: number; layoutId: string; issues: string[] };
 type DeckStyleProfile = "academic" | "product" | "balanced";
 type BatchQaResult = { issues: string[]; hardIssues: string[]; softIssues: string[] };
+type HtmlPptGenerationTraceStage = {
+  id: string;
+  stage: HtmlPptAgentStage;
+  name: string;
+  status: PptGenerationStep["status"];
+  startedAt: string;
+  endedAt: string;
+  durationMs: number;
+  detail: string;
+  modelCalls: number;
+  promptTokens: number;
+  completionTokens: number;
+  totalTokens: number;
+  qaIssueCount?: number;
+};
+type QaQualityScore = {
+  score: number;
+  grade: "A" | "B" | "C" | "D";
+  blockingIssues: number;
+  warnings: number;
+  healedSignals: number;
+  failedSignals: number;
+  warnSignals: number;
+  slideFitIssues: number;
+  classCoverageRate?: number;
+};
 type ClassCoverageReport = {
   htmlMatchedByDeckCss: number;
   htmlMatchedByAnyCss: number;
@@ -53,7 +82,14 @@ type ClassCoverageReport = {
   cssMatchedToHtml: number;
   cssTotal: number;
   unmatchedHtmlClasses: string[];
+  orphanHtmlClasses: string[];
   unusedCssClasses: string[];
+};
+type LayoutRulePresenceIssue = {
+  slideIndex: number;
+  className: string;
+  selector: string;
+  message: string;
 };
 type ModelLogContext = {
   userId?: number;
@@ -67,6 +103,7 @@ type QaReport = {
   repairedSlides: number[];
   truncatedSlides: number[];
   warnings: string[];
+  quality?: QaQualityScore;
   signals: {
     structure: QaSignalReport;
     assets: QaSignalReport;
@@ -102,12 +139,34 @@ class HtmlPptAgentBatchError extends Error {
 @Injectable()
 export class HtmlPptAgentService {
   private readonly logger = new Logger(HtmlPptAgentService.name);
+  private static readonly BLOCKED_FX = new Set(["knowledge-graph", "gradient-blob"]);
 
   constructor(
     @Inject(LlmConfigService) private readonly llmConfigService: LlmConfigService,
     @Inject(HtmlPptRendererService) private readonly rendererService: HtmlPptRendererService,
     @Inject(LlmLoggingService) private readonly llmLoggingService: LlmLoggingService
   ) {}
+
+  private modelConfigForRole(activeConfig: ActiveModelConfig, role: LlmStageModelRole): ActiveModelConfig {
+    const override = activeConfig.stageModelOverrides?.[role]?.trim();
+    return override ? { ...activeConfig, model: override } : activeConfig;
+  }
+
+  private modelRoutingSummary(activeConfig: ActiveModelConfig) {
+    const roles: LlmStageModelRole[] = ["research", "plan", "visual", "section", "css", "qa"];
+    return {
+      default: activeConfig.model,
+      roles: Object.fromEntries(roles.map((role) => [role, this.modelConfigForRole(activeConfig, role).model]))
+    };
+  }
+
+  private formatModelRouting(activeConfig: ActiveModelConfig) {
+    const routing = this.modelRoutingSummary(activeConfig);
+    const overrides = Object.entries(routing.roles)
+      .filter(([, model]) => model !== routing.default)
+      .map(([role, model]) => `${role}:${model}`);
+    return overrides.length ? `${routing.default} (${overrides.join(", ")})` : routing.default;
+  }
 
   async generateDeck(
     input: HtmlPptAgentInput,
@@ -118,6 +177,8 @@ export class HtmlPptAgentService {
     }
   ): Promise<{ deckSpec: PptDeckSpec; deckRender: HtmlPptRenderResult; orchestration: PptGenerationOrchestration }> {
     const activeConfig = await this.llmConfigService.getActiveConfig();
+    const modelConfig = (role: LlmStageModelRole) => this.modelConfigForRole(activeConfig, role);
+    const modelRouting = this.modelRoutingSummary(activeConfig);
     const agentInput = {
       ...input,
       templateId: resume?.checkpoint?.templateId ?? input.templateId,
@@ -132,6 +193,7 @@ export class HtmlPptAgentService {
     let promptTokens = 0;
     let completionTokens = 0;
     let totalTokens = 0;
+    const traceStages: HtmlPptGenerationTraceStage[] = [];
     let skill: SkillPack | undefined;
     let research = resume?.checkpoint?.research;
     let plan = resume?.checkpoint?.plan;
@@ -160,7 +222,7 @@ export class HtmlPptAgentService {
 
     const makeOrchestration = (): PptGenerationOrchestration => ({
       version: "html-ppt-agent-v1",
-      model: activeConfig.model,
+      model: this.formatModelRouting(activeConfig),
       startedAt,
       finishedAt: new Date().toISOString(),
       totalModelCalls: modelCalls,
@@ -219,6 +281,11 @@ export class HtmlPptAgentService {
       const runningDetail = this.stageRunningDetail(stage);
       running = { id: `step-${steps.length + 1}`, name, status: "running", startedAt: started, endedAt: started, detail: runningDetail };
       await publish(`${name} 进行中。${runningDetail}`, "running");
+      const startedMs = Date.now();
+      const modelCallsBefore = modelCalls;
+      const promptTokensBefore = promptTokens;
+      const completionTokensBefore = completionTokens;
+      const totalTokensBefore = totalTokens;
       let heartbeatBusy = false;
       const publishHeartbeat = async () => {
         if (!running || heartbeatBusy) return;
@@ -248,7 +315,23 @@ export class HtmlPptAgentService {
           failedIndexState = undefined;
         }
         nextStage = nextOnSuccess;
-        steps.push({ ...completedStep, status: "completed", endedAt: new Date().toISOString(), detail: result.detail });
+        const endedAt = new Date().toISOString();
+        steps.push({ ...completedStep, status: "completed", endedAt, detail: result.detail });
+        traceStages.push({
+          id: completedStep.id,
+          stage,
+          name,
+          status: "completed",
+          startedAt: started,
+          endedAt,
+          durationMs: Math.max(0, Date.now() - startedMs),
+          detail: result.detail,
+          modelCalls: modelCalls - modelCallsBefore,
+          promptTokens: promptTokens - promptTokensBefore,
+          completionTokens: completionTokens - completionTokensBefore,
+          totalTokens: totalTokens - totalTokensBefore,
+          qaIssueCount: this.estimateStepIssueCount(result.value)
+        });
         running = null;
         await publish(result.detail, "running");
         return result.value;
@@ -269,7 +352,24 @@ export class HtmlPptAgentService {
           issues: this.extractFailureIssues(error),
           occurredAt: new Date().toISOString()
         });
-        steps.push({ ...failedStep, status: "failed", endedAt: new Date().toISOString(), detail: error instanceof Error ? error.message : "步骤失败。" });
+        const endedAt = new Date().toISOString();
+        const detail = error instanceof Error ? error.message : "步骤失败。";
+        steps.push({ ...failedStep, status: "failed", endedAt, detail });
+        traceStages.push({
+          id: failedStep.id,
+          stage,
+          name,
+          status: "failed",
+          startedAt: started,
+          endedAt,
+          durationMs: Math.max(0, Date.now() - startedMs),
+          detail,
+          modelCalls: modelCalls - modelCallsBefore,
+          promptTokens: promptTokens - promptTokensBefore,
+          completionTokens: completionTokens - completionTokensBefore,
+          totalTokens: totalTokens - totalTokensBefore,
+          qaIssueCount: this.extractFailureIssues(error).length
+        });
         running = null;
         await publish(error instanceof Error ? error.message : "步骤失败。", "failed");
         throw new HtmlPptAgentError(error instanceof Error ? error.message : "步骤失败。", makeOrchestration(), buildCheckpoint());
@@ -314,7 +414,7 @@ export class HtmlPptAgentService {
         try {
           const prompt = buildPrompt("research", { input: agentInput, userContextText, skill: skillPack, requestRequirements });
           const value = await this.modelStructured(
-            activeConfig,
+            modelConfig("research"),
             researchSchema,
             this.researchSchemaHint(requestRequirements),
             prompt.system,
@@ -341,7 +441,7 @@ export class HtmlPptAgentService {
         }
         const prompt = buildPrompt("content-plan", { input: agentInput, userContextText, skill: skillPack, research, assetManifest: skillPack.manifest, requestRequirements });
         const planned = await this.modelStructured(
-          activeConfig,
+          modelConfig("plan"),
           planSchema,
           this.planSchemaHint(requestRequirements, research),
           prompt.system,
@@ -368,7 +468,7 @@ export class HtmlPptAgentService {
         let fallbackReason = "";
         try {
           const visuals = await this.modelStructured(
-            activeConfig,
+            modelConfig("visual"),
             visualSchema,
             structuredOutputSchemaHints.visual,
             prompt.system,
@@ -380,7 +480,7 @@ export class HtmlPptAgentService {
             templateId: agentInput.templateId,
             theme: agentInput.theme,
             lockedTemplateId
-          });
+          }, plan);
         } catch (error) {
           fallbackReason = this.describeError(error);
           normalized = this.fallbackVisualPlan(plan, skillPack, {
@@ -409,7 +509,7 @@ export class HtmlPptAgentService {
           throw new ServiceUnavailableException("缺少资料包、内容规划或视觉方案，无法继续生成 index.html。");
         }
         const value = await this.generateIndexHtml(
-          activeConfig,
+          modelConfig("section"),
           agentInput,
           plan,
           visual,
@@ -450,7 +550,7 @@ export class HtmlPptAgentService {
           throw new ServiceUnavailableException("缺少内容规划、视觉方案或 index.html，无法继续生成 style.css。");
         }
         return this.generateStyleCss(
-          activeConfig,
+          modelConfig("css"),
           plan,
           visual,
           indexResult.html,
@@ -498,7 +598,7 @@ export class HtmlPptAgentService {
           plan,
           visual,
           skill: skillPack,
-          activeConfig,
+          activeConfig: modelConfig("qa"),
           agentInput,
           research,
           onCall: countCall
@@ -526,6 +626,24 @@ export class HtmlPptAgentService {
           repairedSlides: [],
           truncatedSlides: [],
           warnings: [],
+          quality: this.scoreQaReport({
+            generatedAt: new Date().toISOString(),
+            repairedSlides: [],
+            truncatedSlides: [],
+            warnings: [],
+            signals: {
+              structure: { status: "passed", issues: [] },
+              assets: { status: "passed", issues: [] },
+              runtime: { status: "passed", issues: [] },
+              fit: { status: "passed", issues: [] },
+              classCoverage: { status: "passed", issues: [], details: { htmlMatchedByDeckCss: 0, htmlMatchedByAnyCss: 0, htmlTotal: 0, cssMatchedToHtml: 0, cssTotal: 0, unmatchedHtmlClasses: [], unusedCssClasses: [] } },
+              consistency: { status: "passed", issues: [] },
+              geometry: { status: "passed", issues: [] },
+              themeContrast: { status: "passed", issues: [] },
+              portability: { status: "passed", issues: [] }
+            },
+            issues: []
+          }),
           signals: {
             structure: { status: "passed", issues: [] },
             assets: { status: "passed", issues: [] },
@@ -547,6 +665,41 @@ export class HtmlPptAgentService {
     }
     const deckSpec = this.summarySpec(plan, visual, qa.slides, qa.chineseChars);
     await publish("HTML-PPT Agent 编排完成。", "completed");
+    await this.writeGenerationTrace(deckRender.outputDir, {
+      traceVersion: "html-ppt-generation-trace-v1",
+      generatedAt: new Date().toISOString(),
+      projectId: agentInput.projectId,
+      messageId: agentInput.assistantMessageId,
+      sourceUserMessageId: agentInput.pendingUserMessage.id,
+      projectName: agentInput.projectName,
+      model: this.formatModelRouting(activeConfig),
+      modelRouting,
+      templateId: agentInput.templateId,
+      theme: visual.primaryTheme,
+      requested: this.extractDeckRequestRequirements(agentInput.pendingUserMessage.content),
+      totals: {
+        modelCalls,
+        promptTokens,
+        completionTokens,
+        totalTokens,
+        durationMs: Math.max(0, Date.now() - new Date(startedAt).getTime())
+      },
+      stages: traceStages,
+      orchestration: makeOrchestration(),
+      deck: {
+        slides: qa.slides,
+        chineseChars: qa.chineseChars,
+        inlineThemes: qa.inlineThemes,
+        previewUrl: deckRender.previewUrl,
+        downloadUrl: deckRender.downloadUrl
+      },
+      qa: {
+        issues: qa.issues,
+        warnings: qa.qaReport.warnings,
+        quality: qa.qaReport.quality,
+        signalSummary: this.summarizeQaSignals(qa.qaReport)
+      }
+    });
     
     if (agentInput.userId && totalTokens > 0) {
       this.llmLoggingService.logCall(
@@ -897,7 +1050,48 @@ export class HtmlPptAgentService {
     };
   }
 
+  private isTransientModelError(error: unknown): boolean {
+    if (!(error instanceof Error)) return false;
+    if (error.name === "AbortError") return false; // server-side abort/timeout — do not retry blindly
+    const cause = "cause" in error ? (error as Error & { cause?: unknown }).cause : undefined;
+    const code = cause && typeof cause === "object" && "code" in cause ? String((cause as { code: unknown }).code) : "";
+    if (["ECONNRESET", "ETIMEDOUT", "EAI_AGAIN", "ENETUNREACH", "ECONNREFUSED", "EPIPE"].includes(code)) return true;
+    const message = `${error.message ?? ""} ${cause instanceof Error ? cause.message ?? "" : ""}`.toLowerCase();
+    if (message.includes("fetch failed")) return true;
+    if (message.includes("socket hang up")) return true;
+    if (message.includes("und_err_socket") || message.includes("und_err_connect")) return true;
+    if (/\b(?:502|503|504|429)\b/.test(message)) return true;
+    return false;
+  }
+
   private async modelText(
+    activeConfig: ActiveModelConfig,
+    system: string,
+    user: string,
+    onCall: (usage?: unknown) => void,
+    logContext?: ModelLogContext
+  ) {
+    const maxAttempts = 3;
+    let lastError: unknown;
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      try {
+        return await this.modelTextOnce(activeConfig, system, user, onCall, logContext);
+      } catch (error) {
+        lastError = error;
+        if (attempt === maxAttempts || !this.isTransientModelError(error)) {
+          throw error;
+        }
+        const backoffMs = Math.round(2000 * Math.pow(3, attempt - 1) * (0.7 + Math.random() * 0.6));
+        this.logger.warn(
+          `HTML-PPT Agent transient model error on attempt ${attempt}/${maxAttempts}, retrying in ${backoffMs}ms: ${this.describeError(error)}`
+        );
+        await new Promise((resolve) => setTimeout(resolve, backoffMs));
+      }
+    }
+    throw lastError instanceof Error ? lastError : new Error("model retry exhausted");
+  }
+
+  private async modelTextOnce(
     activeConfig: ActiveModelConfig,
     system: string,
     user: string,
@@ -1052,7 +1246,7 @@ export class HtmlPptAgentService {
     // every batch (and any per-slide repair) sees the same reference template.
     const referenceFullDeckName = this.pickReferenceFullDeckName(visual, skill);
     const referenceFullDeck = referenceFullDeckName
-      ? await this.readReferenceFullDeck(skill.root, referenceFullDeckName)
+      ? await this.readReferenceFullDeck(skill, referenceFullDeckName)
       : undefined;
     const snapshotMap = new Map((failedIndexState?.batchSnapshots ?? []).map((item) => [item.batchIndex, item]));
     const failedBatchCandidates = failedIndexState?.failedBatches?.length
@@ -1083,14 +1277,22 @@ export class HtmlPptAgentService {
         !resumeSnapshot &&
         this.isCompatibleBatchSnapshot(cachedSnapshot, batch)
       ) {
-        const cachedQa = this.validateSectionBatch(cachedSnapshot.sections, batch, skill, plan, deckStyle);
+        const cachedSanitized = this.sanitizeSectionBatchMarkup(
+          cachedSnapshot.sections,
+          batch,
+          undefined,
+          referenceFullDeck?.contract,
+          referenceFullDeck?.donorContract
+        );
+        const cachedQa = this.validateSectionBatch(cachedSanitized.html, batch, skill, plan, deckStyle, referenceFullDeck?.donorContract);
         if (cachedQa.issues.length === 0) {
           return {
             ok: true as const,
             value: {
               ...cachedSnapshot,
+              sections: cachedSanitized.html,
               modelRepairCalls: 0,
-              localRepairCount: 0
+              localRepairCount: cachedSanitized.localRepairCount
             }
           };
         }
@@ -1099,7 +1301,7 @@ export class HtmlPptAgentService {
           batchIndex,
           batch,
           skill,
-          sections: cachedSnapshot.sections,
+          sections: cachedSanitized.html,
           qaIssues: cachedQa.issues
         });
       }
@@ -1202,6 +1404,19 @@ export class HtmlPptAgentService {
       narrativeExpandedChars = expanded.addedChineseChars;
       narrativeExpandedSlides = expanded.expandedSlides;
     }
+    sections = this.sanitizeFinalSectionsForTemplateDecorations(sections, slides, referenceFullDeck?.donorContract);
+
+    // Hard slide-count guard: if Stage 05 emitted more <section>s than the
+    // plan called for (typically because the model split a slide into two),
+    // collapse adjacent duplicate-titled sections and finally trim to length.
+    // The plan is authoritative on slide count once we entered Stage 05.
+    if (sections.length !== slides.length) {
+      const beforeCount = sections.length;
+      sections = this.reconcileSectionCountToPlan(sections, slides);
+      this.logger.warn(
+        `HTML-PPT Agent slide-count drift in Stage 05: emitted=${beforeCount}, plan=${slides.length}, reconciled=${sections.length}`
+      );
+    }
 
     return {
       html: this.composeIndexHtml(plan, visual, sections.join("\n\n")),
@@ -1234,17 +1449,82 @@ export class HtmlPptAgentService {
     return Array.from(content.match(/<section\b[\s\S]*?<\/section>/gi) ?? []);
   }
 
+  /**
+   * Deterministic tag-balance auto-repair. Counts opening vs. closing
+   * `<div>` tags inside a single `<section>` and appends or prepends closers
+   * when the imbalance is small (≤ 3). This catches the majority of "HTML
+   * 标签嵌套异常" failures (model emitted one stray `</div>` or forgot one)
+   * without spending a model round-trip on repair.
+   */
+  private autoBalanceSectionTags(section: string): string {
+    if (!section) return section;
+    // Operate on the inner contents between the outermost <section ...> and
+    // </section> so we don't accidentally close the outer section itself.
+    const sectionOpenMatch = section.match(/<section\b[^>]*>/i);
+    if (!sectionOpenMatch) return section;
+    const innerStart = (sectionOpenMatch.index ?? 0) + sectionOpenMatch[0].length;
+    const innerEnd = section.lastIndexOf("</section>");
+    if (innerEnd <= innerStart) return section;
+    const head = section.slice(0, innerStart);
+    const inner = section.slice(innerStart, innerEnd);
+    const tail = section.slice(innerEnd);
+
+    let depth = 0;
+    let stripLeadingClosers = 0;
+    const openMatches = inner.match(/<div\b[^>]*?(?<!\/)>/gi)?.length ?? 0;
+    const closeMatches = inner.match(/<\/div\s*>/gi)?.length ?? 0;
+    let next = inner;
+
+    if (closeMatches > openMatches && closeMatches - openMatches <= 3) {
+      // Strip up to N stray leading </div> tokens that close nothing.
+      const stray = closeMatches - openMatches;
+      const tagPattern = /<\/?div\b[^>]*>/gi;
+      let removed = 0;
+      let cursor = 0;
+      const parts: string[] = [];
+      let lastEnd = 0;
+      for (let match = tagPattern.exec(inner); match; match = tagPattern.exec(inner)) {
+        const tag = match[0];
+        const isOpen = /^<div\b/i.test(tag) && !/\/>$/.test(tag);
+        if (isOpen) depth += 1;
+        else {
+          if (depth === 0 && removed < stray) {
+            parts.push(inner.slice(lastEnd, match.index));
+            lastEnd = match.index + tag.length;
+            removed += 1;
+            continue;
+          }
+          if (depth > 0) depth -= 1;
+        }
+      }
+      if (removed > 0) {
+        parts.push(inner.slice(lastEnd));
+        next = parts.join("");
+      }
+      stripLeadingClosers = removed;
+    } else if (openMatches > closeMatches && openMatches - closeMatches <= 3) {
+      // Append missing </div> tokens just before </section>.
+      next = inner + "\n" + "</div>".repeat(openMatches - closeMatches);
+    }
+
+    if (next === inner && stripLeadingClosers === 0) return section;
+    return `${head}${next}${tail}`;
+  }
+
   private sanitizeSectionBatchMarkup(
     sectionsHtml: string,
     batch: AgentPlan["slides"],
     allowedClasses?: Set<string>,
-    referenceContract?: ReferenceComponentContract
+    referenceContract?: ReferenceComponentContract,
+    donorContract?: DonorTemplateContract
   ) {
     let localRepairCount = 0;
     const sections = this.extractSectionList(sectionsHtml)
       .map((section, index) => {
-        const repaired = this.locallyRepairSectionMarkup(section, batch[index], allowedClasses, referenceContract);
-        if (repaired !== section.trim()) localRepairCount += 1;
+        const balanced = this.autoBalanceSectionTags(section);
+        if (balanced !== section) localRepairCount += 1;
+        const repaired = this.locallyRepairSectionMarkup(balanced, batch[index], allowedClasses, referenceContract, donorContract);
+        if (repaired !== balanced.trim()) localRepairCount += 1;
         return repaired;
       })
       .join("\n\n")
@@ -1257,17 +1537,25 @@ export class HtmlPptAgentService {
     section: string,
     slide?: AgentPlan["slides"][number],
     allowedClasses?: Set<string>,
-    referenceContract?: ReferenceComponentContract
+    referenceContract?: ReferenceComponentContract,
+    donorContract?: DonorTemplateContract
   ) {
     let next = section;
     next = this.stripNotesBlocks(next);
     next = this.stripUnsafeMetricFx(next);
+    next = this.stripSectionRootAnimations(next);
+    next = this.stripBlockedFx(next);
+    next = this.normalizeNonNumericNumClasses(next);
     next = this.stripEmptyLeafPlaceholderNodes(next);
     next = this.normalizeHeadingStyledSpans(next);
+    next = this.stripVisibleRuntimeInstructionHints(next);
     next = this.normalizeTemplateHeadingClasses(next, slide, allowedClasses, referenceContract);
     next = this.normalizeTemplateCardClasses(next, slide, allowedClasses, referenceContract);
+    next = this.sanitizeDonorSection(next, { slide, donorContract });
+    next = this.normalizeSiblingCardInlineStyles(next);
     next = this.stripUnknownSectionClasses(next, allowedClasses);
     next = this.ensureSectionDataTitle(next, slide?.title);
+    next = this.ensureSectionPlanIdentity(next, slide);
     return next.trim();
   }
 
@@ -1278,6 +1566,43 @@ export class HtmlPptAgentService {
         .replace(/<(strong|em|b|i)\b[^>]*>([\s\S]*?)<\/\1>/gi, "$2");
       return `<${tag}${attrs}>${normalizedInner}</${tag}>`;
     });
+  }
+
+  private stripVisibleRuntimeInstructionHints(section: string) {
+    let next = section;
+    const hintClasses = [
+      "dk-keyhint",
+      "keyhint",
+      "key-hint",
+      "keyboard-hint",
+      "shortcut-hint",
+      "nav-hint",
+      "runtime-hint"
+    ];
+
+    for (const token of hintClasses) {
+      const escaped = this.escapeRegex(token);
+      next = next.replace(
+        new RegExp(`<(?:div|p|span|small)\\b(?=[^>]*\\bclass=(["'])[^"']*\\b${escaped}\\b[^"']*\\1)[^>]*>[\\s\\S]*?<\\/(?:div|p|span|small)>`, "gi"),
+        ""
+      );
+    }
+
+    const instructionElementPattern =
+      /<(div|p|span|small)\b([^>]*)>([\s\S]*?(?:方向键|切换页面|<kbd\b|navigate|press\s*(?:←|&larr;|left)|presenter|fullscreen)[\s\S]*?)<\/\1>/gi;
+    next = next.replace(instructionElementPattern, (match, tagName: string, attrs: string, inner: string) => {
+      const text = inner.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+      const hasRuntimeSignal =
+        /方向键/.test(text) ||
+        /切换页面/.test(text) ||
+        /navigate/.test(text) ||
+        /press\s*(?:←|left)/i.test(text) ||
+        (/<kbd\b/i.test(inner) && /(←|→|space|enter|presenter|fullscreen|navigate|切换)/i.test(text)) ||
+        /(presenter|fullscreen)/i.test(text);
+      return hasRuntimeSignal ? "" : match;
+    });
+
+    return next;
   }
 
   private buildSectionClassProtocol(input: {
@@ -1299,7 +1624,8 @@ export class HtmlPptAgentService {
     return {
       allowedClasses,
       promptCatalog: this.renderClassCatalog(allowedClasses),
-      referenceContract: input.referenceFullDeck?.contract
+      referenceContract: input.referenceFullDeck?.contract,
+      donorContract: input.referenceFullDeck?.donorContract
     };
   }
 
@@ -1454,6 +1780,230 @@ export class HtmlPptAgentService {
     });
   }
 
+  private stripDonorForbiddenClasses(
+    section: string,
+    slide?: AgentPlan["slides"][number],
+    donorContract?: DonorTemplateContract
+  ) {
+    const alwaysForbidden = new Set((donorContract?.forbiddenClasses ?? []).filter(Boolean));
+    const scopedDecorative = new Set([
+      ...(donorContract?.coverOnlyClasses ?? []),
+      ...(donorContract?.decorativeOnlyClasses ?? [])
+    ].filter(Boolean));
+    if (alwaysForbidden.size === 0 && scopedDecorative.size === 0) return section;
+
+    const isOrnamentalSlide = slide
+      ? ["cover", "section-divider", "cta", "thanks"].includes(slide.layoutId)
+      : false;
+
+    let next = section;
+    if (!isOrnamentalSlide && scopedDecorative.size > 0) {
+      next = this.stripEmptyDecorativeNodes(next, scopedDecorative);
+    }
+
+    return this.rewriteClassAttributes(next, ({ classes }) =>
+      classes.filter((token) => {
+        if (alwaysForbidden.has(token)) return false;
+        if (!isOrnamentalSlide && scopedDecorative.has(token)) return false;
+        return true;
+      })
+    );
+  }
+
+  private sanitizeDonorSection(
+    section: string,
+    options: {
+      slide?: AgentPlan["slides"][number];
+      donorContract?: DonorTemplateContract;
+      maskText?: boolean;
+    } = {}
+  ) {
+    let next = this.stripDonorForbiddenClasses(section, options.slide, options.donorContract);
+    if (options.maskText) {
+      next = this.maskDonorLeafText(next);
+      next = next.replace(/>([^<>{}\n][^<>]*?)</g, (match, text: string) => {
+        const normalized = text.replace(/\s+/g, " ").trim();
+        if (!normalized) return match;
+        if (/^\[[A-Z0-9_-]+\]$/.test(normalized)) return match;
+        return `>${this.semanticDonorToken("", "", normalized)}<`;
+      });
+    }
+    return next.trim();
+  }
+
+  private sanitizeFinalSectionsForTemplateDecorations(
+    sections: string[],
+    slides: AgentPlan["slides"],
+    donorContract?: DonorTemplateContract
+  ) {
+    if (!donorContract) return sections;
+    return sections.map((section, index) => this.sanitizeDonorSection(section, { slide: slides[index], donorContract }));
+  }
+
+  /**
+   * Hard reconciliation of emitted section count to the plan's slide count.
+   * The most common drift mode is: model split one body slide into two
+   * adjacent sections with the same data-title (observed in multiple smoke
+   * decks). Collapse those first; if still over, drop the lowest-priority
+   * extras (closer-style or near-duplicates). If still under, this method
+   * leaves it as-is — Stage 05 already pads from the plan.
+   */
+  private reconcileSectionCountToPlan(sections: string[], slides: AgentPlan["slides"]): string[] {
+    if (sections.length === slides.length) return sections;
+    const titleOf = (section: string): string => {
+      const m = section.match(/data-title=["']([^"']*)["']/i);
+      return (m?.[1] ?? "").trim();
+    };
+    const dataTitleNorm = (s: string) => s.replace(/\s+/g, "").toLowerCase();
+    const next = [...sections];
+
+    // 1) Collapse adjacent duplicate-title sections (common model split).
+    while (next.length > slides.length) {
+      let mergedAny = false;
+      for (let i = next.length - 1; i > 0; i -= 1) {
+        const a = next[i - 1];
+        const b = next[i];
+        if (!a || !b) continue;
+        const ta = dataTitleNorm(titleOf(a));
+        const tb = dataTitleNorm(titleOf(b));
+        if (ta && tb && ta === tb) {
+          // Keep the longer one (more content) when collapsing duplicates.
+          next[i - 1] = a.length >= b.length ? a : b;
+          next.splice(i, 1);
+          mergedAny = true;
+          if (next.length === slides.length) break;
+        }
+      }
+      if (!mergedAny) break;
+    }
+
+    // 2) Still over budget — trim from the lowest-priority tail. We prefer
+    // dropping near-duplicate consecutive sections; failing that, drop
+    // closer-shaped extras (cta / thanks / fin patterns) before body slides.
+    if (next.length > slides.length) {
+      const isClosingShaped = (section: string) => {
+        const t = titleOf(section).toLowerCase();
+        return /(?:thanks|cta|结语|收尾|the end|致谢|q\s*&\s*a)/.test(t);
+      };
+      // Drop trailing closing-shaped surplus first.
+      for (let i = next.length - 1; i >= 0 && next.length > slides.length; i -= 1) {
+        const candidate = next[i];
+        if (i === next.length - 1 && candidate && isClosingShaped(candidate) && i !== slides.length - 1) {
+          next.splice(i, 1);
+        }
+      }
+      // Final fallback: trim the tail to length.
+      while (next.length > slides.length) next.pop();
+    }
+
+    return next;
+  }
+
+  private stripEmptyDecorativeNodes(markup: string, decorativeClasses: Set<string>) {
+    let next = markup;
+    for (const token of decorativeClasses) {
+      const escaped = this.escapeRegex(token);
+      const pattern = new RegExp(
+        `<(div|span)\\b(?=[^>]*\\bclass=(["'])[^"']*\\b${escaped}\\b[^"']*\\2)[^>]*>\\s*<\\/\\1>`,
+        "gi"
+      );
+      next = next.replace(pattern, "");
+    }
+    return next;
+  }
+
+  private normalizeSiblingCardInlineStyles(section: string) {
+    return this.rewriteCardContainers(section, (containerInner) => {
+      const cards = this.findDirectCardBlocks(containerInner);
+      if (cards.length < 2) return containerInner;
+
+      const styleKeys = cards.map((card) => this.inlineCardVisualStyleKey(card.openTag));
+      const nonEmptyKeys = Array.from(new Set(styleKeys.filter(Boolean)));
+      if (nonEmptyKeys.length <= 1) return containerInner;
+
+      let next = containerInner;
+      for (let index = cards.length - 1; index >= 0; index -= 1) {
+        const card = cards[index];
+        if (!card || !styleKeys[index]) continue;
+        if (this.cardHasDifferentiatorClass(card.className)) continue;
+        const cleanedOpenTag = this.stripInlineCardVisualDeclarations(card.openTag);
+        next = `${next.slice(0, card.start)}${cleanedOpenTag}${next.slice(card.start + card.openTag.length)}`;
+      }
+      return next;
+    });
+  }
+
+  private rewriteCardContainers(section: string, transform: (inner: string) => string) {
+    const containerPattern = /<div\b[^>]*class=["'][^"']*\b(?:row|grid|g2|g3|g4|comparison|pros-cons|kpi-grid)\b[^"']*["'][^>]*>/gi;
+    let next = "";
+    let cursor = 0;
+    for (const match of section.matchAll(containerPattern)) {
+      const openTag = match[0];
+      const start = match.index ?? 0;
+      const innerStart = start + openTag.length;
+      const end = this.findMatchingDivEnd(section, innerStart);
+      if (end.openStart <= innerStart) continue;
+      next += section.slice(cursor, innerStart);
+      next += transform(section.slice(innerStart, end.openStart));
+      cursor = end.openStart;
+    }
+    if (cursor === 0) return section;
+    return next + section.slice(cursor);
+  }
+
+  private findDirectCardBlocks(innerHtml: string) {
+    const cards: Array<{ start: number; openTag: string; className: string }> = [];
+    const openTagPattern = /<div\b[^>]*class=["']([^"']*\b(?:card|panel|side|feature-card)\b[^"']*)["'][^>]*>/gi;
+    for (const match of innerHtml.matchAll(openTagPattern)) {
+      const start = match.index ?? 0;
+      const before = innerHtml.slice(0, start);
+      const opens = (before.match(/<div\b/gi) ?? []).length;
+      const closes = (before.match(/<\/div>/gi) ?? []).length;
+      if (opens !== closes) continue;
+      cards.push({ start, openTag: match[0], className: match[1] ?? "" });
+    }
+    return cards;
+  }
+
+  private inlineCardVisualStyleKey(openTag: string) {
+    const style = openTag.match(/\sstyle=(["'])([^"']*)\1/i)?.[2] ?? "";
+    if (!style) return "";
+    const declarations = this.parseInlineStyle(style);
+    return ["background", "background-color", "border", "border-color"]
+      .map((key) => `${key}:${declarations[key] ?? ""}`)
+      .filter((item) => !item.endsWith(":"))
+      .join(";");
+  }
+
+  private parseInlineStyle(style: string) {
+    const entries = style
+      .split(";")
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .map((item) => {
+        const colon = item.indexOf(":");
+        if (colon < 0) return undefined;
+        return [item.slice(0, colon).trim().toLowerCase(), item.slice(colon + 1).trim()] as const;
+      })
+      .filter((item): item is readonly [string, string] => Boolean(item));
+    return Object.fromEntries(entries);
+  }
+
+  private cardHasDifferentiatorClass(className: string) {
+    return /\b(?:card-accent|card-warning|card-danger|card-good|good-side|bad-side|pro|con|positive|negative|success|warning|danger|accent)\b/i.test(className);
+  }
+
+  private stripInlineCardVisualDeclarations(openTag: string) {
+    return openTag.replace(/\sstyle=(["'])([^"']*)\1/i, (_match, quote: string, style: string) => {
+      const kept = style
+        .split(";")
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .filter((item) => !/^(?:background|background-color|border|border-color)\s*:/i.test(item));
+      return kept.length ? ` style=${quote}${kept.join("; ")}${quote}` : "";
+    });
+  }
+
   private rewriteClassAttributes(
     markup: string,
     transform: (input: { tagName: string; classes: string[] }) => string[]
@@ -1487,6 +2037,24 @@ export class HtmlPptAgentService {
   private ensureSectionDataTitle(section: string, title?: string) {
     if (/\bdata-title=/.test(section)) return section;
     return section.replace(/<section\b/i, (match) => `${match} data-title="${this.escapeAttr(title?.trim() || "Slide")}"`);
+  }
+
+  private ensureSectionPlanIdentity(section: string, slide?: AgentPlan["slides"][number]) {
+    if (!slide) return section;
+    return section.replace(/<section\b([^>]*)>/i, (match, attrs: string) => {
+      let nextAttrs = attrs;
+      if (/\bdata-slide-index=/.test(nextAttrs)) {
+        nextAttrs = nextAttrs.replace(/\bdata-slide-index=(["'])[^"']*\1/i, `data-slide-index="${slide.index}"`);
+      } else {
+        nextAttrs += ` data-slide-index="${slide.index}"`;
+      }
+      if (/\bdata-layoutid=/.test(nextAttrs)) {
+        nextAttrs = nextAttrs.replace(/\bdata-layoutid=(["'])[^"']*\1/i, `data-layoutid="${this.escapeAttr(slide.layoutId)}"`);
+      } else {
+        nextAttrs += ` data-layoutid="${this.escapeAttr(slide.layoutId)}"`;
+      }
+      return `<section${nextAttrs}>`;
+    });
   }
 
   private buildSectionBatches(slides: AgentPlan["slides"], skill: SkillPack) {
@@ -1567,6 +2135,59 @@ export class HtmlPptAgentService {
     };
   }
 
+  private async writeHtmlPptDebugArtifact(
+    input: {
+      projectName: string;
+      projectId?: string;
+      assistantMessageId?: string;
+      pendingUserMessage?: { id?: string; content?: string };
+    },
+    stem: string,
+    payload: Record<string, unknown> & { rawHtml?: string; sectionsHtml?: string }
+  ) {
+    const runId = this.safePathSegment(
+      input.projectId
+        ?? input.assistantMessageId
+        ?? input.pendingUserMessage?.id
+        ?? input.projectName
+        ?? randomUUID()
+    );
+    const safeStem = this.safePathSegment(stem);
+    const debugDir = resolve(process.cwd(), ".local-runtime", "html-ppt-debug", runId);
+    const { rawHtml, sectionsHtml, ...meta } = payload;
+    const metadata = {
+      ...meta,
+      projectId: input.projectId,
+      projectName: input.projectName,
+      assistantMessageId: input.assistantMessageId,
+      sourceUserMessageId: input.pendingUserMessage?.id,
+      userPrompt: input.pendingUserMessage?.content,
+      recordedAt: new Date().toISOString()
+    };
+
+    try {
+      await mkdir(debugDir, { recursive: true });
+      await writeFile(join(debugDir, `${safeStem}.json`), JSON.stringify(metadata, null, 2), "utf8");
+      if (typeof rawHtml === "string" && rawHtml.trim()) {
+        await writeFile(join(debugDir, `${safeStem}.raw.html`), rawHtml, "utf8");
+      }
+      if (typeof sectionsHtml === "string" && sectionsHtml.trim()) {
+        await writeFile(join(debugDir, `${safeStem}.sections.html`), sectionsHtml, "utf8");
+      }
+    } catch (error) {
+      this.logger.warn(`Failed to write HTML-PPT debug artifact ${safeStem}: ${this.describeError(error)}`);
+    }
+  }
+
+  private safePathSegment(value: string) {
+    return (value || "unknown")
+      .replace(/[<>:"/\\|?*\u0000-\u001f]/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .slice(0, 120) || "unknown";
+  }
+
   private sectionBatchConcurrency() {
     const configured = Number(process.env.HTML_PPT_BATCH_CONCURRENCY);
     if (Number.isFinite(configured) && configured > 0) {
@@ -1593,6 +2214,145 @@ export class HtmlPptAgentService {
     );
 
     return results;
+  }
+
+  private async generateSectionContentForBatch(input: {
+    activeConfig: ActiveModelConfig;
+    agentInput: {
+      projectName: string;
+      context: { summaryText: string; recentMessages: PptMessageDto[] };
+      pendingUserMessage: PptMessageDto;
+      templateId: string;
+      theme: string;
+    };
+    plan: AgentPlan;
+    visual: VisualPlan;
+    research: ResearchPack;
+    batch: AgentPlan["slides"];
+    batchVisuals: VisualPlan["slideVisuals"];
+    skill: SkillPack;
+    onCall: () => void;
+    priorFailures?: string[];
+    logContextBase?: ModelLogContext;
+    batchIndex: number;
+  }): Promise<SectionContentPlan> {
+    const { activeConfig, agentInput, plan, visual, research, batch, batchVisuals, skill, onCall, priorFailures = [], logContextBase, batchIndex } = input;
+    const prompt = buildPrompt("section-content", {
+      input: agentInput,
+      userContextText: this.userContext(agentInput),
+      skill,
+      assetManifest: skill.manifest,
+      plan,
+      visual,
+      research,
+      batch,
+      batchVisuals,
+      priorFailures
+    });
+
+    try {
+      const drafted = await this.modelStructured(
+        activeConfig,
+        sectionContentSchema,
+        structuredOutputSchemaHints.sectionContent,
+        prompt.system,
+        prompt.user,
+        onCall,
+        {
+          ...(logContextBase ?? {}),
+          source: logContextBase?.source ?? "html-ppt-agent",
+          stage: `05-generate-index:batch-${batchIndex + 1}-content`
+        }
+      );
+      return this.normalizeSectionContentPlan(drafted, batch);
+    } catch (error) {
+      this.logger.warn(`HTML-PPT section content drafting failed for batch ${batchIndex + 1}; using plan fallback. error=${this.describeError(error)}`);
+      await this.writeHtmlPptDebugArtifact(agentInput, `batch-${batchIndex + 1}-content-fallback`, {
+        stage: "05-generate-index",
+        attempt: "section-content-fallback",
+        batchIndex,
+        slideIndexes: batch.map((slide) => slide.index),
+        layoutIds: batch.map((slide) => slide.layoutId),
+        qaIssues: [`section-content failed: ${this.describeError(error)}`],
+        hardIssues: [],
+        softIssues: []
+      });
+      return this.fallbackSectionContentPlan(batch);
+    }
+  }
+
+  private normalizeSectionContentPlan(input: SectionContentPlan, batch: AgentPlan["slides"]): SectionContentPlan {
+    const byIndex = new Map((input.slides ?? []).map((slide) => [slide.index, slide]));
+    return {
+      slides: batch.map((planned) => {
+        const current = byIndex.get(planned.index);
+        if (!current) return this.fallbackSectionContentSlide(planned);
+        return {
+          index: planned.index,
+          title: planned.title,
+          layoutId: planned.layoutId,
+          kicker: this.trimOptionalText(current.kicker, 80),
+          h1: this.trimOptionalText(current.h1, 120) ?? planned.title,
+          h2: this.trimOptionalText(current.h2, 120) ?? planned.title,
+          lede: this.trimOptionalText(current.lede, 260),
+          bullets: this.normalizeTextList(current.bullets, 10, 180),
+          cards: (current.cards ?? [])
+            .map((card) => ({
+              title: this.str(card.title, "").slice(0, 80),
+              body: this.str(card.body, "").slice(0, 220),
+              ...(this.opt(card.tag) ? { tag: this.opt(card.tag)?.slice(0, 40) } : {})
+            }))
+            .filter((card) => card.title && card.body)
+            .slice(0, 8),
+          metrics: (current.metrics ?? [])
+            .map((metric) => ({
+              label: this.str(metric.label, "").slice(0, 60),
+              value: this.str(metric.value, "").slice(0, 40),
+              ...(this.opt(metric.note) ? { note: this.opt(metric.note)?.slice(0, 120) } : {})
+            }))
+            .filter((metric) => metric.label && metric.value)
+            .slice(0, 8),
+          footer: this.trimOptionalText(current.footer, 100)
+        };
+      })
+    };
+  }
+
+  private fallbackSectionContentPlan(batch: AgentPlan["slides"]): SectionContentPlan {
+    return { slides: batch.map((slide) => this.fallbackSectionContentSlide(slide)) };
+  }
+
+  private fallbackSectionContentSlide(slide: AgentPlan["slides"][number]): SectionContentPlan["slides"][number] {
+    const points = slide.keyPoints.length ? slide.keyPoints : [slide.goal || slide.title];
+    return {
+      index: slide.index,
+      title: slide.title,
+      layoutId: slide.layoutId,
+      kicker: `${String(slide.index).padStart(2, "0")} · ${slide.type}`,
+      h1: slide.title,
+      h2: slide.title,
+      lede: slide.goal || points[0],
+      bullets: points.slice(0, 6),
+      cards: points.slice(0, 4).map((point, index) => ({
+        title: point.length > 28 ? `${point.slice(0, 26)}…` : point,
+        body: point,
+        tag: String(index + 1).padStart(2, "0")
+      })),
+      metrics: [],
+      footer: ""
+    };
+  }
+
+  private normalizeTextList(items: string[] | undefined, maxItems: number, maxLength: number) {
+    return (items ?? [])
+      .map((item) => this.str(item, "").replace(/\s+/g, " ").trim().slice(0, maxLength))
+      .filter(Boolean)
+      .slice(0, maxItems);
+  }
+
+  private trimOptionalText(value: string | undefined, maxLength: number) {
+    const text = this.str(value, "").replace(/\s+/g, " ").trim();
+    return text ? text.slice(0, maxLength) : undefined;
   }
 
   private async processSectionBatch(input: {
@@ -1627,15 +2387,31 @@ export class HtmlPptAgentService {
       referenceFullDeck,
       skill
     });
-    const prompt = buildPrompt("section-batch", {
-      input: agentInput,
-      userContextText: this.userContext(agentInput),
-      skill,
+    const sectionContent = await this.generateSectionContentForBatch({
+      activeConfig,
+      agentInput,
       plan,
       visual,
       research,
       batch,
       batchVisuals,
+      skill,
+      onCall,
+      priorFailures,
+      logContextBase,
+      batchIndex
+    });
+    const prompt = buildPrompt("section-batch", {
+      input: agentInput,
+      userContextText: this.userContext(agentInput),
+      skill,
+      assetManifest: skill.manifest,
+      plan,
+      visual,
+      research,
+      batch,
+      batchVisuals,
+      sectionContent,
       layoutTemplates,
       referenceFullDeck,
       allowedClassCatalog: sectionClassProtocol.promptCatalog,
@@ -1652,11 +2428,12 @@ export class HtmlPptAgentService {
         resumeSnapshot.sections,
         batch,
         sectionClassProtocol.allowedClasses,
-        sectionClassProtocol.referenceContract
+        sectionClassProtocol.referenceContract,
+        sectionClassProtocol.donorContract
       );
       sections = resumedSanitized.html;
       localRepairCount = resumedSanitized.localRepairCount;
-      qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle);
+      qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle, sectionClassProtocol.donorContract);
     } else {
       const raw = await this.modelText(activeConfig, prompt.system, prompt.user, onCall, {
         ...(logContextBase ?? {}),
@@ -1667,11 +2444,26 @@ export class HtmlPptAgentService {
         this.extractSlideSections(raw),
         batch,
         sectionClassProtocol.allowedClasses,
-        sectionClassProtocol.referenceContract
+        sectionClassProtocol.referenceContract,
+        sectionClassProtocol.donorContract
       );
       sections = initialSanitized.html;
       localRepairCount = initialSanitized.localRepairCount;
-      qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle);
+      qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle, sectionClassProtocol.donorContract);
+      if (qa.issues.length > 0) {
+        await this.writeHtmlPptDebugArtifact(agentInput, `batch-${batchIndex + 1}-attempt-1-draft`, {
+          stage: "05-generate-index",
+          attempt: "draft",
+          batchIndex,
+          slideIndexes: batch.map((slide) => slide.index),
+          layoutIds: batch.map((slide) => slide.layoutId),
+          qaIssues: qa.issues,
+          hardIssues: qa.hardIssues,
+          softIssues: qa.softIssues,
+          rawHtml: raw,
+          sectionsHtml: sections
+        });
+      }
     }
 
     if (qa.issues.length > 0) {
@@ -1702,10 +2494,18 @@ export class HtmlPptAgentService {
       }
 
       if (qa.hardIssues.length === 0) {
-        const truncated = this.truncateBatchSectionsToDensityBudget(sections, batch, skill, plan, deckStyle);
-        sections = truncated.sections;
-        localRepairCount += truncated.changedCount;
-        qa = this.validateSectionBatch(sections, batch, skill, plan, deckStyle);
+        const softened = this.applySoftDensityRepair({
+          sections,
+          batch,
+          skill,
+          plan,
+          deckStyle,
+          donorContract: sectionClassProtocol.donorContract,
+          qa
+        });
+        sections = softened.sections;
+        localRepairCount += softened.changedCount;
+        qa = softened.qa;
       }
 
       if (qa.hardIssues.length > 0) {
@@ -1736,15 +2536,30 @@ export class HtmlPptAgentService {
           this.extractSlideSections(repairRaw),
           batch,
           sectionClassProtocol.allowedClasses,
-          sectionClassProtocol.referenceContract
+          sectionClassProtocol.referenceContract,
+          sectionClassProtocol.donorContract
         );
         let repaired = repairedSanitized.html;
         localRepairCount += repairedSanitized.localRepairCount;
-        let repairedQa = this.validateSectionBatch(repaired, batch, skill, plan, deckStyle);
+        let repairedQa = this.validateSectionBatch(repaired, batch, skill, plan, deckStyle, sectionClassProtocol.donorContract);
         let issuesBySlide = this.groupIssuesBySlide(
           repairedQa.hardIssues.length > 0 ? repairedQa.hardIssues : repairedQa.issues,
           batch
         );
+        if (repairedQa.issues.length > 0) {
+          await this.writeHtmlPptDebugArtifact(agentInput, `batch-${batchIndex + 1}-attempt-2-repair`, {
+            stage: "05-generate-index",
+            attempt: "repair",
+            batchIndex,
+            slideIndexes: batch.map((slide) => slide.index),
+            layoutIds: batch.map((slide) => slide.layoutId),
+            qaIssues: repairedQa.issues,
+            hardIssues: repairedQa.hardIssues,
+            softIssues: repairedQa.softIssues,
+            rawHtml: repairRaw,
+            sectionsHtml: repaired
+          });
+        }
 
         if (repairedQa.hardIssues.length > 0) {
           issuesBySlide = this.groupIssuesBySlide(repairedQa.hardIssues, batch);
@@ -1774,14 +2589,33 @@ export class HtmlPptAgentService {
         }
 
         if (repairedQa.hardIssues.length === 0 && repairedQa.softIssues.length > 0) {
-          const truncated = this.truncateBatchSectionsToDensityBudget(repaired, batch, skill, plan, deckStyle);
-          repaired = truncated.sections;
-          localRepairCount += truncated.changedCount;
-          repairedQa = this.validateSectionBatch(repaired, batch, skill, plan, deckStyle);
+          const softened = this.applySoftDensityRepair({
+            sections: repaired,
+            batch,
+            skill,
+            plan,
+            deckStyle,
+            donorContract: sectionClassProtocol.donorContract,
+            qa: repairedQa
+          });
+          repaired = softened.sections;
+          localRepairCount += softened.changedCount;
+          repairedQa = softened.qa;
           issuesBySlide = this.groupIssuesBySlide(repairedQa.issues, batch);
         }
 
         if (repairedQa.hardIssues.length > 0) {
+          await this.writeHtmlPptDebugArtifact(agentInput, `batch-${batchIndex + 1}-final-failure`, {
+            stage: "05-generate-index",
+            attempt: "final-failure",
+            batchIndex,
+            slideIndexes: batch.map((slide) => slide.index),
+            layoutIds: batch.map((slide) => slide.layoutId),
+            qaIssues: repairedQa.issues,
+            hardIssues: repairedQa.hardIssues,
+            softIssues: repairedQa.softIssues,
+            sectionsHtml: repaired
+          });
           throw new HtmlPptAgentBatchError(`index.html 分批生成 QA 未通过：${repairedQa.issues.join("；")}`, {
             batchIndex,
             slideIndexes: batch.map((slide) => slide.index),
@@ -1860,6 +2694,7 @@ export class HtmlPptAgentService {
       allowedClasses: Set<string>;
       promptCatalog: string;
       referenceContract?: ReferenceComponentContract;
+      donorContract?: DonorTemplateContract;
     };
     deckStyle: DeckStyleProfile;
     onCall: () => void;
@@ -1917,13 +2752,14 @@ export class HtmlPptAgentService {
         this.extractSlideSections(singleRaw),
         [slide],
         sectionClassProtocol.allowedClasses,
-        sectionClassProtocol.referenceContract
+        sectionClassProtocol.referenceContract,
+        sectionClassProtocol.donorContract
       );
       localRepairCount += sanitizedSingle.localRepairCount;
       const singleSections = this.extractSectionList(sanitizedSingle.html);
       const repairedSection = singleSections[0];
       if (singleSections.length !== 1 || !repairedSection) continue;
-      const singleQa = this.validateSectionBatch(repairedSection, [slide], skill, plan, deckStyle);
+      const singleQa = this.validateSectionBatch(repairedSection, [slide], skill, plan, deckStyle, sectionClassProtocol.donorContract);
       if (singleQa.hardIssues.length === 0) {
         repairedSections[issueGroup.batchOffset] = repairedSection;
       }
@@ -1932,7 +2768,7 @@ export class HtmlPptAgentService {
     const nextSections = repairedSections.join("\n\n");
     return {
       sections: nextSections,
-      qa: this.validateSectionBatch(nextSections, batch, skill, plan, deckStyle),
+      qa: this.validateSectionBatch(nextSections, batch, skill, plan, deckStyle, sectionClassProtocol.donorContract),
       localRepairCount,
       modelRepairCalls
     };
@@ -1960,6 +2796,65 @@ export class HtmlPptAgentService {
       sections: nextSections.join("\n\n"),
       changedCount
     };
+  }
+
+  private applySoftDensityRepair(input: {
+    sections: string;
+    batch: AgentPlan["slides"];
+    skill: SkillPack;
+    plan?: AgentPlan;
+    deckStyle: DeckStyleProfile;
+    donorContract?: DonorTemplateContract;
+    qa: BatchQaResult;
+  }) {
+    if (
+      input.qa.hardIssues.length > 0 ||
+      input.qa.softIssues.length === 0 ||
+      !this.shouldTruncateForSoftIssues(input.qa.softIssues)
+    ) {
+      return { sections: input.sections, qa: input.qa, changedCount: 0 };
+    }
+
+    const truncated = this.truncateBatchSectionsToDensityBudget(
+      input.sections,
+      input.batch,
+      input.skill,
+      input.plan,
+      input.deckStyle
+    );
+
+    if (truncated.changedCount === 0) {
+      return { sections: input.sections, qa: input.qa, changedCount: 0 };
+    }
+
+    const nextQa = this.validateSectionBatch(
+      truncated.sections,
+      input.batch,
+      input.skill,
+      input.plan,
+      input.deckStyle,
+      input.donorContract
+    );
+
+    if (nextQa.hardIssues.length > 0) {
+      this.logger.warn(`Soft density truncation introduced hard issues; keeping original sections. issues=${nextQa.hardIssues.join(" | ")}`);
+      return { sections: input.sections, qa: input.qa, changedCount: 0 };
+    }
+
+    return { sections: truncated.sections, qa: nextQa, changedCount: truncated.changedCount };
+  }
+
+  private shouldTruncateForSoftIssues(issues: string[]) {
+    if (issues.length === 0) return false;
+    const densitySignals = issues.filter((issue) =>
+      /(可见文字|横版预算|估算会超出|正文|文本|字数|标题.*超过|line-height|overflow)/i.test(issue)
+    );
+    if (densitySignals.length === 0) return false;
+
+    const structureOnlySignals = issues.every((issue) =>
+      /(卡片\/面板|指标元素|布局声明为横向结构|少于布局建议下限|超过布局健全性上限)/.test(issue)
+    );
+    return !structureOnlySignals;
   }
 
   private async repairSingleSlideFromSkeleton(input: {
@@ -2120,12 +3015,13 @@ export class HtmlPptAgentService {
         this.extractSlideSections(expandedRaw),
         [candidate.slide],
         sectionClassProtocol.allowedClasses,
-        sectionClassProtocol.referenceContract
+        sectionClassProtocol.referenceContract,
+        sectionClassProtocol.donorContract
       );
       const singleSections = this.extractSectionList(sanitized.html);
       const nextSection = singleSections[0];
       if (singleSections.length !== 1 || !nextSection) continue;
-      const nextQa = this.validateSectionBatch(nextSection, [candidate.slide], skill, plan, deckStyle);
+      const nextQa = this.validateSectionBatch(nextSection, [candidate.slide], skill, plan, deckStyle, sectionClassProtocol.donorContract);
       if (nextQa.issues.length > 0) continue;
       if (this.estimateLandscapeFitIssues(nextSection, candidate.slide, skill, plan, deckStyle).length > 0) continue;
 
@@ -2283,7 +3179,8 @@ export class HtmlPptAgentService {
     batch: AgentPlan["slides"],
     skill?: SkillPack,
     plan?: AgentPlan,
-    deckStyle: DeckStyleProfile = "balanced"
+    deckStyle: DeckStyleProfile = "balanced",
+    donorContract?: DonorTemplateContract
   ): BatchQaResult {
     const sections = sectionsHtml.match(/<section\b[\s\S]*?<\/section>/gi) ?? [];
     const hardIssues: string[] = [];
@@ -2298,6 +3195,7 @@ export class HtmlPptAgentService {
     sections.forEach((section, index) => {
       const slide = batch[index];
       const label = slide ? `第 ${slide.index} 页(${slide.layoutId})` : `第 ${index + 1} 个 section`;
+      const layout = slide ? (skill?.manifest?.layouts ?? []).find((item) => item.id === slide.layoutId) : undefined;
       const visibleText = this.visibleSlideText(section);
       const styleCount = (section.match(/\sstyle=/gi) ?? []).length;
       const sectionChars = section.length;
@@ -2306,17 +3204,48 @@ export class HtmlPptAgentService {
       const maxSectionChars = isClosing ? 7200 : 9500;
 
       if (!/\bdata-title=/.test(section)) pushHard(`${label} 缺少 data-title`);
+      if (/<section\b[^>]*\sdata-anim=/i.test(section)) pushHard(`${label} data-anim 不应写在 slide 根节点，会导致非当前页可见`);
       if (/<(?:div|aside)\b[^>]*class=["'][^"']*\bnotes\b/i.test(section)) pushHard(`${label} 含 notes/逐字稿，请删除 notes 并只保留观众可见内容`);
       if (visibleText.length > maxVisibleChars) pushSoft(`${label} 可见文字 ${visibleText.length} 字，超过 ${maxVisibleChars}，请压缩为短标题、指标、卡片和对比关系`);
       if (sectionChars > maxSectionChars) pushSoft(`${label} HTML ${sectionChars} 字符，超过 ${maxSectionChars}，页面结构过重，容易纵向溢出`);
       if (styleCount > 12) pushSoft(`${label} inline style 数量 ${styleCount}，超过 12，说明偏离模板骨架`);
       if (/<[^>]*class=["'][^"']*\bmetric-(?:large|number|sm)\b[^"']*["'][^>]*\sdata-fx=/i.test(section)) pushHard(`${label} 指标数字不应使用 data-fx，会产生数字层遮挡`);
+      const blockedFx = this.findBlockedFxValues(section);
+      if (blockedFx.length > 0) pushHard(`${label} 使用了黑名单特效：${blockedFx.join(", ")}`);
+      const badNumLabels = this.findNonNumericNumLabels(section);
+      if (badNumLabels.length > 0) pushHard(`${label} .num 数字徽标被用于非数字文本：${badNumLabels.slice(0, 3).join(", ")}`);
       if (/<script\b/gi.test(section) && !/<canvas\b/i.test(section)) pushHard(`${label} 含 script 但不是 chart canvas 场景，请移除脚本`);
       if (/<canvas\b/i.test(section) && slide && !slide.layoutId.startsWith("chart-")) pushHard(`${label} 非 chart layout 不应使用 canvas`);
 
       const emptyBlocks = this.findEmptyContentBlocks(section);
       if (emptyBlocks.length > 0) {
         pushHard(`${label} 存在空白内容块：${emptyBlocks.slice(0, 3).join(", ")}`);
+      }
+
+      const nestingIssues = this.findSectionNestingIssues(section);
+      if (nestingIssues.length > 0) {
+        pushHard(`${label} HTML 标签嵌套异常：${nestingIssues.slice(0, 3).join("；")}`);
+      }
+
+      const incompleteCards = layout?.sanity?.wantsCardBody === false ? [] : this.findIncompleteSiblingCards(section);
+      if (incompleteCards.length > 0) {
+        pushHard(`${label} 存在缺少说明正文的卡片：${incompleteCards.slice(0, 3).join(", ")}`);
+      }
+
+      if (layout?.sanity) {
+        const sanityIssues = this.findLayoutSanityIssues(section, layout.sanity);
+        for (const issue of sanityIssues.hardIssues) pushHard(`${label} ${issue}`);
+        for (const issue of sanityIssues.softIssues) pushSoft(`${label} ${issue}`);
+      }
+
+      const runtimeHints = this.findVisibleRuntimeInstructionHints(section);
+      if (runtimeHints.length > 0) {
+        pushHard(`${label} 含可见运行时/快捷键说明：${runtimeHints.slice(0, 3).join(", ")}`);
+      }
+
+      const forbiddenText = this.findForbiddenDonorText(section, donorContract);
+      if (forbiddenText.length > 0) {
+        pushHard(`${label} 含 donor 模板占位文本：${forbiddenText.slice(0, 4).join(", ")}`);
       }
 
       if (slide && skill) {
@@ -2344,6 +3273,83 @@ export class HtmlPptAgentService {
       .trim();
   }
 
+  private findForbiddenDonorText(section: string, donorContract?: DonorTemplateContract) {
+    const text = this.visibleSlideText(section);
+    if (!text) return [];
+    const hits: string[] = [];
+    const universalPatterns: Array<[RegExp, string]> = [
+      [/\[(?:KICKER|H1|H2|H3|BODY|BULLET|FOOTER|LABEL|TITLE|SUBTITLE|METRIC)\]/iu, "semantic placeholder"]
+    ];
+    for (const [pattern, label] of universalPatterns) {
+      const match = text.match(pattern)?.[0];
+      if (match) hits.push(`${label}:${match}`);
+    }
+    if (!donorContract?.forbiddenTextPatterns?.length) return Array.from(new Set(hits));
+    for (const pattern of donorContract.forbiddenTextPatterns) {
+      try {
+        const re = new RegExp(pattern, "iu");
+        const match = text.match(re)?.[0];
+        if (match) hits.push(match);
+      } catch {
+        if (text.toLowerCase().includes(pattern.toLowerCase())) {
+          hits.push(pattern);
+        }
+      }
+    }
+    return Array.from(new Set(hits));
+  }
+
+  private findVisibleRuntimeInstructionHints(section: string) {
+    const hits: string[] = [];
+    const text = this.visibleSlideText(section);
+    const patterns: Array<[RegExp, string]> = [
+      [/方向键\s*[←→\s]*\s*切换/u, "方向键切换"],
+      [/切换页面/u, "切换页面"],
+      [/\bnavigate\b/iu, "navigate"],
+      [/\bpress\s*(?:←|left)\b/iu, "press left"],
+      [/\bpresenter\b/iu, "presenter"],
+      [/\bfullscreen\b/iu, "fullscreen"]
+    ];
+    for (const [pattern, label] of patterns) {
+      if (pattern.test(text)) hits.push(label);
+    }
+    if (/<(?:div|p|span|small)\b[^>]*class=["'][^"']*\b(?:dk-keyhint|keyhint|key-hint|keyboard-hint|shortcut-hint|nav-hint|runtime-hint)\b/i.test(section)) {
+      hits.push("hint class");
+    }
+    if (/<kbd\b/i.test(section) && /(←|→|space|enter|navigate|presenter|fullscreen|方向键|切换)/i.test(text)) {
+      hits.push("kbd shortcut");
+    }
+    return Array.from(new Set(hits));
+  }
+
+  private findSectionNestingIssues(section: string) {
+    const issues: string[] = [];
+    const stack: string[] = [];
+    const structuralTags = new Set(["section", "div", "article", "header", "footer", "main", "nav", "aside", "ul", "ol"]);
+    const voidTags = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+    const tagPattern = /<\/?([a-z0-9-]+)\b[^>]*>/gi;
+    for (const match of section.matchAll(tagPattern)) {
+      const raw = match[0] ?? "";
+      const tag = (match[1] ?? "").toLowerCase();
+      if (!tag || voidTags.has(tag) || !structuralTags.has(tag)) continue;
+      if (/\/\s*>$/.test(raw)) continue;
+      if (!raw.startsWith("</")) {
+        stack.push(tag);
+        continue;
+      }
+
+      const expected = stack.pop();
+      if (expected !== tag) {
+        issues.push(`遇到 </${tag}>，但当前期望关闭 ${expected ? `<${expected}>` : "空栈"}`);
+        if (issues.length >= 5) break;
+      }
+    }
+    if (stack.length > 0) {
+      issues.push(`未闭合标签：${stack.slice(-5).map((tag) => `<${tag}>`).join(", ")}`);
+    }
+    return issues;
+  }
+
   private stripNotesBlocks(html: string) {
     return html
       .replace(/<(?:div|aside)\b[^>]*class=["'][^"']*\bnotes\b[^"']*["'][^>]*>[\s\S]*?<\/(?:div|aside)>/gi, "")
@@ -2362,6 +3368,81 @@ export class HtmlPptAgentService {
     );
   }
 
+  private stripSectionRootAnimations(html: string) {
+    return html.replace(
+      /<section\b([^>]*)>/gi,
+      (match, attrs: string) => {
+        if (!/\bclass=(["'])[^"']*\bslide\b[^"']*\1/i.test(attrs) || !/\sdata-anim=/i.test(attrs)) return match;
+        return `<section${attrs.replace(/\sdata-anim=(["'])[^"']+\1/gi, "")}>`;
+      }
+    );
+  }
+
+  private isBlockedFx(value: string) {
+    return HtmlPptAgentService.BLOCKED_FX.has(value.trim().toLowerCase());
+  }
+
+  private findBlockedFxValues(html: string) {
+    return Array.from(new Set(this.extractAttrValues(html, "data-fx").filter((value) => this.isBlockedFx(value))));
+  }
+
+  private stripBlockedFx(html: string) {
+    let next = html.replace(
+      /<div\b([^>]*class=(["'])[^"']*\bdeck-fx-layer\b[^"']*\2[^>]*)>\s*<\/div>/gi,
+      (match, attrs: string) => {
+        const fx = attrs.match(/\sdata-fx=(["'])([^"']+)\1/i)?.[2] ?? "";
+        return this.isBlockedFx(fx) ? "" : match;
+      }
+    );
+
+    next = next.replace(
+      /\sdata-fx=(["'])([^"']+)\1/gi,
+      (match, _quote: string, value: string) => (this.isBlockedFx(value) ? "" : match)
+    );
+    next = next.replace(
+      /\sdata-fx-to=(["'])([^"']+)\1/gi,
+      (match, _quote: string, value: string) => (this.isBlockedFx(value) ? "" : match)
+    );
+    return next;
+  }
+
+  private normalizeNonNumericNumClasses(html: string) {
+    return html.replace(
+      /<([a-z0-9-]+)\b([^>]*\bclass=(["'])([^"']*\bnum\b[^"']*)\3[^>]*)>([\s\S]*?)<\/\1>/gi,
+      (match, tag: string, attrs: string, _quote: string, classValue: string, inner: string) => {
+        const text = this.visibleSlideText(inner);
+        if (this.isNumericBadgeText(text)) return match;
+        const nextClassValue = classValue
+          .split(/\s+/)
+          .filter((token) => token && token !== "num")
+          .join(" ");
+        const nextAttrs = nextClassValue
+          ? attrs.replace(/\bclass=(["'])[^"']+\1/i, `class="${nextClassValue}"`)
+          : attrs.replace(/\sclass=(["'])[^"']+\1/i, "");
+        return `<${tag}${nextAttrs}>${inner}</${tag}>`;
+      }
+    );
+  }
+
+  private findNonNumericNumLabels(html: string) {
+    const hits: string[] = [];
+    html.replace(
+      /<([a-z0-9-]+)\b[^>]*\bclass=(["'])[^"']*\bnum\b[^"']*\2[^>]*>([\s\S]*?)<\/\1>/gi,
+      (_match, _tag: string, _quote: string, inner: string) => {
+        const text = this.visibleSlideText(inner);
+        if (text && !this.isNumericBadgeText(text)) hits.push(text.slice(0, 20));
+        return "";
+      }
+    );
+    return Array.from(new Set(hits));
+  }
+
+  private isNumericBadgeText(text: string) {
+    const value = text.trim();
+    if (!value) return true;
+    return /^(?:\d{1,4}|[０-９]{1,4}|[一二三四五六七八九十百千万零〇]{1,6}|[IVXLCDM]{1,6}|[A-Z]{1,3})(?:[.)、])?$/iu.test(value);
+  }
+
   private normalizeSectionFxLayers(html: string) {
     return html.replace(
       /<section\b([^>]*?)class=(["'])([^"']*\bslide\b[^"']*)\2([^>]*)>/gi,
@@ -2370,6 +3451,12 @@ export class HtmlPptAgentService {
         const fxMatch = attrs.match(/\sdata-fx=(["'])([^"']+)\1/i);
         if (!fxMatch) return match;
         const fx = fxMatch[2] ?? "";
+        if (this.isBlockedFx(fx)) {
+          const cleanAttrs = attrs
+            .replace(/\sdata-fx=(["'])[^"']+\1/gi, "")
+            .replace(/\sdata-fx-to=(["'])[^"']+\1/gi, "");
+          return `<section${cleanAttrs}>`;
+        }
         const fxToMatch = attrs.match(/\sdata-fx-to=(["'])([^"']+)\1/i);
         const cleanAttrs = attrs
           .replace(/\sdata-fx=(["'])[^"']+\1/gi, "")
@@ -2446,6 +3533,74 @@ export class HtmlPptAgentService {
     return empty;
   }
 
+  private findIncompleteSiblingCards(section: string) {
+    const incomplete: string[] = [];
+    this.rewriteCardContainers(section, (containerInner) => {
+      const cards = this.findDirectCardBlocks(containerInner);
+      if (cards.length < 2) return containerInner;
+      for (const card of cards) {
+        const innerStart = card.start + card.openTag.length;
+        const end = this.findMatchingDivEnd(containerInner, innerStart);
+        if (end.openStart <= innerStart) continue;
+        const inner = containerInner.slice(innerStart, end.openStart);
+        const hasHeading = /<(?:h2|h3|h4|h5|h6)\b[\s\S]*?<\/(?:h2|h3|h4|h5|h6)>/i.test(inner);
+        const hasBody =
+          /<(?:p|li|small)\b[\s\S]*?<\/(?:p|li|small)>/i.test(inner) ||
+          /\bclass=["'][^"']*\b(?:dim|desc|txt|body|copy|lede|caption)\b[^"']*["']/i.test(inner);
+        const text = this.visibleSlideText(inner);
+        if (hasHeading && !hasBody && text.length < 24) {
+          incomplete.push(card.className.split(/\s+/).slice(0, 4).join("."));
+        }
+      }
+      return containerInner;
+    });
+    return Array.from(new Set(incomplete));
+  }
+
+  private findLayoutSanityIssues(section: string, sanity: LayoutSanityContract) {
+    const hardIssues: string[] = [];
+    const softIssues: string[] = [];
+    const cardCount = (section.match(/<(?:div|article)\b[^>]*class=["'][^"']*\b(?:card|panel|metric-card|kpi-card|comparison-panel)\b[^"']*["'][^>]*>/gi) ?? []).length;
+    const bulletCount = (section.match(/<li\b/gi) ?? []).length;
+    const metricCount = (section.match(/\b(?:metric|counter|kpi|metric-large|metric-number|number)\b/gi) ?? []).length;
+
+    if (typeof sanity.requiresCanvas === "boolean" && sanity.requiresCanvas && !/<canvas\b/i.test(section)) {
+      hardIssues.push("布局约束要求 canvas，但页面缺少 canvas");
+    }
+    if (typeof sanity.minCards === "number" && cardCount < sanity.minCards) {
+      hardIssues.push(`卡片/面板 ${cardCount} 个，少于布局最低要求 ${sanity.minCards}`);
+    }
+    if (typeof sanity.maxCards === "number" && cardCount > sanity.maxCards) {
+      softIssues.push(`卡片/面板 ${cardCount} 个，超过布局健全性上限 ${sanity.maxCards}`);
+    }
+    if (typeof sanity.minBullets === "number" && bulletCount < sanity.minBullets && sanity.minBullets > 0) {
+      softIssues.push(`列表项 ${bulletCount} 个，少于布局建议下限 ${sanity.minBullets}`);
+    }
+    if (typeof sanity.maxBullets === "number" && bulletCount > sanity.maxBullets) {
+      softIssues.push(`列表项 ${bulletCount} 个，超过布局健全性上限 ${sanity.maxBullets}`);
+    }
+    if (typeof sanity.minMetrics === "number" && metricCount < sanity.minMetrics && sanity.minMetrics > 0) {
+      softIssues.push(`指标元素 ${metricCount} 个，少于布局建议下限 ${sanity.minMetrics}`);
+    }
+    if (typeof sanity.maxMetrics === "number" && metricCount > sanity.maxMetrics) {
+      softIssues.push(`指标元素 ${metricCount} 个，超过布局健全性上限 ${sanity.maxMetrics}`);
+    }
+
+    if (sanity.horizontal && cardCount >= 2) {
+      const hasHorizontalShell =
+        /\b(?:grid|row|comparison|pros-cons|g2|g3|g4|kpi-grid|roadmap|timeline|process|flow|arch)\b/i.test(section) ||
+        /display\s*:\s*(?:grid|flex)/i.test(section);
+      if (!hasHorizontalShell) {
+        softIssues.push("布局声明为横向结构，但未检测到 grid/row/flex/comparison 等横向容器");
+      }
+    }
+
+    return {
+      hardIssues: Array.from(new Set(hardIssues)),
+      softIssues: Array.from(new Set(softIssues))
+    };
+  }
+
   private findDivBlocksByClass(html: string, classPattern: RegExp) {
     const blocks: Array<{ className: string; inner: string }> = [];
     const openTagPattern = /<div\b[^>]*class=["']([^"']+)["'][^>]*>/gi;
@@ -2478,7 +3633,9 @@ export class HtmlPptAgentService {
   private composeIndexHtml(plan: AgentPlan, visual: VisualPlan, sections: string) {
     const cleanSections = this.normalizeInitialActiveSlide(
       this.normalizeLargeStatNumberClasses(
-        this.normalizeSectionFxLayers(this.stripUnsafeMetricFx(this.stripNotesBlocks(sections)))
+        this.normalizeNonNumericNumClasses(
+          this.normalizeSectionFxLayers(this.stripBlockedFx(this.stripSectionRootAnimations(this.stripUnsafeMetricFx(this.stripNotesBlocks(sections)))))
+        )
       )
     );
     const themes = Array.from(new Set([visual.primaryTheme, ...visual.backupThemes].filter(Boolean)));
@@ -2540,6 +3697,7 @@ export class HtmlPptAgentService {
     let styleCss = await readFile(join(outputDir, "style.css"), "utf8").catch(() => "");
     let structureHealed = false;
     let fitHealed = false;
+    let themeContrastHealed = false;
     let repairedSlides: number[] = [];
     let truncatedSlides: number[] = [];
 
@@ -2559,6 +3717,13 @@ export class HtmlPptAgentService {
       await writeFile(join(outputDir, "style.css"), styleCss, "utf8");
     }
 
+    const contrastPatch = this.buildThemeContrastPatch(visual, skill);
+    if (contrastPatch) {
+      styleCss = `${styleCss.trimEnd()}\n\n${contrastPatch}\n`;
+      await writeFile(join(outputDir, "style.css"), styleCss, "utf8");
+      themeContrastHealed = true;
+    }
+
     let evaluation = await this.evaluatePublishedDeckQa({
       outputDir,
       expectedSlides,
@@ -2570,6 +3735,7 @@ export class HtmlPptAgentService {
       styleCss,
       structureHealed,
       fitHealed,
+      themeContrastHealed,
       repairedSlides,
       truncatedSlides
     });
@@ -2597,14 +3763,15 @@ export class HtmlPptAgentService {
         evaluation = await this.evaluatePublishedDeckQa({
           outputDir,
           expectedSlides,
-            plan,
-            visual,
-            skill,
-            baseCss,
-            files,
-            styleCss,
-            structureHealed,
+          plan,
+          visual,
+          skill,
+          baseCss,
+          files,
+          styleCss,
+          structureHealed,
           fitHealed,
+          themeContrastHealed,
           repairedSlides,
           truncatedSlides
         });
@@ -2612,7 +3779,8 @@ export class HtmlPptAgentService {
     }
 
     const consistencyBeforePatch = this.extractConsistencyFindings(evaluation.qaReport.signals.consistency.details?.outliers);
-    if (consistencyBeforePatch.length > 0) {
+    const structuralCssPatchInstructions = this.extractCssPatchInstructions(evaluation.qaReport.signals.classCoverage.details?.cssPatchInstructions);
+    if (consistencyBeforePatch.length > 0 || structuralCssPatchInstructions.length > 0) {
       const patched = await this.repairPublishedDeckCssConsistency({
         outputDir,
         plan,
@@ -2621,6 +3789,7 @@ export class HtmlPptAgentService {
         activeConfig,
         styleCss,
         consistencyFindings: consistencyBeforePatch,
+        extraInstructions: structuralCssPatchInstructions,
         onCall
       });
       if (patched.applied) {
@@ -2637,6 +3806,7 @@ export class HtmlPptAgentService {
           styleCss,
           structureHealed,
           fitHealed,
+          themeContrastHealed,
           repairedSlides,
           truncatedSlides
         });
@@ -2655,6 +3825,7 @@ export class HtmlPptAgentService {
             styleCss,
             structureHealed,
             fitHealed,
+            themeContrastHealed,
             repairedSlides,
             truncatedSlides
           });
@@ -2690,6 +3861,7 @@ export class HtmlPptAgentService {
           styleCss,
           structureHealed,
           fitHealed,
+          themeContrastHealed,
           repairedSlides,
           truncatedSlides
         });
@@ -2709,6 +3881,19 @@ export class HtmlPptAgentService {
     });
   }
 
+  private extractCssPatchInstructions(value: unknown): CssPatchInstruction[] {
+    if (!Array.isArray(value)) return [];
+    return value.filter((item): item is CssPatchInstruction => {
+      if (!item || typeof item !== "object") return false;
+      const candidate = item as Partial<CssPatchInstruction>;
+      return Number.isInteger(candidate.slideIndex) &&
+        typeof candidate.role === "string" &&
+        typeof candidate.property === "string" &&
+        typeof candidate.selector === "string" &&
+        typeof candidate.message === "string";
+    });
+  }
+
   private countConsistencyOutliers(findings: ConsistencyFinding[]) {
     return findings.reduce((sum, finding) => sum + finding.outliers.length, 0);
   }
@@ -2721,9 +3906,13 @@ export class HtmlPptAgentService {
     activeConfig: ActiveModelConfig;
     styleCss: string;
     consistencyFindings: ConsistencyFinding[];
+    extraInstructions?: CssPatchInstruction[];
     onCall: (usage?: unknown) => void;
   }) {
-    const instructions = buildCssPatchInstructions(input.consistencyFindings);
+    const instructions = [
+      ...(input.extraInstructions ?? []),
+      ...buildCssPatchInstructions(input.consistencyFindings)
+    ].slice(0, 14);
     if (instructions.length === 0) {
       return { applied: false as const, previousStyleCss: input.styleCss, styleCss: input.styleCss };
     }
@@ -2769,7 +3958,9 @@ export class HtmlPptAgentService {
       this.normalizeMetricCountPlaceholders(
         this.normalizeInitialActiveSlide(
           this.normalizeLargeStatNumberClasses(
-            this.normalizeSectionFxLayers(this.stripUnsafeMetricFx(this.stripNotesBlocks(html)))
+            this.normalizeNonNumericNumClasses(
+              this.normalizeSectionFxLayers(this.stripBlockedFx(this.stripSectionRootAnimations(this.stripUnsafeMetricFx(this.stripNotesBlocks(html)))))
+            )
           )
         )
       )
@@ -2806,10 +3997,11 @@ export class HtmlPptAgentService {
     styleCss: string;
     structureHealed: boolean;
     fitHealed: boolean;
+    themeContrastHealed: boolean;
     repairedSlides: number[];
     truncatedSlides: number[];
   }) {
-    const { outputDir, expectedSlides, plan, visual, skill, baseCss, files, styleCss, structureHealed, fitHealed, repairedSlides, truncatedSlides } = input;
+    const { outputDir, expectedSlides, plan, visual, skill, baseCss, files, styleCss, structureHealed, fitHealed, themeContrastHealed, repairedSlides, truncatedSlides } = input;
     const deckStyle = this.classifyDeckStyle(plan);
     const filesWithStats = files.map((file) => ({ ...file, stats: this.htmlDeckStats(file.html) }));
     const indexFile = filesWithStats.find((file) => file.name === "index.html");
@@ -2820,6 +4012,7 @@ export class HtmlPptAgentService {
     const runtimeIssues: string[] = [];
     const fitIssues: string[] = [];
     const fitSlideIssues: QaSlideFitIssue[] = [];
+    const layoutRuleIssues: LayoutRulePresenceIssue[] = [];
     const consistencyIssues: string[] = [];
     const geometryBlockingIssues: string[] = [];
     const geometryWarningIssues: string[] = [];
@@ -2879,6 +4072,13 @@ export class HtmlPptAgentService {
     blockingAssetIssues.push(...inlineThemeIssues);
 
     const sections = this.extractSectionList(indexFile?.html ?? "");
+    layoutRuleIssues.push(...this.collectLayoutRulePresenceIssues(indexFile?.html ?? "", `${baseCss}\n${styleCss}`));
+    const structuralCssPatchInstructions = this.buildStructuralCssPatchInstructions({
+      indexHtml: indexFile?.html ?? "",
+      deckClass: visual.deckClass,
+      classCoverage,
+      layoutRuleIssues
+    });
     plan.slides.forEach((slide, index) => {
       const section = sections[index];
       if (!section) return;
@@ -2888,11 +4088,12 @@ export class HtmlPptAgentService {
       fitIssues.push(...issues.map((issue) => `第 ${slide.index} 页(${slide.layoutId}) ${issue}`));
     });
 
-    themeContrastIssues.push(...this.collectThemeContrastIssues(visual, skill));
+    themeContrastIssues.push(...this.collectThemeContrastIssues(visual, skill, themeContrastHealed));
     const portability = await this.collectPortabilityIssues(outputDir, filesWithStats);
     blockingPortabilityIssues.push(...portability.blocking);
     advisoryPortabilityIssues.push(...portability.advisory);
-    const referenceContract = (await this.readReferenceFullDeck(skill.root, this.pickReferenceFullDeckName(visual, skill) ?? ""))?.contract;
+    const referenceContract = (await this.readReferenceFullDeck(skill, this.pickReferenceFullDeckName(visual, skill) ?? ""))?.contract;
+    const coverCloserParityIssues = this.collectCoverCloserParityIssues(indexFile?.html ?? "", plan, visual);
 
     const cascades = buildSlideCascade(indexFile?.html ?? "", styleCss, {
       baseCss,
@@ -2910,6 +4111,7 @@ export class HtmlPptAgentService {
       consistencyIssues.push(`${finding.property} 与 deck 其他同层页面不一致，建议回归 ${String(finding.canonical)}。${sampleLabels}`);
     }
     consistencyIssues.push(...this.collectReferenceContractContinuityIssues(indexFile?.html ?? "", plan, referenceContract));
+    consistencyIssues.push(...coverCloserParityIssues);
     for (const finding of geometryFindings) {
       if (finding.severity === "block") {
         geometryBlockingIssues.push(`第 ${finding.slideIndex} 页(${finding.layoutId}) ${finding.message}`);
@@ -2938,11 +4140,15 @@ export class HtmlPptAgentService {
         assets: this.makeQaSignal([...blockingAssetIssues, ...advisoryAssetIssues], false, { dataFxValues, dataAnimValues }),
         runtime: this.makeQaSignal(runtimeIssues, false),
         fit: this.makeQaSignal(fitIssues, fitHealed, { slideIssues: fitSlideIssues }),
-        classCoverage: this.makeQaSignal([], false, classCoverage),
+        classCoverage: this.makeQaSignal([], false, {
+          ...classCoverage,
+          layoutRuleIssues,
+          cssPatchInstructions: structuralCssPatchInstructions
+        }),
         consistency: this.makeQaSignal(
           consistencyIssues,
           false,
-          { outliers: consistencyFindings, groups: Object.keys(ledger.groups).length, referenceContract },
+          { outliers: consistencyFindings, groups: Object.keys(ledger.groups).length, referenceContract, coverCloserParityIssues },
           consistencyIssues.length > 0 ? "warn" : undefined
         ),
         geometry: this.makeQaSignal(
@@ -2951,11 +4157,17 @@ export class HtmlPptAgentService {
           { findings: geometryFindings },
           geometryBlockingIssues.length > 0 ? "failed" : geometryWarningIssues.length > 0 ? "warn" : undefined
         ),
-        themeContrast: this.makeQaSignal(themeContrastIssues, false, { primaryTheme: visual.primaryTheme }),
+        themeContrast: this.makeQaSignal(
+          themeContrastIssues,
+          themeContrastHealed,
+          { primaryTheme: visual.primaryTheme, autoPatchApplied: themeContrastHealed },
+          themeContrastIssues.length > 0 ? "warn" : undefined
+        ),
         portability: this.makeQaSignal([...blockingPortabilityIssues, ...advisoryPortabilityIssues], false)
       },
       issues: blockingIssues
     };
+    qaReport.quality = this.scoreQaReport(qaReport);
 
     return {
       slides: indexStats.slides,
@@ -2989,6 +4201,74 @@ export class HtmlPptAgentService {
     return {
       htmlSummary: `${htmlMatchedByDeckCss}/${htmlTotal}`,
       cssSummary: `${cssMatchedToHtml}/${cssTotal}`
+    };
+  }
+
+  private estimateStepIssueCount(value: unknown) {
+    if (!value || typeof value !== "object") return undefined;
+    const record = value as Record<string, unknown>;
+    const issues = Array.isArray(record.issues) ? record.issues.length : 0;
+    const qaReport = record.qaReport && typeof record.qaReport === "object" ? record.qaReport as QaReport : undefined;
+    const qaIssues = qaReport ? qaReport.issues.length + qaReport.warnings.length : 0;
+    if (issues || qaIssues) return issues + qaIssues;
+    if (Array.isArray(record.stats)) {
+      return record.stats.reduce((sum, item) => {
+        if (!item || typeof item !== "object") return sum;
+        const stat = item as Record<string, unknown>;
+        return sum + Number(stat.modelRepairCalls ?? 0) + Number(stat.localRepairCount ?? 0);
+      }, 0);
+    }
+    return undefined;
+  }
+
+  private summarizeQaSignals(qaReport: QaReport) {
+    return Object.fromEntries(
+      Object.entries(qaReport.signals).map(([key, signal]) => [
+        key,
+        {
+          status: signal.status,
+          issues: signal.issues.length
+        }
+      ])
+    );
+  }
+
+  private scoreQaReport(qaReport: QaReport): QaQualityScore {
+    const signals = Object.values(qaReport.signals);
+    const failedSignals = signals.filter((signal) => signal.status === "failed").length;
+    const warnSignals = signals.filter((signal) => signal.status === "warn").length;
+    const healedSignals = signals.filter((signal) => signal.status === "healed").length;
+    const blockingIssues = qaReport.issues.length;
+    const warnings = qaReport.warnings.length;
+    const fitDetails = qaReport.signals.fit.details;
+    const slideFitIssues = Array.isArray(fitDetails?.slideIssues) ? fitDetails.slideIssues.length : qaReport.signals.fit.issues.length;
+    const classCoverageDetails = qaReport.signals.classCoverage.details;
+    const htmlTotal = Number(classCoverageDetails?.htmlTotal ?? 0);
+    const htmlMatched = Number(classCoverageDetails?.htmlMatchedByDeckCss ?? classCoverageDetails?.htmlMatchedByAnyCss ?? 0);
+    const classCoverageRate = htmlTotal > 0 ? Number((htmlMatched / htmlTotal).toFixed(4)) : undefined;
+    const classCoveragePenalty = classCoverageRate === undefined ? 0 : Math.max(0, Math.round((1 - classCoverageRate) * 20));
+
+    const rawScore =
+      100
+      - blockingIssues * 18
+      - failedSignals * 14
+      - warnings * 3
+      - warnSignals * 5
+      - healedSignals * 2
+      - slideFitIssues * 3
+      - classCoveragePenalty;
+    const score = Math.max(0, Math.min(100, Math.round(rawScore)));
+    const grade = score >= 90 ? "A" : score >= 75 ? "B" : score >= 60 ? "C" : "D";
+    return {
+      score,
+      grade,
+      blockingIssues,
+      warnings,
+      healedSignals,
+      failedSignals,
+      warnSignals,
+      slideFitIssues,
+      ...(classCoverageRate !== undefined ? { classCoverageRate } : {})
     };
   }
 
@@ -3049,8 +4329,87 @@ export class HtmlPptAgentService {
       cssMatchedToHtml,
       cssTotal: deckCssClasses.length,
       unmatchedHtmlClasses: htmlClasses.filter((token) => !deckCssClassSet.has(token)).slice(0, 20),
+      orphanHtmlClasses: htmlClasses.filter((token) => !anyCssClassSet.has(token)).slice(0, 20),
       unusedCssClasses: deckCssClasses.filter((token) => !htmlClassSet.has(token)).slice(0, 20)
     };
+  }
+
+  private collectLayoutRulePresenceIssues(indexHtml: string, cssText: string): LayoutRulePresenceIssue[] {
+    const issues: LayoutRulePresenceIssue[] = [];
+    const targetClasses = new Set(["row", "comparison", "grid-2", "grid-3", "grid-4", "g2", "g3", "g4", "kpi-grid", "pros-cons"]);
+    const sections = this.extractSectionList(indexHtml);
+    sections.forEach((section, index) => {
+      const classTokens = new Set(this.extractClassTokensFromMarkup(section));
+      for (const className of targetClasses) {
+        if (!classTokens.has(className)) continue;
+        if (this.hasLayoutDisplayRule(className, cssText, classTokens)) continue;
+        issues.push({
+          slideIndex: index + 1,
+          className,
+          selector: `.${className}`,
+          message: `第 ${index + 1} 页 .${className} 缺少 display:flex/grid 规则，横向结构可能退化为纵向堆叠`
+        });
+      }
+    });
+    return issues;
+  }
+
+  private hasLayoutDisplayRule(className: string, cssText: string, sectionClassTokens: Set<string>) {
+    const acceptableClasses = new Set<string>([className]);
+    if (["g2", "g3", "g4", "grid-2", "grid-3", "grid-4"].includes(className) && sectionClassTokens.has("grid")) {
+      acceptableClasses.add("grid");
+    }
+    for (const rule of this.findCssRules(cssText)) {
+      if (!/\bdisplay\s*:\s*(?:flex|grid)\b/i.test(rule.body)) continue;
+      const selectorClasses = this.extractClassTokensFromSelector(rule.selector);
+      if (selectorClasses.some((token) => acceptableClasses.has(token))) return true;
+    }
+    return false;
+  }
+
+  private buildStructuralCssPatchInstructions(input: {
+    indexHtml: string;
+    deckClass: string;
+    classCoverage: ClassCoverageReport;
+    layoutRuleIssues: LayoutRulePresenceIssue[];
+  }): CssPatchInstruction[] {
+    const instructions: CssPatchInstruction[] = [];
+    const seen = new Set<string>();
+    const add = (instruction: CssPatchInstruction) => {
+      const key = `${instruction.slideIndex}:${instruction.property}:${instruction.selector}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      instructions.push(instruction);
+    };
+
+    for (const issue of input.layoutRuleIssues.slice(0, 8)) {
+      add({
+        slideIndex: issue.slideIndex,
+        role: "layout-rule",
+        property: "layout.display",
+        currentValue: "missing display:flex/grid",
+        canonicalValue: issue.className.includes("grid") || issue.className.startsWith("g") ? "display:grid" : "display:flex",
+        selector: issue.selector,
+        message: issue.message
+      });
+    }
+
+    const sections = this.extractSectionList(input.indexHtml);
+    for (const className of input.classCoverage.orphanHtmlClasses.slice(0, 8)) {
+      const slideIndex = Math.max(1, sections.findIndex((section) => this.sectionHasClassToken(section, className)) + 1);
+      add({
+        slideIndex,
+        role: "orphan-class",
+        property: "orphan-class.css-rule",
+        currentValue: `.${className} has no CSS rule`,
+        canonicalValue: "add a scoped rule using existing theme tokens",
+        selector: `.${className}`,
+        message: `HTML 使用 .${className}，但 base.css/style.css 没有对应选择器；补一个最小视觉规则或继承相关组件风格`
+      });
+    }
+
+    void input.deckClass;
+    return instructions.slice(0, 12);
   }
 
   private filterCoverageClasses(classNames: Iterable<string>) {
@@ -3193,6 +4552,7 @@ export class HtmlPptAgentService {
       liCount,
       cardCount,
       densityBudget: layout.densityBudget,
+      sanity: layout.sanity,
       plan,
       deckStyle
     });
@@ -3235,10 +4595,11 @@ export class HtmlPptAgentService {
     liCount: number;
     cardCount: number;
     densityBudget: { maxTitleChars: number; maxBodyCharsTotal: number; maxItems: number; maxCardCount: number };
+    sanity?: LayoutSanityContract;
     plan?: AgentPlan;
     deckStyle?: DeckStyleProfile;
   }) {
-    const { slide, titleText, visibleTextLength, densityBudget, plan, deckStyle = "balanced" } = input;
+    const { slide, titleText, visibleTextLength, densityBudget, sanity, plan, deckStyle = "balanced" } = input;
     const layoutId = slide.layoutId.toLowerCase();
     const topicCount = Math.max(1, slide.keyPoints.length);
     const avgPointLength =
@@ -3247,7 +4608,9 @@ export class HtmlPptAgentService {
         : 0;
     const plannedItemCount = Math.max(1, slide.keyPoints.length);
     const columnCount =
-      layoutId.startsWith("three-column") || layoutId === "three-col"
+      sanity?.columns && sanity.columns > 0
+        ? sanity.columns
+        : layoutId.startsWith("three-column") || layoutId === "three-col"
         ? 3
         : layoutId.startsWith("two-column") || layoutId === "two-col"
           ? 2
@@ -3264,12 +4627,18 @@ export class HtmlPptAgentService {
       cardBudget += 1;
     }
     cardBudget = Math.max(1, cardBudget - longTitlePenalty);
+    if (typeof sanity?.maxCards === "number") {
+      cardBudget = Math.max(cardBudget, sanity.maxCards);
+    }
 
     let titleBudget = Math.max(10, densityBudget.maxTitleChars - longTitlePenalty * 2);
     let itemBudget = Math.max(
       1,
       densityBudget.maxItems * columnCount + (compactTopicSet ? columnCount : 0) - longPointPenalty
     );
+    if (typeof sanity?.maxBullets === "number") {
+      itemBudget = Math.max(itemBudget, sanity.maxBullets);
+    }
     let textBudget = Math.max(
       140,
       densityBudget.maxBodyCharsTotal + (compactTopicSet ? 60 : 0) - longTitlePenalty * 40 - longPointPenalty * 30
@@ -3288,28 +4657,52 @@ export class HtmlPptAgentService {
     itemBudget = Math.max(itemBudget, plannedItemCount);
 
     if (isTocLayout) {
-      const tocItemCount = Math.max(
+      // TOC budget should track the deck's actual body-slide count, not a
+      // hard 6-cap. An 11-slide deck has 9 entries in its TOC and that's
+      // correct, not "over budget".
+      const realTocEntries = Math.max(
         1,
         plan?.slides.filter((entry) => entry.index !== slide.index && !this.isSparsePlanSlide(entry)).length ?? plannedItemCount
       );
-      itemBudget = Math.max(itemBudget, tocItemCount);
-      cardBudget = Math.max(cardBudget, tocItemCount);
+      const tocCeiling = Math.max(realTocEntries, 6);
+      itemBudget = Math.max(itemBudget, tocCeiling);
+      cardBudget = Math.max(cardBudget, tocCeiling);
       titleBudget = Math.max(titleBudget, 14);
-      textBudget = Math.max(textBudget, 260);
+      textBudget = Math.max(textBudget, 260 + Math.max(0, realTocEntries - 6) * 30);
       pressureThreshold = Math.max(pressureThreshold, 1.05);
     }
 
     if (layoutId.startsWith("two-column") || layoutId === "two-col") {
-      itemBudget = Math.max(itemBudget, columnCount * 2);
-      cardBudget = Math.max(cardBudget, 2);
+      // Two-column layouts naturally hold 2 cards per row, often 2 rows = 4.
+      // The floor must cover this so we don't reject 3-4 card legitimate decks.
+      itemBudget = Math.max(itemBudget, 6);
+      cardBudget = Math.max(cardBudget, 4);
     }
-    if (layoutId === "comparison") {
-      itemBudget = Math.max(itemBudget, 4);
+    if (layoutId.startsWith("three-column") || layoutId === "three-col") {
+      itemBudget = Math.max(itemBudget, 9);
+      cardBudget = Math.max(cardBudget, 6);
+    }
+    if (layoutId === "comparison" || layoutId === "pros-cons") {
+      itemBudget = Math.max(itemBudget, 6);
       cardBudget = Math.max(cardBudget, 3);
     }
-    if (layoutId === "stat-highlight") {
-      itemBudget = Math.max(itemBudget, 4);
-      cardBudget = Math.max(cardBudget, 2);
+    if (layoutId === "stat-highlight" || layoutId === "kpi-grid" || layoutId === "metrics") {
+      itemBudget = Math.max(itemBudget, 6);
+      cardBudget = Math.max(cardBudget, 4);
+    }
+    if (layoutId === "timeline" || layoutId === "roadmap" || layoutId === "process" || layoutId === "process-steps") {
+      // Timelines / roadmaps / process flows are fundamentally multi-node;
+      // a 1-card timeline is not a timeline. Floor to a realistic minimum.
+      itemBudget = Math.max(itemBudget, 6);
+      cardBudget = Math.max(cardBudget, 4);
+    }
+    if (layoutId === "bullets" || layoutId === "bullet-list" || layoutId === "bullet-cards") {
+      itemBudget = Math.max(itemBudget, 6);
+      cardBudget = Math.max(cardBudget, 4);
+    }
+    if (layoutId === "feature-cards" || layoutId === "card-grid" || layoutId === "icon-grid") {
+      itemBudget = Math.max(itemBudget, 6);
+      cardBudget = Math.max(cardBudget, 4);
     }
 
     if (["cover", "cta", "thanks"].includes(layoutId)) {
@@ -3459,7 +4852,7 @@ export class HtmlPptAgentService {
     // with the rest of the deck.
     const referenceFullDeckName = this.pickReferenceFullDeckName(visual, skill);
     const referenceFullDeck = referenceFullDeckName
-      ? await this.readReferenceFullDeck(skill.root, referenceFullDeckName)
+      ? await this.readReferenceFullDeck(skill, referenceFullDeckName)
       : undefined;
     for (const slideIssue of slideIssues.slice(0, 2)) {
       const slide = plan.slides.find((item) => item.index === slideIssue.slideIndex);
@@ -3491,12 +4884,13 @@ export class HtmlPptAgentService {
       this.extractSlideSections(singleRaw),
       [slide],
       sectionClassProtocol.allowedClasses,
-      sectionClassProtocol.referenceContract
+      sectionClassProtocol.referenceContract,
+      sectionClassProtocol.donorContract
     );
       const singleSections = this.extractSectionList(sanitizedSingle.html);
       const candidate = singleSections[0];
       if (singleSections.length !== 1 || !candidate) continue;
-        const candidateQa = this.validateSectionBatch(candidate, [slide], skill, plan, deckStyle);
+        const candidateQa = this.validateSectionBatch(candidate, [slide], skill, plan, deckStyle, sectionClassProtocol.donorContract);
         if (candidateQa.issues.length > 0) continue;
         if (this.estimateLandscapeFitIssues(candidate, slide, skill, plan, deckStyle).length > 0) continue;
       sections[slideIssue.planOffset] = candidate;
@@ -3576,6 +4970,7 @@ export class HtmlPptAgentService {
       liCount,
       cardCount,
       densityBudget: layout.densityBudget,
+      sanity: layout.sanity,
       plan,
       deckStyle
     });
@@ -3663,19 +5058,149 @@ export class HtmlPptAgentService {
       .filter(Boolean);
   }
 
-  private collectThemeContrastIssues(visual: VisualPlan, skill: SkillPack) {
+  private buildThemeContrastPatch(visual: VisualPlan, skill: SkillPack) {
+    const theme = (skill.manifest?.themes ?? []).find((item) => item.id === visual.primaryTheme);
+    if (!theme) return "";
+    const palette = theme.palette;
+    const surface2 = palette.surface2 || palette.surface;
+    const declarations: string[] = [];
+    const text1Ratio = this.contrastRatio(palette.text1, palette.bg);
+    if (text1Ratio !== null && text1Ratio < 4.5) {
+      declarations.push(`--text-1: ${this.bestReadableTextColor([palette.bg])};`);
+    }
+
+    const accentRatio = this.contrastRatio(palette.accent, palette.bg);
+    if (accentRatio !== null && accentRatio < 4.5) {
+      declarations.push(`--accent: ${this.bestReadableAccentColor(palette.bg)};`);
+    }
+
+    const uniqueDeclarations = Array.from(new Set(declarations));
+    if (uniqueDeclarations.length === 0) return "";
+    const deckClass = (visual.deckClass || "tpl-html-ppt-agent").replace(/[^a-z0-9_-]/gi, "-");
+    return [
+      "/* phase-3 theme contrast patch v1 */",
+      `body.${deckClass}{`,
+      ...uniqueDeclarations.map((declaration) => `  ${declaration}`),
+      "}"
+    ].join("\n");
+  }
+
+  private collectThemeContrastIssues(visual: VisualPlan, skill: SkillPack, healed = false) {
+    if (healed) return [];
     const issues: string[] = [];
     const theme = (skill.manifest?.themes ?? []).find((item) => item.id === visual.primaryTheme);
     if (!theme) return issues;
-    const ratio = this.contrastRatio(theme.palette.text1, theme.palette.bg);
-    if (ratio === null) {
-      issues.push(`主题 ${visual.primaryTheme} 的 --text-1 或 --bg 无法解析，无法验证 WCAG 对比度`);
-      return issues;
-    }
-    if (ratio < 4.5) {
-      issues.push(`主题 ${visual.primaryTheme} 的 --text-1 与 --bg 对比度仅 ${ratio.toFixed(2)}，低于 WCAG AA 4.5`);
+    const palette = theme.palette;
+    const surface2 = palette.surface2 || palette.surface;
+    const checks = [
+      { label: "--text-1 与 --bg", foreground: palette.text1, background: palette.bg, required: 4.5 },
+      { label: "--text-2 与 --surface", foreground: palette.text2, background: palette.surface, required: 4.5 },
+      { label: "--text-2 与 --surface-2", foreground: palette.text2, background: surface2, required: 4.5 },
+      { label: "--accent 与 --bg", foreground: palette.accent, background: palette.bg, required: 4.5 }
+    ].filter((check) => check.foreground && check.background);
+
+    for (const check of checks) {
+      const ratio = this.contrastRatio(check.foreground, check.background);
+      if (ratio === null) {
+        issues.push(`主题 ${visual.primaryTheme} 的 ${check.label} 无法解析，无法验证 WCAG 对比度`);
+      } else if (ratio < check.required) {
+        issues.push(`主题 ${visual.primaryTheme} 的 ${check.label} 对比度仅 ${ratio.toFixed(2)}，低于 WCAG AA ${check.required}`);
+      }
     }
     return issues;
+  }
+
+  private bestReadableTextColor(backgrounds: string[]) {
+    const candidates = ["#0b1220", "#f8fafc"];
+    return this.pickHighestMinimumContrast(candidates, backgrounds) ?? "#0b1220";
+  }
+
+  private bestReadableAccentColor(background: string) {
+    const candidates = ["#0f766e", "#2563eb", "#b91c1c", "#7c3aed", "#0369a1", "#f8fafc", "#0b1220"];
+    return this.pickHighestMinimumContrast(candidates, [background]) ?? this.bestReadableTextColor([background]);
+  }
+
+  private pickHighestMinimumContrast(candidates: string[], backgrounds: string[]) {
+    let best: { color: string; ratio: number } | null = null;
+    for (const color of candidates) {
+      const ratios = backgrounds
+        .map((background) => this.contrastRatio(color, background))
+        .filter((ratio): ratio is number => ratio !== null);
+      if (ratios.length === 0) continue;
+      const ratio = Math.min(...ratios);
+      if (!best || ratio > best.ratio) best = { color, ratio };
+    }
+    return best?.color;
+  }
+
+  private collectCoverCloserParityIssues(indexHtml: string, plan: AgentPlan, visual: VisualPlan) {
+    const issues: string[] = [];
+    const sections = this.extractSectionList(indexHtml);
+    if (sections.length < 2) return issues;
+    const cover = sections[0] ?? "";
+    const closer = sections[sections.length - 1] ?? "";
+    if (!cover || !closer) return issues;
+
+    const coverTreatment = this.extractHeadlineTreatment(cover);
+    const closerTreatment = this.extractHeadlineTreatment(closer);
+    if (coverTreatment !== "unknown" && closerTreatment !== "unknown" && coverTreatment !== closerTreatment) {
+      issues.push(`封面与结尾标题风格不一致：封面 ${coverTreatment}，结尾 ${closerTreatment}；结尾页应沿用封面 headline treatment`);
+    }
+
+    const coverAnim = this.extractAnimationFamily(cover);
+    const closerAnim = this.extractAnimationFamily(closer);
+    if (coverAnim !== "none" && closerAnim !== "none" && coverAnim !== closerAnim) {
+      issues.push(`封面与结尾入场动画家族不一致：封面 ${coverAnim}，结尾 ${closerAnim}`);
+    }
+
+    const coverFx = this.extractFxFamily(cover);
+    const closerFx = this.extractFxFamily(closer);
+    if (coverFx !== "none" && closerFx !== "none" && coverFx !== closerFx) {
+      issues.push(`封面与结尾背景特效家族不一致：封面 ${coverFx}，结尾 ${closerFx}`);
+    }
+
+    const lastSlide = plan.slides[plan.slides.length - 1];
+    if (lastSlide && /(?:thanks|cta|clos|结尾|总结)/i.test(`${lastSlide.layoutId} ${lastSlide.type}`) && !closer.includes(visual.deckClass)) {
+      // The body carries deckClass, so this usually stays silent. It catches accidental
+      // full-section donor pastes that inject a different tpl-* class onto the closer.
+      const tplClass = closer.match(/\btpl-[a-z0-9_-]+\b/i)?.[0];
+      if (tplClass && tplClass !== visual.deckClass) {
+        issues.push(`结尾页混入了不同模板类 ${tplClass}，当前 deckClass 为 ${visual.deckClass}`);
+      }
+    }
+    return issues;
+  }
+
+  private extractHeadlineTreatment(section: string) {
+    const heading = section.match(/<(h1|h2)\b[^>]*>[\s\S]*?<\/\1>/i)?.[0] ?? "";
+    if (!heading) return "unknown";
+    if (/\b(?:gradient-text|xw-grad|grad|mega|text-gradient|clip-text)\b|background-clip|-webkit-text-fill-color/i.test(heading)) {
+      return "gradient";
+    }
+    if (/\b(?:accent|highlight|mark|emphasis)\b/i.test(heading)) {
+      return "accent";
+    }
+    return "solid";
+  }
+
+  private extractAnimationFamily(section: string) {
+    const values = this.extractAttrValues(section, "data-anim");
+    const value = (values[0] ?? "").toLowerCase();
+    if (!value) return "none";
+    if (/(?:fade|rise|zoom|slide|blur|reveal|pop|type)/.test(value)) return "entry";
+    if (/(?:stagger|list)/.test(value)) return "stagger";
+    if (/(?:float|pulse|loop|spin)/.test(value)) return "loop";
+    return value;
+  }
+
+  private extractFxFamily(section: string) {
+    const values = this.extractAttrValues(section, "data-fx");
+    const value = (values.find((item) => !item.startsWith("to:")) ?? "").toLowerCase();
+    if (!value) return "none";
+    if (/(?:particle|spark|confetti|firework|star|snow)/.test(value)) return "particles";
+    if (/(?:gradient|aurora|blob|glow|halo|mesh|light)/.test(value)) return "glow";
+    if (/(?:grid|matrix|terminal|code|scan)/.test(value)) return "technical";
+    return value;
   }
 
   private contrastRatio(foreground: string, background: string) {
@@ -3782,6 +5307,14 @@ export class HtmlPptAgentService {
       .then((content) => JSON.parse(content) as Record<string, unknown>)
       .catch(() => ({}));
     await writeFile(manifestPath, JSON.stringify({ ...manifest, qaReport }, null, 2), "utf8");
+  }
+
+  private async writeGenerationTrace(outputDir: string, trace: Record<string, unknown>) {
+    try {
+      await writeFile(join(outputDir, "generation-trace.json"), JSON.stringify(trace, null, 2), "utf8");
+    } catch (error) {
+      this.logger.warn(`Failed to write HTML-PPT generation trace: ${this.describeError(error)}`);
+    }
   }
 
   /**
@@ -4403,6 +5936,10 @@ export class HtmlPptAgentService {
     return this.escapeHtml(input).replace(/"/g, "&quot;");
   }
 
+  private escapeRegex(input: string) {
+    return input.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
   private appendRuntimeCssGuard(css: string) {
     return [
       css.trim(),
@@ -4415,15 +5952,23 @@ export class HtmlPptAgentService {
       "  inset: 0;",
       "  width: 100vw;",
       "  height: 100vh;",
-      "  opacity: 0;",
+      "  opacity: 0 !important;",
+      "  visibility: hidden !important;",
+      "  animation: none !important;",
       "  pointer-events: none !important;",
       "  transform: translateX(30px);",
       "}",
       ".deck > .slide.is-active {",
       "  opacity: 1 !important;",
+      "  visibility: visible !important;",
       "  pointer-events: auto !important;",
       "  transform: translateX(0);",
       "  z-index: 2;",
+      "}",
+      ".deck > .slide:not(.is-active) {",
+      "  opacity: 0 !important;",
+      "  visibility: hidden !important;",
+      "  animation: none !important;",
       "}",
       ".deck > .slide.is-prev {",
       "  transform: translateX(-30px);",
@@ -4555,6 +6100,65 @@ export class HtmlPptAgentService {
       "  font-size: clamp(11px, .9vw, 13px);",
       "  line-height: 1.25;",
       "}",
+      ".deck > .slide:has(.arch) {",
+      "  justify-content: flex-start !important;",
+      "  padding-top: clamp(28px, 4vh, 48px) !important;",
+      "}",
+      ".deck > .slide:has(.arch) > [style*=\"margin:auto\"] {",
+      "  margin: 0 !important;",
+      "}",
+      ".deck > .slide:has(.arch) :where(.dk-keyhint) {",
+      "  display: none !important;",
+      "}",
+      ".deck > .slide :where(.arch) {",
+      "  overflow: visible !important;",
+      "  gap: clamp(7px, .8vw, 12px) !important;",
+      "  padding: clamp(4px, .55vw, 8px) 0 !important;",
+      "  will-change: transform;",
+      "}",
+      ".deck > .slide :where(.arch .tier:has(.tname):has(.cells)) {",
+      "  display: grid !important;",
+      "  grid-template-columns: minmax(96px, 12vw) 1fr !important;",
+      "  gap: clamp(8px, .75vw, 12px) !important;",
+      "  align-items: stretch !important;",
+      "  min-height: 0 !important;",
+      "}",
+      ".deck > .slide :where(.arch .tname) {",
+      "  min-width: 0 !important;",
+      "  padding: clamp(6px, .62vw, 10px) !important;",
+      "  font-size: clamp(10px, .82vw, 13px) !important;",
+      "  line-height: 1.16 !important;",
+      "}",
+      ".deck > .slide :where(.arch .cells) {",
+      "  gap: clamp(6px, .65vw, 9px) !important;",
+      "  min-height: 0 !important;",
+      "  align-items: stretch !important;",
+      "}",
+      ".deck > .slide :where(.arch .cell) {",
+      "  display: flex !important;",
+      "  flex-direction: column !important;",
+      "  align-items: center !important;",
+      "  justify-content: center !important;",
+      "  min-height: 0 !important;",
+      "  padding: clamp(7px, .7vw, 10px) !important;",
+      "  overflow: visible !important;",
+      "}",
+      ".deck > .slide :where(.arch .ic) {",
+      "  width: clamp(22px, 2vw, 30px) !important;",
+      "  height: clamp(22px, 2vw, 30px) !important;",
+      "  font-size: clamp(11px, .95vw, 15px) !important;",
+      "  margin-bottom: clamp(2px, .28vw, 4px) !important;",
+      "}",
+      ".deck > .slide :where(.arch h4) {",
+      "  font-size: clamp(10px, .95vw, 14px) !important;",
+      "  line-height: 1.12 !important;",
+      "  margin: 0 0 clamp(2px, .28vw, 4px) !important;",
+      "}",
+      ".deck > .slide :where(.arch p) {",
+      "  font-size: clamp(9px, .78vw, 11px) !important;",
+      "  line-height: 1.12 !important;",
+      "  margin: 0 !important;",
+      "}",
       ".deck > .slide :where(.cta-tagline.gradient-text, .cta-lede.gradient-text) {",
       "  background: none !important;",
       "  -webkit-background-clip: border-box !important;",
@@ -4621,24 +6225,63 @@ export class HtmlPptAgentService {
         keyPoints: this.strings(s.keyPoints)
       };
     });
-    const tone = this.opt(c.tone);
-    const format = this.opt(c.format);
-    const withDividers = this.enforceSectionDividers(
+    const tone = this.normalizePlanTone(this.opt(c.tone), fallbackTitle);
+    const format = this.normalizePlanFormat(this.opt(c.format), requestRequirements);
+    const finalSlides = this.finalizePlanSlides(
       slides.length ? slides : [{ index: 1, title: this.str(c.title, fallbackTitle), type: "cover", layoutId: "cover", goal: "封面", keyPoints: [] }],
       skill,
       requestRequirements
     );
-    const finalSlides = this.rebalanceSlidesForNarrativeTarget(withDividers, skill, requestRequirements);
     return {
       title: this.str(c.title, fallbackTitle).slice(0, 80),
       subtitle: this.opt(c.subtitle),
       slideCount: finalSlides.length,
       audience: this.str(c.audience, "普通观众"),
-      ...(tone ? { tone } : {}),
-      ...(format ? { format } : {}),
+      tone,
+      format,
       objective: this.str(c.objective, "生成 HTML-PPT"),
       slides: finalSlides
     };
+  }
+
+  private normalizePlanTone(rawTone?: string, fallbackText = "") {
+    const value = (rawTone ?? "").trim().toLowerCase();
+    if ((PLAN_TONES as readonly string[]).includes(value)) return value;
+    const signal = `${value} ${fallbackText}`.toLowerCase();
+    const chineseSignal = `${rawTone ?? ""} ${fallbackText}`;
+    if (/cyber|sci-fi|gaming|game|neon|terminal|hacker|nightlife|赛博|科幻|游戏|电竞|霓虹|终端|黑客/i.test(signal) || /赛博|科幻|游戏|电竞|霓虹|终端|黑客/.test(chineseSignal)) return "cyber";
+    if (/academic|research|paper|methodology|scientific|theory|教学|课程|研究|学术|论文|方法论|理论|讲解|探讨/.test(signal) || /教学|课程|研究|学术|论文|方法论|理论|讲解|探讨/.test(chineseSignal)) return "academic";
+    if (/enterprise|strategy|executive|corporate|board|investor|b2b|企业|战略|高管|管理层|董事会|商业汇报/.test(signal) || /企业|战略|高管|管理层|董事会|商业汇报/.test(chineseSignal)) return "enterprise";
+    if (/documentary|history|news|journalism|reportage|纪实|历史|新闻|纪录|调查|观察/.test(signal) || /纪实|历史|新闻|纪录|调查|观察/.test(chineseSignal)) return "documentary";
+    if (/lifestyle|wellbeing|consumer|travel|food|home|小红书|生活方式|消费|健康|旅行|美食|家居/.test(signal) || /小红书|生活方式|消费|健康|旅行|美食|家居/.test(chineseSignal)) return "lifestyle";
+    if (/playful|fun|kids|toy|culture|meme|趣味|儿童|玩具|潮流|梗|轻松/.test(signal) || /趣味|儿童|玩具|潮流|轻松/.test(chineseSignal)) return "playful";
+    if (/energetic|launch|pitch|vc|sales|growth|campaign|发布|路演|融资|增长|营销|动员/.test(signal) || /发布|路演|融资|增长|营销|动员/.test(chineseSignal)) return "energetic";
+    if (/clinical|medical|healthcare|risk|compliance|policy|医疗|临床|合规|风控|政策|严肃/.test(signal) || /医疗|临床|合规|风控|政策|严肃/.test(chineseSignal)) return "clinical";
+    if (/friendly|onboarding|guide|tutorial|intro|入门|指南|教程|说明|介绍/.test(signal) || /入门|指南|教程|说明|介绍/.test(chineseSignal)) return "friendly";
+    return "editorial";
+  }
+
+  private normalizePlanFormat(rawFormat?: string, requestRequirements?: DeckRequestRequirements) {
+    const value = (rawFormat ?? "").trim().toLowerCase();
+    if ((PLAN_FORMATS as readonly string[]).includes(value)) return value;
+    const signal = value;
+    if (/xhs|xiaohongshu|小红书|图文/.test(signal)) return "xhs-image";
+    if (/handout|pdf|document|文档|资料/.test(signal)) return "pdf-handout";
+    if (/internal|memo|内部|备忘/.test(signal)) return "internal-memo";
+    if (/keynote|launch|发布会/.test(signal)) return "keynote";
+    if (/web|share|网页|分享/.test(signal)) return "web-share";
+    if (requestRequirements?.requestedNarrativeLength && requestRequirements.requestedNarrativeLength >= 1600) return "pdf-handout";
+    return "live-talk";
+  }
+
+  private finalizePlanSlides(
+    slides: AgentPlan["slides"],
+    skill: SkillPack,
+    requestRequirements?: DeckRequestRequirements
+  ): AgentPlan["slides"] {
+    const withSectionRhythm = this.applySectionDividerPolicy(slides, skill, requestRequirements);
+    const densityBalanced = this.applyNarrativeDensityPolicy(withSectionRhythm, skill, requestRequirements);
+    return densityBalanced.map((slide, index) => ({ ...slide, index: index + 1 }));
   }
 
   /**
@@ -4652,7 +6295,7 @@ export class HtmlPptAgentService {
    * - 13+ body slides -> 3 dividers at quarters.
    * - Existing dividers are preserved; we only add when none exist.
    */
-  private enforceSectionDividers(
+  private applySectionDividerPolicy(
     slides: AgentPlan["slides"],
     skill: SkillPack,
     requestRequirements?: DeckRequestRequirements
@@ -4699,10 +6342,37 @@ export class HtmlPptAgentService {
       }
     }
 
+    // When the user did not specify a hard slide count, we still try to keep
+    // the deck length close to the original plan so audience expectations
+    // (e.g. "10-page deck") aren't silently violated by injected dividers.
+    // Drop the lowest-priority body slides (light layouts) to compensate.
+    const targetLength = slides.length;
+    if (next.length > targetLength) {
+      const lightPriority: Record<string, number> = {
+        "big-quote": 1,
+        "section-divider": 0, // never drop dividers we just added
+        toc: 3,
+        cta: 4,
+        thanks: 5
+      };
+      const isOriginalLight = (slide: AgentPlan["slides"][number]) =>
+        slide.layoutId in lightPriority && lightPriority[slide.layoutId] !== 0;
+      const dropOrder = next
+        .map((slide, idx) => ({ slide, idx }))
+        .filter((entry) => isOriginalLight(entry.slide))
+        .sort((a, b) => (lightPriority[a.slide.layoutId] ?? 99) - (lightPriority[b.slide.layoutId] ?? 99));
+      while (next.length > targetLength && dropOrder.length > 0) {
+        const drop = dropOrder.shift();
+        if (!drop) break;
+        const liveIndex = next.indexOf(drop.slide);
+        if (liveIndex >= 0) next.splice(liveIndex, 1);
+      }
+    }
+
     return next.map((slide, i) => ({ ...slide, index: i + 1 }));
   }
 
-  private rebalanceSlidesForNarrativeTarget(
+  private applyNarrativeDensityPolicy(
     slides: AgentPlan["slides"],
     skill: SkillPack,
     requestRequirements?: DeckRequestRequirements
@@ -4752,10 +6422,22 @@ export class HtmlPptAgentService {
   private normalizeVisual(
     input: unknown,
     skill: SkillPack,
-    fallback: { templateId: string; theme: string; lockedTemplateId?: string }
+    fallback: { templateId: string; theme: string; lockedTemplateId?: string },
+    plan?: AgentPlan
   ): VisualPlan {
     const c = input && typeof input === "object" ? input as Record<string, unknown> : {};
-    const primaryTheme = skill.themeNames.includes(this.str(c.primaryTheme, "")) ? this.str(c.primaryTheme, "") : (skill.themeNames.includes(fallback.theme) ? fallback.theme : skill.themeNames[0] ?? "gruvbox-dark");
+    const allowedThemes = plan ? this.themeShortlistForPlan(plan, skill) : [];
+    const modelPrimaryTheme = this.str(c.primaryTheme, "");
+    const fallbackTheme = skill.themeNames.includes(fallback.theme) ? fallback.theme : "";
+    const firstAllowedTheme = allowedThemes[0] ?? "";
+    const primaryTheme =
+      (modelPrimaryTheme && skill.themeNames.includes(modelPrimaryTheme) && (allowedThemes.length === 0 || allowedThemes.includes(modelPrimaryTheme)) ? modelPrimaryTheme : "")
+      || (fallbackTheme && (allowedThemes.length === 0 || allowedThemes.includes(fallbackTheme)) ? fallbackTheme : "")
+      || firstAllowedTheme
+      || (skill.themeNames.includes(modelPrimaryTheme) ? modelPrimaryTheme : "")
+      || fallbackTheme
+      || skill.themeNames[0]
+      || "gruvbox-dark";
     const lockedTemplateId = fallback.lockedTemplateId && skill.templateNames.includes(fallback.lockedTemplateId)
       ? fallback.lockedTemplateId
       : undefined;
@@ -4771,7 +6453,7 @@ export class HtmlPptAgentService {
     );
     return {
       primaryTheme,
-      backupThemes: this.strings(c.backupThemes).filter((item) => skill.themeNames.includes(item) && item !== primaryTheme).slice(0, 8),
+      backupThemes: this.normalizeBackupThemes(this.strings(c.backupThemes), primaryTheme, skill, allowedThemes),
       referenceTemplates,
       deckClass,
       visualLanguage: this.str(c.visualLanguage, "高质量 HTML-PPT 视觉系统"),
@@ -4782,19 +6464,57 @@ export class HtmlPptAgentService {
     };
   }
 
+  private normalizeBackupThemes(modelThemes: string[], primaryTheme: string, skill: SkillPack, allowedThemes: string[]) {
+    const pool = allowedThemes.length > 0 ? allowedThemes : skill.themeNames;
+    const seen = new Set<string>([primaryTheme]);
+    const ordered = [
+      ...modelThemes.filter((item) => pool.includes(item)),
+      ...pool
+    ];
+    const result: string[] = [];
+    for (const theme of ordered) {
+      if (!skill.themeNames.includes(theme) || seen.has(theme)) continue;
+      seen.add(theme);
+      result.push(theme);
+      if (result.length >= 8) break;
+    }
+    return result;
+  }
+
+  private themeShortlistForPlan(plan: AgentPlan, skill: SkillPack) {
+    const tone = (plan.tone ?? "editorial").toLowerCase();
+    const toneBindings: Record<string, string[]> = {
+      clinical: ["minimal-white", "arctic-cool", "swiss-grid", "corporate-clean", "academic-paper", "engineering-whiteprint"],
+      playful: ["memphis-pop", "soft-pastel", "midcentury", "xiaohongshu-white", "sunset-warm", "bauhaus"],
+      editorial: ["editorial-serif", "magazine-bold", "news-broadcast", "swiss-grid", "japanese-minimal", "xiaohongshu-white"],
+      cyber: ["cyberpunk-neon", "tokyo-night", "dracula", "vaporwave", "y2k-chrome", "terminal-green", "retro-tv"],
+      enterprise: ["minimal-white", "corporate-clean", "arctic-cool", "swiss-grid", "sharp-mono", "blueprint"],
+      documentary: ["news-broadcast", "academic-paper", "blueprint", "engineering-whiteprint", "magazine-bold", "swiss-grid"],
+      lifestyle: ["xiaohongshu-white", "sunset-warm", "soft-pastel", "japanese-minimal", "midcentury", "editorial-serif"],
+      energetic: ["neo-brutalism", "sharp-mono", "bauhaus", "memphis-pop", "pitch-deck-vc", "aurora"],
+      academic: ["academic-paper", "engineering-whiteprint", "blueprint", "swiss-grid", "minimal-white", "magazine-bold"],
+      friendly: ["soft-pastel", "sunset-warm", "japanese-minimal", "xiaohongshu-white", "midcentury", "minimal-white"]
+    };
+    const candidates = toneBindings[tone] ?? toneBindings.editorial ?? [];
+    return candidates.filter((theme) => skill.themeNames.includes(theme));
+  }
+
   private fallbackVisualPlan(
     plan: AgentPlan,
     skill: SkillPack,
     fallback: { templateId: string; theme: string; lockedTemplateId?: string }
   ): VisualPlan {
     const audienceSignal = `${plan.audience} ${plan.tone ?? ""} ${plan.format ?? ""}`.toLowerCase();
+    const themePool = this.themeShortlistForPlan(plan, skill);
     const preferredTheme =
-      skill.themeNames.find((name) => name === fallback.theme)
+      themePool.find((name) => name === fallback.theme)
+      ?? themePool[0]
+      ?? skill.themeNames.find((name) => name === fallback.theme)
       ?? skill.themeNames.find((name) => audienceSignal.includes("academic") && /academic|blueprint|whiteprint|swiss/i.test(name))
       ?? skill.themeNames.find((name) => audienceSignal.includes("editorial") && /editorial|magazine|xiaohongshu|white/i.test(name))
       ?? skill.themeNames[0]
       ?? "editorial-serif";
-    const backupThemes = skill.themeNames.filter((name) => name !== preferredTheme).slice(0, 3);
+    const backupThemes = this.normalizeBackupThemes([], preferredTheme, skill, themePool).slice(0, 3);
     const referenceTemplates = fallback.lockedTemplateId && skill.templateNames.includes(fallback.lockedTemplateId)
       ? [fallback.lockedTemplateId]
       : skill.templateNames.includes(fallback.templateId)
@@ -4811,7 +6531,7 @@ export class HtmlPptAgentService {
         composition: this.defaultCompositionForLayout(slide.layoutId, slide.title)
       }))
     };
-    return this.normalizeVisual(rawVisual, skill, fallback);
+    return this.normalizeVisual(rawVisual, skill, fallback, plan);
   }
 
   private selectedTemplateId(input: { pendingUserMessage: PptMessageDto; templateId: string }, skill: SkillPack) {
@@ -4864,9 +6584,9 @@ export class HtmlPptAgentService {
     const animationCatalog = Array.from(new Set((skill.manifest?.animations ?? []).map((item) => item.id))).filter(Boolean);
     const fxCatalog = Array.from(new Set((skill.manifest?.fxEffects ?? []).map((item) => item.id))).filter(Boolean);
     const fallbackAnimations = ["fade-up", "fade-left", "fade-right", "rise-in", "zoom-pop", "stagger-list"];
-    const fallbackFx = ["gradient-blob", "data-stream", "orbit-ring", "sparkle-trail"];
+    const fallbackFx = ["data-stream", "orbit-ring", "sparkle-trail"];
     const availableAnimations = animationCatalog.length > 0 ? animationCatalog : fallbackAnimations;
-    const availableFx = fxCatalog.length > 0 ? fxCatalog : fallbackFx;
+    const availableFx = this.filterAllowedFx(fxCatalog.length > 0 ? fxCatalog : fallbackFx);
     const existingByIndex = new Map(visual.slideVisuals.map((item) => [item.index, item]));
 
     const slideVisuals = plan.slides.map((slide, order) => {
@@ -4886,6 +6606,7 @@ export class HtmlPptAgentService {
 
     this.ensureAnimationDiversity(slideVisuals, plan.slides, availableAnimations);
     this.ensureFxCoverage(slideVisuals, plan.slides, availableFx, visual.primaryTheme);
+    this.limitFxCoverage(slideVisuals, plan.slides, visual.primaryTheme);
 
     return { ...visual, slideVisuals };
   }
@@ -4893,7 +6614,12 @@ export class HtmlPptAgentService {
   private pickAllowedVisualValue(value: string, allowedValues: string[]) {
     if (!value) return null;
     const normalized = value.trim().toLowerCase();
+    if (HtmlPptAgentService.BLOCKED_FX.has(normalized)) return null;
     return allowedValues.find((item) => item.toLowerCase() === normalized) ?? null;
+  }
+
+  private filterAllowedFx(values: string[]) {
+    return values.filter((value) => value && !this.isBlockedFx(value));
   }
 
   private defaultCompositionForLayout(layoutId: string, title: string) {
@@ -4973,14 +6699,14 @@ export class HtmlPptAgentService {
 
   private defaultFxForLayout(layoutId: string, order: number, availableFx: string[], primaryTheme: string) {
     const conservativeTheme = /(corporate|academic|minimal|swiss|whiteprint|news)/i.test(primaryTheme);
-    const subtlePool = ["gradient-blob", "data-stream", "orbit-ring", "sparkle-trail"];
-    const vividPool = ["knowledge-graph", "galaxy-swirl", "particle-burst", "counter-explosion", "constellation"];
+    const subtlePool = ["orbit-ring", "sparkle-trail"];
+    const vividPool = ["galaxy-swirl", "particle-burst", "counter-explosion", "constellation"];
     const byLayout: Record<string, string[]> = {
       cover: conservativeTheme ? subtlePool : [...vividPool, ...subtlePool],
       "section-divider": conservativeTheme ? subtlePool : [...vividPool, ...subtlePool],
-      "stat-highlight": conservativeTheme ? ["data-stream", "gradient-blob", "orbit-ring"] : ["counter-explosion", "data-stream", "particle-burst", "gradient-blob"],
-      timeline: conservativeTheme ? ["orbit-ring", "data-stream"] : ["constellation", "knowledge-graph", "orbit-ring"],
-      thanks: conservativeTheme ? ["sparkle-trail", "gradient-blob"] : ["firework", "sparkle-trail", "gradient-blob"]
+      "stat-highlight": conservativeTheme ? ["orbit-ring"] : ["counter-explosion", "data-stream", "particle-burst"],
+      timeline: conservativeTheme ? ["orbit-ring", "data-stream"] : ["constellation", "orbit-ring"],
+      thanks: conservativeTheme ? ["sparkle-trail"] : ["firework", "sparkle-trail"]
     };
     const preferred = [...(byLayout[layoutId] ?? (conservativeTheme ? subtlePool : vividPool)), ...availableFx];
     for (const key of preferred) {
@@ -5018,8 +6744,9 @@ export class HtmlPptAgentService {
     primaryTheme: string
   ) {
     if (slideVisuals.length === 0 || availableFx.length === 0) return;
+    const conservativeTheme = /(corporate|academic|minimal|swiss|whiteprint|news)/i.test(primaryTheme);
     const currentCount = slideVisuals.filter((item) => Boolean(item.fx)).length;
-    const targetCount = slideVisuals.length >= 10 ? 3 : slideVisuals.length >= 8 ? 2 : 1;
+    const targetCount = conservativeTheme ? 1 : slideVisuals.length >= 10 ? 2 : 1;
     if (currentCount >= targetCount) return;
 
     const orderByPriority = slides
@@ -5051,6 +6778,49 @@ export class HtmlPptAgentService {
       visual.fx = fx;
       filled += 1;
     }
+  }
+
+  private limitFxCoverage(
+    slideVisuals: Array<{ index: number; composition: string; animation?: string; fx?: string }>,
+    slides: AgentPlan["slides"],
+    primaryTheme: string
+  ) {
+    if (slideVisuals.length === 0) return;
+    const conservativeTheme = /(corporate|academic|minimal|swiss|whiteprint|news)/i.test(primaryTheme);
+    const maxFxCount = conservativeTheme ? 1 : slideVisuals.length >= 10 ? 2 : 1;
+    const allowedLayouts = new Set(["cover", "section-divider", "stat-highlight", "cta", "thanks"]);
+    const priorityByLayout: Record<string, number> = {
+      cover: 0,
+      "section-divider": 1,
+      "stat-highlight": 2,
+      cta: 3,
+      thanks: 4
+    };
+
+    const ranked = slideVisuals
+      .map((visual, order) => ({ visual, slide: slides[order], order }))
+      .filter((item) => Boolean(item.visual.fx));
+
+    for (const item of ranked) {
+      const layoutId = item.slide?.layoutId ?? "";
+      if (!allowedLayouts.has(layoutId) || this.isBlockedFx(item.visual.fx ?? "")) {
+        delete item.visual.fx;
+      }
+    }
+
+    const remaining = ranked
+      .filter((item) => Boolean(item.visual.fx))
+      .sort((a, b) => {
+        const pa = priorityByLayout[a.slide?.layoutId ?? ""] ?? 99;
+        const pb = priorityByLayout[b.slide?.layoutId ?? ""] ?? 99;
+        return pa - pb || a.order - b.order;
+      });
+
+    remaining.forEach((item, index) => {
+      if (index >= maxFxCount) {
+        delete item.visual.fx;
+      }
+    });
   }
 
   private normalizeLayoutId(input: string, type: string, index: number, total: number, allowed: string[]) {
@@ -5203,15 +6973,20 @@ export class HtmlPptAgentService {
     return [
       "Return one JSON object only.",
       "Schema:",
-      `{ "title": "string", "subtitle": "string?", "slideCount": ${slideCount}, "audience": "string", "tone": "string?", "format": "string?", "objective": "string", "slides": [{ "index": 1, "title": "string", "type": "string", "layoutId": "string", "goal": "string", "keyPoints": ["string"] }] }`
+      `{ "title": "string", "subtitle": "string?", "slideCount": ${slideCount}, "audience": "string", "tone": "clinical|playful|editorial|cyber|enterprise|documentary|lifestyle|energetic|academic|friendly", "format": "live-talk|pdf-handout|xhs-image|web-share|keynote|internal-memo", "objective": "string", "slides": [{ "index": 1, "title": "string", "type": "string", "layoutId": "string", "goal": "string", "keyPoints": ["string"] }] }`
     ].join("\n");
   }
 
   private async readLayoutTemplates(skillRoot: string, layoutIds: string[]) {
     const unique = Array.from(new Set(layoutIds));
     const snippets = await Promise.all(unique.map(async (layoutId) => {
-      const compact = (await this.readSingleLayoutTemplate(skillRoot, layoutId)).replace(/\n{3,}/g, "\n\n").trim();
-      return `--- layoutId: ${layoutId} ---\n${compact.slice(0, 6500)}`;
+      const raw = await this.readSingleLayoutTemplate(skillRoot, layoutId);
+      const compact = this.sanitizeLayoutTemplateForPrompt(layoutId, raw).replace(/\n{3,}/g, "\n\n").trim();
+      return [
+        `--- layoutId: ${layoutId} ---`,
+        "Gold-standard slot skeleton: preserve this structure and class rhythm; replace bracketed tokens with this deck's planned content.",
+        compact.slice(0, 6500)
+      ].join("\n");
     }));
     return snippets.join("\n\n");
   }
@@ -5219,6 +6994,28 @@ export class HtmlPptAgentService {
   private async readSingleLayoutTemplate(skillRoot: string, layoutId: string) {
     const content = await readFile(join(skillRoot, "templates", "single-page", `${layoutId}.html`), "utf8").catch(() => "");
     return content.match(/<section\b[\s\S]*?<\/section>/i)?.[0] ?? content;
+  }
+
+  private sanitizeLayoutTemplateForPrompt(layoutId: string, template: string) {
+    let next = template
+      .replace(/\bis-active\b/g, "")
+      .replace(/\s{2,}/g, " ");
+    next = next.replace(/<section\b([^>]*)>/i, (match, attrs: string) => {
+      let nextAttrs = attrs;
+      if (!/\bdata-title=/.test(nextAttrs)) nextAttrs += ' data-title="{TITLE}"';
+      else nextAttrs = nextAttrs.replace(/\bdata-title=(["'])[^"']*\1/i, 'data-title="{TITLE}"');
+      if (!/\bdata-slide-index=/.test(nextAttrs)) nextAttrs += ' data-slide-index="{INDEX}"';
+      if (!/\bdata-layoutid=/.test(nextAttrs)) nextAttrs += ` data-layoutid="${this.escapeAttr(layoutId)}"`;
+      return `<section${nextAttrs}>`;
+    });
+    next = this.maskDonorLeafText(next);
+    next = next.replace(/>([^<>{}\n][^<>]*?)</g, (match, text: string) => {
+      const normalized = text.replace(/\s+/g, " ").trim();
+      if (!normalized) return match;
+      if (/^\[[A-Z0-9_-]+\]$/.test(normalized)) return match;
+      return `>${this.semanticDonorToken("", "", normalized)}<`;
+    });
+    return next;
   }
 
   /**
@@ -5262,8 +7059,9 @@ export class HtmlPptAgentService {
    * inherit visual DNA (typography, decoration, accents) without copying
    * text content verbatim.
    */
-  private async readReferenceFullDeck(skillRoot: string, templateName: string): Promise<ReferenceFullDeckSnippet | undefined> {
+  private async readReferenceFullDeck(skill: SkillPack, templateName: string): Promise<ReferenceFullDeckSnippet | undefined> {
     if (!templateName) return undefined;
+    const skillRoot = skill.root;
     const indexPath = join(skillRoot, "templates", "full-decks", templateName, "index.html");
     const stylePath = join(skillRoot, "templates", "full-decks", templateName, "style.css");
     const [indexHtml, cssText] = await Promise.all([
@@ -5294,13 +7092,73 @@ export class HtmlPptAgentService {
       if (!section) continue;
       picks.push(section.replace(/\s+\n/g, "\n").trim());
     }
+    const donorContract = await this.resolveDonorTemplateContract(skill, templateName);
+    const sanitizedPicks = picks
+      .slice(0, 5)
+      .map((section) => this.sanitizeDonorSectionForPrompt(section, donorContract));
 
     return {
       name: templateName,
-      sections: picks.slice(0, 5),
-      cssExcerpt: cssText.slice(0, 4000),
-      contract: this.inferReferenceComponentContract(picks.slice(0, 5), cssText)
+      sections: sanitizedPicks,
+      cssExcerpt: this.sanitizeDonorCssExcerptForPrompt(cssText, donorContract).slice(0, 4000),
+      contract: this.inferReferenceComponentContract(picks.slice(0, 5), cssText),
+      donorContract
     };
+  }
+
+  private async resolveDonorTemplateContract(skill: SkillPack, templateName: string): Promise<DonorTemplateContract | undefined> {
+    const fromManifest = skill.manifest?.fullDecks?.find((deck) => deck.id === templateName)?.donorContract;
+    if (fromManifest) return fromManifest;
+    const raw = await readFile(join(skill.root, "templates", "full-decks", templateName, "donor-contract.json"), "utf8").catch(() => "");
+    if (!raw.trim()) return undefined;
+    try {
+      return JSON.parse(raw) as DonorTemplateContract;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private sanitizeDonorSectionForPrompt(section: string, donorContract?: DonorTemplateContract) {
+    return this.sanitizeDonorSection(section, { donorContract, maskText: true });
+  }
+
+  private maskDonorLeafText(markup: string) {
+    return markup.replace(/<([a-z0-9:-]+)\b([^>]*)>([^<>]+)<\/\1>/gi, (match, tagName: string, attrs: string, text: string) => {
+      const normalized = text.replace(/\s+/g, " ").trim();
+      if (!normalized) return match;
+      const classes = attrs.match(/\bclass=(["'])([^"']+)\1/i)?.[2] ?? "";
+      return `<${tagName}${attrs}>${this.semanticDonorToken(tagName.toLowerCase(), classes, normalized)}</${tagName}>`;
+    });
+  }
+
+  private semanticDonorToken(tagName: string, classes: string, text: string) {
+    const classText = classes.toLowerCase();
+    if (/h1/.test(tagName) || /\b(?:h1|title|hero-title|cover-title)\b/.test(classText)) return "[H1]";
+    if (/h2/.test(tagName) || /\b(?:h2|title-md|subtitle)\b/.test(classText)) return "[H2]";
+    if (/h[3-6]/.test(tagName)) return "[H3]";
+    if (tagName === "li") return "[BULLET]";
+    if (/footer|page|snum|slide-number/.test(classText)) return "[FOOTER]";
+    if (/kicker|eyebrow|tag|label|badge|pill/.test(classText)) return "[KICKER]";
+    if (/num|metric|value|amount|counter/.test(classText) || /^\d+[%+.,\w-]*$/.test(text.trim())) return "[NUMBER]";
+    if (/code|mono|terminal|cmd/.test(classText) || ["code", "pre"].includes(tagName)) return "[CODE]";
+    if (/lede|sub|dim|desc|body|txt|copy/.test(classText) || tagName === "p") return "[BODY]";
+    return "[TEXT]";
+  }
+
+  private sanitizeDonorCssExcerptForPrompt(cssText: string, donorContract?: DonorTemplateContract) {
+    if (!donorContract) return cssText;
+    const redacted = new Set([
+      ...(donorContract.forbiddenClasses ?? []),
+      ...(donorContract.coverOnlyClasses ?? []),
+      ...(donorContract.decorativeOnlyClasses ?? []),
+      ...(donorContract.cssRedactClasses ?? [])
+    ].filter(Boolean));
+    if (redacted.size === 0) return cssText;
+
+    return this.findCssRules(cssText)
+      .filter((rule) => !this.extractClassTokensFromSelector(rule.selector).some((token) => redacted.has(token)))
+      .map((rule) => `${rule.selector.trim()}{${rule.body.trim()}}`)
+      .join("\n");
   }
 
   private inferReferenceComponentContract(sections: string[], cssText: string): ReferenceComponentContract | undefined {

@@ -25,9 +25,8 @@ export default async function LoginPage({
             当前后台已经接入 PostgreSQL、JWT 与 RBAC。管理员登录后可以直接进入资讯管理台，完成内容创建、编辑与发布。
           </p>
           <div className="mt-6 rounded-[26px] border border-[rgba(15,118,110,0.18)] bg-[var(--accent-softer)] px-5 py-5 text-sm leading-7 text-[var(--accent-strong)]">
-            <p className="font-semibold">默认管理员</p>
-            <p className="mt-2">用户名: admin</p>
-            <p>密码: Admin@123456</p>
+            <p className="font-semibold">管理员登录</p>
+            <p className="mt-2">管理员账号由站点维护，普通用户请使用自己的账号登录。</p>
           </div>
         </div>
 

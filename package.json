@@ -13,6 +13,7 @@
     "build": "npm run build --workspace @codex/backend && npm run build --workspace @codex/frontend",
     "start": "concurrently \"npm run start --workspace @codex/backend\" \"npm run start --workspace @codex/frontend\"",
     "typecheck": "npm run typecheck --workspace @codex/backend && npm run typecheck --workspace @codex/frontend",
+    "smoke:html-ppt": "node scripts/html-ppt-quick-smoke.mjs",
     "db:up": "docker compose up -d postgres",
     "db:down": "docker compose down",
     "docker:prod:build": "docker compose --env-file .env.production -f docker-compose.prod.yml build",

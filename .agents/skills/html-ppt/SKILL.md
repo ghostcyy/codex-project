@@ -148,6 +148,9 @@ Only after those are clear, scaffold the deck and start writing.
   and the progress bar are provided by `assets/base.css` + `runtime.js`.
 - **Keyboard-first.** Always include `<script src="../assets/runtime.js"></script>`
   so the deck supports ← → / T / A / F / S / O / hash deep-links.
+  This is runtime behavior only. Do **not** write visible usage instructions
+  such as "方向键 ← → 切换", "press ← to rewind", "navigate", or shortcut hints
+  on the slides themselves.
 - **Enable inline editing.** Add `<script src="../assets/edit-mode.js"></script>` right after `runtime.js`.
   This gives non-coders **E** key access to click-to-edit any text, auto-save to localStorage, and **Ctrl+S** to download a clean standalone HTML export.
   Use it on demo decks, review drafts, and any workflow where last-minute copy edits are common.

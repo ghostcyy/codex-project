@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": ["#ai-a…"],
+  "forbiddenTextPatterns": ["#ai-[a-z0-9-]+"],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": [],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": []
+}

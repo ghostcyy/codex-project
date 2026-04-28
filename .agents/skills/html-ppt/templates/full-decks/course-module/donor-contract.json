@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": ["Define recursion", "Correct.", "No base case"],
+  "forbiddenTextPatterns": ["Define\\s+recursion", "No\\s+base\\s+case", "\\bCorrect\\b"],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": [],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": []
+}

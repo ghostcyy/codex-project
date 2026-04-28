@@ -8,6 +8,7 @@ import { basename, join, resolve } from "node:path";
 export type ThemePalette = {
   bg: string;
   surface: string;
+  surface2: string;
   border: string;
   text1: string;
   text2: string;
@@ -37,11 +38,27 @@ export type LayoutDensityBudget = {
   maxCardCount: number;
 };
 
+export type LayoutSanityContract = {
+  minCards?: number;
+  maxCards?: number;
+  minBullets?: number;
+  maxBullets?: number;
+  minMetrics?: number;
+  maxMetrics?: number;
+  wantsCardTitle?: boolean;
+  wantsCardBody?: boolean;
+  horizontal?: boolean;
+  columns?: number;
+  requiresCanvas?: boolean;
+  notes?: string;
+};
+
 export type LayoutAsset = {
   id: string;
   role: LayoutRole;
   slots: string[];
   densityBudget: LayoutDensityBudget;
+  sanity: LayoutSanityContract;
   canvasRequired: boolean;
   tags: string[];
 };
@@ -57,6 +74,16 @@ export type FullDeckAsset = {
   previewSlides: string[];
   previewCss: string;
   tags: string[];
+  donorContract?: DonorTemplateContract;
+};
+
+export type DonorTemplateContract = {
+  forbiddenTextPatterns?: string[];
+  forbiddenTextExamples?: string[];
+  forbiddenClasses?: string[];
+  coverOnlyClasses?: string[];
+  decorativeOnlyClasses?: string[];
+  cssRedactClasses?: string[];
 };
 
 export type AnimationAsset = {
@@ -112,6 +139,40 @@ const LOOP_ANIM_IDS = new Set([
   "neon-glow", "shimmer-sweep", "gradient-flow",
   "parallax-tilt", "path-draw", "morph-shape",
 ]);
+
+const DEFAULT_LAYOUT_SANITY: Record<string, LayoutSanityContract> = {
+  "arch-diagram": { minCards: 2, maxCards: 6, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3, notes: "Architecture diagrams should use grouped nodes, not stacked prose." },
+  "big-quote": { minCards: 0, maxCards: 1, maxBullets: 2, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "bullets": { minBullets: 3, maxBullets: 8, minCards: 0, maxCards: 2, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "chart-bar": { minCards: 0, maxCards: 3, minMetrics: 0, maxMetrics: 4, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 2, requiresCanvas: true },
+  "chart-line": { minCards: 0, maxCards: 3, minMetrics: 0, maxMetrics: 4, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 2, requiresCanvas: true },
+  "chart-pie": { minCards: 0, maxCards: 3, minMetrics: 0, maxMetrics: 4, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 2, requiresCanvas: true },
+  "chart-radar": { minCards: 0, maxCards: 3, minMetrics: 0, maxMetrics: 4, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 2, requiresCanvas: true },
+  "code": { minCards: 1, maxCards: 3, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "comparison": { minCards: 2, maxCards: 4, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "cover": { minCards: 0, maxCards: 2, maxBullets: 3, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "cta": { minCards: 0, maxCards: 3, maxBullets: 3, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "diff": { minCards: 2, maxCards: 4, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "flow-diagram": { minCards: 3, maxCards: 7, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "gantt": { minCards: 3, maxCards: 8, wantsCardTitle: true, wantsCardBody: false, horizontal: true, columns: 4 },
+  "image-grid": { minCards: 3, maxCards: 6, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "image-hero": { minCards: 1, maxCards: 3, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "kpi-grid": { minCards: 3, maxCards: 6, minMetrics: 3, maxMetrics: 6, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 4 },
+  "mindmap": { minCards: 3, maxCards: 7, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "process-steps": { minCards: 3, maxCards: 6, minBullets: 0, maxBullets: 8, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "pros-cons": { minCards: 2, maxCards: 4, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "roadmap": { minCards: 3, maxCards: 6, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "section-divider": { minCards: 0, maxCards: 2, maxBullets: 3, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "stat-highlight": { minCards: 0, maxCards: 3, minMetrics: 1, maxMetrics: 4, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 2 },
+  "table": { minCards: 0, maxCards: 2, maxBullets: 4, wantsCardTitle: false, wantsCardBody: false, horizontal: true, columns: 1 },
+  "terminal": { minCards: 1, maxCards: 3, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "thanks": { minCards: 0, maxCards: 2, maxBullets: 2, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "three-column": { minCards: 3, maxCards: 6, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "timeline": { minCards: 3, maxCards: 7, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 3 },
+  "toc": { minCards: 3, maxCards: 6, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 },
+  "todo-checklist": { minBullets: 3, maxBullets: 8, minCards: 0, maxCards: 3, wantsCardTitle: false, wantsCardBody: false, horizontal: false, columns: 1 },
+  "two-column": { minCards: 2, maxCards: 4, wantsCardTitle: true, wantsCardBody: true, horizontal: true, columns: 2 }
+};
 
 // Animation IDs that use 3D transforms or heavy filters
 const HEAVY_ANIM_IDS = new Set([
@@ -217,6 +278,7 @@ async function computeSkillHash(skillRoot: string): Promise<string> {
     join(skillRoot, "SKILL.md"),
     join(skillRoot, "assets", "themes"),
     join(skillRoot, "templates", "single-page"),
+    join(skillRoot, "templates", "single-page", "layout-sanity.json"),
     join(skillRoot, "templates", "full-decks"),
     join(skillRoot, "assets", "animations"),
   ];
@@ -232,7 +294,7 @@ async function computeSkillHash(skillRoot: string): Promise<string> {
     })
   );
 
-  const INDEXER_VERSION = "v3"; // bumped: per-role density multipliers + full-deck calibration
+  const INDEXER_VERSION = "v6"; // bumped: layout sanity contracts
   return createHash("sha256").update(parts.join("|") + "|" + INDEXER_VERSION).digest("hex").slice(0, 16);
 }
 
@@ -300,6 +362,7 @@ function parseThemePalette(css: string): ThemePalette {
   return {
     bg,
     surface: vars["--surface"] ?? "#ffffff",
+    surface2: vars["--surface-2"] ?? vars["--surface"] ?? "#ffffff",
     border: vars["--border"] ?? "rgba(0,0,0,.08)",
     text1: vars["--text-1"] ?? "#111216",
     text2: vars["--text-2"] ?? "#55596a",
@@ -352,6 +415,7 @@ function deriveThemeTags(id: string, palette: ThemePalette): string[] {
 async function indexLayouts(skillRoot: string): Promise<LayoutAsset[]> {
   const layoutsDir = join(skillRoot, "templates", "single-page");
   const files = await readdir(layoutsDir).catch((): string[] => []);
+  const sanityOverrides = await readLayoutSanityContracts(skillRoot);
   return Promise.all(
     files
       .filter((f) => f.endsWith(".html"))
@@ -359,23 +423,88 @@ async function indexLayouts(skillRoot: string): Promise<LayoutAsset[]> {
       .map(async (file) => {
         const id = basename(file, ".html");
         const html = await readFile(join(layoutsDir, file), "utf8").catch(() => "");
-        return indexLayout(id, html);
+        return indexLayout(id, html, sanityOverrides[id]);
       })
   );
 }
 
-function indexLayout(id: string, html: string): LayoutAsset {
+async function readLayoutSanityContracts(skillRoot: string): Promise<Record<string, LayoutSanityContract>> {
+  const filePath = join(skillRoot, "templates", "single-page", "layout-sanity.json");
+  const raw = await readFile(filePath, "utf8").catch(() => "");
+  if (!raw.trim()) return {};
+  try {
+    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    const layouts = parsed.layouts;
+    if (layouts && typeof layouts === "object" && !Array.isArray(layouts)) {
+      return layouts as Record<string, LayoutSanityContract>;
+    }
+    return parsed as Record<string, LayoutSanityContract>;
+  } catch {
+    return {};
+  }
+}
+
+function indexLayout(id: string, html: string, sanityOverride?: LayoutSanityContract): LayoutAsset {
   const section = html.match(/<section\b[\s\S]*?<\/section>/i)?.[0] ?? html;
   const role = LAYOUT_ROLES[id] ?? "content";
   const canvasRequired = /<canvas\b/i.test(section);
+  const sanity = normalizeLayoutSanity({
+    ...inferLayoutSanity(id, section, role, canvasRequired),
+    ...(DEFAULT_LAYOUT_SANITY[id] ?? {}),
+    ...(sanityOverride ?? {})
+  });
   return {
     id,
     role,
     slots: extractSlots(section, canvasRequired),
     densityBudget: deriveDensityBudget(id, section, role),
+    sanity,
     canvasRequired,
     tags: deriveLayoutTags(id, role, canvasRequired),
   };
+}
+
+function inferLayoutSanity(id: string, section: string, role: LayoutRole, canvasRequired: boolean): LayoutSanityContract {
+  const cardCount = (section.match(/class="[^"]*\bcard\b[^"]*"/g) ?? []).length;
+  const bulletCount = (section.match(/<li\b/gi) ?? []).length;
+  const metricCount = (section.match(/\b(?:metric|counter|kpi|number)\b/gi) ?? []).length;
+  const columns = id.includes("three") || /\bg3\b/.test(section)
+    ? 3
+    : id.includes("two") || /\bg2\b/.test(section)
+      ? 2
+      : /\bg4\b/.test(section)
+        ? 4
+        : 1;
+  return {
+    minCards: cardCount > 0 ? Math.min(cardCount, 2) : 0,
+    maxCards: cardCount > 0 ? Math.max(cardCount, columns * 2) : Math.max(1, columns),
+    minBullets: bulletCount > 0 ? Math.min(bulletCount, 3) : 0,
+    maxBullets: bulletCount > 0 ? Math.max(bulletCount, 8) : 4,
+    minMetrics: metricCount > 0 ? Math.min(metricCount, 2) : 0,
+    maxMetrics: metricCount > 0 ? Math.max(metricCount, 6) : 4,
+    wantsCardTitle: cardCount > 0,
+    wantsCardBody: cardCount > 0 && role !== "chart",
+    horizontal: columns > 1 || ["chart", "image"].includes(role),
+    columns,
+    requiresCanvas: canvasRequired
+  };
+}
+
+function normalizeLayoutSanity(input: LayoutSanityContract): LayoutSanityContract {
+  const next: LayoutSanityContract = {};
+  const numericKeys = ["minCards", "maxCards", "minBullets", "maxBullets", "minMetrics", "maxMetrics", "columns"] as const;
+  for (const key of numericKeys) {
+    const value = input[key];
+    if (typeof value === "number" && Number.isFinite(value) && value >= 0) {
+      next[key] = Math.floor(value);
+    }
+  }
+  if (typeof input.wantsCardTitle === "boolean") next.wantsCardTitle = input.wantsCardTitle;
+  if (typeof input.wantsCardBody === "boolean") next.wantsCardBody = input.wantsCardBody;
+  if (typeof input.horizontal === "boolean") next.horizontal = input.horizontal;
+  if (typeof input.requiresCanvas === "boolean") next.requiresCanvas = input.requiresCanvas;
+  if (typeof input.notes === "string" && input.notes.trim()) next.notes = input.notes.trim().slice(0, 240);
+  return next;
 }
 
 function extractSlots(html: string, hasCanvas: boolean): string[] {
@@ -535,9 +664,10 @@ async function indexFullDecks(skillRoot: string): Promise<FullDeckAsset[]> {
 }
 
 async function indexFullDeck(dir: string, id: string): Promise<FullDeckAsset> {
-  const [indexHtml, styleCss] = await Promise.all([
+  const [indexHtml, styleCss, donorContract] = await Promise.all([
     readFile(join(dir, "index.html"), "utf8").catch(() => ""),
     readFile(join(dir, "style.css"), "utf8").catch(() => ""),
+    readDonorContract(dir),
   ]);
 
   const slideCount = (indexHtml.match(/<section\b[^>]*class="[^"]*\bslide\b/g) ?? []).length;
@@ -588,7 +718,28 @@ async function indexFullDeck(dir: string, id: string): Promise<FullDeckAsset> {
     previewSlides,
     previewCss: styleCss,
     tags: inferFullDeckTags(id),
+    ...(donorContract ? { donorContract } : {}),
   };
+}
+
+async function readDonorContract(dir: string): Promise<DonorTemplateContract | undefined> {
+  const raw = await readFile(join(dir, "donor-contract.json"), "utf8").catch(() => "");
+  if (!raw.trim()) return undefined;
+  try {
+    const parsed = JSON.parse(raw) as DonorTemplateContract;
+    const normalizeList = (value: unknown) =>
+      Array.isArray(value) ? value.map((item) => String(item).trim()).filter(Boolean) : undefined;
+    return {
+      forbiddenTextPatterns: normalizeList(parsed.forbiddenTextPatterns),
+      forbiddenTextExamples: normalizeList(parsed.forbiddenTextExamples),
+      forbiddenClasses: normalizeList(parsed.forbiddenClasses),
+      coverOnlyClasses: normalizeList(parsed.coverOnlyClasses),
+      decorativeOnlyClasses: normalizeList(parsed.decorativeOnlyClasses),
+      cssRedactClasses: normalizeList(parsed.cssRedactClasses),
+    };
+  } catch {
+    return undefined;
+  }
 }
 
 function inferFullDeckTags(id: string): string[] {

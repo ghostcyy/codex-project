@@ -4,6 +4,8 @@ dist/
 .turbo/
 coverage/
 .local-runtime/
+.claude/
+output/
 .playwright-cli/
 test-results/
 playwright-report/

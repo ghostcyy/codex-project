@@ -18,6 +18,15 @@ function normalizeErrorMessage(value: unknown, fallback: string) {
   return fallback;
 }
 
+function collectStageModelOverrides(formData: FormData) {
+  const roles = ["research", "plan", "visual", "section", "css", "qa"] as const;
+  return Object.fromEntries(
+    roles
+      .map((role) => [role, String(formData.get(`stageModel.${role}`) ?? "").trim()] as const)
+      .filter(([, value]) => value.length > 0)
+  );
+}
+
 export async function createLlmConfigAction(formData: FormData) {
   await requireLlmManagerUser("/admin/llm");
   const payload = {
@@ -26,6 +35,7 @@ export async function createLlmConfigAction(formData: FormData) {
     baseUrl: String(formData.get("baseUrl") ?? ""),
     apiKey: String(formData.get("apiKey") ?? ""),
     model: String(formData.get("model") ?? ""),
+    stageModelOverrides: collectStageModelOverrides(formData),
     enabled: String(formData.get("enabled") ?? "") === "on"
   };
 
@@ -52,6 +62,7 @@ export async function updateLlmConfigAction(formData: FormData) {
     baseUrl: String(formData.get("baseUrl") ?? ""),
     apiKey: String(formData.get("apiKey") ?? ""),
     model: String(formData.get("model") ?? ""),
+    stageModelOverrides: collectStageModelOverrides(formData),
     enabled: String(formData.get("enabled") ?? "") === "on"
   };
 

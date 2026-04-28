@@ -13,9 +13,8 @@
 <body class="tpl-presenter-mode-reveal">
 <div class="deck">
 
-  <!-- ============ 1. COVER ============ -->
+
   <section class="slide" data-title="Cover">
-    <p class="kicker">presenter-mode / demo</p>
     <h1 class="h1 anim-fade-up" data-anim="fade-up">如何做一场<br><span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">有逐字稿</span>的技术分享</h1>
     <p class="lede mt-m">按 <span class="mono">S</span> 进入演讲者视图 · <span class="mono">T</span> 切换主题 · <span class="mono">← →</span> 翻页</p>
     <div class="speaker">
@@ -23,7 +22,6 @@
       <div><b>@lewis</b><span>sharing talk · 30 min</span></div>
     </div>
     <div class="deck-footer">
-      <span class="mono">#presenter #逐字稿 #tech-talk</span>
       <span class="slide-number" data-current="1" data-total="6"></span>
     </div>
     <aside class="notes">
@@ -34,7 +32,7 @@
     </aside>
   </section>
 
-  <!-- ============ 2. AGENDA ============ -->
+
   <section class="slide" data-title="Agenda">
     <p class="kicker">agenda</p>
     <h2 class="h2">今天要讲的 5 件事</h2>
@@ -56,7 +54,7 @@
     </aside>
   </section>
 
-  <!-- ============ 3. PROBLEM ============ -->
+
   <section class="slide" data-title="Problem">
     <p class="kicker">// part 01 · problem</p>
     <h2 class="h2">做 PPT 和讲 PPT，<br>是<span class="accent">两件事</span>。</h2>
@@ -83,9 +81,8 @@
     </aside>
   </section>
 
-  <!-- ============ 4. SOLUTION ============ -->
+
   <section class="slide" data-title="Presenter View">
-    <p class="kicker">// part 02 · presenter view</p>
     <h2 class="h2">演讲者视图应该有<span class="accent">四块信息</span></h2>
     <div class="grid g2 mt-l">
       <div>
@@ -103,11 +100,11 @@
       <p>第二块，<strong>下一页预览</strong>。这个很多人不理解为什么要放，我解释一下：演讲最卡的瞬间不是讲某一页，而是<em>翻到下一页的那 2 秒</em>。如果你提前看到下一页长什么样，过渡句自然就有了。</p>
       <p>第三块，<strong>逐字稿区域</strong>——这是今天的重点，下一部分我会专门讲。这里先说一个硬性要求：字号必须大、对比度必须高、必须能滚动。因为你讲的时候<em>只有余光瞄一下</em>，字小了根本来不及读。</p>
       <p>第四块，<strong>计时器和页码</strong>。知道自己讲了多久、还剩几页——节奏感全靠它。Keynote 做得最好，reveal.js 默认不够清楚。</p>
-      <p>这四块缺一不可。今天这个 deck 我把这四块都做出来了，按 S 大家可以试试。</p>
+      <p>这四块缺一不可。这个 deck 把它们拆成了清晰的演示界面，方便讲者稳定把控节奏。</p>
     </aside>
   </section>
 
-  <!-- ============ 5. SCRIPT ============ -->
+
   <section class="slide" data-title="Script">
     <p class="kicker">// part 03 · script</p>
     <h2 class="h2">逐字稿的<span class="accent">3 条铁律</span></h2>
@@ -144,42 +141,28 @@
     </aside>
   </section>
 
-  <!-- ============ 6. DEMO + CLOSING ============ -->
+
   <section class="slide" data-title="Demo & Close">
     <p class="kicker">// part 04-05 · demo + close</p>
     <h2 class="h2">现在<span class="accent">你也能做到</span></h2>
-    <div class="code-block mt-m">
-<span class="comment"># 安装 html-ppt skill</span>
-<span class="cmd">npx</span> skills add <span class="flag">https://github.com/lewislulu/html-ppt-skill</span>
-
-<span class="comment"># 复制演讲者模式模板</span>
-<span class="cmd">cp -r</span> templates/full-decks/presenter-mode-reveal examples/my-talk
-<span class="cmd">open</span> examples/my-talk/index.html
-
-<span class="comment"># 键盘操作</span>
-<span class="flag">S</span>  <span class="comment">→ 进入演讲者视图</span>
-<span class="flag">T</span>  <span class="comment">→ 切换主题（5 种预设）</span>
-<span class="flag">← →</span> <span class="comment">→ 翻页</span>
-<span class="flag">R</span>  <span class="comment">→ 重置计时器</span>
+    <div class="proof-grid mt-m">
+      <div class="proof-card"><strong>内容</strong><span>每页只保留观众能听懂的核心句。</span></div>
+      <div class="proof-card"><strong>讲稿</strong><span>逐字稿放在 notes，不进入画面。</span></div>
+      <div class="proof-card"><strong>节奏</strong><span>页面、提示和计时各司其职。</span></div>
     </div>
-    <p class="lede mt-m tc">关键是：<strong>每一页 &lt;aside class="notes"&gt; 里写 150–300 字逐字稿</strong>。</p>
+    <p class="lede mt-m tc">关键是：<strong>把观众画面和讲者提示彻底分离</strong>。</p>
     <div class="deck-footer">
       <span class="mono">#thanks · Q&amp;A</span>
       <span class="slide-number" data-current="6" data-total="6"></span>
     </div>
     <aside class="notes">
-      <p>最后我演示一下这个 skill 怎么用，给大家省点时间自己摸索。</p>
-      <p>第一步，装 html-ppt skill，一行命令。第二步，把我这个 <code>presenter-mode-reveal</code> 模板复制到你自己的 examples 目录。第三步，打开 html，按 S。</p>
-      <p>键盘操作我列在这里了。<strong>S 进入演讲者视图、T 切换主题、左右键翻页、R 重置计时器</strong>。主题默认带 5 个——tokyo-night、dracula、catppuccin-mocha、nord、corporate-clean——基本覆盖了深色技术分享、浅色商务汇报两种常见场景。</p>
-      <p>最关键的一步——<em>每一页底部的 <code>&lt;aside class="notes"&gt;</code> 里，老老实实写 150 到 300 字的逐字稿</em>。这是整个方法论的交付物。AI 可以帮你写初稿，但你一定要自己过一遍，读出来听听是不是你会说的话。</p>
+      <p>最后我想收束到一个原则：观众看到的是结论、结构和证据，讲者看到的是节奏、过渡和提醒。</p>
+      <p>当这两层被分离，演讲就不会再被页面文字拖着走。你可以把注意力放在听众反馈上，而不是低头找下一句。</p>
+      <p>逐字稿依然很重要，但它不是投影内容。它应该服务讲者，而不是挤占观众的认知空间。</p>
       <p>好，我今天就讲到这里。如果你做下一场分享的时候想起了这个"演讲者视图 + 逐字稿"的组合，并且觉得讲得比以前顺——那就是我最大的收获。谢谢大家，有问题现在开始。</p>
     </aside>
   </section>
 
-</div>
-
-<div style="position:fixed;bottom:12px;left:12px;font-size:11px;color:#484f5866;z-index:100;pointer-events:none">
-  S 演讲者视图 · T 切换主题 · ← → 翻页 · F 全屏 · O 总览 · R 重置计时
 </div>
 
 <script src="../../../assets/runtime.js"></script>

@@ -33,6 +33,7 @@
   // Roles / classes that belong to the deck chrome, not slide content
   var SKIP_IDS   = ['ppt-edit-toolbar','ppt-edit-toast'];
   var SKIP_CLASSES = ['notes-overlay','overview','progress-bar','ppt-edit-toolbar'];
+  var PREFERRED_EDITABLE_CLASS_RE = /(?:^|[-_])(tag|badge|pill|label|alert|chip|marker|eyebrow|kicker)(?:$|[-_])/i;
 
   var editMode = false;
   var editableEls = [];             // currently active contenteditable elements
@@ -470,7 +471,7 @@
         }
       }
 
-      if (hasDirectText) {
+      if (hasDirectText && (_isPreferredEditableTextElement(el) || !_hasPreferredEditableTextDescendant(el))) {
         results.push(el);
         // Don't recurse — el itself will be contenteditable, covering its children
         return;
@@ -486,6 +487,24 @@
       walk(root.children[k]);
     }
     return results;
+  }
+
+  function _isPreferredEditableTextElement(el) {
+    if (!el || !el.classList) return false;
+    for (var i = 0; i < el.classList.length; i++) {
+      if (PREFERRED_EDITABLE_CLASS_RE.test(el.classList[i])) return true;
+    }
+    return false;
+  }
+
+  function _hasPreferredEditableTextDescendant(el) {
+    if (!el || !el.children) return false;
+    for (var i = 0; i < el.children.length; i++) {
+      var child = el.children[i];
+      if (_isPreferredEditableTextElement(child)) return true;
+      if (_hasPreferredEditableTextDescendant(child)) return true;
+    }
+    return false;
   }
 
   /* ─────────────────────────────────────────────

@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": ["FIN · week 15"],
+  "forbiddenTextPatterns": ["FIN\\s*·\\s*week\\s*\\d+"],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": [],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": []
+}

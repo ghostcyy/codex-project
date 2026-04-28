@@ -1,4 +1,4 @@
-/* pitch-deck — classic YC/VC pitch */
+
 .tpl-pitch-deck{
   --bg:#ffffff;--bg-soft:#f6f7fb;--surface:#ffffff;--surface-2:#f2f4fa;
   --border:rgba(20,25,60,.08);--border-strong:rgba(20,25,60,.18);
@@ -16,8 +16,9 @@
 .tpl-pitch-deck .h2{font-size:62px;font-weight:800;letter-spacing:-.03em}
 .tpl-pitch-deck .mega{font-size:180px;font-weight:900;line-height:.95;letter-spacing:-.05em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .tpl-pitch-deck .mega-sub{font-size:28px;color:var(--text-2);margin-top:18px}
-.tpl-pitch-deck .cover-bg{position:absolute;inset:0;background:var(--grad-soft);z-index:-1}
-.tpl-pitch-deck .cover-blob{position:absolute;right:-140px;top:-140px;width:560px;height:560px;border-radius:50%;background:var(--grad);filter:blur(8px);opacity:.35;z-index:-1}
+.tpl-pitch-deck .slide[data-title="Cover"]::before{content:"";position:absolute;inset:0;background:var(--grad-soft);z-index:0;pointer-events:none}
+.tpl-pitch-deck .cover-bg{display:none}
+.tpl-pitch-deck .cover-blob{position:absolute;right:-140px;top:-140px;width:560px;height:560px;border-radius:50%;background:var(--grad);filter:blur(8px);opacity:.35;z-index:0;pointer-events:none}
 .tpl-pitch-deck .brand-dot{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--grad);margin-right:10px;vertical-align:middle}
 .tpl-pitch-deck .brand{font-weight:800;font-size:22px;letter-spacing:-.02em}
 .tpl-pitch-deck .card{border-radius:var(--radius)}

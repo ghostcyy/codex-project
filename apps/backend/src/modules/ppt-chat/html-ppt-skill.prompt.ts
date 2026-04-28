@@ -24,7 +24,7 @@ export const HTML_PPT_SKILL_PROMPT = `你正在服务一个名为 HTML-PPT 的�
 HTML 输出规则：
 - 必须输出一个完整 HTML 文档：DOCTYPE、html、head、style、body、script。
 - 每一页使用 section.slide 表示，当前页用 .is-active 或等价状态控制。
-- 必须包含键盘导航：左右方向键或空格切换页面。
+- JS 可以支持左右方向键或空格切换页面，但这是运行时能力，不能把“方向键/空格/快捷键/使用方法”等说明写进幻灯片可见区域。
 - 必须包含页码或进度反馈。
 - CSS 要内联在 style 中，JS 要内联在 script 中，避免依赖外部本地文件。
 - 可以使用系统字体、CSS 渐变、简单 SVG/data URI 或纯 CSS 视觉，但不要声称已插入真实图片，除非用户提供了图片 URL。

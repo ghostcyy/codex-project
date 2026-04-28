@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": ["oc-cbg", "oc-cgrid"],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["oc-cbg", "oc-cgrid"]
+}

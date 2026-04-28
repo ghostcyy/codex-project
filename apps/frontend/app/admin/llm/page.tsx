@@ -2,6 +2,15 @@ import Link from "next/link";
 import { getAdminLlmConfigs, getAdminLlmLogs, getAdminLlmStats, requireLlmManagerUser } from "../../../lib/server-auth";
 import { createLlmConfigAction, deleteLlmConfigAction, updateLlmConfigAction } from "./actions";
 
+const HTML_PPT_MODEL_STAGES = [
+  { key: "research", label: "Research", hint: "02 资料整理" },
+  { key: "plan", label: "Plan", hint: "03 内容规划" },
+  { key: "visual", label: "Visual", hint: "04 视觉方案" },
+  { key: "section", label: "Section", hint: "05 内容/HTML" },
+  { key: "css", label: "CSS", hint: "06 样式生成" },
+  { key: "qa", label: "QA Repair", hint: "08 定点修复" }
+] as const;
+
 type PageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
@@ -104,6 +113,28 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
                     </label>
                   </div>
 
+                  <div className="rounded-[22px] border border-[var(--line)] bg-white/55 p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">HTML-PPT Stage Overrides</div>
+                        <p className="mt-1 text-xs leading-5 text-[var(--muted)]">Optional. Leave blank to use the primary Model ID above.</p>
+                      </div>
+                    </div>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      {HTML_PPT_MODEL_STAGES.map((stage) => (
+                        <label key={stage.key} className="grid gap-1.5">
+                          <span className="px-1 text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">{stage.label}</span>
+                          <input
+                            name={`stageModel.${stage.key}`}
+                            defaultValue={config.stageModelOverrides?.[stage.key] ?? ""}
+                            className="text-input h-10 text-xs"
+                            placeholder={`${stage.hint} → ${config.model}`}
+                          />
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
                   <label className="grid gap-2">
                     <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Endpoint URL</span>
                     <input name="baseUrl" defaultValue={config.baseUrl} className="text-input text-sm h-12" />
@@ -160,6 +191,22 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
                   <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Model Name</span>
                   <input name="model" className="text-input text-sm h-12 bg-white" placeholder="gpt-4o" required />
                 </label>
+              </div>
+              <div className="rounded-[22px] border border-[var(--line)] bg-white/55 p-4">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">HTML-PPT Stage Overrides</div>
+                <p className="mt-1 text-xs leading-5 text-[var(--muted)]">Optional per-stage model IDs. Blank stages use the primary model.</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {HTML_PPT_MODEL_STAGES.map((stage) => (
+                    <label key={stage.key} className="grid gap-1.5">
+                      <span className="px-1 text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">{stage.label}</span>
+                      <input
+                        name={`stageModel.${stage.key}`}
+                        className="text-input h-10 bg-white text-xs"
+                        placeholder={stage.hint}
+                      />
+                    </label>
+                  ))}
+                </div>
               </div>
               <label className="grid gap-2">
                 <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Base URL</span>

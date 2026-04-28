@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": ["fin", "cta · final", "窗口 stuffing", "方向键 ← → 切换", "press ← to rewind", "nav · ← → · space"],
+  "forbiddenTextPatterns": ["\\bfin\\b", "cta\\s*·\\s*final", "窗口\\s*stuffing", "方向键\\s*[←→\\s<kbd>/]*\\s*切换", "press\\s*<kbd>?←", "nav\\s*·"],
+  "forbiddenClasses": ["dk-keyhint"],
+  "coverOnlyClasses": [],
+  "decorativeOnlyClasses": [],
+  "cssRedactClasses": ["dk-keyhint"]
+}

@@ -1,0 +1,8 @@
+{
+  "forbiddenTextExamples": [],
+  "forbiddenTextPatterns": [],
+  "forbiddenClasses": [],
+  "coverOnlyClasses": ["hc-scanlines"],
+  "decorativeOnlyClasses": ["dots"],
+  "cssRedactClasses": ["hc-scanlines", "dots"]
+}
