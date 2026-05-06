@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { deckIrSchema, type DeckIR } from "../ir";
 import type { SkillRegistry, TemplatePackage } from "../registry";
 import {
@@ -85,6 +86,7 @@ export type TemplateSelectionTraceCandidate = {
   };
 };
 
+@Injectable()
 export class HtmlPptV2AgentService {
   async generateDeckIr(input: HtmlPptV2AgentInput): Promise<HtmlPptV2AgentResult> {
     const stageAttempts: Record<string, number> = {

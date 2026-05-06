@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { mkdir } from "node:fs/promises";
 import { join, resolve, sep } from "node:path";
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable, Optional } from "@nestjs/common";
 import { deckIrSchema, type DeckIR, type SlideSlotFillIR } from "../ir";
 import { DeckRendererService } from "../renderer";
 import type { SkillRegistry, TemplatePackage } from "../registry";
@@ -71,10 +71,16 @@ export type HtmlPptV2PublishResult = {
 
 @Injectable()
 export class HtmlPptV2PublishService {
+  private readonly agent: HtmlPptV2AgentService;
+  private readonly renderer: DeckRendererService;
+
   constructor(
-    private readonly agent = new HtmlPptV2AgentService(),
-    private readonly renderer = new DeckRendererService()
-  ) {}
+    @Optional() @Inject(HtmlPptV2AgentService) agent?: HtmlPptV2AgentService,
+    @Optional() @Inject(DeckRendererService) renderer?: DeckRendererService
+  ) {
+    this.agent = agent ?? new HtmlPptV2AgentService();
+    this.renderer = renderer ?? new DeckRendererService();
+  }
 
   async generateAndPublish(input: HtmlPptV2PublishInput): Promise<HtmlPptV2PublishResult> {
     const outputRoot = resolve(input.outputRoot);

@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { Injectable } from "@nestjs/common";
 import { deckIrSchema, type DeckIR } from "../ir";
 import { renderCoreLayout } from "./layout-renderers";
 import { composeDeckStyleCss } from "./css-composer";
@@ -9,6 +10,7 @@ import type { RenderDeckToDirectoryOptions, RenderedDeck, RenderedDeckManifest }
 import type { SkillRegistry } from "../registry";
 import { createZipBuffer } from "./zip-writer";
 
+@Injectable()
 export class DeckRendererService {
   render(deckInput: unknown, registryHash?: string, registry?: SkillRegistry): RenderedDeck {
     const deck = deckIrSchema.parse(deckInput);
