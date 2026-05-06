@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Smart Governance: 2026 Digital Sovereign Strategy</title>
+    <link rel="stylesheet" href="../../../../assets/fonts.css">
+    <link rel="stylesheet" href="../../../../assets/base.css">
+    <link rel="stylesheet" href="../../../../assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-gov">
+    <div class="deck">
+        <canvas id="gov-canvas"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">NATIONAL DIGITAL INFRASTRUCTURE</div>
+                <h1 class="h1">Smart Governance<br>2026 Strategy</h1>
+                <p style="font-size: 20px; color: var(--text-muted); margin-top: 30px; letter-spacing: 4px; font-weight: 500;">BUILDING THE FUTURE OF DIGITAL SOVEREIGNTY</p>
+                <div style="margin-top: 60px;">
+                    <div style="width: 60px; height: 2px; background: var(--primary); margin: 0 auto;"></div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MINISTRY OF DIGITAL AFFAIRS</span>
+                <span class="slide-number" data-current="1" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 02 Grid-2 Standard -->
+        <section class="slide" data-title="核心支柱">
+            <div class="header">
+                <div class="kicker">CORE PILLARS</div>
+                <h2 class="h2">数字化转型的两大核心动力</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>数据主权</h3>
+                        <p>通过建立国家级安全云存储体系，确保核心公民数据不离境，维护数字时代的领土完整。强化跨境数据流动监管，构建可信、可控的数据交换机制。</p>
+                    </div>
+                    <div class="card">
+                        <h3>算法正义</h3>
+                        <p>在公共决策中引入透明的 AI 审计机制，消除算法偏见，确保每一项自动化决策都具备公平性、可追溯性与人文关怀。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STRATEGIC FRAMEWORK</span>
+                <span class="slide-number" data-current="2" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 03 Grid-2 Alt -->
+        <section class="slide" data-title="愿景目标">
+            <div class="header">
+                <div class="kicker">VISION & OBJECTIVES</div>
+                <h2 class="h2">以人为本的数字政务蓝图</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2-alt">
+                    <div class="card">
+                        <h3>全域智治</h3>
+                        <p>实现从城市运行监控到社会治理决策的全流程智能化。利用数字孪生技术实时模拟城市运行状态，通过预测性分析提前化解潜在社会矛盾与公共风险，提升政府治理效能与响应速度。</p>
+                        <div class="policy-box">"科技向善，治理透明，服务无感。"</div>
+                    </div>
+                    <div class="card">
+                        <h3>零阻力服务</h3>
+                        <p>推行“一网通办”极致体验，让市民足不出户即可完成 99% 的政务审批事项，实现从“人找服务”向“服务找人”的范式转移。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GOVERNMENT EVOLUTION</span>
+                <span class="slide-number" data-current="3" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 04 Grid-3 Standard -->
+        <section class="slide" data-title="关键领域">
+            <div class="header">
+                <div class="kicker">KEY DOMAINS</div>
+                <h2 class="h2">智慧城市的三大核心应用场景</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>智慧交通</h3>
+                        <p>利用毫米波雷达与 AI 协同，实现信号灯自动感应控制，将城市核心区拥堵率降低 25%。</p>
+                    </div>
+                    <div class="card">
+                        <h3>智慧医疗</h3>
+                        <p>打通全市电子病历，实现检查结果互认，大幅提升医疗资源利用率与基层诊疗能力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>绿色能源</h3>
+                        <p>建立城市级能耗预测模型，精准调配电网负荷，助力实现碳达峰与碳中和目标。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>URBAN ECOSYSTEM</span>
+                <span class="slide-number" data-current="4" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 05 Grid-3 Alt -->
+        <section class="slide" data-title="技术支撑">
+            <div class="header">
+                <div class="kicker">TECH STACK</div>
+                <h2 class="h2">驱动数字政府的底层逻辑</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3-alt">
+                    <div class="card">
+                        <h3>隐私计算</h3>
+                        <p>采用联邦学习与同态加密技术。</p>
+                    </div>
+                    <div class="card">
+                        <h3>分布式账本</h3>
+                        <p>确保政务数据的不可篡改与透明流转，建立政府与民众间的数字信任。从电子证照签发到公共资源交易，全流程链上存证，消除信息孤岛与人为干预空间。</p>
+                    </div>
+                    <div class="card">
+                        <h3>边缘中枢</h3>
+                        <p>实现毫秒级的实时响应能力。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>INFRASTRUCTURE LAYER</span>
+                <span class="slide-number" data-current="5" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 06 Grid-4 Standard -->
+        <section class="slide" data-title="阶段任务">
+            <div class="header">
+                <div class="kicker">PHASED TASKS</div>
+                <h2 class="h2">2026 年度数字化建设四大战役</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>网络加固</h3>
+                        <p>全面升级关键基础设施的量子安全防御能力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>全民普惠</h3>
+                        <p>消除数字鸿沟，确保适老化与无障碍服务覆盖。</p>
+                    </div>
+                    <div class="card">
+                        <h3>平台整合</h3>
+                        <p>整合 500+ 分散的政务入口，打造超级政务 App。</p>
+                    </div>
+                    <div class="card">
+                        <h3>人才引育</h3>
+                        <p>培养 10,000 名具备数字化治理思维的公务员。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>IMPLEMENTATION ROADMAP</span>
+                <span class="slide-number" data-current="6" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 07 Grid-4 Alt -->
+        <section class="slide" data-title="评估标准">
+            <div class="header">
+                <div class="kicker">KPI METRICS</div>
+                <h2 class="h2">衡量政务效能的四大维度</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4-alt">
+                    <div class="card">
+                        <h3>响应时效</h3>
+                        <p>紧急政务事项响应时间缩短至 15 分钟内。</p>
+                    </div>
+                    <div class="card">
+                        <h3>群众满意度</h3>
+                        <p>全量业务线上评价好评率稳定在 98% 以上。</p>
+                    </div>
+                    <div class="card">
+                        <h3>行政减损</h3>
+                        <p>通过流程优化降低年度政府运营成本 15%。</p>
+                    </div>
+                    <div class="card">
+                        <h3>数据共享率</h3>
+                        <p>部门间数据非密共享率达到 100% 覆盖。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PERFORMANCE REVIEW</span>
+                <span class="slide-number" data-current="7" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 08 Grid-5 Standard -->
+        <section class="slide" data-title="组织架构">
+            <div class="header">
+                <div class="kicker">ORG STRUCTURE</div>
+                <h2 class="h2">智治委员会的五个专业工作组</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card"><h3>安全组</h3><p>边界防护与合规。</p></div>
+                    <div class="card"><h3>应用组</h3><p>业务逻辑重塑。</p></div>
+                    <div class="card"><h3>数据组</h3><p>资产治理与治理。</p></div>
+                    <div class="card"><h3>法制组</h3><p>立法配套保障。</p></div>
+                    <div class="card"><h3>基建组</h3><p>底层硬件维护。</p></div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GOVERNANCE MODEL</span>
+                <span class="slide-number" data-current="8" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 09 Grid-5 Alt -->
+        <section class="slide" data-title="国际对标">
+            <div class="header">
+                <div class="kicker">BENCHMARKING</div>
+                <h2 class="h2">全球数字竞争力对标象限</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5-alt">
+                    <div class="card">
+                        <h3>领先者地位</h3>
+                        <p>在数字基础设施与政务应用密度方面，我们已进入全球前 5%。</p>
+                    </div>
+                    <div class="card"><h3>算力指数</h3><p>98/100</p></div>
+                    <div class="card"><h3>带宽覆盖</h3><p>95%</p></div>
+                    <div class="card"><h3>法律完善</h3><p>90/100</p></div>
+                    <div class="card"><h3>创新活力</h3><p>A+</p></div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GLOBAL POSITIONING</span>
+                <span class="slide-number" data-current="9" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 10 Table Single -->
+        <section class="slide" data-title="预算分配">
+            <div class="header">
+                <div class="kicker">BUDGET ALLOCATION</div>
+                <h2 class="h2">2026 年度数字治理专项预算表</h2>
+            </div>
+            <div class="content-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>项目名称</th>
+                            <th>投入规模 (亿元)</th>
+                            <th>预期产出</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>云网融合基座</td><td>245.0</td><td>覆盖全国的 10ms 延迟圈</td></tr>
+                        <tr><td>AI 审批系统升级</td><td>120.0</td><td>秒批业务占比达到 60%</td></tr>
+                        <tr><td>网络安全盾牌</td><td>85.0</td><td>0 级事故防御体系</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <span>FINANCIAL DISCLOSURE</span>
+                <span class="slide-number" data-current="10" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 11 Table Double -->
+        <section class="slide" data-title="部门指标">
+            <div class="header">
+                <div class="kicker">DEPARTMENTAL METRICS</div>
+                <h2 class="h2">各核心委办局数字化任务进度对比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <table class="data-table">
+                        <thead><tr><th>部门 (东部区)</th><th>进度 (%)</th></tr></thead>
+                        <tbody>
+                            <tr><td>交通局</td><td>85.4%</td></tr>
+                            <tr><td>民政局</td><td>92.1%</td></tr>
+                        </tbody>
+                    </table>
+                    <table class="data-table">
+                        <thead><tr><th>部门 (西部区)</th><th>进度 (%)</th></tr></thead>
+                        <tbody>
+                            <tr><td>水利局</td><td>76.8%</td></tr>
+                            <tr><td>林业局</td><td>81.2%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PROGRESS TRACKING</span>
+                <span class="slide-number" data-current="11" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 12 Audio -->
+        <section class="slide" data-title="市民心声">
+            <div class="header">
+                <div class="kicker">VOICE OF CITIZENS</div>
+                <h2 class="h2">真实反馈：市民对数字政务的感受</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card center" style="justify-content: center;">
+                        <div style="font-size: 60px; margin-bottom: 30px;">📢</div>
+                        <audio controls style="width: 80%;">
+                            <source src="audio/citizen_feedback.mp3" type="audio/mpeg">
+                        </audio>
+                    </div>
+                    <div class="card">
+                        <h3>听取民意</h3>
+                        <p>通过语音采样技术，实时收集办事大厅的民众反馈，利用自然语言处理 (NLP) 自动归纳共性痛点，驱动流程再造。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>FEEDBACK LOOP</span>
+                <span class="slide-number" data-current="12" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 13 Video -->
+        <section class="slide" data-title="实况演示">
+            <div class="header">
+                <div class="kicker">LIVE DEMO</div>
+                <h2 class="h2">智慧大厅：AI 引导员实地运行实录</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/demo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <h3>无感体验</h3>
+                        <p>展示了全息引导员如何在不需要人类干预的情况下，协助高龄市民完成复杂的社保年检流程。科技的温度在此体现。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>FIELD OPERATIONS</span>
+                <span class="slide-number" data-current="13" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 14 Data Line -->
+        <section class="slide" data-title="效率趋势">
+            <div class="header">
+                <div class="kicker">EFFICIENCY TRENDS</div>
+                <h2 class="h2">审批时延显著下降趋势 (2023-2026)</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STATISTICAL INSIGHTS</span>
+                <span class="slide-number" data-current="14" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 15 Data Bar -->
+        <section class="slide" data-title="服务覆盖">
+            <div class="header">
+                <div class="kicker">SERVICE COVERAGE</div>
+                <h2 class="h2">各省市数字普惠指数对比</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STATISTICAL INSIGHTS</span>
+                <span class="slide-number" data-current="15" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 16 Data Pie -->
+        <section class="slide" data-title="资源分布">
+            <div class="header">
+                <div class="kicker">RESOURCE DISTRIBUTION</div>
+                <h2 class="h2">算力资源池分配构成</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STATISTICAL INSIGHTS</span>
+                <span class="slide-number" data-current="16" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 17 Data Gantt -->
+        <section class="slide" data-title="工程进度">
+            <div class="header">
+                <div class="kicker">ENGINEERING PROGRESS</div>
+                <h2 class="h2">国家大脑二期工程建设里程碑</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STATISTICAL INSIGHTS</span>
+                <span class="slide-number" data-current="17" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 18 Asset 1 -->
+        <section class="slide" data-title="智慧愿景">
+            <div class="header">
+                <div class="kicker">FUTURE CITY</div>
+                <h2 class="h2">联接万物：数字双生城市的实景预览</h2>
+            </div>
+            <div class="content-area">
+                <div class="card" style="padding: 0;">
+                    <div class="img-wrap">
+                        <img src="img/asset1.png" alt="Smart City">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>VISUAL ASSETS</span>
+                <span class="slide-number" data-current="18" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 19 Asset 2 -->
+        <section class="slide" data-title="政务中心">
+            <div class="header">
+                <div class="kicker">GOVERNANCE CORE</div>
+                <h2 class="h2">智库中枢：决策指挥中心的工业级设计</h2>
+            </div>
+            <div class="content-area">
+                <div class="card" style="padding: 0;">
+                    <div class="img-wrap">
+                        <img src="img/asset2.png" alt="Government Hall">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>VISUAL ASSETS</span>
+                <span class="slide-number" data-current="19" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 20 Asset 3 -->
+        <section class="slide" data-title="末端触点">
+            <div class="header">
+                <div class="kicker">CITIZEN INTERFACE</div>
+                <h2 class="h2">极致触达：高科技政务自助服务网点</h2>
+            </div>
+            <div class="content-area">
+                <div class="card" style="padding: 0;">
+                    <div class="img-wrap">
+                        <img src="img/asset3.png" alt="Citizen Service">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>VISUAL ASSETS</span>
+                <span class="slide-number" data-current="20" data-total="21"></span>
+            </div>
+        </section>
+
+        <!-- 21 结尾 -->
+        <section class="slide title-slide center tc" data-title="结尾">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Digital Sovereign</h1>
+                <p style="font-size: 24px; color: var(--primary); margin-top: 40px; font-weight: 700; letter-spacing: 12px;">GOVERNANCE REDEFINED</p>
+                <div style="margin-top: 60px;">
+                    <button style="padding: 16px 48px; background: var(--primary); color: #fff; border: none; font-weight: 700; cursor: pointer; border-radius: 4px; letter-spacing: 2px;">JOIN THE NETWORK</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STRATEGIC CONCLUDING // 2026</span>
+                <span class="slide-number" data-current="21" data-total="21"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="../../../../assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Network Nodes) ---
+            const canvas = document.getElementById('gov-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let nodes = [];
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                class Node {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.vx = (Math.random() - 0.5) * 0.5;
+                        this.vy = (Math.random() - 0.5) * 0.5;
+                    }
+                    update() {
+                        this.x += this.vx; this.y += this.vy;
+                        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    }
+                }
+                for (let i = 0; i < 40; i++) nodes.push(new Node());
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.strokeStyle = 'rgba(30, 58, 138, 0.1)';
+                    ctx.fillStyle = 'rgba(30, 58, 138, 0.3)';
+                    nodes.forEach((n, i) => {
+                        n.update();
+                        ctx.beginPath();
+                        ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+                        ctx.fill();
+                        for (let j = i + 1; j < nodes.length; j++) {
+                            const dx = n.x - nodes[j].x;
+                            const dy = n.y - nodes[j].y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+                            if (dist < 150) {
+                                ctx.beginPath();
+                                ctx.moveTo(n.x, n.y);
+                                ctx.lineTo(nodes[j].x, nodes[j].y);
+                                ctx.stroke();
+                            }
+                        }
+                    });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#475569';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2023', '2024', '2025', '2026'],
+                    datasets: [{
+                        label: 'Approval Latency (Min)',
+                        data: [120, 85, 45, 12],
+                        borderColor: '#1e3a8a',
+                        backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['EAST', 'WEST', 'NORTH', 'SOUTH'],
+                    datasets: [{
+                        label: 'Inclusive Index',
+                        data: [92, 78, 85, 81],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'pie',
+                data: {
+                    labels: ['Public Service', 'Internal Gov', 'Emergency', 'Infrastructure'],
+                    datasets: [{
+                        data: [40, 25, 20, 15],
+                        backgroundColor: ['#1e3a8a', '#3b82f6', '#94a3b8', '#cbd5e1'],
+                        borderWidth: 1
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['Network Base', 'AI Core', 'Edge Deployment', 'Public Launch'],
+                    datasets: [
+                        { data: [0, 3, 6, 9], backgroundColor: 'transparent', stack: 's' },
+                        { data: [4, 4, 3, 2], backgroundColor: '#1e3a8a', stack: 's', borderRadius: 10 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
