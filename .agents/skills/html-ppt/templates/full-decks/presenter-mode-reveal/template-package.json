@@ -1,0 +1,79 @@
+{
+  "id": "presenter-mode-reveal",
+  "label": {
+    "zh-CN": "演讲展示",
+    "en": "Presenter Mode"
+  },
+  "description": {
+    "zh-CN": "适合正式演讲、主题分享和舞台展示的节奏型模板。",
+    "en": "A presentation-oriented template for formal talks, keynote sharing, and staged reveals."
+  },
+  "donorTemplateId": "presenter-mode-reveal",
+  "deckClass": "tpl-presenter-mode-reveal",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "editorial-serif",
+  "themeAlternates": [
+    "magazine-bold",
+    "minimal-nav",
+    "engineering-whiteprint"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "quote",
+      "image-hero",
+      "process",
+      "timeline",
+      "kpi-grid"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "executives",
+    "students",
+    "general-public"
+  ],
+  "formatFit": [
+    "lecture",
+    "briefing",
+    "showcase"
+  ],
+  "toneFit": [
+    "narrative",
+    "inspirational",
+    "authoritative"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 12,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "rise-in",
+      "fade-up",
+      "zoom-pop",
+      "none"
+    ],
+    "allowedFx": [
+      "spotlight",
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 3
+  },
+  "embeddingPrompt": "Keynote presentation, speaker-led reveal, formal talk, narrative stage rhythm, presenter deck.",
+  "promptSignals": [
+    "演讲",
+    "主题分享",
+    "发布演讲",
+    "keynote",
+    "presenter",
+    "speech",
+    "talk",
+    "reveal"
+  ],
+  "forbidPromptSignals": [
+    "表格式周报"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

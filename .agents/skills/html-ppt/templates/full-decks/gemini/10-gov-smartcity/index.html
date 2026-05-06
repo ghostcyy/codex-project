@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智慧城市数据安全治理体系白皮书</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-gov">
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide" data-title="封面">
+            <div class="title-wrapper">
+                <span class="kicker">GOVERNMENT WHITE PAPER // 2026</span>
+                <h1 class="h1">智慧城市数据安全治理体系<br>白皮书</h1>
+                <p style="font-size: 20px; color: var(--accent); margin-top: 30px; font-weight: 500; letter-spacing: 2px;">深化数据治理 · 构筑安全屏障 · 驱动数字中国</p>
+                <div style="margin-top: 40px; height: 2px; width: 100px; background: var(--accent); margin-left: auto; margin-right: auto;"></div>
+            </div>
+            <div class="footer">
+                <span style="color: white; opacity: 0.8;">国家信息中心 · 数据治理专家组</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 治理背景 -->
+        <section class="slide" data-title="治理背景">
+            <div class="header">
+                <h2 class="h2"><span class="num">01.</span>治理背景与现实挑战</h2>
+                <span class="kicker">GOVERNANCE CONTEXT</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-sidebar">
+                    <div class="card">
+                        <h3>数字化转型的新挑战</h3>
+                        <p>随着“数字中国”战略的深入实施，智慧城市建设进入深水区。数据已成为新型生产要素，但随之而来的数据泄露、非法篡改及违规跨境传输等风险日益突出。</p>
+                        <p style="margin-top: 15px;">构建一套“全域、全量、全程”的动态安全治理体系势在必行。</p>
+                    </div>
+                    <div class="card" style="padding: 0;">
+                        <img src="img/photo-1573164713988-8665fc963095.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius);" alt="Smart City">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第一章：治理背景与形势分析</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 治理原则 (2栏) -->
+        <section class="slide" data-title="治理原则">
+            <div class="header">
+                <h2 class="h2"><span class="num">02.</span>核心治理原则</h2>
+                <span class="kicker">CORE PRINCIPLES</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>法制引领，合规为先</h3>
+                        <p>严格遵守《数据安全法》、《个人信息保护法》，将法律合规要求内嵌于数据全生命周期的管理流程中。</p>
+                    </div>
+                    <div class="card">
+                        <h3>协同治理，多方共治</h3>
+                        <p>建立政府主导、多方参与的协同机制。打破部门壁垒，实现跨区域、跨层级的数据安全联防联控。</p>
+                    </div>
+                </div>
+                <div class="policy-box">
+                    “坚持安全与发展并重，以安全保发展，以发展促安全，构建政府、企业、社会多元共治的数据安全治理新格局。”
+                </div>
+            </div>
+            <div class="footer">
+                <span>第二章：总体思路与核心原则</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 三大体系 (3栏) -->
+        <section class="slide" data-title="三大体系">
+            <div class="header">
+                <h2 class="h2"><span class="num">03.</span>总体架构体系</h2>
+                <span class="kicker">GOVERNANCE ARCHITECTURE</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>组织保障体系</h3>
+                        <p>成立首席数据官（CDO）制度，明确各职能部门的安全责任边界，实现职责到人、权责对等。</p>
+                    </div>
+                    <div class="card">
+                        <h3>管理制度体系</h3>
+                        <p>建立分类分级管理、安全审计、风险评价等全套制度，确立数据流转的操作规程。</p>
+                    </div>
+                    <div class="card">
+                        <h3>技术防护体系</h3>
+                        <p>部署加密脱敏、态势感知、沙箱运行等前沿技术，构建纵深防御的技术屏障。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第三章：体系架构设计</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 资产增长柱状图 -->
+        <section class="slide" data-title="数据规模">
+            <div class="header">
+                <h2 class="h2"><span class="num">04.</span>城市数据资产规模</h2>
+                <span class="kicker">DATA ASSETS SCALE</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="chart-container">
+                        <canvas id="assetBarChart"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>指数级增长趋势</h3>
+                        <p>随着政务数据开放与物联设备普及，城市核心数据资产呈现爆发式增长。这要求治理体系必须具备极高的可扩展性与处理性能。</p>
+                        <div style="margin-top: 20px; padding: 15px; background: #f1f5f9; border-left: 4px solid var(--secondary);">
+                            <strong>核心指标：</strong>年度复合增长率超过 45%，敏感数据占比提升至 28%。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第四章：资产分析与风险画像</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 关键领域 (4栏) -->
+        <section class="slide" data-title="关键领域">
+            <div class="header">
+                <h2 class="h2"><span class="num">05.</span>重点治理领域</h2>
+                <span class="kicker">KEY DOMAINS</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>电子政务</h3>
+                        <p>聚焦政务服务平台、宏观决策系统的核心数据保护。</p>
+                    </div>
+                    <div class="card">
+                        <h3>医疗健康</h3>
+                        <p>保护居民电子病历、公共卫生数据及个人基因信息安全。</p>
+                    </div>
+                    <div class="card">
+                        <h3>智慧交通</h3>
+                        <p>保障车路协同、公共交通运营数据的实时性与完整性。</p>
+                    </div>
+                    <div class="card">
+                        <h3>能源金融</h3>
+                        <p>防范对城市生命线系统及金融结算体系的恶意攻击。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第五章：重点行业应用实践</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 生命周期 (5栏) -->
+        <section class="slide" data-title="生命周期">
+            <div class="header">
+                <h2 class="h2"><span class="num">06.</span>全生命周期管控</h2>
+                <span class="kicker">LIFECYCLE CONTROL</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card" style="padding: 15px;">
+                        <h3>采集</h3>
+                        <p style="font-size: 13px;">合法性审核、源头脱敏、分类标识。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>存储</h3>
+                        <p style="font-size: 13px;">国密加密、分布式容灾、权限分级。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>使用</h3>
+                        <p style="font-size: 13px;">沙箱环境、水印溯源、动态授权。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>共享</h3>
+                        <p style="font-size: 13px;">接口审计、合约执行、合规评估。</p>
+                    </div>
+                    <div class="card" style="padding: 15px; border-color: var(--primary);">
+                        <h3>销毁</h3>
+                        <p style="font-size: 13px;">物理擦除、逻辑擦除、全流程留痕。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第六章：核心治理流程规范</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 政策条文 -->
+        <section class="slide" data-title="政策法律">
+            <div class="header">
+                <h2 class="h2"><span class="num">07.</span>法律法规参考</h2>
+                <span class="kicker">LEGISLATIVE REFERENCE</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="policy-box">
+                        <strong>《中华人民共和国数据安全法》第二十七条：</strong><br>
+                        “开展数据处理活动应当依照法律、法规的规定，建立健全全流程数据安全管理制度，组织开展数据安全教育培训，采取相应的技术措施和其他必要措施，保障数据安全。”
+                    </div>
+                    <div class="policy-box">
+                        <strong>《个人信息保护法》：</strong><br>
+                        “处理个人信息应当具有明确、合理的目的，并应当与处理目的直接相关，采取对个人权益影响最小的方式。不得过度收集个人信息。”
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第七章：合规性与法律责任</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 城市大脑 -->
+        <section class="slide" data-title="运营中心">
+            <div class="header">
+                <h2 class="h2"><span class="num">08.</span>安全运营中心 (SOC)</h2>
+                <span class="kicker">OPERATION CENTER</span>
+            </div>
+            <div class="content-area" style="align-items: center; justify-content: center;">
+                <div class="img-wrap" style="width: 100%; height: 100%; position: relative;">
+                    <img src="img/photo-1550751827-4bd374c3f58b.jpg" style="width:100%; height:100%; object-fit: cover; border-radius: var(--radius);" alt="SOC">
+                    <div style="position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(10, 46, 92, 0.9); padding: 20px; color: white; border-radius: var(--radius);">
+                        <h3 style="font-family: var(--font-serif); margin: 0 0 10px 0;">全城安全态势一屏感知</h3>
+                        <p style="font-size: 14px; opacity: 0.9; margin: 0;">通过统一的运营大屏，实时监测全市数千个业务系统的安全状态，实现分钟级的威胁研判与协同指挥。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第八章：城市级安全底座建设</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 预警能力 -->
+        <section class="slide" data-title="预警体系">
+            <div class="header">
+                <h2 class="h2"><span class="num">09.</span>态势感知与响应</h2>
+                <span class="kicker">THREAT INTELLIGENCE</span>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <h3>全时监测</h3>
+                        <p>24/7 不间断采集网络流量与日志，利用 AI 识别隐蔽攻击行为。</p>
+                    </div>
+                    <div class="card">
+                        <h3>情报关联</h3>
+                        <p>整合国家及行业安全情报，实现攻击预见与精准打击。</p>
+                    </div>
+                    <div class="card">
+                        <h3>自动处置</h3>
+                        <p>基于预案的自动化编排响应（SOAR），大幅缩短 MTTR。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第八章：城市级安全底座建设</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 威胁占比饼图 -->
+        <section class="slide" data-title="风险分析">
+            <div class="header">
+                <h2 class="h2"><span class="num">10.</span>年度风险威胁画像</h2>
+                <span class="kicker">RISK LANDSCAPE</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>内部风险仍是关键</h3>
+                        <p>统计显示，权限滥用与误操作导致的安全事件占比显著。治理体系必须加强对“内部人”的管理与审计。</p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container" style="border: none; padding: 0;">
+                            <canvas id="riskPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第四章：资产分析与风险画像</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 跨境合规 -->
+        <section class="slide" data-title="跨境安全">
+            <div class="header">
+                <h2 class="h2"><span class="num">11.</span>数据跨境合规管控</h2>
+                <span class="kicker">CROSS-BORDER COMPLIANCE</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-sidebar">
+                    <div class="card">
+                        <h3>关键设施运营者义务</h3>
+                        <p>明确 CIIO 运营中的数据跨境自评估流程。针对核心数据及大量个人信息出境，必须通过国家互联网信息部门的安全评估。</p>
+                        <ul style="margin-top: 15px; color: var(--text-muted); font-size: 14px; line-height: 2;">
+                            <li>• 数据出境目的合法性审核</li>
+                            <li>• 接收方安全保障能力核查</li>
+                            <li>• 标准合同签署与备案管理</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding: 0;">
+                        <img src="img/photo-1451187580459-43490279c0fa.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Global Data">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第七章：合规性与法律责任</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 评估流程 -->
+        <section class="slide" data-title="评估体系">
+            <div class="header">
+                <h2 class="h2"><span class="num">12.</span>安全成熟度评估流程</h2>
+                <span class="kicker">MATURITY ASSESSMENT</span>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <h3>01. 自查评估</h3>
+                        <p>对照标准进行摸底排查，发现系统弱点与管理缺失。</p>
+                    </div>
+                    <div class="card">
+                        <h3>02. 外部审计</h3>
+                        <p>引入第三方专业机构进行独立审核，确保结果公正性。</p>
+                    </div>
+                    <div class="card">
+                        <h3>03. 缺陷修复</h3>
+                        <p>针对发现的问题制定整改计划，实施闭环管理。</p>
+                    </div>
+                    <div class="card">
+                        <h3>04. 颁发认证</h3>
+                        <p>通过评估后授予相应的安全等级认证并持续监督。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第九章：评估与监督机制</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 投入趋势 -->
+        <section class="slide" data-title="投入分析">
+            <div class="header">
+                <h2 class="h2"><span class="num">13.</span>安全保障专项投入</h2>
+                <span class="kicker">BUDGET ALLOCATION</span>
+            </div>
+            <div class="content-area">
+                <div class="grid-sidebar">
+                    <div class="card">
+                        <div class="chart-container" style="border: none; padding: 0;">
+                            <canvas id="budgetLineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>常态化安全预算</h3>
+                        <p>建议信息化项目中安全投入占比不低于 10%。重点支持基础平台建设、专业人才引进及应急响应演练。</p>
+                        <p style="margin-top: 15px;">从“被动补漏”向“主动防御”的预算结构转型。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第十章：资源投入与保障措施</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 展望 2030 (2栏) -->
+        <section class="slide" data-title="展望展望">
+            <div class="header">
+                <h2 class="h2"><span class="num">14.</span>未来愿景 2030</h2>
+                <span class="kicker">INTERLOCK_SPLIT</span>
+            </div>
+            <div class="content-area">
+                <div class="layout-split-v2">
+                    <div class="card">
+                        <h3>高水平安全</h3>
+                        <p>建成全球领先的城市级安全治理体系。实现对关键基础设施、核心政务数据的绝对安全管控，具备抵御重大网络安全攻击的能力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>高质量发展</h3>
+                        <p>安全治理与数据要素市场化改革深度融合。在确保安全的前提下，最大程度释放数据价值，支撑城市治理现代化。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第十一章：总结与展望</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 区域试点 -->
+        <section class="slide" data-title="试点方案">
+            <div class="header">
+                <h2 class="h2"><span class="num">15.</span>国家级区域试点方案</h2>
+                <span class="kicker">PILOT PROGRAM</span>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <h3>长三角</h3>
+                        <p>跨省市数据流动合规协同试点。</p>
+                    </div>
+                    <div class="card">
+                        <h3>珠三角</h3>
+                        <p>粤港澳大湾区跨境互联安全试点。</p>
+                    </div>
+                    <div class="card">
+                        <h3>京津冀</h3>
+                        <p>关键政务信息系统高可靠保护试点。</p>
+                    </div>
+                    <div class="card">
+                        <h3>成渝地区</h3>
+                        <p>数字产业集群安全赋能试点。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第五章：重点行业应用实践</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 应用场景 (3栏) -->
+        <section class="slide" data-title="典型场景">
+            <div class="header">
+                <h2 class="h2"><span class="num">16.</span>典型安全应用场景</h2>
+                <span class="kicker">SCENARIO SHOWCASE</span>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>政务云安全</h3>
+                        <p>多租户隔离、镜像审计、虚拟机加固，构建云上安全堡垒。</p>
+                    </div>
+                    <div class="card">
+                        <h3>API 治理</h3>
+                        <p>自动识别敏感接口，实施流量整形与身份认证，防止接口滥用。</p>
+                    </div>
+                    <div class="card">
+                        <h3>终端接入</h3>
+                        <p>针对海量摄像头与传感器，实施零信任接入与固件指纹验证。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第八章：城市级安全底座建设</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 核心 KPI (5栏) -->
+        <section class="slide" data-title="指标体系">
+            <div class="header">
+                <h2 class="h2"><span class="num">17.</span>治理成效核心 KPI</h2>
+                <span class="kicker">PENTAGON_FOCUS</span>
+            </div>
+            <div class="content-area">
+                <div class="layout-pentagon">
+                    <div class="card" style="padding: 15px;">
+                        <h3>合规率</h3>
+                        <p style="font-size: 13px;">核心系统合规性审计通过率达 100%。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>响应时效</h3>
+                        <p style="font-size: 13px;">重大事件研判时间缩短至 15 分钟内。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>资产受控</h3>
+                        <p style="font-size: 13px;">核心敏感数据全流程监控覆盖率 100%。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>用户感知</h3>
+                        <p style="font-size: 13px;">居民个人信息被非法泄露投诉率下降 80%。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>演练频次</h3>
+                        <p style="font-size: 13px;">全市跨部门综合应急演练每半年 1 次。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>第九章：评估与监督机制</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 筑牢屏障 -->
+        <section class="slide" data-title="使命愿景">
+            <div class="title-wrapper" style="border: none; background: rgba(10, 46, 92, 0.05);">
+                <h2 style="font-family: var(--font-serif); font-size: 48px; color: var(--primary); margin-bottom: 20px;">筑牢数字屏障 · 护航智慧新城</h2>
+                <p style="font-size: 22px; color: var(--text-muted); max-width: 800px; margin-left: auto; margin-right: auto;">
+                    安全是发展的底线，也是发展的动力。通过构建科学、严密、动态的数据安全治理体系，我们必将开创智慧城市安全发展的新篇章。
+                </p>
+            </div>
+            <div class="footer">
+                <span>第十一章：总结与展望</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide" data-title="结束">
+            <div class="title-wrapper">
+                <h1 class="h1">咨询与反馈</h1>
+                <p style="font-size: 20px; color: var(--accent); margin-top: 30px;">共同推进城市数字化转型的安全底座建设</p>
+                <div style="margin-top: 50px; padding: 20px; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px;">
+                    <p style="font-family: var(--font-sans); font-size: 16px; margin-bottom: 10px;">联系我们：DATA-GOV@SMARTCITY.GOV.CN</p>
+                    <p style="font-family: var(--font-sans); font-size: 16px;">发布日期：2026年5月</p>
+                </div>
+            </div>
+            <div class="footer">
+                <span style="color: white; opacity: 0.8;">国家信息中心 · 数据治理专家组</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Chart.defaults.color = '#64748b';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            // 05 资产柱状图
+            const ctxBar = document.getElementById('assetBarChart');
+            if (ctxBar) {
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2023', '2024', '2025', '2026(P)'],
+                        datasets: [{
+                            label: '城市数据资产存量 (Exabytes)',
+                            data: [450, 680, 1120, 1850],
+                            backgroundColor: '#0a2e5c',
+                            borderColor: '#1e4b8a',
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { beginAtZero: true, grid: { color: '#e2e8f0' } } }
+                    }
+                });
+            }
+
+            // 11 风险饼图
+            const ctxPie = document.getElementById('riskPieChart');
+            if (ctxPie) {
+                new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['内部威胁', '外部攻击', '合规漏洞', '供应链风险'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#0a2e5c', '#1e4b8a', '#3b82f6', '#94a3b8'],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // 14 预算折线图
+            const ctxLine = document.getElementById('budgetLineChart');
+            if (ctxLine) {
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                        datasets: [{
+                            label: '安全专项投入 (亿元)',
+                            data: [12, 18, 15, 28],
+                            borderColor: '#0a2e5c',
+                            backgroundColor: 'rgba(10, 46, 92, 0.05)',
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { grid: { color: '#e2e8f0' } } }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

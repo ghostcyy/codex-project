@@ -1,0 +1,77 @@
+{
+  "id": "xhs-pastel-card",
+  "label": {
+    "zh-CN": "柔和彩卡",
+    "en": "XHS Pastel Card"
+  },
+  "description": {
+    "zh-CN": "适合消费科普、生活建议和轻内容分享的柔和卡片模板。",
+    "en": "A soft pastel card template for consumer education, lifestyle advice, and light explainers."
+  },
+  "donorTemplateId": "xhs-pastel-card",
+  "deckClass": "tpl-xhs-pastel-card",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "xhs-pastel",
+  "themeAlternates": [
+    "sunset-warm",
+    "editorial-serif",
+    "japanese-minimal"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "image-hero",
+      "bullet-list",
+      "stat-highlight",
+      "quote"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "consumers",
+    "general-public",
+    "designers"
+  ],
+  "formatFit": [
+    "showcase",
+    "tutorial",
+    "briefing"
+  ],
+  "toneFit": [
+    "friendly",
+    "inspirational",
+    "narrative"
+  ],
+  "defaultDensity": "sparse",
+  "defaultSlideCount": 9,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "zoom-pop",
+      "fade-up",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 4
+  },
+  "embeddingPrompt": "Pastel card social deck, soft consumer guide, friendly health or lifestyle explainer, swipeable cards.",
+  "promptSignals": [
+    "柔和",
+    "马卡龙",
+    "健康",
+    "生活建议",
+    "消费科普",
+    "pastel",
+    "friendly",
+    "lifestyle"
+  ],
+  "forbidPromptSignals": [
+    "黑客",
+    "财报"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

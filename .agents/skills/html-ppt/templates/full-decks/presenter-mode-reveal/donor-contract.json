@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["演讲者模式示例", "按 S 进入演讲者视图"],
+  "forbiddenTextPatterns": ["演讲者模式示例", "按\\s*S\\s*进入演讲者视图"],
   "forbiddenClasses": ["notes", "speaker"],
   "coverOnlyClasses": [],
   "decorativeOnlyClasses": [],

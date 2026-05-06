@@ -1,0 +1,154 @@
+name: HTML-PPT v2 CI
+
+on:
+  pull_request:
+    paths:
+      - "apps/backend/src/modules/ppt-chat/html-ppt-v2/**"
+      - "apps/frontend/app/tools/html-ppt-v2/**"
+      - "apps/frontend/app/api/ppt/v2/**"
+      - "scripts/html-ppt-*.mjs"
+      - "scripts/fixtures/html-ppt-v2-*.json"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/html-ppt-v2-ci.yml"
+  push:
+    branches:
+      - main
+      - master
+      - "0428_first_version"
+  workflow_dispatch:
+    inputs:
+      prompt_count:
+        description: "Number of prompts to run from the corpus."
+        required: false
+        default: "3"
+      corpus_path:
+        description: "Prompt corpus JSON path."
+        required: false
+        default: "scripts/html-ppt-smoke-prompts.json"
+      output_dir:
+        description: "Directory for smoke JSON records and gate reports."
+        required: false
+        default: ".local-runtime/logs/html-ppt-v2-live"
+      backend_api_url:
+        description: "Backend API base URL. Prefer repository/environment secret HTML_PPT_SMOKE_API_BASE_URL."
+        required: false
+        default: ""
+      min_cases:
+        description: "Migration gate minimum case count."
+        required: false
+        default: "3"
+      min_pass_rate:
+        description: "Migration gate minimum V2 pass rate, 0 to 1."
+        required: false
+        default: "1"
+      max_hard_issue_cases:
+        description: "Allowed cases with hard verification issues."
+        required: false
+        default: "0"
+      max_obstruction_issue_cases:
+        description: "Allowed cases with obstruction/overflow issues."
+        required: false
+        default: "0"
+
+jobs:
+  html-ppt-v2:
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run deterministic v2 checks
+        run: npm run ci:html-ppt:v2
+
+  html-ppt-v2-live-provider:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    env:
+      HTML_PPT_SMOKE_API_BASE_URL: ${{ inputs.backend_api_url || secrets.HTML_PPT_SMOKE_API_BASE_URL }}
+      HTML_PPT_SMOKE_USERNAME: ${{ secrets.HTML_PPT_SMOKE_USERNAME || secrets.DEFAULT_ADMIN_USERNAME }}
+      HTML_PPT_SMOKE_PASSWORD: ${{ secrets.HTML_PPT_SMOKE_PASSWORD || secrets.DEFAULT_ADMIN_PASSWORD }}
+      HTML_PPT_SMOKE_OUTPUT_DIR: ${{ inputs.output_dir }}
+      HTML_PPT_SMOKE_PROMPTS_FILE: ${{ inputs.corpus_path }}
+      HTML_PPT_SMOKE_LIMIT: ${{ inputs.prompt_count }}
+      HTML_PPT_SMOKE_PIPELINE: v2
+      HTML_PPT_V2_GATE_MIN_CASES: ${{ inputs.min_cases }}
+      HTML_PPT_V2_GATE_MIN_PASS_RATE: ${{ inputs.min_pass_rate }}
+      HTML_PPT_V2_GATE_MAX_HARD_ISSUE_CASES: ${{ inputs.max_hard_issue_cases }}
+      HTML_PPT_V2_GATE_MAX_OBSTRUCTION_ISSUE_CASES: ${{ inputs.max_obstruction_issue_cases }}
+      HTML_PPT_V2_GATE_WRITE_REPORT: "1"
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
+      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate live-provider prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          missing=()
+          [[ -n "${HTML_PPT_SMOKE_API_BASE_URL:-}" ]] || missing+=("HTML_PPT_SMOKE_API_BASE_URL secret or backend_api_url input")
+          [[ -n "${HTML_PPT_SMOKE_USERNAME:-}" ]] || missing+=("HTML_PPT_SMOKE_USERNAME or DEFAULT_ADMIN_USERNAME secret")
+          [[ -n "${HTML_PPT_SMOKE_PASSWORD:-}" ]] || missing+=("HTML_PPT_SMOKE_PASSWORD or DEFAULT_ADMIN_PASSWORD secret")
+          if [[ -z "${OPENAI_API_KEY:-}${ANTHROPIC_API_KEY:-}${GOOGLE_GENERATIVE_AI_API_KEY:-}${AZURE_OPENAI_API_KEY:-}" ]]; then
+            missing+=("at least one live model provider secret: OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_GENERATIVE_AI_API_KEY, or AZURE_OPENAI_API_KEY")
+          fi
+          if [[ "${#missing[@]}" -gt 0 ]]; then
+            echo "::error title=Missing HTML-PPT v2 live-provider prerequisites::Configure: ${missing[*]}"
+            exit 1
+          fi
+          test -f "${HTML_PPT_SMOKE_PROMPTS_FILE}" || {
+            echo "::error title=Missing prompt corpus::No prompt corpus found at '${HTML_PPT_SMOKE_PROMPTS_FILE}'."
+            exit 1
+          }
+          mkdir -p "${HTML_PPT_SMOKE_OUTPUT_DIR}"
+
+      - name: Run live-provider smoke
+        run: node scripts/html-ppt-quick-smoke.mjs --pipeline v2 --prompts-file "${HTML_PPT_SMOKE_PROMPTS_FILE}"
+
+      - name: Run live-provider migration gate
+        run: |
+          node scripts/html-ppt-v2-migration-gate.mjs \
+            --min-cases "${HTML_PPT_V2_GATE_MIN_CASES}" \
+            --min-pass-rate "${HTML_PPT_V2_GATE_MIN_PASS_RATE}" \
+            --max-hard-issue-cases "${HTML_PPT_V2_GATE_MAX_HARD_ISSUE_CASES}" \
+            --max-obstruction-issue-cases "${HTML_PPT_V2_GATE_MAX_OBSTRUCTION_ISSUE_CASES}" \
+            --write-report
+
+      - name: Upload live-provider smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-ppt-v2-live-provider-${{ github.run_id }}
+          path: |
+            ${{ inputs.output_dir }}/html-ppt-quick-smoke-*.json
+            ${{ inputs.output_dir }}/html-ppt-v2-migration-gate-*.md
+          if-no-files-found: warn

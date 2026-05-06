@@ -1,0 +1,82 @@
+{
+  "id": "product-launch",
+  "label": {
+    "zh-CN": "产品发布",
+    "en": "Product Launch"
+  },
+  "description": {
+    "zh-CN": "面向产品发布、功能展示和市场传播的高能视觉模板。",
+    "en": "A high-energy visual template for product launches, feature showcases, and go-to-market stories."
+  },
+  "donorTemplateId": "product-launch",
+  "deckClass": "tpl-product-launch",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "sunset-warm",
+  "themeAlternates": [
+    "magazine-bold",
+    "xhs-pastel",
+    "minimal-nav"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "image-hero",
+      "stat-highlight",
+      "comparison",
+      "process",
+      "kpi-grid"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "consumers",
+    "sales",
+    "executives",
+    "designers"
+  ],
+  "formatFit": [
+    "showcase",
+    "pitch",
+    "briefing"
+  ],
+  "toneFit": [
+    "inspirational",
+    "friendly",
+    "authoritative"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 9,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "zoom-pop",
+      "fade-up",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "spotlight",
+      "none"
+    ],
+    "maxAccentSlides": 4
+  },
+  "embeddingPrompt": "Product launch presentation, new feature reveal, customer value, product positioning, launch campaign.",
+  "promptSignals": [
+    "产品发布",
+    "新品",
+    "功能介绍",
+    "发布会",
+    "launch",
+    "product",
+    "feature",
+    "go-to-market",
+    "customer value"
+  ],
+  "forbidPromptSignals": [
+    "学术论文",
+    "安全事故"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

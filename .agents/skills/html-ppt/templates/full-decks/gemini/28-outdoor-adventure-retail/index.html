@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wild Peak: Outdoor Gear & Adventure Retail</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-outdoor">
+    <div class="deck">
+        <canvas id="outdoor-canvas"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">BEYOND BOUNDARIES // 2026</div>
+                <h1 class="h1">Wild<br>Peak</h1>
+                <p style="font-size: 20px; color: var(--secondary); margin-top: 30px; font-weight: 900; letter-spacing: 10px;">OUTDOOR EQUIPMENT & GEAR STRATEGY</p>
+                <div style="margin-top: 50px;">
+                    <div style="display: inline-block; padding: 2px 40px; background: var(--primary);"></div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SUMMIT RETAIL GROUP</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 概述 (侧边栏) -->
+        <section class="slide" data-title="项目概述">
+            <div class="header">
+                <div class="kicker">THE EXPEDITION</div>
+                <h2 class="h2">巅峰之志：重塑户外运动生态</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="margin-bottom: 20px;">
+                            <img src="img/title.jpg" alt="Wilderness">
+                        </div>
+                        <h3>探索无界</h3>
+                        <p>Wild Peak 致力于为每一位探险家提供最强悍的装备。我们不仅卖产品，更在倡导一种挑战极限、拥抱自然的生活哲学。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>极端环境实验室</h3>
+                            <p>所有装备均在海拔 5000 米以上的极端环境下经过 1000 小时的实测，确保万无一失。</p>
+                        </div>
+                        <div class="card">
+                            <h3>轻量化技术突破</h3>
+                            <p>通过纳米级纤维技术，将全套露营装备的重量降低了 30%，让长途跋涉更加轻松。</p>
+                        </div>
+                        <div class="card">
+                            <h3>数字化向导系统</h3>
+                            <p>装备内置传感器与 App 实时互联，提供地形分析、天气预警与紧急救援联动。</p>
+                        </div>
+                        <div class="card">
+                            <h3>可持续生态闭环</h3>
+                            <p>采用 100% 回收聚酯纤维，并提供终身免费维修服务，减少户外运动对环境的足迹。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>RUGGED & RELIABLE</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 产品展示 (2栏) -->
+        <section class="slide" data-title="产品展示">
+            <div class="header">
+                <div class="kicker">EQUIPMENT_SPEC</div>
+                <h2 class="h2">硬核工艺：对抗自然严苛的甲胄</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img src="img/grid1.jpg" alt="Nature Gear">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 13px; font-weight: 900; color: var(--secondary); letter-spacing: 2px;">APEX SERIES</span>
+                        <h3 style="margin-top: 15px;">Apex Storm 冲锋衣</h3>
+                        <p>搭载三层压胶技术，具备 20,000mm 的防水指数与极佳的透气性。无论是在暴雨如注的密林还是寒风凛冽的雪山，它都是你最坚实的后盾。</p>
+                        <div class="policy-box" style="margin-top: 40px;">
+                            "在风暴中心，寻找真正的自由。"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PRODUCT PORTFOLIO</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 服务承诺 (3栏) -->
+        <section class="slide" data-title="服务承诺">
+            <div class="header">
+                <div class="kicker">SUPPORT_DEPT</div>
+                <h2 class="h2">全境守护：探险路上的安全后盾</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <div style="font-size: 40px; margin-bottom: 20px;">🧗</div>
+                        <h3>专业领队指导</h3>
+                        <p>购买核心装备的用户可获得资深户外领队的 1 对 1 路线规划与安全指导。</p>
+                    </div>
+                    <div class="card">
+                        <h3>全球卫星救援</h3>
+                        <p>高端系列装备内置一键求救功能，直连全球顶尖民间救援机构。</p>
+                    </div>
+                    <div class="card">
+                        <h3>装备折旧回收</h3>
+                        <p>定期举办旧装备回收周，旧件可抵扣新品购置费用，支持设备循环使用。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SERVICE EXCELLENCE</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 渠道布局 (4栏) -->
+        <section class="slide" data-title="渠道布局">
+            <div class="header">
+                <div class="kicker">DISTRIBUTION</div>
+                <h2 class="h2">触手可及：全场景的探险触点</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/grid2.jpg"></div>
+                        <h3>旗舰旗舰店</h3>
+                        <p>大都市核心区的高端体验中心。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/grid3.jpg"></div>
+                        <h3>前线驿站</h3>
+                        <p>部署在热门徒步线路起点的补给站。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/title.jpg"></div>
+                        <h3>数字商城</h3>
+                        <p>沉浸式的 3D 选购与虚拟试穿平台。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/grid1.jpg"></div>
+                        <h3>极客社群</h3>
+                        <p>基于微信与 Discord 的深度专业社群。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>RETAIL NETWORK</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 考核指标 (5栏) -->
+        <section class="slide" data-title="考核指标">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">巅峰数据：衡量增长的核心指标</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-pentagon">
+                    <div class="card">
+                        <h3 style="font-size: 15px;">GMV</h3>
+                        <p style="font-size: 11px;">销售额年度增长。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">LTV</h3>
+                        <p style="font-size: 11px;">用户终身价值潜力。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">CLB</h3>
+                        <p style="font-size: 11px;">品牌社群活跃度。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">ECF</h3>
+                        <p style="font-size: 11px;">每单环境足迹系数。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">NPS</h3>
+                        <p style="font-size: 11px;">用户净推荐值评分。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>BUSINESS SUCCESS</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图: 行业增长 -->
+        <section class="slide" data-title="行业增长">
+            <div class="header">
+                <div class="kicker">MARKET_PULSE</div>
+                <h2 class="h2">户外运动市场规模与 Wild Peak 增长曲线</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>户外热潮席卷</h3>
+                        <p>随着人们对健康与自然连接的渴望日益增强，专业户外装备市场正在迎来黄金十年。我们在高客单价品类的份额提升了 200%。</p>
+                        <div style="margin-top: 40px; border-left: 4px solid var(--secondary); padding-left: 20px;">
+                            <div style="font-size: 44px; font-weight: 900; color: #fff;">+200%</div>
+                            <div style="font-size: 13px; color: var(--primary); letter-spacing: 2px;">MARKET SHARE GROWTH</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GROWTH DATA</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 饼图: 消费画像 -->
+        <section class="slide" data-title="消费画像">
+            <div class="header">
+                <div class="kicker">DEMOGRAPHICS</div>
+                <h2 class="h2">Wild Peak 核心用户群年龄分布与偏好</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>中青年精英为主力</h3>
+                        <p>25-40 岁的城市精英人群是我们的核心受众，他们追求专业性，且具备极强的消费能力与品牌忠诚度。</p>
+                        <ul style="margin-top: 30px; line-height: 2; font-weight: 800;">
+                            <li><span style="color:#98be2c">●</span> 核心发烧友: 30%</li>
+                            <li><span style="color:#f97316">●</span> 城市轻户外: 45%</li>
+                            <li><span style="color:#384338">●</span> 极限运动者: 15%</li>
+                            <li><span style="color:#9ca39c">●</span> 其它人群: 10%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>USER ANALYTICS</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 柱状图: 渠道表现 -->
+        <section class="slide" data-title="渠道表现">
+            <div class="header">
+                <div class="kicker">CHANNEL_REPORT</div>
+                <h2 class="h2">全渠道营销转化效率对比 (2026 Q1-Q3)</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 1fr 1.5fr;">
+                    <div class="card">
+                        <h3>社群驱动的爆发</h3>
+                        <p>通过深度专业社群的口碑发酵，我们的获客成本（CAC）远低于行业平均水平。未来将持续加大对私域流量的投入。</p>
+                        <div class="policy-box" style="margin-top: 30px;">
+                            "真实分享，是最好的广告。"
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PERFORMANCE DATA</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 甘特图: 扩张路线 -->
+        <section class="slide" data-title="扩张路线">
+            <div class="header">
+                <div class="kicker">STRATEGIC_TIMELINE</div>
+                <h2 class="h2">Wild Peak 2.0: 全球零售网络与数字化升级蓝图</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PROJECT LIFECYCLE</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 音频 Exhibit -->
+        <section class="slide" data-title="品牌原声">
+            <div class="header">
+                <div class="kicker">AUDIO EXHIBIT</div>
+                <h2 class="h2">荒野呼唤：Wild Peak 品牌环境音景</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>听觉的探险</h3>
+                        <p>我们将风声、鸟鸣、踩踏枯叶的声音融入品牌音景中。让用户在浏览时，仿佛已经置身于那片渴望已久的荒野之中。</p>
+                    </div>
+                    <div class="card center" style="background: rgba(0,0,0,0.3); border-style: dashed;">
+                        <div style="font-size: 50px; color: var(--primary); margin-bottom: 25px;">🏔️</div>
+                        <audio controls style="width: 80%;">
+                            <source src="audio/wild_ambient.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 15px; font-weight: 900; color: var(--secondary);">TRACK: ECHOES_OF_SUMMIT.MP3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SENSORY ASSETS</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 视频 Case Study -->
+        <section class="slide" data-title="视频纪实">
+            <div class="header">
+                <div class="kicker">VIDEO DOCUMENTARY</div>
+                <h2 class="h2">极限实录：Apex 系列在巴塔哥尼亚的极寒测试</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/wild_test.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 11px; background: var(--secondary); color: #fff; padding: 2px 8px; border-radius: 2px; font-weight: 900;">FIELD_TEST_04</span>
+                        <h3 style="margin-top: 15px;">拒绝虚假参数</h3>
+                        <p>跟随我们的测试团队，在海拔 4000 米、气温 -30℃ 的荒野中，亲身验证装备的极限性能。我们只用事实说话。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>BRAND TRUTH</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13-19 填充页面 -->
+        <section class="slide" data-title="全球供应">
+            <div class="header">
+                <div class="kicker">GLOBAL_SUPPLY</div>
+                <h2 class="h2">协同进化：从原材料到终点站的精准把控</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <h3>特种纤维基地</h3>
+                        <p>与全球顶尖的特种面料实验室建立直连，确保新一代材料的首发应用权。</p>
+                    </div>
+                    <div class="card">
+                        <h3>智慧柔性工厂</h3>
+                        <p>支持小批量、高频次的快速补货，降低库存积压风险，响应市场热点。</p>
+                    </div>
+                    <div class="card">
+                        <h3>全域仓储网</h3>
+                        <p>基于 AI 销量预测的全球分仓策略，实现核心装备的闪电化交付。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OPERATIONS</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="社会责任">
+            <div class="header">
+                <div class="kicker">CONSERVATION</div>
+                <h2 class="h2">因为热爱荒野，所以守护荒野</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap"><img src="img/grid2.jpg"></div>
+                    </div>
+                    <div class="card">
+                        <h3>荒野清理行动</h3>
+                        <p>我们承诺将每年利润的 2% 用于全球热门徒步路线的垃圾清理与生态修复项目。保持荒野的纯净，是我们共同的使命。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OUR PROMISE</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="组织架构">
+            <div class="header">
+                <div class="kicker">OUR_TEAM</div>
+                <h2 class="h2">跨学科专家团队，为探险保驾护航</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <h3>材料工程师</h3>
+                        <p>专注于极限环境下新型耐磨与防水材料的分子级开发。</p>
+                    </div>
+                    <div class="card">
+                        <h3>户外向导官</h3>
+                        <p>由具备世界级高峰登顶经验的职业向导把控产品实战细节。</p>
+                    </div>
+                    <div class="card">
+                        <h3>数字化产品经</h3>
+                        <p>负责可穿戴设备与 App 生态的深度集成，打造数字化探险闭环。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PEOPLE POWER</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="会员尊享">
+            <div class="header">
+                <div class="kicker">SUMMIT_CLUB</div>
+                <h2 class="h2">超越零售：打造全球最硬核的户外社群</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>装备终身质保</h3>
+                        <p>无论在哪里，只要产品出现非人为损坏，我们都提供免费维修与更换。</p>
+                    </div>
+                    <div class="card">
+                        <h3>优先参与探险</h3>
+                        <p>获得 Wild Peak 组织的全球人迹罕至区域科学考察的专属申请名额。</p>
+                    </div>
+                    <div class="card">
+                        <h3>专家级调教</h3>
+                        <p>购买大件装备可享受专属顾问的上门安装、调试与使用培训服务。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>COMMUNITY</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="未来愿景">
+            <div class="header">
+                <div class="kicker">VISION_2030</div>
+                <h2 class="h2">通往更高境界的阶梯</h2>
+            </div>
+            <div class="content-area">
+                <div class="card center" style="background: transparent; border: none;">
+                    <div class="policy-box" style="font-size: 28px; text-align: center; max-width: 800px; padding: 40px; border-color: var(--primary);">
+                        "Wild Peak 不仅在制造装备，我们更在构建一个让每个人都能安全、尊严地挑战极限的数字平台。未来，属于勇敢者。"
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OUR BELIEF</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18-19 继续填充... (这里省略部分重复结构以节省空间) -->
+        <section class="slide" data-title="合作伙伴">
+            <div class="header">
+                <div class="kicker">ALLIANCES</div>
+                <h2 class="h2">强强联手：构建最深厚的技术护城河</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card"><h3>面料巨头</h3><p>全球唯一指定战略合作伙伴。</p></div>
+                    <div class="card"><h3>卫星通讯商</h3><p>确保全球全境无死角紧急通讯能力。</p></div>
+                    <div class="card"><h3>公益基金会</h3><p>共同守护高海拔生态脆弱区。</p></div>
+                </div>
+            </div>
+            <div class="footer"><span>NETWORK</span><span class="slide-number" data-current="18" data-total="20"></span></div>
+        </section>
+
+        <section class="slide" data-title="研发中枢">
+            <div class="header">
+                <div class="kicker">R&D_HUB</div>
+                <h2 class="h2">创新不断，挑战不止</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card"><h3>动态热管理系统</h3><p>下一代自适应控温技术预览。</p></div>
+                    <div class="card"><div class="img-wrap"><img src="img/grid3.jpg"></div></div>
+                </div>
+            </div>
+            <div class="footer"><span>INNOVATION</span><span class="slide-number" data-current="19" data-total="20"></span></div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Summit<br>Found</h1>
+                <p style="font-size: 24px; color: var(--primary); margin-top: 40px; font-weight: 900; letter-spacing: 12px;">THE JOURNEY NEVER ENDS</p>
+                <div style="margin-top: 60px;">
+                    <button style="padding: 22px 60px; background: var(--secondary); color: #fff; border: none; font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 4px; box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4);">JOIN THE EXPEDITION</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SUMMIT RETAIL GROUP // 2026</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Topographical Lines) ---
+            const canvas = document.getElementById('outdoor-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                let time = 0;
+                function drawTopography() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.strokeStyle = 'rgba(152, 190, 44, 0.3)';
+                    ctx.lineWidth = 1;
+
+                    for (let j = 0; j < 5; j++) {
+                        ctx.beginPath();
+                        for (let i = 0; i < canvas.width; i += 10) {
+                            const y = canvas.height * 0.5 +
+                                      Math.sin(i * 0.005 + time + j) * 100 +
+                                      Math.cos(i * 0.002 - time * 0.5) * 50;
+                            if (i === 0) ctx.moveTo(i, y + j * 40);
+                            else ctx.lineTo(i, y + j * 40);
+                        }
+                        ctx.stroke();
+                    }
+                    time += 0.005;
+                    requestAnimationFrame(drawTopography);
+                }
+                drawTopography();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#9ca39c';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2022', '2024', '2026'],
+                    datasets: [{
+                        label: 'Wild Peak Sales (M$)',
+                        data: [20, 85, 240, 680],
+                        borderColor: '#98be2c',
+                        backgroundColor: 'rgba(152, 190, 44, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'pie',
+                data: {
+                    labels: ['发烧友', '轻户外', '运动员', '其它'],
+                    datasets: [{
+                        data: [30, 45, 15, 10],
+                        backgroundColor: ['#98be2c', '#f97316', '#384338', '#9ca39c'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['私域社群', 'KOL 联动', '线下活动', '传统广告'],
+                    datasets: [{
+                        label: 'Conversion Rate (%)',
+                        data: [22, 14, 18, 5],
+                        backgroundColor: '#98be2c',
+                        borderRadius: 2
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['Apex 2.0 研发', '全球驿站铺设', '卫星调度中枢上线', '欧洲旗舰店开业'],
+                    datasets: [
+                        { data: [0, 2, 5, 8], backgroundColor: 'transparent', stack: 's' },
+                        { data: [4, 6, 3, 2], backgroundColor: '#f97316', stack: 's' }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

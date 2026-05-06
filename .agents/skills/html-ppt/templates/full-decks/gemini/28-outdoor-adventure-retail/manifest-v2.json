@@ -1,0 +1,2609 @@
+{
+  "schemaVersion": 2,
+  "id": "28-outdoor-adventure-retail",
+  "deckClass": "tpl-outdoor",
+  "label": {
+    "zh-CN": "模板 28-outdoor-adventure-retail",
+    "en": "Template 28-outdoor-adventure-retail"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "deckEffects": {
+    "htmlFile": "fragments/deck-effects.html",
+    "jsFile": "assets/deck-effects.js",
+    "elementIds": [
+      "outdoor-canvas"
+    ]
+  },
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "WildPeak"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BEYOND BOUNDARIES // 2026"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SUMMIT RETAIL GROUP"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > p",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "OUTDOOR EQUIPMENT & GEAR STRATEGY"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "SummitFound"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SUMMIT RETAIL GROUP // 2026"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "THE JOURNEY NEVER ENDS"
+        },
+        {
+          "slotId": "cta-1",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div > button",
+          "tarChars": 16,
+          "maxChars": 31,
+          "optional": false,
+          "kind": "cta",
+          "sourceText": "JOIN THE EXPEDITION"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "项目概述",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "media page with grid:2x2 x1 + card x5 + image x1; pageType:sidebar, layout:media, grid:2x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:2x2 x1 + card x5 + image x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x2": 1,
+          "card": 10,
+          "image": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "巅峰之志：重塑户外运动生态"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "THE EXPEDITION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "RUGGED & RELIABLE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "探索无界"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Wild Peak 致力于为每一位探险家提供最强悍的装备。我们不仅卖产品，更在倡导一种挑战极限、拥抱自然的生活哲学。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极端环境实验室"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "所有装备均在海拔 5000 米以上的极端环境下经过 1000 小时的实测，确保万无一失。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "轻量化技术突破"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过纳米级纤维技术，将全套露营装备的重量降低了 30%，让长途跋涉更加轻松。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数字化向导系统"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "装备内置传感器与 App 实时互联，提供地形分析、天气预警与紧急救援联动。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "可持续生态闭环"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "采用 100% 回收聚酯纤维，并提供终身免费维修服务，减少户外运动对环境的足迹。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "产品展示",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x2 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x2 + image x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 86,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "硬核工艺：对抗自然严苛的甲胄"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "EQUIPMENT_SPEC"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PRODUCT PORTFOLIO"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Apex Storm 冲锋衣"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 172,
+          "maxChars": 344,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "搭载三层压胶技术，具备 20,000mm 的防水指数与极佳的透气性。无论是在暴雨如注的密林还是寒风凛冽的雪山，它都是你最坚实的后盾。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "APEX SERIES"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div.policy-box",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"在风暴中心，寻找真正的自由。\""
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "服务承诺",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全境守护：探险路上的安全后盾"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SUPPORT_DEPT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SERVICE EXCELLENCE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "专业领队指导"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "购买核心装备的用户可获得资深户外领队的 1 对 1 路线规划与安全指导。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全球卫星救援"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "高端系列装备内置一键求救功能，直连全球顶尖民间救援机构。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "装备折旧回收"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "定期举办旧装备回收周，旧件可抵扣新品购置费用，支持设备循环使用。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "渠道布局",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x4 x1 + card x4 + image x4; pageType:grid-4, layout:media, grid:1x4",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x4 x1 + card x4 + image x4",
+        "density": "high",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-2",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-3",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-4",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8,
+          "image": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:media",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "触手可及：全场景的探险触点"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DISTRIBUTION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "RETAIL NETWORK"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "旗舰旗舰店"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "大都市核心区的高端体验中心。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "前线驿站"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "部署在热门徒步线路起点的补给站。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数字商城"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "沉浸式的 3D 选购与虚拟试穿平台。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极客社群"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于微信与 Discord 的深度专业社群。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']",
+        "img[data-image-slot='1']",
+        "img[data-image-slot='2']",
+        "img[data-image-slot='3']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "考核指标",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x3 x1 + card x5; pageType:grid-5, layout:grid, grid:2x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x3 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-pentagon",
+            "kind": "grid",
+            "subtype": "layout-pentagon",
+            "selector": ".layout-pentagon",
+            "layout": {
+              "rows": 2,
+              "cols": 3,
+              "items": 5,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-pentagon": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:2x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "巅峰数据：衡量增长的核心指标"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "BUSINESS SUCCESS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "GMV"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "销售额年度增长。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "LTV"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "用户终身价值潜力。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CLB"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "品牌社群活跃度。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "ECF"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "每单环境足迹系数。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "NPS"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "用户净推荐值评分。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "行业增长",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 75,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "户外运动市场规模与 Wild Peak 增长曲线"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MARKET_PULSE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "GROWTH DATA"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "户外热潮席卷"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "随着人们对健康与自然连接的渴望日益增强，专业户外装备市场正在迎来黄金十年。我们在高客单价品类的份额提升了 200%。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > div > div:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "+200%"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > div > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "MARKET SHARE GROWTH"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "消费画像",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2 + list x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4,
+          "list": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 62,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Wild Peak 核心用户群年龄分布与偏好"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DEMOGRAPHICS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "USER ANALYTICS"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "中青年精英为主力"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 124,
+          "maxChars": 248,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "25-40 岁的城市精英人群是我们的核心受众，他们追求专业性，且具备极强的消费能力与品牌忠诚度。"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 核心发烧友: 30%"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 城市轻户外: 45%"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 极限运动者: 15%"
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(4)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 其它人群: 10%"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "渠道表现",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 68,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全渠道营销转化效率对比 (2026 Q1-Q3)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CHANNEL_REPORT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PERFORMANCE DATA"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "社群驱动的爆发"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 136,
+          "maxChars": 272,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过深度专业社群的口碑发酵，我们的获客成本（CAC）远低于行业平均水平。未来将持续加大对私域流量的投入。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > div.policy-box",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"真实分享，是最好的广告。\""
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "扩张路线",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x1; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Wild Peak 2.0: 全球零售网络与数字化升级蓝图"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "STRATEGIC_TIMELINE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PROJECT LIFECYCLE"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "audio",
+      "sourcePageType": "audio",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "品牌原声",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:audio, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:audio",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "荒野呼唤：Wild Peak 品牌环境音景"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "AUDIO EXHIBIT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SENSORY ASSETS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "听觉的探险"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 132,
+          "maxChars": 264,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们将风声、鸟鸣、踩踏枯叶的声音融入品牌音景中。让用户在浏览时，仿佛已经置身于那片渴望已久的荒野之中。"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "TRACK: ECHOES_OF_SUMMIT.MP3"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "audio"
+      ]
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "video",
+      "sourcePageType": "video",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "视频纪实",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + video x1; pageType:video, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + video x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "video-1",
+            "kind": "video",
+            "subtype": "video"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "video": 2
+        },
+        "tags": [
+          "pageType:video",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 72,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "极限实录：Apex 系列在巴塔哥尼亚的极寒测试"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "VIDEO DOCUMENTARY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "BRAND TRUTH"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "拒绝虚假参数"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 144,
+          "maxChars": 288,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "跟随我们的测试团队，在海拔 4000 米、气温 -30℃ 的荒野中，亲身验证装备的极限性能。我们只用事实说话。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "FIELD_TEST_04"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "videoSlotSelector": "video[data-video-slot='primary']",
+      "mediaKinds": [
+        "video"
+      ]
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "全球供应",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "协同进化：从原材料到终点站的精准把控"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "GLOBAL_SUPPLY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "OPERATIONS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "特种纤维基地"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "与全球顶尖的特种面料实验室建立直连，确保新一代材料的首发应用权。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "智慧柔性工厂"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "支持小批量、高频次的快速补货，降低库存积压风险，响应市场热点。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全域仓储网"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于 AI 销量预测的全球分仓策略，实现核心装备的闪电化交付。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "社会责任",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 70,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "因为热爱荒野，所以守护荒野"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CONSERVATION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "OUR PROMISE"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "荒野清理行动"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 140,
+          "maxChars": 280,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们承诺将每年利润的 2% 用于全球热门徒步路线的垃圾清理与生态修复项目。保持荒野的纯净，是我们共同的使命。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "组织架构",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "跨学科专家团队，为探险保驾护航"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "OUR_TEAM"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PEOPLE POWER"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "材料工程师"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "专注于极限环境下新型耐磨与防水材料的分子级开发。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "户外向导官"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "由具备世界级高峰登顶经验的职业向导把控产品实战细节。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数字化产品经"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "负责可穿戴设备与 App 生态的深度集成，打造数字化探险闭环。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "会员尊享",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "超越零售：打造全球最硬核的户外社群"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SUMMIT_CLUB"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "COMMUNITY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "装备终身质保"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "无论在哪里，只要产品出现非人为损坏，我们都提供免费维修与更换。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "优先参与探险"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "获得 Wild Peak 组织的全球人迹罕至区域科学考察的专属申请名额。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "专家级调教"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "购买大件装备可享受专属顾问的上门安装、调试与使用培训服务。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "未来愿景",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "text page with card x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "card": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "通往更高境界的阶梯"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "VISION_2030"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "OUR BELIEF"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div.policy-box",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"Wild Peak 不仅在制造装备，我们更在构建一个让每个人都能安全、尊严地挑战极限的数字平台。未来，属于勇敢者。\""
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "合作伙伴",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "强强联手：构建最深厚的技术护城河"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "ALLIANCES"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "NETWORK"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "面料巨头"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "全球唯一指定战略合作伙伴。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "卫星通讯商"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "确保全球全境无死角紧急通讯能力。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "公益基金会"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "共同守护高海拔生态脆弱区。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "研发中枢",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "创新不断，挑战不止"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "R&D_HUB"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INNOVATION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "动态热管理系统"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "下一代自适应控温技术预览。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": true,
+    "hasAudioPages": true
+  }
+}

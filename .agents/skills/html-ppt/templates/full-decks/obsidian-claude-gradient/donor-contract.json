@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["OBSIDIAN × CLAUDE", "Local REST API 插件"],
+  "forbiddenTextPatterns": ["OBSIDIAN\\s*×\\s*CLAUDE", "Local\\s+REST\\s+API"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["oc-cbg", "oc-cgrid"],
   "decorativeOnlyClasses": [],

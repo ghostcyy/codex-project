@@ -1,0 +1,28 @@
+<section class="slide" data-title="底层技术：IRT模型" data-page-type="image-text">
+            <div class="header">
+                <div class="kicker">CORE TECH: IRT ALGORITHM</div>
+                <h2 class="h2">项目反应理论 (IRT)：测量真实的学习能力</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>超越传统的“正确率”</h3>
+                        <p>在传统测试中，做对 8 道题的学生分数都是 80 分。但在自适应系统中，做对 8 道“难题”和做对 8 道“简单题”的学生，其能力值 (Theta) 截然不同。</p>
+                        <ul style="margin-top:16px;">
+                            <li><strong>题目难度参数 (a)：</strong> 这道题区分高低分学生的能力。</li>
+                            <li><strong>区分度参数 (b)：</strong> 题目的固有难度阈值。</li>
+                            <li><strong>猜测系数 (c)：</strong> 学生靠瞎猜做对的概率。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>贝叶斯知识追踪 (BKT)</h3>
+                        <p>随着学生每做完一道题，系统都会使用贝叶斯公式重新计算其掌握该知识点的概率。一旦概率超过 95%，系统将判定为“已掌握”，自动跳过后续重复性练习。</p>
+                        <div class='img-wrap'><img style='width:100%; height:100%; object-fit: cover;' data-image-slot="0"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>03 AI引擎解析</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>

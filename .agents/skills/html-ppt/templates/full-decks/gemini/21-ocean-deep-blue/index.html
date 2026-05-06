@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deep Blue Abyss: Ocean Exploration & Conservation</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-ocean">
+    <div class="deck">
+        <canvas id="ocean-particles"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">GLOBAL MARINE INIATIVE 2026</div>
+                <h1 class="h1">Deep Blue<br>Abyss</h1>
+                <p style="font-size: 24px; margin-top: 30px; font-weight: 300; letter-spacing: 4px; color: var(--primary);">EXPLORING THE FINAL FRONTIER ON EARTH</p>
+                <div style="margin-top: 50px; display: flex; gap: 20px; justify-content: center;">
+                    <div style="padding: 10px 24px; border: 1px solid var(--primary); color: var(--primary); border-radius: 4px; font-weight: 700;">MISSION: DISCOVERY</div>
+                    <div style="padding: 10px 24px; background: var(--primary); color: #000; border-radius: 4px; font-weight: 700;">STATUS: SUBMERGED</div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Oceanic Exploration Group</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 概述 (侧边栏) -->
+        <section class="slide" data-title="项目概述">
+            <div class="header">
+                <div class="kicker">PROJECT OVERVIEW</div>
+                <h2 class="h2">海洋深渊：未知的蓝色引擎</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="margin-bottom: 20px;">
+                            <img src="img/base.png" alt="Research Base">
+                        </div>
+                        <h3>探索任务</h3>
+                        <p>我们的目标是绘制 95% 尚未探索的海底地图，并研究深海生态系统对全球气候调节的关键作用。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>生物多样性</h3>
+                            <p>在深海热液喷口发现数千种新物种，它们拥有独特的生化机制，可为生物医药提供全新灵感。</p>
+                        </div>
+                        <div class="card">
+                            <h3>资源勘探</h3>
+                            <p>科学评估深海矿产资源，寻找支持绿色能源转型的关键稀有金属，同时确保生态平衡。</p>
+                        </div>
+                        <div class="card">
+                            <h3>气候调节</h3>
+                            <p>海洋吸收了全球 90% 的多余热量。了解深海环流是预测未来气候变化的核心。</p>
+                        </div>
+                        <div class="card">
+                            <h3>环境保护</h3>
+                            <p>建立全球性的深海保护区网络，防止过度开发，保护这一脆弱的蓝色星球根基。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 1: The Blue Frontier</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 核心技术 (2栏带图) -->
+        <section class="slide" data-title="核心技术">
+            <div class="header">
+                <div class="kicker">CORE TECHNOLOGY</div>
+                <h2 class="h2">挑战万米深渊的工程奇迹</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img src="img/title.png" alt="Submarine">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span class="pill" style="background: var(--primary); color: #000;">INNOVATION</span>
+                        <h3>Abyssal Explorer V3</h3>
+                        <p>采用新型碳纤维增强钛合金外壳，能够承受超过 1000 个大气压的极端压力。配备 AI 自动避障与 8K 实时影像传输系统。</p>
+                        <ul style="margin-top: 20px; color: var(--text-muted);">
+                            <li>全自动压载平衡系统</li>
+                            <li>自适应深海照明矩阵</li>
+                            <li>多任务机械臂协作系统</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 1: The Blue Frontier</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 科研平台 (3栏) -->
+        <section class="slide" data-title="科研平台">
+            <div class="header">
+                <div class="kicker">RESEARCH PLATFORMS</div>
+                <h2 class="h2">多维度的立体探测网络</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🛸</div>
+                        <h3>无人潜航器 (AUV)</h3>
+                        <p>自主作业时间长达 48 小时，支持大面积海底扫描与数据采集。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 40px; margin-bottom: 10px;">📡</div>
+                        <h3>卫星海洋观测</h3>
+                        <p>全球范围内的海平面、温度与叶绿素实时监控系统。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🏗️</div>
+                        <h3>固定式观测站</h3>
+                        <p>部署在关键海域的海底基阵，提供持续的声学与环境参数监测。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 2: Technology & Systems</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 保护现状 (4栏带图) -->
+        <section class="slide" data-title="保护现状">
+            <div class="header">
+                <div class="kicker">CONSERVATION STATUS</div>
+                <h2 class="h2">守护海洋生物的家园</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;">
+                            <img src="img/reef.png" alt="Reef">
+                        </div>
+                        <h3>珊瑚修复</h3>
+                        <p>利用 3D 打印基底，加速受损珊瑚礁的恢复速度。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;">
+                            <img src="img/tech.png" alt="Tech">
+                        </div>
+                        <h3>塑料回收</h3>
+                        <p>智能拦截系统，在河流入海口高效清理垃圾。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;">
+                            <img src="img/base.png" alt="Base">
+                        </div>
+                        <h3>过度捕捞</h3>
+                        <p>AI 监控非法渔船，保护公海渔业资源。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;">
+                            <img src="img/title.png" alt="Ocean">
+                        </div>
+                        <h3>酸化监控</h3>
+                        <p>高精度传感器部署，预警海洋化学变化。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 2: Technology & Systems</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 探测深度 (5栏) -->
+        <section class="slide" data-title="探测深度">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">海洋垂直结构与探测挑战</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card">
+                        <h3 style="font-size: 14px;">透光层 (0-200m)</h3>
+                        <p style="font-size: 12px;">生命力最旺盛的区域，阳光充足。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">弱光层 (200-1km)</h3>
+                        <p style="font-size: 12px;">光线微弱，许多生物拥有发光器官。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">深海层 (1km-4km)</h3>
+                        <p style="font-size: 12px;">压力巨大，常年处于绝对黑暗中。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">深渊层 (4km-6km)</h3>
+                        <p style="font-size: 12px;">极寒与高压，只有特化生物能存活。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">超深渊 (>6km)</h3>
+                        <p style="font-size: 12px;">地球最深处，人类探索的终极挑战。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 3: Data & Insights</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图: 探测面积 -->
+        <section class="slide" data-title="探测面积趋势">
+            <div class="header">
+                <div class="kicker">DATA VISUALIZATION</div>
+                <h2 class="h2">全球深海高清地图测绘完成度 (2015-2026)</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>测绘速度倍增</h3>
+                        <p>得益于多波束测深技术与 AUV 集群的应用，我们在过去五年中测绘的海底面积超过了此前两个世纪的总和。</p>
+                        <div style="margin-top: 30px; border-left: 4px solid var(--primary); padding-left: 20px;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">28.5%</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">CURRENT GLOBAL COMPLETION</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 3: Data & Insights</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 饼图: 威胁因素 -->
+        <section class="slide" data-title="海洋威胁因素">
+            <div class="header">
+                <div class="kicker">THREAT ANALYSIS</div>
+                <h2 class="h2">影响海洋生态系统健康的主要因素占比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>气候变化是头号威胁</h3>
+                        <p>全球变暖导致的海洋变暖与酸化正严重威胁珊瑚礁与极地生态系统。</p>
+                        <ul style="margin-top: 20px; line-height: 2;">
+                            <li><span style="color:#00d4ff">●</span> 气候变化: 40%</li>
+                            <li><span style="color:#00ffa3">●</span> 塑料污染: 25%</li>
+                            <li><span style="color:#ff00d4">●</span> 过度捕捞: 20%</li>
+                            <li><span style="color:#ffbb00">●</span> 沿海开发: 15%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 3: Data & Insights</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 柱状图: 预算分配 -->
+        <section class="slide" data-title="预算分配">
+            <div class="header">
+                <div class="kicker">BUDGET ALLOCATION</div>
+                <h2 class="h2">2026 年度全球海洋探测与保护资金分配</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>向保护与监测倾斜</h3>
+                        <p>今年的预算重点已从单纯的资源勘探转向了长期的生态监测与修复技术研发。</p>
+                        <div style="margin-top: 20px; background: rgba(0,212,255,0.05); padding: 20px; border-radius: 8px;">
+                            <p style="font-size: 14px; font-style: italic;">“投资海洋就是投资人类的未来。”</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 3: Data & Insights</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 甘特图: 任务阶段 -->
+        <section class="slide" data-title="任务时间线">
+            <div class="header">
+                <div class="kicker">MISSION TIMELINE</div>
+                <h2 class="h2">“蓝色星球 2030” 阶段性目标规划</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 4: Future Roadmap</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 音频 Exhibit -->
+        <section class="slide" data-title="深海音景">
+            <div class="header">
+                <div class="kicker">AUDIO EXHIBIT</div>
+                <h2 class="h2">倾听深渊的声音：鲸歌与地球脉动</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>声学监测的重要性</h3>
+                        <p>声音在水中传播效率极高。通过水下听音器，我们可以远距离追踪海洋哺乳动物的迁徙，甚至监测到千里之外的海底地震或冰山崩裂。</p>
+                    </div>
+                    <div class="card center" style="background: linear-gradient(135deg, #001a33, #002b4d);">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🐋</div>
+                        <audio controls style="width: 80%; filter: hue-rotate(180deg) brightness(1.5);">
+                            <source src="audio/ocean_ambient.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 15px; font-size: 12px; color: var(--primary);">TRACK: BLUE_WHALE_CALL_RECORDING.MP3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 4: Future Roadmap</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 视频 Case Study -->
+        <section class="slide" data-title="视频纪实">
+            <div class="header">
+                <div class="kicker">VIDEO CASE STUDY</div>
+                <h2 class="h2">万米载人深潜纪实：挑战马里亚纳</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/abyss_dive.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <span class="pill" style="background: var(--accent); color: #fff;">EXCLUSIVE</span>
+                        <h3>极限深度记录</h3>
+                        <p>跟随我们的探测器潜入海底 10,928 米。这段珍贵的影像记录了人类首次在如此深度发现塑料垃圾，向全球敲响了环保警钟。</p>
+                        <div style="margin-top: 20px; font-size: 13px; color: var(--text-muted);">
+                            <strong>时长:</strong> 04:30<br>
+                            <strong>深度:</strong> 10,928m<br>
+                            <strong>日期:</strong> 2026.04.12
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Part 4: Future Roadmap</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 典型案例 (2栏) -->
+        <section class="slide" data-title="典型案例">
+            <div class="header">
+                <div class="kicker">CASE STUDY</div>
+                <h2 class="h2">马里亚纳海沟：挑战地球最深处</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>海沟探测</h3>
+                        <p>通过“奋斗者”号载人潜水器，我们成功在万米深渊采集了岩石、海水及生物样本，填补了该深度科考的空白。</p>
+                        <div class="img-wrap" style="margin-top: 15px;"><img src="img/tech.png"></div>
+                    </div>
+                    <div class="card">
+                        <h3>科学突破</h3>
+                        <p>发现了适应极高压环境的新型微生物，并在其基因组中提取出了具有潜在工业价值的耐压酶。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>The Science of Abyss</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 生物奇观 (3栏) -->
+        <section class="slide" data-title="生物奇观">
+            <div class="header">
+                <div class="kicker">BIOLOGICAL WONDERS</div>
+                <h2 class="h2">深海：自发光的奇异世界</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 150px; margin-bottom: 15px;"><img src="img/title.png"></div>
+                        <h3>鮟鱇鱼</h3>
+                        <p>头部的发光器是其捕食的致命诱饵。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 150px; margin-bottom: 15px;"><img src="img/reef.png"></div>
+                        <h3>发光水母</h3>
+                        <p>通过生物化学反应产生变幻莫测的色彩。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 150px; margin-bottom: 15px;"><img src="img/tech.png"></div>
+                        <h3>巨型乌贼</h3>
+                        <p>深海中神龙见首不见尾的顶级掠食者。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Deep Sea Life</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 资源勘探 (4栏) -->
+        <section class="slide" data-title="资源勘探">
+            <div class="header">
+                <div class="kicker">RESOURCE EXPLORATION</div>
+                <h2 class="h2">海底矿产：未来的蓝色资源库</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>多金属结核</h3>
+                        <p>富含锰、镍、铜等关键稀有金属。</p>
+                    </div>
+                    <div class="card">
+                        <h3>富钴结壳</h3>
+                        <p>主要分布在海山地区，价值巨大。</p>
+                    </div>
+                    <div class="card">
+                        <h3>多金属硫化物</h3>
+                        <p>形成于热液喷口，矿化程度极高。</p>
+                    </div>
+                    <div class="card">
+                        <h3>天然气水合物</h3>
+                        <p>即可燃冰，潜在的巨大清洁能源。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Marine Resources</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 环保倡议 (侧边栏) -->
+        <section class="slide" data-title="环保倡议">
+            <div class="header">
+                <div class="kicker">ECO-INITIATIVE</div>
+                <h2 class="h2">减少塑料足迹：还海洋一片纯净</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill" style="background: var(--accent); color:#fff">ACT NOW</span>
+                        <h3>拒绝一次性塑料</h3>
+                        <p>每年有超过 800 万吨塑料垃圾流入海洋。通过改变生活方式，我们可以从源头切断这一污染链条。</p>
+                    </div>
+                    <div class="grid-3">
+                        <div class="card">
+                            <h3 style="font-size: 16px;">减量</h3>
+                            <p style="font-size: 13px;">优先选择无包装或极简包装产品。</p>
+                        </div>
+                        <div class="card">
+                            <h3 style="font-size: 16px;">回用</h3>
+                            <p style="font-size: 13px;">推广可循环使用的生活器具。</p>
+                        </div>
+                        <div class="card">
+                            <h3 style="font-size: 16px;">循环</h3>
+                            <p style="font-size: 13px;">完善废弃塑料的回收再利用体系。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Conservation</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 蓝色经济 (2栏) -->
+        <section class="slide" data-title="蓝色经济">
+            <div class="header">
+                <div class="kicker">CORE_INFO</div>
+                <h2 class="h2">可持续的海洋经济增长模式</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>海洋牧场</h3>
+                        <p>发展现代深远海养殖，提供高质量蛋白质来源的同时减轻近海压力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>海洋旅游</h3>
+                        <p>推广负责任的生态旅游，让人们在领略海洋之美的同时增强保护意识。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Economy & Growth</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 政策法规 (3栏) -->
+        <section class="slide" data-title="政策法规">
+            <div class="header">
+                <div class="kicker">POLICY & GOVERNANCE</div>
+                <h2 class="h2">法治引领：共建蓝色文明</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>海域法制</h3>
+                        <p>明确领海、毗连区及专属经济区的法律地位与管辖权。</p>
+                    </div>
+                    <div class="card">
+                        <h3>环评机制</h3>
+                        <p>所有涉海重大工程必须通过严格的环境影响评估。</p>
+                    </div>
+                    <div class="card">
+                        <h3>BBNJ 协议</h3>
+                        <p>推动国家管辖范围以外区域生物多样性的保护与可持续利用。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Global Governance</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">One Ocean<br>One Planet</h1>
+                <p style="font-size: 24px; color: var(--primary); margin-top: 30px; letter-spacing: 2px;">PROTECTING OUR COMMON HERITAGE</p>
+                <div style="margin-top: 50px;">
+                    <button style="padding: 15px 40px; background: transparent; border: 2px solid var(--primary); color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 4px;">JOIN THE MISSION</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Oceanic Exploration Group</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Bubbles) ---
+            const canvas = document.getElementById('ocean-particles');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                class Particle {
+                    constructor() { this.init(); }
+                    init() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = canvas.height + Math.random() * 100;
+                        this.size = Math.random() * 5 + 1;
+                        this.speedY = Math.random() * -2 - 1;
+                        this.opacity = Math.random() * 0.5 + 0.1;
+                    }
+                    update() {
+                        this.y += this.speedY;
+                        if (this.y < -50) this.init();
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(129, 212, 250, ${this.opacity})`;
+                        ctx.fill();
+                    }
+                }
+                for (let i = 0; i < 60; i++) particles.push(new Particle());
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => { p.update(); p.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#81d4fa';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2015', '2018', '2021', '2024', '2026'],
+                    datasets: [{
+                        label: 'Mapped Area (%)',
+                        data: [5.2, 9.8, 15.4, 23.1, 28.5],
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['气候变化', '塑料污染', '过度捕捞', '沿海开发'],
+                    datasets: [{
+                        data: [40, 25, 20, 15],
+                        backgroundColor: ['#00d4ff', '#00ffa3', '#ff00d4', '#ffbb00'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['探测研发', '生态修复', '监测网络', '公众教育'],
+                    datasets: [{
+                        label: 'Budget (Million $)',
+                        data: [450, 380, 290, 120],
+                        backgroundColor: '#00ffa3',
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['深渊制图', '新物种鉴定', '海底观测站部署', '零塑料计划'],
+                    datasets: [
+                        { data: [0, 2, 4, 1], backgroundColor: 'transparent', stack: 's' },
+                        { data: [3, 5, 6, 9], backgroundColor: '#ff00d4', stack: 's', borderRadius: 20 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

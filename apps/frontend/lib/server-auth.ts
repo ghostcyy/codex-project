@@ -9,7 +9,7 @@ import type {
   PptProjectSummary,
   SessionUser
 } from "./types";
-import { ADMIN_ACCESS_PERMISSION } from "./auth";
+import { ADMIN_ROLE, isAdminUser } from "./auth";
 
 const API_BASE_URL =
   process.env.API_BASE_URL ??
@@ -81,15 +81,25 @@ export async function requireUserWithPermission(permission: string, nextPath: st
 }
 
 export async function requireAdminUser(nextPath = "/admin") {
-  return requireUserWithPermission(ADMIN_ACCESS_PERMISSION, nextPath);
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect(`/login?next=${encodeURIComponent(nextPath)}`);
+  }
+
+  if (!isAdminUser(user) || !user.roles.includes(ADMIN_ROLE)) {
+    redirect("/");
+  }
+
+  return user;
 }
 
 export async function requireLlmManagerUser(nextPath = "/admin/llm") {
-  return requireUserWithPermission("llm.manage", nextPath);
+  return requireAdminUser(nextPath);
 }
 
 export async function requireNewsManagerUser(nextPath = "/admin/news") {
-  return requireUserWithPermission("news.write", nextPath);
+  return requireAdminUser(nextPath);
 }
 
 export async function getAdminOverview() {

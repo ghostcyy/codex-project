@@ -1,0 +1,34 @@
+<section class="slide" data-title="系统架构" data-page-type="grid-4">
+            <div class="header">
+                <div class="kicker">SYSTEM ARCHITECTURE</div>
+                <h2 class="h2">云-边-端 一体化医疗架构</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <span class="pill">01 终端接入 (Terminal)</span>
+                        <h3>基层 PACS 直连</h3>
+                        <p>兼容院内老旧的 DICOM 影像格式，拍摄完成后自动触发脱敏推流，无需医生额外点击导出上传。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">02 边缘计算 (Edge)</span>
+                        <h3>前置脱敏网关</h3>
+                        <p>在医院内网部署轻量级网关，自动剔除患者姓名、身份证号等敏感信息，仅保留纯净影像特征。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">03 云端算力 (Cloud)</span>
+                        <h3>GPU 弹性推理集群</h3>
+                        <p>汇聚数百万三甲医院金标准病历训练出的三维卷积神经网络(3D-CNN)，在毫秒级生成病灶三维重建。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">04 结果回传 (Output)</span>
+                        <h3>结构化报告生成</h3>
+                        <p>自动高亮可疑区域并出具标准化(如 BI-RADS/Lung-RADS)的辅助文本报告，供主治医生审核签字。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>02 技术实现</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>

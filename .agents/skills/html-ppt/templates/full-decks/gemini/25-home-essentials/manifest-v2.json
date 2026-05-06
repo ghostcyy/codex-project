@@ -1,0 +1,2650 @@
+{
+  "schemaVersion": 2,
+  "id": "25-home-essentials",
+  "deckClass": "tpl-home",
+  "label": {
+    "zh-CN": "模板 25-home-essentials",
+    "en": "Template 25-home-essentials"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "deckEffects": {
+    "htmlFile": "fragments/deck-effects.html",
+    "jsFile": "assets/deck-effects.js",
+    "elementIds": [
+      "home-canvas"
+    ]
+  },
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "HomeHarmony"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BETTER LIVING // 2026"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "MUJI-LIFE SOLUTIONS"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > p",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "THE ART OF DAILY NECESSITIES"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div:nth-of-type(2) > div",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "STRATEGY GUIDE"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "StaySimple"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "MUJI-LIFE SOLUTIONS // 2026"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "HARMONY IN EVERY DETAIL"
+        },
+        {
+          "slotId": "cta-1",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div > button",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "cta",
+          "sourceText": "JOIN THE COMMUNITY"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "项目概述",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "media page with grid:2x2 x1 + card x5 + image x1; pageType:sidebar, layout:media, grid:2x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:2x2 x1 + card x5 + image x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x2": 1,
+          "card": 10,
+          "image": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "家之和谐：重塑日用品的生命力"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "OVERVIEW"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SIMPLICITY & COMFORT"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "日常的诗意"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 128,
+          "maxChars": 256,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "日用品不应只是消耗品，它们是构建居家幸福感的基石。我们致力于将美学与实用主义融入每一件寻常物件中。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极简设计语言"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "去除冗余装饰，回归功能本质，让产品自然融入各种居家风格。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全生命周期管理"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "从选材、使用到回收，全流程考虑环境影响，实现可持续的居家生活。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "智慧补给系统"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "利用 IoT 技术感知消耗进度，自动提醒并一键下单，让生活永不断供。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极致性价比"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过供应链优化剔除品牌溢价，让高品质的居家生活触手可及。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "品类展示",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x2 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x2 + image x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 66,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "精选品类：覆盖居家生活的每一个角落"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CATEGORIES"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PRODUCT PORTFOLIO"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Ceramic Series 2.0"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 132,
+          "maxChars": 264,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "采用纳米抗污技术的陶瓷系列，不仅美观大方，更易于清洗。圆润的倒角设计，为每一次下厨增添一份温柔的触感。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "KITCHEN ESSENTIALS"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div.policy-box",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"让烟火气也带有艺术感。\""
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "服务承诺",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "无忧居家：全方位的售后支持"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "OUR PROMISE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SERVICE QUALITY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "365 天质保"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "针对核心家居件提供长达一年的质保承诺，品质无忧。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "闪电送达"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "全国 500 个前置仓部署，确保日用消耗品 1 小时内触达。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "旧物焕新"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "针对床垫、厨具等大件，提供以旧换新与上门回收服务。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "渠道布局",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x4 x1 + card x4 + image x4; pageType:grid-4, layout:media, grid:1x4",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x4 x1 + card x4 + image x4",
+        "density": "high",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-2",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-3",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-4",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8,
+          "image": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:media",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "触手可及：全场景的零售网络"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CHANNELS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "RETAIL NETWORK"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "自有电商"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "提供最完整的品牌体验与会员权益。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "第三方平台"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "入驻主流电商，覆盖海量公域流量。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "社区超市"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "深度渗透社区零售，解决即时需求。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "无人零售"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在高端社区部署智能售货机。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']",
+        "img[data-image-slot='1']",
+        "img[data-image-slot='2']",
+        "img[data-image-slot='3']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "考核指标",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "数据驱动：日用品经营的北极星指标"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "BUSINESS METRICS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "DAU"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "活跃用户数。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AOV"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "客单价增长。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "RR"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "次月留存率。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "STOCK"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "库存周转率。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CSAT"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "用户满意度。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "销售增长",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 65,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "居家消费升级背景下的销售增长曲线"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "PERFORMANCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "GROWTH DATA"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "消费习惯的变迁"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 130,
+          "maxChars": 260,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "用户开始愿意为更高品质的洗护、餐具等小件支付溢价。我们在高频日用品品类实现了年复合 40% 的增长。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > div > div:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "4.2X"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > div > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "USER LTV INCREASE"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "预算分布",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2 + list x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4,
+          "list": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "2026 年度家庭日用品消费预算分布"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BUDGET ALLOCATION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "CONSUMER BUDGET"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "洗护与软装成为核心"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "个人护理与洗护用品占据了预算的大头。同时，旨在提升氛围感的软装配件也逐渐成为刚需。"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 个人洗护: 40%"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 家居软装: 25%"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 厨房用具: 20%"
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(4)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "● 其它消耗品: 15%"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "用户粘性",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "不同年龄段用户对品牌忠诚度对比"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "USER STICKINESS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "USER ANALYTICS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "年轻一代的品牌认同"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Z 世代对具备“颜值”与“价值观”的日用品表现出极高的品牌忠诚度，一旦认同便极少更换。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > div.policy-box",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"颜价比是年轻人的新追求。\""
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "供应链优化",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x1; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "极致效率：全球柔性供应链升级路径"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SUPPLY CHAIN"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "OPERATIONAL EXCELLENCE"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "audio",
+      "sourcePageType": "audio",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "音频展示",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:audio, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:audio",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "生活之歌：Fresh Life 品牌主题曲"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "AUDIO BRANDING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SENSORY ASSETS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "声音名片"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们创作了清新、明快的品牌音效。在用户浏览商品或完成下单时播放，建立独特的声音记忆点。"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "TRACK: MORNING_HARMONY.MP3"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "audio"
+      ]
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "video",
+      "sourcePageType": "video",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "视频展示",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + video x1; pageType:video, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + video x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "video-1",
+            "kind": "video",
+            "subtype": "video"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "video": 2
+        },
+        "tags": [
+          "pageType:video",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 75,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "产品背后的故事：匠心制造流程"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "VIDEO SHOWCASE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "BRAND STORY"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "精益求精"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "走进我们的数字化全自动化工厂，见证每一件日用品如何在高精尖设备的协作下诞生。严苛的质检标准，是我们对用户最大的敬畏。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "FACTORY TOUR"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "videoSlotSelector": "video[data-video-slot='primary']",
+      "mediaKinds": [
+        "video"
+      ]
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "全球协作",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "跨国智造：汇聚全球设计力量"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "GLOBAL COLLABORATION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "NETWORK"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "北欧美学中心"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "位于斯德哥尔摩的设计室，负责品牌整体色调与极简轮廓的把控。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "亚洲功能实验室"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "位于东京，专注于产品的人机工学细节与小空间收纳方案优化。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全球供应链中枢"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "位于深圳，统筹全球生产资源，确保产能的弹性响应。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "环保行动",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 75,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "不只是消费，更是对地球的善意"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SUSTAINABILITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "GREEN MISSION"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "海洋塑料回收计划"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们的部分洗护包材采用 100% 海洋回收塑料制成。每一瓶产品的售出，都意味着有 10 克海洋塑料被成功转化为资源。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "仓储自动化",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "智慧仓储：提升最后一公里的效率"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CORE_INFO"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "TECH POWER"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AGV 机器人集群"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "全仓无人化拣选，将出库错误率降低至 0.001% 以下，响应速度提升 3 倍。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "动态路径优化"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于实时交通数据的配送算法，确保订单在最短时间内送达用户手中。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "会员尊享",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Harmony Club：打造居家生活的专属权益"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MEMBERSHIP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "COMMUNITY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极速退换货"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "会员享有无理由免运费退换货特权，购物零负担。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "定制化订阅"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "针对周期性消耗品，提供灵活的订阅方案，享受更低折扣。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "美学沙龙"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "定期举办线下收纳课程与居家软装沙龙，提升生活品质。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "研发实力",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x3; pageType:sidebar, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "科技护航：每一件产品背后的严谨"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "R&D CAPACITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INNOVATION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "材料科学突破"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们与高校实验室合作研发的新型植物基纤维，已成功应用于全线纺织产品中。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "耐用性测试"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "模拟 10,000 次日常使用，确保产品持久耐用。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "成分透明化"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "拒绝隐藏成分，全线洗护产品 100% 透明标注。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "LAB TESTED"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "组织文化",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "因为热爱生活，所以懂得生活"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CULTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "OUR TEAM"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "用户共创"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "每一款新产品的雏形，都来自于上千名真实用户的深度体验反馈。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极致坦诚"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们鼓励团队直面产品缺陷，不断迭代优化。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "长期主义"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "不追求短期爆发，专注于为用户提供穿越周期的价值。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "未来愿景",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "text page with card x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "card": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "连接千万家，温暖平凡事"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "FUTURE VISION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "OUR VISION"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div.policy-box",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"日用品不应只是沉默的物件。通过设计与科技，我们希望让每一个清晨与黄昏，都因为这些物件的存在而变得更加从容与优雅。\""
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": true,
+    "hasAudioPages": true
+  }
+}

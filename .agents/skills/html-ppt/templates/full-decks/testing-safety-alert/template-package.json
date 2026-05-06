@@ -1,0 +1,80 @@
+{
+  "id": "testing-safety-alert",
+  "label": {
+    "zh-CN": "安全警示",
+    "en": "Safety Alert"
+  },
+  "description": {
+    "zh-CN": "适合风险提示、测试复盘、安全事故和应急预案的高对比警示模板。",
+    "en": "A high-contrast alert template for risk notices, test reviews, safety incidents, and response plans."
+  },
+  "donorTemplateId": "testing-safety-alert",
+  "deckClass": "tpl-testing-safety-alert",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "safety-alert",
+  "themeAlternates": [
+    "terminal-cyber",
+    "engineering-whiteprint",
+    "minimal-nav"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "comparison",
+      "process",
+      "bullet-list",
+      "chart",
+      "stat-highlight"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "engineers",
+    "policy-makers",
+    "executives"
+  ],
+  "formatFit": [
+    "briefing",
+    "report",
+    "analysis"
+  ],
+  "toneFit": [
+    "authoritative",
+    "rigorous",
+    "analytical"
+  ],
+  "defaultDensity": "dense",
+  "defaultSlideCount": 10,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "grid-lines",
+      "none"
+    ],
+    "maxAccentSlides": 2
+  },
+  "embeddingPrompt": "Safety alert deck, risk warning, incident review, testing failure, emergency response, red alert.",
+  "promptSignals": [
+    "安全",
+    "警示",
+    "事故",
+    "风险",
+    "预案",
+    "测试",
+    "alert",
+    "risk",
+    "incident",
+    "safety"
+  ],
+  "forbidPromptSignals": [
+    "小红书",
+    "温柔"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

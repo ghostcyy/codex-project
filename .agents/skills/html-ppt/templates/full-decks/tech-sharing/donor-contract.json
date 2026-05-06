@@ -2,7 +2,7 @@
   "forbiddenTextExamples": ["#ai-a…"],
   "forbiddenTextPatterns": ["#ai-[a-z0-9-]+"],
   "forbiddenClasses": [],
-  "coverOnlyClasses": [],
-  "decorativeOnlyClasses": [],
-  "cssRedactClasses": []
+  "coverOnlyClasses": ["terminal"],
+  "decorativeOnlyClasses": ["github"],
+  "cssRedactClasses": ["terminal", "github"]
 }

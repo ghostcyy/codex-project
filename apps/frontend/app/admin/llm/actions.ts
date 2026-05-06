@@ -31,7 +31,7 @@ export async function createLlmConfigAction(formData: FormData) {
   await requireLlmManagerUser("/admin/llm");
   const payload = {
     name: String(formData.get("name") ?? "New Model"),
-    providerType: String(formData.get("providerType") ?? "openai-compatible"),
+    providerType: String(formData.get("providerType") ?? "minimax-cli"),
     baseUrl: String(formData.get("baseUrl") ?? ""),
     apiKey: String(formData.get("apiKey") ?? ""),
     model: String(formData.get("model") ?? ""),
@@ -58,7 +58,7 @@ export async function updateLlmConfigAction(formData: FormData) {
   const id = String(formData.get("id"));
   const payload = {
     name: String(formData.get("name") ?? "New Model"),
-    providerType: String(formData.get("providerType") ?? "openai-compatible"),
+    providerType: String(formData.get("providerType") ?? "minimax-cli"),
     baseUrl: String(formData.get("baseUrl") ?? ""),
     apiKey: String(formData.get("apiKey") ?? ""),
     model: String(formData.get("model") ?? ""),
@@ -83,7 +83,7 @@ export async function updateLlmConfigAction(formData: FormData) {
 export async function deleteLlmConfigAction(formData: FormData) {
   await requireLlmManagerUser("/admin/llm");
   const id = String(formData.get("id"));
-  
+
   const response = await fetchWithSession(`/admin/llm-config/${id}`, {
     method: "DELETE"
   });

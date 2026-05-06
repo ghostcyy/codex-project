@@ -1,0 +1,208 @@
+.tpl-innovation {
+  --bg: #0a0a0a;
+  --surface: #151515;
+  --primary: #4458bc; /* Blue */
+  --secondary: #fcc5c5; /* Pink */
+  --accent: #ff3e3e;
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --border: rgba(255, 255, 255, 0.1);
+  --radius: 12px;
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Slide Positioning */
+.tpl-innovation .slide {
+  position: absolute;
+  inset: 0;
+  padding: 50px 70px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Kinetic Grid Particles */
+#innovation-canvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.2;
+}
+
+/* Header */
+.tpl-innovation .header {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.tpl-innovation .kicker {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.tpl-innovation .h1 {
+  font-size: clamp(60px, 10vw, 120px);
+  font-weight: 900;
+  line-height: 0.9;
+  margin: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tpl-innovation .h2 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+/* Content Area */
+.tpl-innovation .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+  min-height: 0;
+}
+
+/* --- INNOVATIVE LAYOUTS --- */
+
+/* 1. Mosaic Hero: 1 large left, 2 small right stacked */
+.tpl-innovation .grid-mosaic {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+.tpl-innovation .grid-mosaic .card:nth-child(1) {
+  grid-row: span 2;
+}
+
+/* 2. Panoramic Detail: 1 wide top, 3 small bottom */
+.tpl-innovation .grid-panoramic {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1.5fr 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+.tpl-innovation .grid-panoramic .card:nth-child(1) {
+  grid-column: span 3;
+}
+
+/* 3. Bento Dashboard: Complex spans */
+.tpl-innovation .grid-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 15px;
+  flex: 1;
+  min-height: 0;
+}
+.tpl-innovation .grid-bento .card:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.tpl-innovation .grid-bento .card:nth-child(2) { grid-column: span 2; }
+
+/* 4. Triptych Focus: Central big, sides narrow */
+.tpl-innovation .grid-triptych {
+  display: grid;
+  grid-template-columns: 0.6fr 1.8fr 0.6fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 5. Zig-Zag Flow: Staggered columns */
+.tpl-innovation .grid-zigzag {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 40px;
+  flex: 1;
+  min-height: 0;
+}
+.tpl-innovation .grid-zigzag .card:nth-child(odd) { transform: translateY(30px); }
+.tpl-innovation .grid-zigzag .card:nth-child(even) { transform: translateY(-30px); }
+
+/* Standard Cards */
+.tpl-innovation .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  transition: all 0.4s ease;
+}
+
+.tpl-innovation .card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 40px rgba(68, 88, 188, 0.3);
+  transform: translateY(-10px);
+}
+
+.tpl-innovation .img-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.tpl-innovation .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Charts */
+.tpl-innovation .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+/* Footer */
+.tpl-innovation .footer {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Animations */
+.tpl-innovation .slide.is-active .card {
+  animation: innovIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes innovIn {
+  from { opacity: 0; transform: scale(0.9); filter: blur(10px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}

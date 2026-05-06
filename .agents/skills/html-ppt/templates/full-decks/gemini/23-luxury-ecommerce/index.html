@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Gilded Collection: Luxury Ecommerce Strategy</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-luxury">
+    <div class="deck">
+        <canvas id="luxury-canvas"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">EXCELLENCE REDEFINED // 2026</div>
+                <h1 class="h1">Luxury<br>Commerce</h1>
+                <p style="font-size: 20px; color: var(--primary); margin-top: 30px; letter-spacing: 8px; font-weight: 300;">THE ART OF DIGITAL PRESTIGE</p>
+                <div style="margin-top: 60px; height: 1px; width: 200px; background: var(--primary); margin-left: auto; margin-right: auto;"></div>
+            </div>
+            <div class="footer">
+                <span>VOGUE DIGITAL GROUP</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 概述 (侧边栏) -->
+        <section class="slide" data-title="项目概述">
+            <div class="header">
+                <div class="kicker">STRATEGY OVERVIEW</div>
+                <h2 class="h2">重新定义数字时代的奢侈品体验</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="margin-bottom: 25px;">
+                            <img src="img/title.png" alt="Luxury Watch">
+                        </div>
+                        <h3>稀缺性与尊贵感</h3>
+                        <p>奢侈品电商的核心不在于销售额的爆发，而在于如何通过数字渠道完美复刻线下旗舰店的私密与尊贵体验。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>全渠道整合</h3>
+                            <p>打破线上线下的边界，实现从虚拟试穿到私人定制的一站式奢华服务闭环。</p>
+                        </div>
+                        <div class="card">
+                            <h3>AI 私人管家</h3>
+                            <p>利用大数据构建超精细用户画像，提供 7*24 小时的个性化购物建议与品牌故事解读。</p>
+                        </div>
+                        <div class="card">
+                            <h3>区块链溯源</h3>
+                            <p>每一件单品都拥有唯一的数字身份证，从原材料到交付全流程透明，捍卫品牌真实性。</p>
+                        </div>
+                        <div class="card">
+                            <h3>沉浸式交互</h3>
+                            <p>结合 AR/VR 技术，将数字橱窗转化为艺术展厅，提升用户在平台的停留时间与忠诚度。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ELEGANCE & VISION</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 产品展示 (2栏) -->
+        <section class="slide" data-title="产品展示">
+            <div class="header">
+                <div class="kicker">PRODUCT CURATION</div>
+                <h2 class="h2">匠心独运：顶级单品的数字呈现</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img src="img/handbag.png" alt="Handbag">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; color: var(--primary); letter-spacing: 2px;">NEW ARRIVAL</span>
+                        <h3 style="margin-top: 10px;">Noir Elite Series</h3>
+                        <p>精选全球不到 1% 的顶级皮革，经过 300 道纯手工工序打造。在电商平台上，我们通过 3D 高精度建模，让用户可以感知每一处缝线的细腻质感。</p>
+                        <div class="policy-box" style="margin-top: 30px;">
+                            "不仅是商品，更是值得收藏的数字资产。"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>THE COLLECTION</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 服务体系 (3栏) -->
+        <section class="slide" data-title="服务体系">
+            <div class="header">
+                <div class="kicker">SERVICE EXCELLENCE</div>
+                <h2 class="h2">超越预期的尊荣服务矩阵</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div style="font-size: 36px; margin-bottom: 20px;">🛎️</div>
+                        <h3>白手套配送</h3>
+                        <p>专属礼宾团队，确保每一件珍品在最完美的状态下送达客户手中。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 36px; margin-bottom: 20px;">🛡️</div>
+                        <h3>全球保修云</h3>
+                        <p>跨国界的售后联动机制，让客户无论身处何地，都能享受品牌的一致关怀。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 36px; margin-bottom: 20px;">✨</div>
+                        <h3>专属会员沙龙</h3>
+                        <p>线上直播发布会优先权与线下闭门酒会名额，构建高净值社交圈层。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SERVICE INFRASTRUCTURE</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 营销矩阵 (4栏带图) -->
+        <section class="slide" data-title="营销矩阵">
+            <div class="header">
+                <div class="kicker">MARKETING MATRIX</div>
+                <h2 class="h2">多维渗透：全域高端流量捕获</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 140px; margin-bottom: 15px;"><img src="img/perfume.png"></div>
+                        <h3>情感共鸣</h3>
+                        <p>通过深度故事化视频，传递品牌的核心价值观。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 140px; margin-bottom: 15px;"><img src="img/box.png"></div>
+                        <h3>KOL 联名</h3>
+                        <p>与顶级艺术家和影响力人物推出限量胶囊系列。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 140px; margin-bottom: 15px;"><img src="img/title.png"></div>
+                        <h3>数据私有域</h3>
+                        <p>建立极高粘性的私有社群，实现高频互动与复购。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 140px; margin-bottom: 15px;"><img src="img/handbag.png"></div>
+                        <h3>快闪联动</h3>
+                        <p>通过 AR 虚拟快闪店，在社交媒体制造爆发式热点。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OMNICHANNEL STRATEGY</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 评价标准 (5栏) -->
+        <section class="slide" data-title="评价标准">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">奢侈品电商的核心评估维度</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card">
+                        <h3 style="font-size: 14px;">AOV</h3>
+                        <p style="font-size: 12px;">单笔订单均价。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">NPS</h3>
+                        <p style="font-size: 12px;">用户净推荐值。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">REPURCHASE</h3>
+                        <p style="font-size: 12px;">核心用户复购率。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">ENGAGEMENT</h3>
+                        <p style="font-size: 12px;">品牌内容互动深度。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">LTV</h3>
+                        <p style="font-size: 12px;">客户终身价值模型。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>METRICS & KPI</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图: 市场份额 -->
+        <section class="slide" data-title="市场份额">
+            <div class="header">
+                <div class="kicker">MARKET DYNAMICS</div>
+                <h2 class="h2">全球线上奢侈品销售增长趋势 (2018-2026)</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>数字化的必然选择</h3>
+                        <p>随着千禧一代与 Z 世代成为奢侈品消费主力，线上渠道的贡献度已从 10% 飙升至 35% 以上，且增长势头不减。</p>
+                        <div style="margin-top: 40px; border-left: 2px solid var(--primary); padding-left: 20px;">
+                            <div style="font-size: 42px; font-family: var(--font-serif); color: var(--primary);">$120B</div>
+                            <div style="font-size: 12px; color: var(--text-muted); letter-spacing: 2px;">PROJECTED ONLINE REVENUE</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MARKET INSIGHTS</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 饼图: 消费画像 -->
+        <section class="slide" data-title="消费画像">
+            <div class="header">
+                <div class="kicker">CUSTOMER PROFILE</div>
+                <h2 class="h2">线上奢侈品核心购买人群年龄分布</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>年轻化趋势不可逆转</h3>
+                        <p>25-35 岁的中青年高净值群体贡献了超过 50% 的订单量。他们更注重品牌的数字交互与社交价值。</p>
+                        <ul style="margin-top: 30px; line-height: 2; font-family: var(--font-serif);">
+                            <li><span style="color:#d4af37">●</span> Gen Z (18-24): 20%</li>
+                            <li><span style="color:#ffffff">●</span> Millennial (25-35): 35%</li>
+                            <li><span style="color:#808080">●</span> Gen X (36-50): 30%</li>
+                            <li><span style="color:#404040">●</span> Boomers (50+): 15%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>CONSUMER DATA</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 柱状图: 地区表现 -->
+        <section class="slide" data-title="地区表现">
+            <div class="header">
+                <div class="kicker">REGIONAL PERFORMANCE</div>
+                <h2 class="h2">2026 年度全球各地区奢侈品电商表现对比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 1fr 2fr;">
+                    <div class="card">
+                        <h3>亚太市场持续领跑</h3>
+                        <p>中国与东南亚市场凭借极高的移动互联网渗透率，已成为全球奢侈品电商最活跃的试验场。</p>
+                        <div class="policy-box" style="font-size: 14px;">
+                            "本地化运营与支付体验是成功的关键。"
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GLOBAL PERFORMANCE</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 甘特图: 部署规划 -->
+        <section class="slide" data-title="部署规划">
+            <div class="header">
+                <div class="kicker">IMPLEMENTATION PLAN</div>
+                <h2 class="h2">旗舰级电商平台升级路线图</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PROJECT LIFECYCLE</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 音频 Exhibit -->
+        <section class="slide" data-title="环境音">
+            <div class="header">
+                <div class="kicker">AUDIO EXHIBIT</div>
+                <h2 class="h2">沉浸式奢华：精品店环境音景</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>感官营销</h3>
+                        <p>在线上平台中，环境音效与精美的视觉画面相结合，能有效提升用户的品牌共鸣感，模拟步入高端沙龙的尊贵体验。</p>
+                    </div>
+                    <div class="card center" style="background: linear-gradient(135deg, #141414, #1a1a1a);">
+                        <div style="font-size: 50px; margin-bottom: 25px;">🎻</div>
+                        <audio controls style="width: 80%; filter: invert(1);">
+                            <source src="audio/luxury_ambient.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 15px; font-size: 11px; color: var(--primary); letter-spacing: 3px;">TRACK: CHOPIN_ETUDE_LUXURY_MIX.MP3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SENSORY BRANDING</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 视频 Case Study -->
+        <section class="slide" data-title="视频纪实">
+            <div class="header">
+                <div class="kicker">VIDEO CASE STUDY</div>
+                <h2 class="h2">案例：2026 春季数字大秀实录</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2.2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000; overflow: hidden;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/luxury_show.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 11px; padding: 4px 8px; border: 1px solid var(--primary); color: var(--primary);">LIVE PREVIEW</span>
+                        <h3 style="margin-top: 15px;">数字秀场爆发力</h3>
+                        <p>我们展示了如何通过虚幻引擎 5 实时渲染，将 1.2 万名观众带入虚拟的佛罗伦萨庄园，同步实现“即看即买”。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DIGITAL SHOWCASE</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 合作伙伴 (3栏) -->
+        <section class="slide" data-title="合作伙伴">
+            <div class="header">
+                <div class="kicker">PARTNERSHIPS</div>
+                <h2 class="h2">协同进化：顶级供应链与艺术合作</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>顶级工坊</h3>
+                        <p>直接对接意大利与法国的百年家族工坊，确保每一件单品的工艺传承。</p>
+                    </div>
+                    <div class="card">
+                        <h3>当代艺术家</h3>
+                        <p>每季度与先锋艺术家推出联名款，赋予奢侈品更深层的文化属性。</p>
+                    </div>
+                    <div class="card">
+                        <h3>物流领航者</h3>
+                        <p>与全球顶级奢护物流合作，解决最后一公里的精细化交付难题。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PARTNER NETWORK</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 物流细节 (侧边栏) -->
+        <section class="slide" data-title="物流细节">
+            <div class="header">
+                <div class="kicker">LOGISTICS DETAIL</div>
+                <h2 class="h2">零缺陷交付：最后一公里的艺术</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap"><img src="img/box.png"></div>
+                    </div>
+                    <div class="card">
+                        <h3>礼盒式开箱</h3>
+                        <p>我们深知开箱体验是奢侈品消费的重要一环。定制香氛、手写感谢卡与高密度防震保护，构建完美的初次邂逅。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DELIVERY STANDARDS</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 隐私与安全 (2栏) -->
+        <section class="slide" data-title="隐私与安全">
+            <div class="header">
+                <div class="kicker">PRIVACY & SECURITY</div>
+                <h2 class="h2">数据主权：守护客户的数字隐私</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>端到端加密通信</h3>
+                        <p>我们为 VVIP 客户提供专属的加密沟通渠道，确保所有定制需求与私人信息绝不外泄。</p>
+                        <div class="img-wrap" style="margin-top: 20px;"><img src="img/title.png"></div>
+                    </div>
+                    <div class="card">
+                        <h3>物理级安全存储</h3>
+                        <p>用户画像数据存储于独立的物理服务器中，并由顶尖网络安全团队 24/7 监控，防止任何形式的数据穿透。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SECURITY ARCHITECTURE</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 支付体验 (3栏) -->
+        <section class="slide" data-title="支付体验">
+            <div class="header">
+                <div class="kicker">PAYMENT EXPERIENCE</div>
+                <h2 class="h2">无缝交易：全球化的金融连接</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>多币种实时结算</h3>
+                        <p>支持全球 150 多种货币，以最优汇率即时完成结算，消除跨境交易门槛。</p>
+                    </div>
+                    <div class="card">
+                        <h3>数字资产支付</h3>
+                        <p>率先支持主流数字货币，为 Web3 时代的先锋藏家提供便利。</p>
+                    </div>
+                    <div class="card">
+                        <h3>分期尊享方案</h3>
+                        <p>与全球顶级私行合作，为特定藏品提供极低利率的专属融资支持。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>FINANCIAL INTEGRATION</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 环保承诺 (侧边栏) -->
+        <section class="slide" data-title="环保承诺">
+            <div class="header">
+                <div class="kicker">SUSTAINABLE LUXURY</div>
+                <h2 class="h2">绿色奢华：环境友好的品牌承诺</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span style="font-size: 11px; padding: 2px 8px; background: var(--primary); color:#000;">CARBON NEUTRAL</span>
+                        <h3>零碳物流计划</h3>
+                        <p>我们承诺到 2028 年，全球电商物流产生的碳足迹将通过植树与清洁能源项目实现 100% 抵消。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>环保包装</h3>
+                            <p>采用 100% 可降解材质，在保持质感的同时大幅减少对环境的负担。</p>
+                        </div>
+                        <div class="card">
+                            <h3>循环奢品</h3>
+                            <p>官方认证的二手回收与翻新服务，延长每一件精品的使用寿命。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SUSTAINABILITY GOALS</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 典型人物 (3栏) -->
+        <section class="slide" data-title="典型人物">
+            <div class="header">
+                <div class="kicker">THE CRAFTSMEN</div>
+                <h2 class="h2">幕后功臣：支撑品牌灵魂的大师</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>首席设计师</h3>
+                        <p>将古典美学与现代数字交互完美融合，定义品牌的视觉语言。</p>
+                    </div>
+                    <div class="card">
+                        <h3>资深皮具匠人</h3>
+                        <p>在巴黎工坊驻守 40 年，每一针一线都凝聚着对完美的偏执追求。</p>
+                    </div>
+                    <div class="card">
+                        <h3>算法架构师</h3>
+                        <p>用冷冰冰的代码构建起最有温度的私人管家服务系统。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>HUMAN CAPITAL</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 品牌使命 (1栏) -->
+        <section class="slide" data-title="品牌使命">
+            <div class="header">
+                <div class="kicker">BRAND MISSION</div>
+                <h2 class="h2">传承经典，启迪未来</h2>
+            </div>
+            <div class="content-area">
+                <div class="card center" style="border: none; background: transparent;">
+                    <div class="policy-box" style="font-size: 28px; max-width: 800px; text-align: center;">
+                        "我们不仅仅在销售产品，我们是在通过数字技术，让那些沉淀百年的匠心精神，在全新的维度中得以重生与永恒。"
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OUR PROMISE</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Legacy<br>Continues</h1>
+                <p style="font-size: 24px; color: var(--primary); margin-top: 40px; letter-spacing: 12px; font-weight: 300;">SHAPING THE FUTURE OF LUXE</p>
+                <div style="margin-top: 60px;">
+                    <button style="padding: 18px 50px; background: var(--primary); color: #000; border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 4px;">REQUEST CATALOGUE</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>VOGUE DIGITAL GROUP // 2026</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Gold Dust) ---
+            const canvas = document.getElementById('luxury-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let sparks = [];
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                class Spark {
+                    constructor() { this.init(); }
+                    init() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 2 + 0.5;
+                        this.speedX = (Math.random() - 0.5) * 0.3;
+                        this.speedY = Math.random() * 0.5 + 0.2;
+                        this.alpha = Math.random() * 0.6 + 0.1;
+                        this.blink = Math.random() * 0.02 + 0.005;
+                    }
+                    update() {
+                        this.y += this.speedY;
+                        this.x += this.speedX;
+                        this.alpha -= this.blink;
+                        if (this.y > canvas.height || this.alpha <= 0) this.init();
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+                        ctx.fill();
+                    }
+                }
+                for (let i = 0; i < 80; i++) sparks.push(new Spark());
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    sparks.forEach(s => { s.update(); s.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#a0a0a0';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2018', '2020', '2022', '2024', '2026'],
+                    datasets: [{
+                        label: 'Online Revenue (Billion $)',
+                        data: [25, 42, 68, 95, 120],
+                        borderColor: '#d4af37',
+                        borderWidth: 2,
+                        backgroundColor: 'rgba(212, 175, 55, 0.05)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'pie',
+                data: {
+                    labels: ['Gen Z', 'Millennial', 'Gen X', 'Boomers'],
+                    datasets: [{
+                        data: [20, 35, 30, 15],
+                        backgroundColor: ['#d4af37', '#ffffff', '#808080', '#404040'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['CHINA', 'USA', 'EU', 'SEA'],
+                    datasets: [{
+                        label: 'Growth Rate (%)',
+                        data: [42, 28, 15, 35],
+                        backgroundColor: '#d4af37',
+                        borderRadius: 2
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['架构审计', 'AI 模块集成', '全球支付同步', '正式上线'],
+                    datasets: [
+                        { data: [0, 2, 4, 6], backgroundColor: 'transparent', stack: 's' },
+                        { data: [3, 4, 3, 2], backgroundColor: '#d4af37', stack: 's' }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+.tpl-academic-lecture {
+  --bg: #fcf9f2; /* Soft Cream Warm White */
+  --text: #2c1810; /* Deep Warm Brown */
+  --text-dim: #5d4037;
+  --primary: #8d6e63; /* Soft Earthy Brown */
+  --secondary: #bcaaa4;
+  --accent: #efebe9;
+  --border: #d7ccc8;
+  --radius: 8px;
+
+  font-family: 'Georgia', 'Source Serif Pro', serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-academic-lecture .slide {
+  position: absolute;
+  inset: 0;
+  padding: 60px 100px;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Title & End Slides with Academic Elements */
+.tpl-academic-lecture .slide.title-slide {
+  background: linear-gradient(rgba(44, 24, 16, 0.8), rgba(44, 24, 16, 0.7)),
+              radial-gradient(circle at 18% 22%, rgba(239, 235, 233, 0.24), transparent 32%),
+              linear-gradient(135deg, #2c1810 0%, #5d4037 58%, #8d6e63 100%);
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+}
+
+.tpl-academic-lecture .slide.title-slide h1 {
+  font-size: clamp(32px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.tpl-academic-lecture .slide.title-slide .author {
+  font-size: 22px;
+  color: #efebe9;
+  font-family: system-ui, sans-serif;
+  letter-spacing: 1px;
+}
+
+.tpl-academic-lecture .header {
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 15px;
+  margin-bottom: 35px;
+  flex: 0 0 auto;
+}
+
+.tpl-academic-lecture .header h2 {
+  font-size: 42px;
+  color: var(--primary);
+  margin: 0;
+  font-weight: 700;
+}
+
+.tpl-academic-lecture .content {
+  flex: 1;
+  font-size: 22px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.tpl-academic-lecture ul {
+  padding-left: 30px;
+  margin-top: 15px;
+}
+
+.tpl-academic-lecture li {
+  margin-bottom: 15px;
+}
+
+.tpl-academic-lecture .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.tpl-academic-lecture .box {
+  border: 1px solid var(--border);
+  padding: 30px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 15px rgba(141, 110, 99, 0.05);
+}
+
+.tpl-academic-lecture .box h4 {
+  margin-top: 0;
+  color: var(--primary);
+  font-size: 24px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.tpl-academic-lecture .footer {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  margin-top: 35px;
+  padding-top: 15px;
+  font-size: 13px;
+  color: #8d6e63;
+  font-family: system-ui, sans-serif;
+}
+
+.tpl-academic-lecture .slide-number {
+  font-weight: 600;
+}

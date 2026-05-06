@@ -1,4 +1,6 @@
 import { randomUUID } from "node:crypto";
+import { existsSync } from "node:fs";
+import { mkdir, readFile } from "node:fs/promises";
 import {
   BadRequestException,
   Inject,
@@ -9,14 +11,52 @@ import {
 } from "@nestjs/common";
 import type { QueryResultRow } from "pg";
 import { DatabaseService } from "../database/database.service";
-import { HtmlPptRendererService } from "../html-ppt-renderer/html-ppt-renderer.service";
+import type { HtmlPptRendererService } from "../html-ppt-renderer/html-ppt-renderer.service";
 import { LlmConfigService } from "../llm-config/llm-config.service";
 import { LlmLoggingService } from "../llm-logging/llm-logging.service";
-import { HtmlPptAgentService } from "./html-ppt-agent.service";
 import type { HtmlPptAgentCheckpoint, HtmlPptAgentFailureRecord, HtmlPptAgentProgress, ResearchPack } from "./html-ppt-agent.types";
+import {
+  deckIrSchema,
+  type AssetIR,
+  type ChoreographyIR,
+  type DeckIR,
+  type DesignSystemIR,
+  type EvidencePack,
+  type IntentIR,
+  type LayoutPlanIR,
+  type NarrativeIR,
+  type SlotFillIR
+} from "./html-ppt-v2/ir";
+import {
+  compactDeckForRenderVerification,
+  HtmlPptV2JsonModelClient,
+  type RenderRemediationTrace,
+  type HtmlPptV2PublishResult,
+  type HtmlPptV2PublishTrace
+} from "./html-ppt-v2/orchestration";
+import { DeckRendererService } from "./html-ppt-v2/renderer";
+import { normalizeTemplatePackageId, resolveTemplatePackageSelection, SkillRegistryService, templatePackageSchema, type SkillRegistry, type TemplatePackage } from "./html-ppt-v2/registry";
+import {
+  runAssetStage,
+  runAuxiliaryArtifactsStage,
+  runChoreographyStage,
+  runCriticStage,
+  runDesignStage,
+  runEvidenceStage,
+  runIntentStage,
+  runLayoutPlanStage,
+  runNarrativeStage,
+  runRenderVerificationStage,
+  runSlotFillStage,
+  runTemplateSelectionStage,
+  type AuxiliaryArtifactsStageResult,
+  type RenderVerificationIssue,
+  type RenderVerificationReport,
+  type TemplateSelectionResult
+} from "./html-ppt-v2/stages";
 import { HTML_PPT_SKILL_PROMPT } from "./html-ppt-skill.prompt";
-import { findWorkspaceRoot, indexSkillAssets } from "./skill-asset-indexer";
-import { join, resolve } from "node:path";
+import { findWorkspaceRoot } from "./skill-asset-indexer";
+import { basename, join, resolve } from "node:path";
 import type {
   CreatePptProjectInput,
   PptGenerationOrchestration,
@@ -27,6 +67,7 @@ import type {
   PptDeckCreativeStyle,
   PptDeckCreativeSlideStyle,
   PptDeckLayout,
+  PptDeckRender,
   PptDeckSlide,
   PptDeckSlideType,
   PptDeckSpec,
@@ -142,6 +183,55 @@ type DeckProgressUpdate = {
   generationStatus: "running" | "completed" | "failed";
   checkpoint?: DeckResumeCheckpoint;
   agentCheckpoint?: HtmlPptAgentCheckpoint;
+  v2Checkpoint?: HtmlPptV2ChatCheckpoint;
+};
+type DeckPipeline = "v1" | "v2";
+type HtmlPptV2ResumeStage =
+  | "01-intent"
+  | "01b-template-select"
+  | "02-evidence"
+  | "03-narrative"
+  | "04-design"
+  | "05-layout"
+  | "06-slots"
+  | "07-assets"
+  | "08-choreography"
+  | "09-critic"
+  | "10-render"
+  | "11-verify"
+  | "12-artifacts"
+  | "13-publish"
+  | "completed";
+type HtmlPptV2TraceCheckpoint = Partial<HtmlPptV2PublishTrace> & {
+  stageAttempts: Record<string, number>;
+  modelCalls: number;
+  warnings: string[];
+};
+type HtmlPptV2ChatCheckpoint = {
+  version: "html-ppt-v2-checkpoint-v1";
+  sourceUserMessageId: string;
+  projectName: string;
+  pendingUserMessage: PptMessageDto;
+  context: { summaryText: string; recentMessages: PptMessageDto[] };
+  nextStage: HtmlPptV2ResumeStage;
+  deckId: string;
+  outputDir: string;
+  registryHash?: string;
+  intent?: IntentIR;
+  templateSelection?: TemplateSelectionResult;
+  evidence?: EvidencePack;
+  narrative?: NarrativeIR;
+  design?: DesignSystemIR;
+  layoutPlan?: LayoutPlanIR;
+  slots?: SlotFillIR;
+  assets?: AssetIR;
+  choreography?: ChoreographyIR;
+  deckBeforeCritic?: DeckIR;
+  deck?: DeckIR;
+  verification?: RenderVerificationReport;
+  auxiliary?: AuxiliaryArtifactsStageResult;
+  trace: HtmlPptV2TraceCheckpoint;
+  updatedAt: string;
 };
 type DeckGenerationJob = {
   userId: number;
@@ -150,9 +240,11 @@ type DeckGenerationJob = {
   context: { summaryText: string; recentMessages: PptMessageDto[] };
   pendingUserMessage: PptMessageDto;
   assistantMessageId: string;
+  pipeline?: DeckPipeline;
   resume?: {
     checkpoint?: DeckResumeCheckpoint;
     agentCheckpoint?: HtmlPptAgentCheckpoint;
+    v2Checkpoint?: HtmlPptV2ChatCheckpoint;
     orchestration?: PptGenerationOrchestration;
   };
 };
@@ -166,6 +258,43 @@ class DeckOrchestrationError extends Error {
     super(message);
     this.name = "DeckOrchestrationError";
   }
+}
+
+function extractHtmlSections(html: string): string[] {
+  const sections: string[] = [];
+  for (const match of html.matchAll(/<section\b[\s\S]*?<\/section>/gi)) {
+    const section = match[0]
+      .replace(/<script\b[\s\S]*?<\/script>/gi, "")
+      .replace(/\sdata-notes="[^"]*"/gi, "");
+    sections.push(section);
+  }
+  return sections;
+}
+
+function defaultRenderRemediationTrace(): RenderRemediationTrace {
+  return {
+    attempted: false,
+    accepted: false,
+    slideIndexes: [],
+    before: { hardIssueCount: 0, warningCount: 0 },
+    reason: "not-run"
+  };
+}
+
+function v2VerificationIssueCounts(report: RenderVerificationReport) {
+  return {
+    hardIssueCount: report.summary.hardIssueCount,
+    warningCount: report.summary.warningCount
+  };
+}
+
+function v2VerificationImproved(
+  before: { hardIssueCount: number; warningCount: number },
+  after: { hardIssueCount: number; warningCount: number }
+) {
+  const beforeScore = before.hardIssueCount * 100 + before.warningCount;
+  const afterScore = after.hardIssueCount * 100 + after.warningCount;
+  return afterScore < beforeScore;
 }
 
 class HtmlPptAgentResumeError extends Error {
@@ -269,13 +398,34 @@ const ALLOWED_DECK_FX = new Set([
 @Injectable()
 export class PptChatService {
   private readonly logger = new Logger(PptChatService.name);
+  private readonly htmlPptV2Renderer = new DeckRendererService();
+  private readonly htmlPptRendererService: Pick<HtmlPptRendererService, "getCreativeStyleCatalog" | "renderDeck"> = {
+    getCreativeStyleCatalog: () => {
+      throw new ServiceUnavailableException("HTML-PPT legacy v1 renderer is disabled; use the v2 registry and renderer.");
+    },
+    renderDeck: async () => {
+      throw new ServiceUnavailableException("HTML-PPT legacy v1 renderer is disabled; use the v2 registry and renderer.");
+    }
+  };
+  private readonly htmlPptAgentService = {
+    generateDeck: async (..._args: unknown[]): Promise<{
+      deckSpec: PptDeckSpec;
+      deckRender: PptDeckRender;
+      orchestration: PptGenerationOrchestration;
+      checkpoint?: HtmlPptAgentCheckpoint;
+    }> => {
+      throw new ServiceUnavailableException("HTML-PPT legacy v1 generation is disabled; new traffic is routed to v2.");
+    },
+    prepareCheckpointForAdopt: async (_checkpoint: HtmlPptAgentCheckpoint): Promise<HtmlPptAgentCheckpoint> => {
+      throw new BadRequestException("HTML-PPT legacy v1 adoption is disabled; resume the v2 generation instead.");
+    }
+  };
 
   constructor(
     @Inject(DatabaseService) private readonly databaseService: DatabaseService,
-    @Inject(HtmlPptRendererService) private readonly htmlPptRendererService: HtmlPptRendererService,
     @Inject(LlmConfigService) private readonly llmConfigService: LlmConfigService,
-    @Inject(HtmlPptAgentService) private readonly htmlPptAgentService: HtmlPptAgentService,
-    @Inject(LlmLoggingService) private readonly llmLoggingService: LlmLoggingService
+    @Inject(LlmLoggingService) private readonly llmLoggingService: LlmLoggingService,
+    @Inject(SkillRegistryService) private readonly htmlPptV2RegistryService: SkillRegistryService
   ) {}
 
   async listProjects(userId: number): Promise<PptProjectSummary[]> {
@@ -296,6 +446,7 @@ export class PptChatService {
     const projectId = randomUUID();
     const name = await this.resolveNewProjectName(userId, this.normalizeOptionalString(input.name));
     const templateId = this.normalizeOptionalString(input.templateId);
+    await this.assertKnownV2TemplateId(templateId);
 
     const result = await this.databaseService.query<ProjectRow>(
       `
@@ -351,6 +502,7 @@ export class PptChatService {
       input.templateId === null || input.templateId === ""
         ? null
         : this.normalizeOptionalString(input.templateId) ?? project.template_id;
+    await this.assertKnownV2TemplateId(nextTemplateId);
 
     const result = await this.databaseService.query<ProjectRow>(
       `
@@ -377,10 +529,118 @@ export class PptChatService {
   }
 
   async listTemplates() {
-    // Resolve skill root using the workspace root helper
-    const skillRoot = join(findWorkspaceRoot(), ".agents/skills/html-ppt");
-    const manifest = await indexSkillAssets(skillRoot);
-    return manifest.fullDecks;
+    const registry = await this.htmlPptV2RegistryService.hydrate();
+    const templateEntries = await Promise.all(registry.templatePackages.map(async (template) => {
+      const donor = registry.donors.find((item) => item.id === template.donorTemplateId);
+      const previewSlides = donor ? await this.readTemplatePreviewSlides(donor.dir) : [];
+      return {
+        id: template.id,
+        label: template.label["zh-CN"],
+        labelI18n: template.label,
+        description: template.description["zh-CN"],
+        descriptionI18n: template.description,
+        emoji: this.templateEmoji(template.id),
+        desc: template.description["zh-CN"],
+        donorTemplateId: template.donorTemplateId,
+        themeId: template.themeId,
+        themeAlternates: template.themeAlternates,
+        layoutPolicy: template.layoutPolicy,
+        audienceFit: template.audienceFit,
+        formatFit: template.formatFit,
+        toneFit: template.toneFit,
+        defaultDensity: template.defaultDensity,
+        defaultSlideCount: template.defaultSlideCount,
+        thumbnailFile: template.thumbnailFile,
+        aspectRatio: template.aspectRatio,
+        rendererProfile: template.rendererProfile,
+        isAuto: false,
+        deckClass: template.deckClass,
+        previewCss: donor?.css,
+        previewSlides
+      };
+    }));
+
+    return [
+      {
+        id: "auto",
+        label: "灵活模板",
+        labelI18n: { "zh-CN": "灵活模板", en: "Flexible Template" },
+        description: "由系统根据主题、受众和格式自动选择最合适的模板。",
+        descriptionI18n: {
+          "zh-CN": "由系统根据主题、受众和格式自动选择最合适的模板。",
+          en: "The system selects the best template from your topic, audience, and format."
+        },
+        emoji: "AUTO",
+        desc: "自动选择最匹配模板",
+        donorTemplateId: null,
+        themeId: null,
+        themeAlternates: [],
+        layoutPolicy: null,
+        audienceFit: [],
+        formatFit: [],
+        toneFit: [],
+        defaultDensity: "balanced",
+        defaultSlideCount: 10,
+        thumbnailFile: null,
+        aspectRatio: null,
+        rendererProfile: null,
+        isAuto: true,
+        deckClass: undefined,
+        previewCss: undefined,
+        previewSlides: []
+      },
+      ...templateEntries
+    ];
+  }
+
+  private async readTemplatePreviewSlides(templateDir: string) {
+    const html = await readFile(resolve(templateDir, "index.html"), "utf8").catch(() => "");
+    return extractHtmlSections(html);
+  }
+
+  private templateEmoji(templateId: string) {
+    const mapping: Record<string, string> = {
+      "pitch-deck": "VC",
+      "product-launch": "PL",
+      "tech-sharing": "TS",
+      "weekly-report": "WR",
+      "course-module": "EDU",
+      "xhs-post": "XHS",
+      "presenter-mode-reveal": "PM",
+      "xhs-white-editorial": "WE",
+      "graphify-dark-graph": "GD",
+      "knowledge-arch-blueprint": "BP",
+      "hermes-cyber-terminal": "CT",
+      "obsidian-claude-gradient": "OG",
+      "xhs-pastel-card": "XP",
+      "dir-key-nav-minimal": "NAV",
+      "testing-safety-alert": "SA"
+    };
+    return mapping[templateId] ?? "TPL";
+  }
+
+  private normalizeV2TemplateId(templateId?: string | null) {
+    return normalizeTemplatePackageId(templateId);
+  }
+
+  private resolvePinnedV2Template(registry: SkillRegistry, templateId?: string | null): TemplatePackage | undefined {
+    const resolution = resolveTemplatePackageSelection(registry, templateId);
+    if (resolution.kind === "auto") {
+      return undefined;
+    }
+    if (resolution.kind === "unknown") {
+      throw new BadRequestException(`未知的 HTML-PPT v2 模板：${resolution.templateId}。请重新选择模板或使用 Auto。`);
+    }
+    return resolution.template;
+  }
+
+  private async assertKnownV2TemplateId(templateId?: string | null) {
+    const normalized = this.normalizeV2TemplateId(templateId);
+    if (!normalized) {
+      return;
+    }
+    const registry = await this.htmlPptV2RegistryService.hydrate();
+    this.resolvePinnedV2Template(registry, normalized);
   }
 
   async listMessages(userId: number, projectId: string): Promise<PptMessageDto[]> {
@@ -403,6 +663,10 @@ export class PptChatService {
     const content = this.normalizeRequiredString(input.content, "content");
     const files = this.normalizeFiles(input.files);
     const template = this.normalizeTemplate(input.template, project.template_id);
+    const shouldGenerateDeckSpec = this.shouldGenerateDeckSpec(content);
+    if (shouldGenerateDeckSpec) {
+      await this.assertKnownV2TemplateId(template?.id ?? project.template_id);
+    }
     const userMessageId = randomUUID();
     const pendingUserMessage: PptMessageDto = {
       id: userMessageId,
@@ -425,10 +689,14 @@ export class PptChatService {
     await this.databaseService.query("UPDATE ppt_projects SET updated_at = NOW() WHERE id = $1", [projectId]);
 
     const assistantMessageId = randomUUID();
-    const shouldGenerateDeckSpec = this.shouldGenerateDeckSpec(content);
+    const pipeline: DeckPipeline = "v2";
 
     if (shouldGenerateDeckSpec) {
-      const orchestration = await this.createQueuedDeckOrchestration();
+      const orchestration = await this.createQueuedDeckOrchestration(undefined, {
+        version: "orchestrator-v2",
+        name: "00 v2 后台任务排队",
+        detail: "已创建 HTML-PPT v2 IR 编排任务，等待执行结构化生成。"
+      });
       await this.insertAssistantMessage(
         projectId,
         assistantMessageId,
@@ -436,6 +704,7 @@ export class PptChatService {
         {
           orchestration,
           generationStatus: "running",
+          pipeline: "html-ppt-v2",
           sourceUserMessageId: userMessageId
         }
       );
@@ -447,7 +716,8 @@ export class PptChatService {
         projectName: project.name,
         context,
         pendingUserMessage,
-        assistantMessageId
+        assistantMessageId,
+        pipeline
       });
 
       return {
@@ -503,13 +773,13 @@ export class PptChatService {
 
   private async createQueuedDeckOrchestration(
     base?: PptGenerationOrchestration | null,
-    options?: { name?: string; detail?: string }
+    options?: { name?: string; detail?: string; version?: string }
   ): Promise<PptGenerationOrchestration> {
     const activeConfig = base ? null : await this.llmConfigService.getActiveConfig();
     const now = new Date().toISOString();
     const previousSteps = (base?.steps ?? []).filter((step) => step.status !== "running");
     return {
-      version: base?.version ?? "orchestrator-v1",
+      version: base?.version ?? options?.version ?? "orchestrator-v1",
       model: base?.model ?? activeConfig?.model ?? "unknown",
       startedAt: base?.startedAt ?? now,
       finishedAt: now,
@@ -549,8 +819,10 @@ export class PptChatService {
 
   private async runDeckGenerationJob(job: DeckGenerationJob) {
     let currentMeta: Record<string, unknown> = (await this.getMessageMeta(job.assistantMessageId)) ?? {};
-    let generationCheckpoint = job.resume?.checkpoint ?? this.normalizeStoredGenerationCheckpoint(currentMeta.generationCheckpoint);
-    let agentCheckpoint = job.resume?.agentCheckpoint ?? this.normalizeStoredAgentCheckpoint(currentMeta.agentCheckpoint);
+    let generationCheckpoint: DeckResumeCheckpoint | null = null;
+    let agentCheckpoint: HtmlPptAgentCheckpoint | null = null;
+    let v2Checkpoint = job.resume?.v2Checkpoint ?? this.normalizeStoredV2Checkpoint(currentMeta.v2Checkpoint);
+    const pipeline: DeckPipeline = "v2";
 
     const updateAssistantMessage = async (contentValue: string, metaValue: Record<string, unknown>) => {
       currentMeta = metaValue;
@@ -558,14 +830,14 @@ export class PptChatService {
     };
 
     let generatedDeckSpec: PptDeckSpec | null = null;
-    let generatedDeckRender: { deckId: string; title: string; previewUrl: string; downloadUrl: string; createdAt: string } | null = null;
+    let generatedDeckRender: PptDeckRender | null = null;
     let orchestration: PptGenerationOrchestration | null =
       job.resume?.orchestration ?? this.normalizeStoredOrchestration(currentMeta.orchestration) ?? null;
     let generationError: string | null = null;
     let assistantContent = "";
 
     try {
-      const result = await this.orchestrateDeckGeneration(
+      const result = await this.orchestrateDeckGenerationV2(
         job.userId,
         job.projectId,
         job.assistantMessageId,
@@ -573,14 +845,13 @@ export class PptChatService {
         job.context,
         job.pendingUserMessage,
         async (progress) => {
-          generationCheckpoint = progress.checkpoint ?? generationCheckpoint;
-          agentCheckpoint = progress.agentCheckpoint ?? agentCheckpoint;
+          v2Checkpoint = progress.v2Checkpoint ?? v2Checkpoint;
           await updateAssistantMessage(progress.content, {
             ...currentMeta,
             orchestration: progress.orchestration,
             generationStatus: progress.generationStatus,
-            generationCheckpoint,
-            agentCheckpoint,
+            v2Checkpoint,
+            pipeline: "html-ppt-v2",
             sourceUserMessageId: job.pendingUserMessage.id
           });
           await this.databaseService.query("UPDATE ppt_projects SET updated_at = NOW() WHERE id = $1", [job.projectId]);
@@ -590,7 +861,6 @@ export class PptChatService {
       generatedDeckSpec = result.deckSpec;
       generatedDeckRender = result.deckRender;
       orchestration = result.orchestration;
-      generationCheckpoint = result.checkpoint ?? null;
       assistantContent = this.formatDeckSpecAssistantMessage(result.deckSpec, result.deckRender, result.orchestration);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Deck 编排执行失败。";
@@ -609,6 +879,7 @@ export class PptChatService {
 
     const assistantMeta: Record<string, unknown> = {
       ...currentMeta,
+      pipeline: "html-ppt-v2",
       sourceUserMessageId: job.pendingUserMessage.id
     };
     if (generatedDeckSpec) {
@@ -626,6 +897,9 @@ export class PptChatService {
     if (agentCheckpoint) {
       assistantMeta.agentCheckpoint = agentCheckpoint;
     }
+    if (v2Checkpoint) {
+      assistantMeta.v2Checkpoint = v2Checkpoint;
+    }
     if (generationError) {
       assistantMeta.generationError = generationError;
     } else {
@@ -635,6 +909,7 @@ export class PptChatService {
     if (!generationError) {
       delete assistantMeta.generationCheckpoint;
       delete assistantMeta.agentCheckpoint;
+      delete assistantMeta.v2Checkpoint;
     }
 
     await updateAssistantMessage(assistantContent, assistantMeta);
@@ -678,6 +953,7 @@ export class PptChatService {
     }
 
     const originalMeta = assistantRow.meta ?? {};
+    const resumeMode = this.normalizeResumeMode(input.mode);
     const currentStatus = this.normalizeOptionalString(originalMeta.generationStatus);
     const existingOrchestration = this.normalizeStoredOrchestration(originalMeta.orchestration);
     const staleRunning = currentStatus === "running" && this.isStaleRunningOrchestration(existingOrchestration);
@@ -685,7 +961,8 @@ export class PptChatService {
       throw new BadRequestException("当前任务仍在运行中，不能重复继续。");
     }
 
-    if (this.normalizeStoredDeckRender(originalMeta.deckRender)) {
+    const completedDeckRender = this.normalizeStoredDeckRender(originalMeta.deckRender);
+    if (completedDeckRender && resumeMode !== "template") {
       throw new BadRequestException("该任务已经完成，无需继续生成。");
     }
 
@@ -696,68 +973,85 @@ export class PptChatService {
       originalMeta.generationError = this.staleRunningMessage();
     }
 
-    let generationCheckpoint = this.normalizeStoredGenerationCheckpoint(originalMeta.generationCheckpoint);
-    let agentCheckpoint = this.normalizeStoredAgentCheckpoint(originalMeta.agentCheckpoint);
-    const resumeMode = this.normalizeOptionalString(input.mode)?.toLowerCase() === "adopt" ? "adopt" : "resume";
-    let adoptQueueName = "00 采用结果并跳过 QA";
-    let adoptQueueDetail = "已采用当前导出结果，下一步将跳过 QA 继续完成收尾。";
-    let adoptProgressDetail = "已采用当前结果，将跳过 QA 并继续完成编排。";
-    if (resumeMode === "adopt") {
-      if (!agentCheckpoint) {
-        throw new BadRequestException("当前没有可采用的后台编排 checkpoint。");
-      }
-      try {
-        agentCheckpoint = await this.htmlPptAgentService.prepareCheckpointForAdopt(agentCheckpoint);
-      } catch (error) {
-        throw new BadRequestException(error instanceof Error ? error.message : "当前无法采用。");
-      }
-      if (agentCheckpoint.nextStage === "06-generate-style") {
-        adoptQueueName = "00 采用当前 index 草稿";
-        adoptQueueDetail = "已采用当前 05 阶段草稿，下一步将继续生成 style.css。";
-        adoptProgressDetail = "已采用当前 05 阶段草稿，将继续生成 style.css。";
-      }
-    }
+    let v2Checkpoint = this.normalizeStoredV2Checkpoint(originalMeta.v2Checkpoint);
+    const pipeline: DeckPipeline = "v2";
     const sourceUserMessage = await this.resolveSourceUserMessage(
       projectId,
       assistantRow,
-      agentCheckpoint?.sourceUserMessageId ??
-        generationCheckpoint?.sourceUserMessageId ??
-        this.normalizeOptionalString(originalMeta.sourceUserMessageId)
+      v2Checkpoint?.sourceUserMessageId ?? this.normalizeOptionalString(originalMeta.sourceUserMessageId)
     );
-    const pendingUserMessage = agentCheckpoint?.pendingUserMessage ?? generationCheckpoint?.pendingUserMessage ?? this.mapMessage(sourceUserMessage);
-    const context = await this.buildConversationContextBeforeMessage(userId, projectId, sourceUserMessage);
+    let pendingUserMessage =
+      v2Checkpoint?.pendingUserMessage ??
+      this.mapMessage(sourceUserMessage);
+    let context = v2Checkpoint?.context ?? await this.buildConversationContextBeforeMessage(userId, projectId, sourceUserMessage);
+    let queueName = "00 v2 后台任务恢复排队";
+    let queueDetail = "已恢复 HTML-PPT v2 编排任务，等待后台重新执行结构化生成。";
+
+    if (resumeMode === "template") {
+      if (!completedDeckRender?.outputDir) {
+        throw new BadRequestException("该消息缺少可复用的 v2 输出目录，无法按新模板重跑。");
+      }
+      const registry = await this.htmlPptV2RegistryService.hydrate();
+      const templateId = this.normalizeV2TemplateId(this.normalizeOptionalString(input.templateId));
+      const pinnedTemplate = this.resolvePinnedV2Template(registry, templateId);
+      if (!templateId || !pinnedTemplate) {
+        throw new BadRequestException("请先选择一个有效的非 Auto v2 模板。");
+      }
+      const deck = await this.readV2DeckIrFromRender(completedDeckRender);
+      const templateMessage = this.messageTemplateFromPackage(pinnedTemplate);
+      pendingUserMessage = {
+        ...pendingUserMessage,
+        template: templateMessage
+      };
+      context = await this.buildConversationContextBeforeMessage(userId, projectId, sourceUserMessage);
+      v2Checkpoint = this.buildV2TemplateRerunCheckpoint({
+        sourceUserMessageId: pendingUserMessage.id,
+        projectName: project.name,
+        pendingUserMessage,
+        context,
+        deck,
+        registry,
+        pinnedTemplate,
+        outputRoot: this.htmlPptV2UserDeckRoot(userId)
+      });
+      queueName = "00 v2 模板重跑排队";
+      queueDetail = `已选择模板 ${pinnedTemplate.label["zh-CN"]}，将复用前 3 阶段内容并从 04 Design 重新生成。`;
+      await this.databaseService.query("UPDATE ppt_projects SET template_id = $2, updated_at = NOW() WHERE id = $1", [projectId, templateId]);
+    }
+
     const orchestration = await this.createQueuedDeckOrchestration(
       existingOrchestration,
-      resumeMode === "adopt"
-        ? {
-            name: adoptQueueName,
-            detail: adoptQueueDetail
-          }
-        : {
-            name: "00 后台任务恢复排队",
-            detail: "已恢复未完成编排任务，等待后台继续执行。"
-          }
+      {
+        version: "orchestrator-v2",
+        name: queueName,
+        detail: queueDetail
+      }
     );
     const assistantMeta: Record<string, unknown> = {
       ...originalMeta,
       orchestration,
       generationStatus: "running",
+      pipeline: "html-ppt-v2",
       sourceUserMessageId: pendingUserMessage.id
     };
-    if (generationCheckpoint) {
-      assistantMeta.generationCheckpoint = generationCheckpoint;
-    }
-    if (agentCheckpoint) {
-      assistantMeta.agentCheckpoint = agentCheckpoint;
+    if (v2Checkpoint) {
+      assistantMeta.v2Checkpoint = v2Checkpoint;
     }
     delete assistantMeta.generationError;
+    if (resumeMode === "template") {
+      delete assistantMeta.deckSpec;
+      delete assistantMeta.deckRender;
+      delete assistantMeta.generationCheckpoint;
+      delete assistantMeta.agentCheckpoint;
+      assistantMeta.template = pendingUserMessage.template;
+    }
 
     await this.updateAssistantMessage(
       messageId,
       this.formatDeckProgressMessage(
-        resumeMode === "adopt"
-          ? adoptProgressDetail
-          : "已重新进入后台编排队列，页面会自动刷新进度。",
+        resumeMode === "template"
+          ? "已进入 HTML-PPT v2 模板重跑队列，页面会自动刷新进度。"
+          : "已重新进入 HTML-PPT v2 后台编排队列，页面会自动刷新进度。",
         orchestration,
         "running"
       ),
@@ -772,9 +1066,9 @@ export class PptChatService {
       context,
       pendingUserMessage,
       assistantMessageId: messageId,
+      pipeline,
       resume: {
-        checkpoint: generationCheckpoint ?? undefined,
-        agentCheckpoint: agentCheckpoint ?? undefined,
+        v2Checkpoint: v2Checkpoint ?? undefined,
         orchestration
       }
     });
@@ -783,6 +1077,548 @@ export class PptChatService {
       project: this.mapProject(await this.getOwnedProject(userId, projectId)),
       messages: await this.listMessages(userId, projectId)
     };
+  }
+
+  private async orchestrateDeckGenerationV2(
+    userId: number,
+    projectId: string,
+    assistantMessageId: string,
+    projectName: string,
+    context: { summaryText: string; recentMessages: PptMessageDto[] },
+    pendingUserMessage: PptMessageDto,
+    onProgress?: (progress: DeckProgressUpdate) => Promise<void>,
+    resume?: {
+      v2Checkpoint?: HtmlPptV2ChatCheckpoint;
+      orchestration?: PptGenerationOrchestration;
+    }
+  ): Promise<{
+    deckSpec: PptDeckSpec;
+    deckRender: PptDeckRender;
+    orchestration: PptGenerationOrchestration;
+    checkpoint?: undefined;
+  }> {
+    const activeConfig = await this.llmConfigService.getActiveConfig();
+    const registry = await this.htmlPptV2RegistryService.hydrate();
+    const selectedTemplateId = this.normalizeV2TemplateId(pendingUserMessage.template?.id);
+    const requestedPinnedTemplate = this.resolvePinnedV2Template(registry, selectedTemplateId);
+    const startedAt = resume?.orchestration?.startedAt ?? new Date().toISOString();
+    const steps: PptGenerationStep[] = (resume?.orchestration?.steps ?? [])
+      .filter((step) => step.status !== "running")
+      .map((step, index) => ({ ...step, id: step.id || `step-${index + 1}` }));
+    const checkpoint = resume?.v2Checkpoint?.registryHash === registry.hash ? resume.v2Checkpoint : undefined;
+    const outputRoot = this.htmlPptV2UserDeckRoot(userId);
+    let deckId = checkpoint?.deckId ?? randomUUID();
+    let outputDir = checkpoint?.outputDir ?? resolve(outputRoot, deckId);
+    let nextStage: HtmlPptV2ResumeStage = checkpoint?.nextStage ?? "01-intent";
+    let intent = checkpoint?.intent;
+    let templateSelection = checkpoint?.templateSelection;
+    let selectedTemplate = templateSelection?.selectedTemplate ?? requestedPinnedTemplate;
+    let evidence = checkpoint?.evidence;
+    let narrative = checkpoint?.narrative;
+    let design = checkpoint?.design;
+    let layoutPlan = checkpoint?.layoutPlan;
+    let slots = checkpoint?.slots;
+    let assets = checkpoint?.assets;
+    let choreography = checkpoint?.choreography;
+    let deckBeforeCritic = checkpoint?.deckBeforeCritic;
+    let deck = checkpoint?.deck;
+    let verification = checkpoint?.verification;
+    let auxiliary = checkpoint?.auxiliary;
+    if (!templateSelection && nextStage !== "01-intent" && selectedTemplate) {
+      templateSelection = {
+        selectedTemplate,
+        source: requestedPinnedTemplate ? "pinned" : "auto-deterministic",
+        attempts: 0,
+        shortlist: [{
+          id: selectedTemplate.id,
+          deterministicScore: requestedPinnedTemplate ? 999 : 0,
+          reason: requestedPinnedTemplate ? "Recovered explicit pinned template on resume." : "Recovered selected template on resume."
+        }],
+        rationale: requestedPinnedTemplate ? `Recovered pinned template '${selectedTemplate.id}'.` : `Recovered selected template '${selectedTemplate.id}'.`,
+        confidence: requestedPinnedTemplate ? "high" : "medium",
+        validationErrors: []
+      };
+    }
+    if (!templateSelection && nextStage !== "01-intent") {
+      nextStage = intent ? "01b-template-select" : "01-intent";
+    }
+    const checkpointTrace = checkpoint?.trace;
+    const trace: HtmlPptV2TraceCheckpoint = {
+      ...checkpointTrace,
+      stageAttempts: {
+        intent: 0,
+        templateSelection: 0,
+        evidence: 0,
+        narrative: 0,
+        design: 0,
+        layoutPlan: 0,
+        slotFill: 0,
+        critic: 0,
+        ...(checkpointTrace?.stageAttempts ?? {})
+      },
+      modelCalls: checkpointTrace?.modelCalls ?? 0,
+      warnings: [...(checkpointTrace?.warnings ?? [])],
+      renderRemediation: checkpointTrace?.renderRemediation ?? defaultRenderRemediationTrace()
+    };
+    let currentRunningStep: PptGenerationStep | null = null;
+    let currentRunningStepModelCallStart = trace.modelCalls;
+
+    const stepDurationMs = (startedAtValue: string, endedAtValue: string) => {
+      const start = Date.parse(startedAtValue);
+      const end = Date.parse(endedAtValue);
+      return Number.isFinite(start) && Number.isFinite(end) ? Math.max(0, end - start) : 0;
+    };
+
+    const observedRunningStep = () => {
+      if (!currentRunningStep) return null;
+      const now = new Date().toISOString();
+      const modelCalls = Math.max(0, trace.modelCalls - currentRunningStepModelCallStart);
+      return {
+        ...currentRunningStep,
+        endedAt: now,
+        durationMs: stepDurationMs(currentRunningStep.startedAt, now),
+        modelCalls,
+        retryCount: Math.max(0, modelCalls - 1)
+      };
+    };
+
+    try {
+      const model = new HtmlPptV2JsonModelClient({
+        config: activeConfig,
+        userId,
+        projectId,
+        messageId: assistantMessageId,
+        logger: this.logger,
+        loggingService: this.llmLoggingService
+      });
+
+      const buildCheckpoint = (): HtmlPptV2ChatCheckpoint => ({
+        version: "html-ppt-v2-checkpoint-v1",
+        sourceUserMessageId: pendingUserMessage.id,
+        projectName,
+        pendingUserMessage,
+        context,
+        nextStage,
+        deckId,
+        outputDir,
+        registryHash: registry.hash,
+        intent,
+        templateSelection,
+        evidence,
+        narrative,
+        design,
+        layoutPlan,
+        slots,
+        assets,
+        choreography,
+        deckBeforeCritic,
+        deck,
+        verification,
+        auxiliary,
+        trace,
+        updatedAt: new Date().toISOString()
+      });
+      const progressOrchestration = (): PptGenerationOrchestration => ({
+        version: "orchestrator-v2",
+        model: activeConfig.model,
+        startedAt,
+        finishedAt: new Date().toISOString(),
+        totalModelCalls: trace.modelCalls,
+        steps: currentRunningStep ? [...steps, observedRunningStep()!]
+          : steps
+      });
+      const publishProgress = async (detail: string, status: DeckProgressUpdate["generationStatus"]) => {
+        await onProgress?.({
+          content: this.formatDeckProgressMessage(detail, progressOrchestration(), status),
+          orchestration: progressOrchestration(),
+          generationStatus: status,
+          v2Checkpoint: buildCheckpoint()
+        });
+      };
+
+      const runStep = async <T>(
+        stage: HtmlPptV2ResumeStage,
+        name: string,
+        next: HtmlPptV2ResumeStage,
+        action: () => Promise<{ value: T; detail: string }>
+      ): Promise<T> => {
+        const stepStart = new Date().toISOString();
+        currentRunningStepModelCallStart = trace.modelCalls;
+        currentRunningStep = {
+          id: `step-${steps.length + 1}`,
+          name,
+          status: "running",
+          startedAt: stepStart,
+          endedAt: stepStart,
+          detail: `正在执行 ${name}，完成后会写入 v2 checkpoint。`,
+          durationMs: 0,
+          modelCalls: 0,
+          retryCount: 0
+        };
+        nextStage = stage;
+        await publishProgress(`${name} 进行中。`, "running");
+        try {
+          const result = await action();
+          const endedAt = new Date().toISOString();
+          const modelCalls = Math.max(0, trace.modelCalls - currentRunningStepModelCallStart);
+          currentRunningStep = null;
+          steps.push({
+            id: `step-${steps.length + 1}`,
+            name,
+            status: "completed",
+            startedAt: stepStart,
+            endedAt,
+            detail: result.detail,
+            durationMs: stepDurationMs(stepStart, endedAt),
+            modelCalls,
+            retryCount: Math.max(0, modelCalls - 1)
+          });
+          nextStage = next;
+          await publishProgress(result.detail, "running");
+          return result.value;
+        } catch (error) {
+          const endedAt = new Date().toISOString();
+          const modelCalls = Math.max(0, trace.modelCalls - currentRunningStepModelCallStart);
+          const failureReason = error instanceof Error ? error.message : `${name} 失败。`;
+          currentRunningStep = null;
+          steps.push({
+            id: `step-${steps.length + 1}`,
+            name,
+            status: "failed",
+            startedAt: stepStart,
+            endedAt,
+            detail: failureReason,
+            durationMs: stepDurationMs(stepStart, endedAt),
+            modelCalls,
+            retryCount: Math.max(0, modelCalls - 1),
+            failureReason
+          });
+          await publishProgress(failureReason, "failed");
+          throw error;
+        }
+      };
+
+      await publishProgress(
+        checkpoint
+          ? `已读取 v2 checkpoint，准备从 ${nextStage} 继续。`
+          : "v2 IR 编排已启动。",
+        "running"
+      );
+
+      if (!intent || nextStage === "01-intent") {
+        const result = await runStep("01-intent", "01 Intent", "01b-template-select", async () => {
+          const value = await runIntentStage({
+            userPrompt: pendingUserMessage.content,
+            conversationContext: this.v2ConversationContext(context),
+            userPreferences: { projectName, templateId: selectedTemplateId ?? "auto" },
+            model
+          });
+          intent = value.intent;
+          trace.intentSource = value.source;
+          trace.stageAttempts.intent = value.attempts;
+          trace.modelCalls += value.attempts;
+          return { value: value.intent, detail: `Intent 完成：${value.intent.topic}，${value.intent.derivedSlideCount} 页。` };
+        });
+        intent = result;
+      }
+
+      if (!templateSelection || nextStage === "01b-template-select") {
+        if (!intent) throw new ServiceUnavailableException("缺少 IntentIR，无法执行 Template Select。");
+        const result = await runStep("01b-template-select", "01b Template Select", "02-evidence", async () => {
+          const value = await runTemplateSelectionStage({
+            intent: intent!,
+            registry,
+            rawPrompt: pendingUserMessage.content,
+            pinnedTemplate: requestedPinnedTemplate,
+            model
+          });
+          templateSelection = value;
+          selectedTemplate = value.selectedTemplate;
+          trace.templateSelectionSource = value.source;
+          trace.templateSelection = this.v2TemplateSelectionTrace(value);
+          trace.stageAttempts.templateSelection = value.attempts;
+          trace.modelCalls += value.attempts;
+          trace.warnings.push(...value.validationErrors.map((issue) => `template-select: ${issue}`));
+          return {
+            value,
+            detail: `Template Select 完成：source=${value.source}，template=${value.selectedTemplate.id}，shortlist=${value.shortlist.map((item) => item.id).join(", ")}。`
+          };
+        });
+        templateSelection = result;
+        selectedTemplate = result.selectedTemplate;
+      }
+
+      if (!evidence || nextStage === "02-evidence") {
+        if (!intent) throw new ServiceUnavailableException("缺少 IntentIR，无法执行 Evidence。");
+        const result = await runStep("02-evidence", "02 Evidence", "03-narrative", async () => {
+          const value = await runEvidenceStage({ intent: intent!, model });
+          evidence = value.evidence;
+          trace.evidenceSource = value.source;
+          trace.stageAttempts.evidence = value.attempts;
+          trace.modelCalls += value.attempts;
+          trace.warnings.push(...value.researchErrors);
+          return { value: value.evidence, detail: `Evidence 完成：${value.evidence.facts.length} facts，${value.evidence.dataPoints.length} data points。` };
+        });
+        evidence = result;
+      }
+
+      if (!narrative || nextStage === "03-narrative") {
+        if (!intent || !evidence) throw new ServiceUnavailableException("缺少 Intent/Evidence，无法执行 Narrative。");
+        const result = await runStep("03-narrative", "03 Narrative", "04-design", async () => {
+          const value = await runNarrativeStage({ intent: intent!, evidence: evidence!, model });
+          narrative = value.narrative;
+          trace.narrativeSource = value.source;
+          trace.stageAttempts.narrative = value.attempts;
+          trace.modelCalls += value.attempts;
+          return { value: value.narrative, detail: `Narrative 完成：${value.narrative.slides.length} slides，${value.narrative.totalEstimatedChars} chars。` };
+        });
+        narrative = result;
+      }
+
+      if (!design || nextStage === "04-design") {
+        if (!intent || !evidence || !narrative) throw new ServiceUnavailableException("缺少 Intent/Evidence/Narrative，无法执行 Design。");
+        const result = await runStep("04-design", "04 Design", "05-layout", async () => {
+          const value = await runDesignStage({ intent: intent!, evidence: evidence!, narrative: narrative!, registry, pinnedTemplate: selectedTemplate, model });
+          design = value.design;
+          trace.designSource = value.source;
+          trace.stageAttempts.design = value.attempts;
+          trace.modelCalls += value.attempts;
+          return { value: value.design, detail: `Design 完成：theme=${value.design.themeId}，donor=${value.design.donorTemplateId}。` };
+        });
+        design = result;
+      }
+
+      if (!layoutPlan || nextStage === "05-layout") {
+        if (!intent || !narrative || !design) throw new ServiceUnavailableException("缺少 Intent/Narrative/Design，无法执行 Layout。");
+        const result = await runStep("05-layout", "05 Layout", "06-slots", async () => {
+          const value = await runLayoutPlanStage({ intent: intent!, narrative: narrative!, design: design!, registry, pinnedTemplate: selectedTemplate, model });
+          layoutPlan = value.layoutPlan;
+          trace.layoutPlanSource = value.source;
+          trace.stageAttempts.layoutPlan = value.attempts;
+          trace.modelCalls += value.attempts;
+          return { value: value.layoutPlan, detail: `Layout 完成：${value.layoutPlan.map((item) => item.layoutId).join(", ")}。` };
+        });
+        layoutPlan = result;
+      }
+
+      if (!slots || nextStage === "06-slots") {
+        if (!intent || !evidence || !narrative || !design || !layoutPlan) throw new ServiceUnavailableException("缺少前置 IR，无法执行 Slots。");
+        const result = await runStep("06-slots", "06 Slots", "07-assets", async () => {
+          const value = await runSlotFillStage({ intent: intent!, evidence: evidence!, narrative: narrative!, design: design!, layoutPlan: layoutPlan!, model });
+          slots = value.slots;
+          trace.slotFillSource = value.source;
+          trace.stageAttempts.slotFill = value.attempts;
+          trace.modelCalls += value.attempts;
+          return { value: value.slots, detail: `Slots 完成：${value.slots.length} 个结构化页面填槽。` };
+        });
+        slots = result;
+      }
+
+      if (!assets || nextStage === "07-assets") {
+        if (!slots || !design || !evidence) throw new ServiceUnavailableException("缺少 Slots/Design/Evidence，无法执行 Assets。");
+        const result = await runStep("07-assets", "07 Assets", "08-choreography", async () => {
+          const value = await runAssetStage({ slots: slots!, design: design!, evidence: evidence! });
+          assets = value.assets;
+          trace.assetSource = value.source;
+          trace.warnings.push(...value.warnings);
+          return { value: value.assets, detail: `Assets 完成：${Object.keys(value.assets).length} 个资产。` };
+        });
+        assets = result;
+      }
+
+      if (!choreography || nextStage === "08-choreography") {
+        if (!narrative || !design || !slots) throw new ServiceUnavailableException("缺少 Narrative/Design/Slots，无法执行 Choreography。");
+        const result = await runStep("08-choreography", "08 Choreography", "09-critic", async () => {
+          const value = await runChoreographyStage({ narrative: narrative!, design: design!, slots: slots! });
+          choreography = value.choreography;
+          trace.choreographySource = value.source;
+          trace.warnings.push(...value.warnings);
+          return { value: value.choreography, detail: `Choreography 完成：${value.choreography.length} 个动画条目。` };
+        });
+        choreography = result;
+      }
+
+      if (!deck || nextStage === "09-critic") {
+        if (!intent || !evidence || !narrative || !design || !layoutPlan || !slots || !assets || !choreography) {
+          throw new ServiceUnavailableException("缺少完整 IR，无法执行 Critic。");
+        }
+        const result = await runStep("09-critic", "09 Critic", "10-render", async () => {
+          deckBeforeCritic = deckIrSchema.parse({
+            intent,
+            evidence,
+            narrative,
+            design,
+            layoutPlan,
+            slots,
+            assets,
+            choreography,
+            meta: {
+              irVersion: "v1",
+              revisionRound: 0,
+              qualityScores: {
+                // Stage 9 Critic owns real scoring. Keep pre-critic values neutral so
+                // checkpoint/debug artifacts never imply an unevaluated quality score.
+                factual: 0,
+                narrative: 0,
+                visual: 0,
+                density: 0,
+                accessibility: 0,
+                overall: 0
+              },
+              generatedAt: new Date().toISOString(),
+              checkpoints: this.v2DeckCheckpoints(trace, intent!, evidence!, narrative!, design!, layoutPlan!, slots!, assets!, choreography!)
+            }
+          });
+          const value = await runCriticStage({ deck: deckBeforeCritic, model });
+          deck = value.deck;
+          trace.criticSource = value.source;
+          trace.criticRounds = value.reports.length;
+          trace.stageAttempts.critic = value.attempts;
+          trace.modelCalls += value.attempts;
+          trace.warnings.push(...value.warnings);
+          return { value: value.deck, detail: `Critic 完成：rounds=${value.reports.length}，score=${value.deck.meta.qualityScores.overall}。` };
+        });
+        deck = result;
+      }
+
+      if (!trace.renderSource || nextStage === "10-render" || !existsSync(join(outputDir, "index.html"))) {
+        if (!deck) throw new ServiceUnavailableException("缺少 DeckIR，无法执行 Render。");
+        await runStep("10-render", "10 Render", "11-verify", async () => {
+          await mkdir(outputDir, { recursive: true });
+          await this.htmlPptV2Renderer.renderToDirectory(deck!, { outputDir, registryHash: registry.hash, registry });
+          trace.renderSource = "deterministic";
+          trace.outputDir = outputDir;
+          return { value: outputDir, detail: `Render 完成：${outputDir}` };
+        });
+      }
+
+      if (!verification || nextStage === "11-verify") {
+        if (!deck) throw new ServiceUnavailableException("缺少 DeckIR，无法执行 Verify。");
+        const verifiedDeck = deck;
+        const result = await runStep("11-verify", "11 Verify", "12-artifacts", async () => {
+          const value = await runRenderVerificationStage({ outputDir, deck: verifiedDeck, registryHash: registry.hash });
+          const remediation = await this.remediateV2RenderVerification({
+            deck: verifiedDeck,
+            verification: value,
+            outputDir,
+            registryHash: registry.hash,
+            registry
+          });
+          deck = remediation.deck;
+          verification = remediation.verification;
+          trace.renderRemediation = remediation.trace;
+          trace.verificationSource = remediation.verification.mode;
+          if (remediation.verification.status === "failed") {
+            throw new ServiceUnavailableException(`v2 render verification failed: ${remediation.verification.hardIssues.map((issue) => issue.message).join("；")}`);
+          }
+          const detail = remediation.trace.attempted
+            ? `Verify 完成：status=${remediation.verification.status}，mode=${remediation.verification.mode}，render remediation=${remediation.trace.accepted ? "accepted" : "rejected"}，slides=${remediation.trace.slideIndexes.join(",") || "none"}。`
+            : `Verify 完成：status=${remediation.verification.status}，mode=${remediation.verification.mode}，screenshots=${remediation.verification.screenshots.length}。`;
+          return { value: remediation.verification, detail };
+        });
+        verification = result;
+      }
+
+      if (!auxiliary || nextStage === "12-artifacts") {
+        if (!deck) throw new ServiceUnavailableException("缺少 DeckIR，无法执行 Artifacts。");
+        const artifactDeck = deck;
+        const result = await runStep("12-artifacts", "12 Artifacts", "13-publish", async () => {
+          const value = await runAuxiliaryArtifactsStage({ deck: artifactDeck, outputDir });
+          auxiliary = value;
+          trace.auxiliarySource = value.source;
+          trace.warnings.push(...value.warnings);
+          return { value, detail: `Artifacts 完成：${Object.keys(value.artifacts).length} 个交付辅助文件。` };
+        });
+        auxiliary = result;
+      }
+
+      if (!deck || !verification || !auxiliary) {
+        throw new ServiceUnavailableException("v2 publish 缺少必要结果。");
+      }
+      const finalStepStart = new Date().toISOString();
+      const completedAt = new Date().toISOString();
+      const finalTrace: HtmlPptV2PublishTrace = {
+        intentSource: trace.intentSource ?? "fallback",
+        templateSelectionSource: trace.templateSelectionSource ?? templateSelection?.source ?? "auto-deterministic",
+        templateSelection: trace.templateSelection ?? (templateSelection ? this.v2TemplateSelectionTrace(templateSelection) : {
+          chosenTemplateId: design?.donorTemplateId ?? "unknown",
+          shortlist: [],
+          rationale: "Template selection trace was not available.",
+          confidence: "medium"
+        }),
+        evidenceSource: trace.evidenceSource ?? "fallback",
+        narrativeSource: trace.narrativeSource ?? "fallback",
+        designSource: trace.designSource ?? "fallback",
+        layoutPlanSource: trace.layoutPlanSource ?? "fallback",
+        slotFillSource: trace.slotFillSource ?? "fallback",
+        assetSource: trace.assetSource ?? "deterministic",
+        choreographySource: trace.choreographySource ?? "deterministic",
+        criticSource: trace.criticSource ?? "deterministic",
+        criticRounds: trace.criticRounds ?? 0,
+        stageAttempts: trace.stageAttempts,
+        modelCalls: trace.modelCalls,
+        warnings: trace.warnings,
+        renderSource: "deterministic",
+        verificationSource: verification.mode,
+        auxiliarySource: auxiliary.source,
+        renderRemediation: trace.renderRemediation ?? defaultRenderRemediationTrace(),
+        outputDir,
+        files: this.v2PublishedFiles(outputDir, auxiliary)
+      };
+      const result: HtmlPptV2PublishResult = {
+        deckId,
+        deck,
+        outputDir,
+        verification,
+        auxiliary,
+        trace: finalTrace
+      };
+      steps.push({
+        id: `step-${steps.length + 1}`,
+        name: "13 Publish",
+        status: "completed",
+        startedAt: finalStepStart,
+        endedAt: completedAt,
+        detail: `Publish 完成：deckId=${deckId}，zip=${finalTrace.files.zip}。`,
+        durationMs: stepDurationMs(finalStepStart, completedAt),
+        modelCalls: 0,
+        retryCount: 0
+      });
+      nextStage = "completed";
+      trace.files = finalTrace.files;
+      trace.outputDir = outputDir;
+      const orchestration: PptGenerationOrchestration = {
+        version: "orchestrator-v2",
+        model: activeConfig.model,
+        startedAt,
+        finishedAt: completedAt,
+        totalModelCalls: finalTrace.modelCalls,
+        steps
+      };
+      const deckSpec = this.deckSpecFromV2Deck(result.deck);
+      const deckRender = this.deckRenderFromV2Result(result);
+
+      await onProgress?.({
+        content: this.formatDeckSpecAssistantMessage(deckSpec, deckRender, orchestration),
+        orchestration,
+        generationStatus: "completed",
+        v2Checkpoint: buildCheckpoint()
+      });
+
+      return { deckSpec, deckRender, orchestration, checkpoint: undefined };
+    } catch (error) {
+      const failedAt = new Date().toISOString();
+      const orchestration: PptGenerationOrchestration = {
+        version: "orchestrator-v2",
+        model: activeConfig.model,
+        startedAt,
+        finishedAt: failedAt,
+        totalModelCalls: trace.modelCalls,
+        steps
+      };
+      const message = error instanceof Error ? error.message : "HTML-PPT v2 编排失败。";
+      throw new DeckOrchestrationError(message, orchestration);
+    }
   }
 
   private async orchestrateDeckGeneration(
@@ -800,7 +1636,7 @@ export class PptChatService {
     }
   ) {
     if (process.env.PPT_USE_LEGACY_RENDERER !== "1") {
-      const templateId = pendingUserMessage.template?.id ?? "pitch-deck";
+      const templateId = pendingUserMessage.template?.id ?? "auto";
       try {
         const result = await this.htmlPptAgentService.generateDeck(
           {
@@ -854,7 +1690,7 @@ export class PptChatService {
       .map((step, index) => ({ ...step, id: step.id || `step-${index + 1}` }));
     let totalModelCalls = resume?.orchestration?.totalModelCalls ?? 0;
     let currentRunningStep: PptGenerationStep | null = null;
-    let templateId = resume?.checkpoint?.templateId ?? pendingUserMessage.template?.id ?? "pitch-deck";
+    let templateId = resume?.checkpoint?.templateId ?? pendingUserMessage.template?.id ?? "auto";
     let theme = resume?.checkpoint?.theme ?? this.defaultThemeForTemplate(templateId);
     let nextStep: DeckResumeNextStep = resume?.checkpoint?.nextStep ?? "plan";
     let iteration = resume?.checkpoint?.iteration ?? 0;
@@ -2236,7 +3072,7 @@ export class PptChatService {
     }
   ): Promise<PptDeckSpec> {
     const activeConfig = await this.llmConfigService.getActiveConfig();
-    const templateId = pendingUserMessage.template?.id ?? "pitch-deck";
+    const templateId = pendingUserMessage.template?.id ?? "auto";
     const theme = this.defaultThemeForTemplate(templateId);
     const onModelCall = options?.onModelCall;
     const plan = options?.plan ?? null;
@@ -2685,11 +3521,423 @@ export class PptChatService {
     ].filter(Boolean).join("\n\n");
   }
 
+  private v2ConversationContext(context: { summaryText: string; recentMessages: PptMessageDto[] }) {
+    return [
+      context.summaryText.trim() ? `历史摘要：${context.summaryText.trim()}` : "",
+      ...context.recentMessages.slice(-8).map((message) => `${message.role}: ${this.formatMessageForModel(message)}`)
+    ].filter(Boolean);
+  }
+
+  private v2DeckCheckpoints(
+    trace: HtmlPptV2TraceCheckpoint,
+    intent: IntentIR,
+    evidence: EvidencePack,
+    narrative: NarrativeIR,
+    design: DesignSystemIR,
+    layoutPlan: LayoutPlanIR,
+    slots: SlotFillIR,
+    assets: AssetIR,
+    choreography: ChoreographyIR
+  ): DeckIR["meta"]["checkpoints"] {
+    const now = new Date().toISOString();
+    return [
+      { stage: "stage-1:intent" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Intent source: ${trace.intentSource ?? "fallback"}; slides=${intent.derivedSlideCount}` },
+      { stage: "stage-2:template-select" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Template source: ${trace.templateSelectionSource ?? "auto-deterministic"}; selected=${trace.templateSelection?.chosenTemplateId ?? design.donorTemplateId}` },
+      { stage: "stage-3:evidence" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Evidence source: ${trace.evidenceSource ?? "fallback"}; facts=${evidence.facts.length}` },
+      { stage: "stage-4:narrative" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Narrative source: ${trace.narrativeSource ?? "fallback"}; slides=${narrative.slides.length}` },
+      { stage: "stage-5:design" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Design source: ${trace.designSource ?? "fallback"}; theme=${design.themeId}` },
+      { stage: "stage-6:layout" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Layout source: ${trace.layoutPlanSource ?? "fallback"}; layouts=${layoutPlan.length}` },
+      { stage: "stage-7:slots" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Slot source: ${trace.slotFillSource ?? "fallback"}; slots=${slots.length}` },
+      { stage: "stage-8:assets" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Asset source: deterministic; assets=${Object.keys(assets).length}` },
+      { stage: "stage-9:choreography" as const, status: "completed" as const, startedAt: now, completedAt: now, summary: `Choreography source: deterministic; entries=${choreography.length}` }
+    ];
+  }
+
+  private v2TemplateSelectionTrace(result: TemplateSelectionResult) {
+    return {
+      chosenTemplateId: result.selectedTemplate.id,
+      shortlist: result.shortlist.map((candidate) => candidate.id),
+      rationale: result.rationale,
+      confidence: result.confidence
+    };
+  }
+
+  private async remediateV2RenderVerification(input: {
+    deck: DeckIR;
+    verification: RenderVerificationReport;
+    outputDir: string;
+    registryHash: string;
+    registry: SkillRegistry;
+  }): Promise<{ deck: DeckIR; verification: RenderVerificationReport; trace: RenderRemediationTrace }> {
+    const slideIndexes = this.v2RemediableSlideIndexes(input.verification);
+    const before = v2VerificationIssueCounts(input.verification);
+    if (!slideIndexes.length) {
+      return {
+        deck: input.deck,
+        verification: input.verification,
+        trace: {
+          attempted: false,
+          accepted: false,
+          slideIndexes: [],
+          before,
+          reason: input.verification.status === "clean"
+            ? "verification-clean"
+            : "no-slide-scoped-remediable-issues"
+        }
+      };
+    }
+
+    const candidateDeck = compactDeckForRenderVerification(input.deck, slideIndexes);
+    await this.htmlPptV2Renderer.renderToDirectory(candidateDeck, {
+      outputDir: input.outputDir,
+      registryHash: input.registryHash,
+      registry: input.registry
+    });
+    const candidateVerification = await runRenderVerificationStage({
+      outputDir: input.outputDir,
+      deck: candidateDeck,
+      registryHash: input.registryHash
+    });
+    const after = v2VerificationIssueCounts(candidateVerification);
+    if (v2VerificationImproved(before, after)) {
+      return {
+        deck: candidateDeck,
+        verification: candidateVerification,
+        trace: {
+          attempted: true,
+          accepted: true,
+          slideIndexes,
+          before,
+          after,
+          reason: "stage-11-feedback-compacted-stage-6-slots"
+        }
+      };
+    }
+
+    await this.htmlPptV2Renderer.renderToDirectory(input.deck, {
+      outputDir: input.outputDir,
+      registryHash: input.registryHash,
+      registry: input.registry
+    });
+    const restoredVerification = await runRenderVerificationStage({
+      outputDir: input.outputDir,
+      deck: input.deck,
+      registryHash: input.registryHash
+    });
+
+    return {
+      deck: input.deck,
+      verification: restoredVerification,
+      trace: {
+        attempted: true,
+        accepted: false,
+        slideIndexes,
+        before,
+        after,
+        reason: "stage-11-feedback-did-not-improve-verification"
+      }
+    };
+  }
+
+  private v2RemediableSlideIndexes(report: RenderVerificationReport): number[] {
+    const fixableCodes = new Set(["browser-element-overflow", "browser-slide-viewport-mismatch"]);
+    const issues: RenderVerificationIssue[] = [...report.hardIssues, ...report.warnings];
+    return [...new Set(
+      issues
+        .filter((issue) => typeof issue.slideIndex === "number" && issue.signal === "browser" && fixableCodes.has(issue.code))
+        .map((issue) => issue.slideIndex!)
+        .filter((slideIndex) => Number.isInteger(slideIndex) && slideIndex > 0)
+    )].sort((a, b) => a - b);
+  }
+
+  private v2PublishedFiles(outputDir: string, auxiliary: AuxiliaryArtifactsStageResult): HtmlPptV2PublishTrace["files"] {
+    return {
+      indexHtml: join(outputDir, "index.html"),
+      previewHtml: join(outputDir, "preview.html"),
+      standaloneHtml: join(outputDir, "standalone.html"),
+      styleCss: join(outputDir, "style.css"),
+      manifest: join(outputDir, "manifest.json"),
+      zip: join(outputDir, "html-ppt-deck.zip"),
+      verificationReport: join(outputDir, "verification-report.json"),
+      speakerNotes: join(outputDir, auxiliary.artifacts.speakerNotes),
+      agendaPdf: join(outputDir, auxiliary.artifacts.agendaPdf),
+      talkingPoints: join(outputDir, auxiliary.artifacts.talkingPoints),
+      qaPrep: join(outputDir, auxiliary.artifacts.qaPrep),
+      accessibilityReport: join(outputDir, auxiliary.artifacts.accessibilityReport)
+    };
+  }
+
+  private htmlPptV2UserDeckRoot(userId: number) {
+    return resolve(findWorkspaceRoot(), ".local-runtime", "html-ppt-v2", "published", String(userId));
+  }
+
+  private async readV2DeckIrFromRender(render: PptDeckRender): Promise<DeckIR> {
+    if (!render.outputDir) {
+      throw new BadRequestException("该 v2 deck 缺少 outputDir，无法恢复结构化 IR。");
+    }
+    const manifestPath = join(render.outputDir, "manifest.json");
+    const raw = await readFile(manifestPath, "utf8").catch(() => "");
+    if (!raw) {
+      throw new BadRequestException("该 v2 deck 的 manifest.json 不存在，无法按模板重跑。");
+    }
+    try {
+      const parsed = JSON.parse(raw) as Record<string, unknown>;
+      return deckIrSchema.parse(parsed.deckIr);
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : "manifest deckIr parse failed";
+      throw new BadRequestException(`该 v2 deck 的结构化 IR 无法读取：${reason}`);
+    }
+  }
+
+  private buildV2TemplateRerunCheckpoint(input: {
+    sourceUserMessageId: string;
+    projectName: string;
+    pendingUserMessage: PptMessageDto;
+    context: { summaryText: string; recentMessages: PptMessageDto[] };
+    deck: DeckIR;
+    registry: SkillRegistry;
+    pinnedTemplate: TemplatePackage;
+    outputRoot: string;
+  }): HtmlPptV2ChatCheckpoint {
+    const deckId = randomUUID();
+    const outputDir = resolve(input.outputRoot, deckId);
+    const templateSelection: TemplateSelectionResult = {
+      selectedTemplate: input.pinnedTemplate,
+      source: "pinned",
+      attempts: 0,
+      shortlist: [{
+        id: input.pinnedTemplate.id,
+        deterministicScore: 999,
+        reason: "User requested a completed-deck template rerun."
+      }],
+      rationale: `User switched the completed deck to template '${input.pinnedTemplate.id}'.`,
+      confidence: "high",
+      validationErrors: []
+    };
+    const traceSelection = this.v2TemplateSelectionTrace(templateSelection);
+    return {
+      version: "html-ppt-v2-checkpoint-v1",
+      sourceUserMessageId: input.sourceUserMessageId,
+      projectName: input.projectName,
+      pendingUserMessage: input.pendingUserMessage,
+      context: input.context,
+      nextStage: "04-design",
+      deckId,
+      outputDir,
+      registryHash: input.registry.hash,
+      intent: input.deck.intent,
+      evidence: input.deck.evidence,
+      narrative: input.deck.narrative,
+      templateSelection,
+      trace: {
+        intentSource: "fallback",
+        evidenceSource: "fallback",
+        narrativeSource: "fallback",
+        templateSelectionSource: "pinned",
+        templateSelection: traceSelection,
+        stageAttempts: {
+          intent: 0,
+          templateSelection: 0,
+          evidence: 0,
+          narrative: 0,
+          design: 0,
+          layoutPlan: 0,
+          slotFill: 0,
+          critic: 0
+        },
+        modelCalls: 0,
+        warnings: [`Template rerun reused Stage 1-3 IR from deck '${input.deck.design.donorTemplateId}'.`],
+        renderRemediation: defaultRenderRemediationTrace()
+      },
+      updatedAt: new Date().toISOString()
+    };
+  }
+
+  private messageTemplateFromPackage(template: TemplatePackage): PptMessageTemplate {
+    return {
+      id: template.id,
+      label: template.label["zh-CN"],
+      description: template.description["zh-CN"]
+    };
+  }
+
+  private deckSpecFromV2Deck(deck: DeckIR): PptDeckSpec {
+    const layoutBySlide = new Map(deck.layoutPlan.map((item) => [item.slideIndex, item.layoutId]));
+    return {
+      schemaVersion: "2.0",
+      title: deck.narrative.slides[0]?.contentBrief.headline ?? deck.intent.topic,
+      subtitle: deck.narrative.slides[0]?.contentBrief.subhead,
+      language: deck.intent.language,
+      template: "html-ppt-v2",
+      theme: deck.design.themeId,
+      visualSystem: {
+        density: "balanced",
+        tone: deck.intent.tone,
+        backupThemes: [deck.design.donorTemplateId],
+        customStyleHints: [
+          `deckClass=${deck.design.deckClass}`,
+          `donor=${deck.design.donorTemplateId}`,
+          `registry=${deck.meta.irVersion}`
+        ]
+      },
+      audience: deck.intent.audience,
+      goal: deck.intent.topic,
+      slides: deck.narrative.slides.map((slide): PptDeckSlide => {
+        const layoutId = layoutBySlide.get(slide.index);
+        return {
+          id: `v2-slide-${slide.index}`,
+          type: this.v2SlideRoleToDeckType(slide.role),
+          layout: this.v2LayoutToDeckLayout(layoutId),
+          title: slide.contentBrief.headline,
+          subtitle: slide.contentBrief.subhead,
+          kicker: slide.beat,
+          body: slide.contentBrief.supportingPoints,
+          blocks: (slide.contentBrief.keyMetrics ?? []).map((metric) => ({
+            type: "metric",
+            label: metric
+          })),
+          data: {
+            v2SlideIndex: slide.index,
+            v2Role: slide.role,
+            v2LayoutId: layoutId,
+            densityBudget: slide.densityBudget,
+            estimatedNarrativeChars: slide.estimatedNarrativeChars
+          }
+        };
+      })
+    };
+  }
+
+  private deckRenderFromV2Result(result: HtmlPptV2PublishResult): PptDeckRender {
+    const deckId = encodeURIComponent(result.deckId);
+    const title = result.deck.narrative.slides[0]?.contentBrief.headline ?? result.deck.intent.topic;
+    return {
+      deckId: result.deckId,
+      title,
+      previewUrl: `/api/ppt/v2/decks/${deckId}/preview.html`,
+      downloadUrl: `/api/ppt/v2/decks/${deckId}/download.zip`,
+      manifestUrl: `/api/ppt/v2/decks/${deckId}/manifest.json`,
+      verificationReportUrl: `/api/ppt/v2/decks/${deckId}/verification-report.json`,
+      verificationMode: result.verification.mode,
+      verificationStatus: result.verification.status,
+      screenshotCount: result.verification.screenshots.length,
+      screenshots: result.verification.screenshots.map((screenshot) => ({
+        slideIndex: screenshot.slideIndex,
+        url: `/api/ppt/v2/decks/${deckId}/screenshots/${encodeURIComponent(basename(screenshot.file))}`
+      })),
+      auxiliaryArtifacts: Object.fromEntries(
+        Object.entries(result.auxiliary.artifacts).map(([key, file]) => [
+          key,
+          `/api/ppt/v2/decks/${deckId}/artifacts/${encodeURIComponent(file)}`
+        ])
+      ),
+      pipeline: "html-ppt-v2",
+      outputDir: result.outputDir,
+      templateSelection: {
+        mode: result.trace.templateSelectionSource,
+        chosenTemplateId: result.trace.templateSelection.chosenTemplateId,
+        shortlist: result.trace.templateSelection.shortlist,
+        rationale: result.trace.templateSelection.rationale,
+        confidence: result.trace.templateSelection.confidence
+      },
+      createdAt: new Date().toISOString()
+    };
+  }
+
+  private v2CompletedSteps(
+    result: HtmlPptV2PublishResult,
+    startedAt: string,
+    endedAt: string,
+    offset: number
+  ): PptGenerationStep[] {
+    const trace = result.trace;
+    const stages: Array<[string, string]> = [
+      ["01 Intent", `source=${trace.intentSource}; attempts=${trace.stageAttempts.intent}`],
+      ["01b Template Select", `source=${trace.templateSelectionSource}; attempts=${trace.stageAttempts.templateSelection ?? 0}; selected=${trace.templateSelection.chosenTemplateId}`],
+      ["02 Evidence", `source=${trace.evidenceSource}; attempts=${trace.stageAttempts.evidence}; facts=${result.deck.evidence.facts.length}`],
+      ["03 Narrative", `source=${trace.narrativeSource}; attempts=${trace.stageAttempts.narrative}; slides=${result.deck.narrative.slides.length}`],
+      ["04 Design", `source=${trace.designSource}; attempts=${trace.stageAttempts.design}; theme=${result.deck.design.themeId}; donor=${result.deck.design.donorTemplateId}`],
+      ["05 Layout", `source=${trace.layoutPlanSource}; attempts=${trace.stageAttempts.layoutPlan}; layouts=${result.deck.layoutPlan.map((item) => item.layoutId).join(", ")}`],
+      ["06 Slots", `source=${trace.slotFillSource}; attempts=${trace.stageAttempts.slotFill}; slots=${result.deck.slots.length}`],
+      ["07 Assets", `source=${trace.assetSource}; assets=${Object.keys(result.deck.assets).length}`],
+      ["08 Choreography", `source=${trace.choreographySource}; entries=${result.deck.choreography.length}`],
+      ["09 Critic", `source=${trace.criticSource}; rounds=${trace.criticRounds}; warnings=${trace.warnings.length}`],
+      ["10 Render", `source=${trace.renderSource}; output=${trace.files.indexHtml}`],
+      ["11 Verify", `source=${trace.verificationSource}; status=${result.verification.status}; screenshots=${result.verification.screenshots.length}`],
+      ["12 Artifacts", `source=${trace.auxiliarySource}; files=${Object.keys(result.auxiliary.artifacts).length}`],
+      ["13 Publish", `deckId=${result.deckId}; zip=${trace.files.zip}`]
+    ];
+
+    return stages.map(([name, detail], index) => ({
+      id: `step-${offset + index + 1}`,
+      name,
+      status: "completed" as const,
+      startedAt,
+      endedAt,
+      detail
+    }));
+  }
+
+  private v2SlideRoleToDeckType(role: string): PptDeckSlideType {
+    if (role === "cover") return "cover";
+    if (role === "toc") return "agenda";
+    if (role === "transition-divider") return "section";
+    if (role === "comparison") return "comparison";
+    if (role === "data-highlight") return "data";
+    if (role === "synthesis") return "summary";
+    if (role === "cta" || role === "thanks") return "closing";
+    if (role === "process") return "timeline";
+    return "content";
+  }
+
+  private v2LayoutToDeckLayout(layoutId?: string): PptDeckLayout | undefined {
+    if (!layoutId) return undefined;
+    if (layoutId === "cover") return "cover-hero";
+    if (layoutId === "toc") return "toc-grid";
+    if (layoutId === "kpi-grid" || layoutId === "stat-highlight") return "kpi-grid";
+    if (layoutId === "timeline") return "timeline-ribbon";
+    if (layoutId === "comparison") return "comparison-board";
+    if (layoutId === "process") return "flow-diagram";
+    if (layoutId === "cta") return "closing-cta";
+    return "content-cards";
+  }
+
+  private shouldUseV2Pipeline(projectTemplateId: string | null, content: string, template: PptMessageTemplate | null) {
+    void projectTemplateId;
+    void content;
+    void template;
+    return true;
+  }
+
+  private resolvePipelineFromMeta(meta: Record<string, unknown>): DeckPipeline {
+    void meta;
+    return "v2";
+  }
+
   private formatDeckSpecAssistantMessage(
     deckSpec: PptDeckSpec,
-    deckRender: { previewUrl: string; downloadUrl: string } | null,
+    deckRender: PptDeckRender | null,
     orchestration?: PptGenerationOrchestration | null
   ) {
+    if (deckSpec.template === "html-ppt-v2") {
+      return [
+        "已通过 HTML-PPT v2 结构化 IR 编排生成独立 HTML-PPT。",
+        "",
+        `标题：${deckSpec.title}`,
+        `主题：${deckSpec.theme}`,
+        `页数：${deckSpec.slides.length}`,
+        `管线：模型 JSON IR → 确定性渲染 → Playwright 验证 → 辅助文件 → 打包发布`,
+        deckRender?.verificationStatus ? `校验：${deckRender.verificationStatus} / ${deckRender.verificationMode ?? "unknown"}` : "",
+        deckRender?.screenshotCount !== undefined ? `浏览器截图：${deckRender.screenshotCount} 张` : "",
+        orchestration ? `编排调用：${orchestration.totalModelCalls} 次模型调用 / ${orchestration.steps.length} 个步骤` : "",
+        deckRender ? `预览：${deckRender.previewUrl}` : "",
+        deckRender ? `下载：${deckRender.downloadUrl}` : "",
+        deckRender?.verificationReportUrl ? `校验报告：${deckRender.verificationReportUrl}` : "",
+        "",
+        "本次输出不由模型直接编写 HTML/CSS；HTML、CSS、运行时和交付包均由 v2 renderer 确定性生成。"
+      ].filter(Boolean).join("\n");
+    }
+
     if (deckSpec.template === "html-ppt-agent") {
       return [
         "已按照 html-ppt-skill 直写编排生成独立 HTML-PPT 项目。",
@@ -3543,7 +4791,9 @@ export class PptChatService {
         ...step,
         status: "timeout" as const,
         endedAt: now,
-        detail: `${step.detail} ${this.staleRunningMessage()}`
+        detail: `${step.detail} ${this.staleRunningMessage()}`,
+        durationMs: this.durationMsBetween(step.startedAt, now),
+        failureReason: this.staleRunningMessage()
       };
     });
 
@@ -3558,6 +4808,12 @@ export class PptChatService {
     return `后台任务心跳超过 ${Math.round(this.runningHeartbeatStaleMs() / 1000)} 秒未更新，可能因服务重启或模型请求中断而失联；可以点击继续生成。`;
   }
 
+  private durationMsBetween(startedAt: string, endedAt: string) {
+    const start = Date.parse(startedAt);
+    const end = Date.parse(endedAt);
+    return Number.isFinite(start) && Number.isFinite(end) ? Math.max(0, end - start) : 0;
+  }
+
   private runningHeartbeatStaleMs() {
     const parsed = Number(process.env.PPT_RUNNING_HEARTBEAT_STALE_MS);
     return Number.isFinite(parsed) && parsed > 0 ? parsed : 600_000;
@@ -3569,7 +4825,7 @@ export class PptChatService {
     }
 
     try {
-      return this.normalizeDeckSpec(input, { templateId: "pitch-deck", theme: "pitch-deck-vc" });
+      return this.normalizeDeckSpec(input, { templateId: "auto", theme: this.defaultThemeForTemplate("auto") });
     } catch {
       return undefined;
     }
@@ -3587,14 +4843,85 @@ export class PptChatService {
     const downloadUrl = this.normalizeOptionalString(candidate.downloadUrl);
     const createdAt = this.normalizeOptionalString(candidate.createdAt);
     const outputDir = this.normalizeOptionalString(candidate.outputDir);
+    const manifestUrl = this.normalizeOptionalString(candidate.manifestUrl);
+    const verificationReportUrl = this.normalizeOptionalString(candidate.verificationReportUrl);
+    const verificationModeValue = this.normalizeOptionalString(candidate.verificationMode);
+    const verificationStatusValue = this.normalizeOptionalString(candidate.verificationStatus);
+    const pipelineValue = this.normalizeOptionalString(candidate.pipeline);
+    const screenshotCount = typeof candidate.screenshotCount === "number" && Number.isFinite(candidate.screenshotCount)
+      ? Math.max(0, Math.round(candidate.screenshotCount))
+      : undefined;
 
     if (!deckId || !title || !previewUrl || !downloadUrl || !createdAt) {
       return undefined;
     }
 
-    return outputDir
-      ? { deckId, title, previewUrl, downloadUrl, createdAt, outputDir }
-      : { deckId, title, previewUrl, downloadUrl, createdAt };
+    const screenshots = Array.isArray(candidate.screenshots)
+      ? candidate.screenshots
+          .map((item) => {
+            if (!item || typeof item !== "object") return null;
+            const value = item as Record<string, unknown>;
+            const slideIndex = typeof value.slideIndex === "number" && Number.isFinite(value.slideIndex)
+              ? Math.round(value.slideIndex)
+              : null;
+            const url = this.normalizeOptionalString(value.url);
+            return slideIndex && url ? { slideIndex, url } : null;
+          })
+          .filter((item): item is { slideIndex: number; url: string } => Boolean(item))
+      : undefined;
+    const auxiliaryArtifacts = candidate.auxiliaryArtifacts && typeof candidate.auxiliaryArtifacts === "object"
+      ? Object.fromEntries(
+          Object.entries(candidate.auxiliaryArtifacts as Record<string, unknown>)
+            .map(([key, value]) => [key, this.normalizeOptionalString(value)])
+            .filter((entry): entry is [string, string] => Boolean(entry[1]))
+        )
+      : undefined;
+    const render: PptDeckRender = {
+      deckId,
+      title,
+      previewUrl,
+      downloadUrl,
+      createdAt
+    };
+    if (pipelineValue === "html-ppt-v1" || pipelineValue === "html-ppt-v2") render.pipeline = pipelineValue;
+    if (manifestUrl) render.manifestUrl = manifestUrl;
+    if (verificationReportUrl) render.verificationReportUrl = verificationReportUrl;
+    if (verificationModeValue === "static" || verificationModeValue === "playwright") render.verificationMode = verificationModeValue;
+    if (verificationStatusValue === "clean" || verificationStatusValue === "warning" || verificationStatusValue === "failed") {
+      render.verificationStatus = verificationStatusValue;
+    }
+    if (screenshotCount !== undefined) render.screenshotCount = screenshotCount;
+    if (screenshots?.length) render.screenshots = screenshots;
+    if (auxiliaryArtifacts && Object.keys(auxiliaryArtifacts).length > 0) render.auxiliaryArtifacts = auxiliaryArtifacts;
+    if (outputDir) render.outputDir = outputDir;
+    const templateSelection = this.normalizeStoredV2TemplateSelectionTrace(candidate.templateSelection);
+    if (templateSelection) render.templateSelection = templateSelection;
+    return render;
+  }
+
+  private normalizeStoredV2TemplateSelectionTrace(input: unknown): PptDeckRender["templateSelection"] | undefined {
+    if (!input || typeof input !== "object") {
+      return undefined;
+    }
+    const candidate = input as Record<string, unknown>;
+    const mode = candidate.mode === "pinned" || candidate.mode === "auto-deterministic" || candidate.mode === "auto-llm"
+      ? candidate.mode
+      : undefined;
+    const chosenTemplateId = this.normalizeOptionalString(candidate.chosenTemplateId);
+    const rationale = this.normalizeOptionalString(candidate.rationale);
+    const confidence = candidate.confidence === "high" || candidate.confidence === "medium" || candidate.confidence === "low"
+      ? candidate.confidence
+      : undefined;
+    if (!mode || !chosenTemplateId || !rationale || !confidence) {
+      return undefined;
+    }
+    return {
+      mode,
+      chosenTemplateId,
+      shortlist: this.coerceStringArray(candidate.shortlist),
+      rationale,
+      confidence
+    };
   }
 
   private normalizeStoredOrchestration(input: unknown): PptGenerationOrchestration | undefined {
@@ -3612,14 +4939,25 @@ export class PptChatService {
           return null;
         }
 
-        return {
+        const startedAt = this.normalizeOptionalString(value.startedAt) ?? new Date().toISOString();
+        const endedAt = this.normalizeOptionalString(value.endedAt) ?? new Date().toISOString();
+        const durationMs = Number(value.durationMs);
+        const modelCalls = Number(value.modelCalls);
+        const retryCount = Number(value.retryCount);
+        const failureReason = this.normalizeOptionalString(value.failureReason);
+        const step: PptGenerationStep = {
           id: this.normalizeOptionalString(value.id) ?? `step-${index + 1}`,
           name: this.normalizeOptionalString(value.name) ?? `步骤 ${index + 1}`,
           status,
-          startedAt: this.normalizeOptionalString(value.startedAt) ?? new Date().toISOString(),
-          endedAt: this.normalizeOptionalString(value.endedAt) ?? new Date().toISOString(),
+          startedAt,
+          endedAt,
           detail: this.normalizeOptionalString(value.detail) ?? ""
         };
+        if (Number.isFinite(durationMs) && durationMs >= 0) step.durationMs = Math.round(durationMs);
+        if (Number.isFinite(modelCalls) && modelCalls >= 0) step.modelCalls = Math.round(modelCalls);
+        if (Number.isFinite(retryCount) && retryCount >= 0) step.retryCount = Math.round(retryCount);
+        if (failureReason) step.failureReason = failureReason;
+        return step;
       })
       .filter((item): item is PptGenerationStep => Boolean(item));
 
@@ -3704,6 +5042,159 @@ export class PptChatService {
       review,
       updatedAt: this.normalizeOptionalString(candidate.updatedAt) ?? new Date().toISOString()
     };
+  }
+
+  private normalizeStoredV2Checkpoint(input: unknown): HtmlPptV2ChatCheckpoint | null {
+    if (!input || typeof input !== "object") {
+      return null;
+    }
+
+    const candidate = input as Record<string, unknown>;
+    const version = this.normalizeOptionalString(candidate.version);
+    const sourceUserMessageId = this.normalizeOptionalString(candidate.sourceUserMessageId);
+    const projectName = this.normalizeOptionalString(candidate.projectName);
+    const nextStage = this.normalizeHtmlPptV2Stage(candidate.nextStage);
+    const deckId = this.normalizeOptionalString(candidate.deckId);
+    const outputDir = this.normalizeOptionalString(candidate.outputDir);
+    const pendingUserMessage = this.normalizeStoredPptMessage(candidate.pendingUserMessage);
+    const context = this.normalizeStoredPptContext(candidate.context);
+
+    if (
+      version !== "html-ppt-v2-checkpoint-v1" ||
+      !sourceUserMessageId ||
+      !projectName ||
+      !nextStage ||
+      !deckId ||
+      !outputDir ||
+      !pendingUserMessage ||
+      !context
+    ) {
+      return null;
+    }
+
+    const traceCandidate = candidate.trace && typeof candidate.trace === "object"
+      ? candidate.trace as Record<string, unknown>
+      : {};
+    const attemptsCandidate = traceCandidate.stageAttempts && typeof traceCandidate.stageAttempts === "object"
+      ? traceCandidate.stageAttempts as Record<string, unknown>
+      : {};
+    const trace: HtmlPptV2TraceCheckpoint = {
+      ...(traceCandidate as Partial<HtmlPptV2PublishTrace>),
+      stageAttempts: {
+        intent: Number(attemptsCandidate.intent) || 0,
+        templateSelection: Number(attemptsCandidate.templateSelection) || 0,
+        evidence: Number(attemptsCandidate.evidence) || 0,
+        narrative: Number(attemptsCandidate.narrative) || 0,
+        design: Number(attemptsCandidate.design) || 0,
+        layoutPlan: Number(attemptsCandidate.layoutPlan) || 0,
+        slotFill: Number(attemptsCandidate.slotFill) || 0,
+        critic: Number(attemptsCandidate.critic) || 0
+      },
+      modelCalls: Number(traceCandidate.modelCalls) || 0,
+      warnings: this.coerceStringArray(traceCandidate.warnings)
+    };
+
+    let deck: DeckIR | undefined;
+    if (candidate.deck) {
+      const parsed = deckIrSchema.safeParse(candidate.deck);
+      deck = parsed.success ? parsed.data : undefined;
+    }
+    let deckBeforeCritic: DeckIR | undefined;
+    if (candidate.deckBeforeCritic) {
+      const parsed = deckIrSchema.safeParse(candidate.deckBeforeCritic);
+      deckBeforeCritic = parsed.success ? parsed.data : undefined;
+    }
+
+    return {
+      version: "html-ppt-v2-checkpoint-v1",
+      sourceUserMessageId,
+      projectName,
+      pendingUserMessage,
+      context,
+      nextStage,
+      deckId,
+      outputDir,
+      registryHash: this.normalizeOptionalString(candidate.registryHash) ?? undefined,
+      intent: candidate.intent as IntentIR | undefined,
+      templateSelection: this.normalizeStoredV2TemplateSelection(candidate.templateSelection, candidate.intent as IntentIR | undefined),
+      evidence: candidate.evidence as EvidencePack | undefined,
+      narrative: candidate.narrative as NarrativeIR | undefined,
+      design: candidate.design as DesignSystemIR | undefined,
+      layoutPlan: candidate.layoutPlan as LayoutPlanIR | undefined,
+      slots: candidate.slots as SlotFillIR | undefined,
+      assets: candidate.assets as AssetIR | undefined,
+      choreography: candidate.choreography as ChoreographyIR | undefined,
+      deckBeforeCritic,
+      deck,
+      verification: candidate.verification as RenderVerificationReport | undefined,
+      auxiliary: candidate.auxiliary as AuxiliaryArtifactsStageResult | undefined,
+      trace,
+      updatedAt: this.normalizeOptionalString(candidate.updatedAt) ?? new Date().toISOString()
+    };
+  }
+
+  private normalizeStoredV2TemplateSelection(input: unknown, intent?: IntentIR): TemplateSelectionResult | undefined {
+    if (!input || typeof input !== "object") {
+      return undefined;
+    }
+    const candidate = input as Record<string, unknown>;
+    const selectedTemplate = templatePackageSchema.safeParse(candidate.selectedTemplate);
+    if (!selectedTemplate.success) {
+      return undefined;
+    }
+    const source = candidate.source === "pinned" || candidate.source === "auto-llm" || candidate.source === "auto-deterministic"
+      ? candidate.source
+      : "auto-deterministic";
+    const confidence = candidate.confidence === "high" || candidate.confidence === "medium" || candidate.confidence === "low"
+      ? candidate.confidence
+      : source === "pinned" ? "high" : "medium";
+    const shortlist = Array.isArray(candidate.shortlist)
+      ? candidate.shortlist
+          .filter((item): item is Record<string, unknown> => !!item && typeof item === "object")
+          .map((item) => ({
+            id: this.normalizeOptionalString(item.id) ?? selectedTemplate.data.id,
+            deterministicScore: Number(item.deterministicScore) || 0,
+            reason: this.normalizeOptionalString(item.reason) ?? "Recovered checkpoint candidate."
+          }))
+          .slice(0, 8)
+      : [{
+          id: selectedTemplate.data.id,
+          deterministicScore: source === "pinned" ? 999 : 0,
+          reason: intent ? `Recovered checkpoint candidate for ${intent.topic}.` : "Recovered checkpoint candidate."
+        }];
+    return {
+      selectedTemplate: selectedTemplate.data,
+      source,
+      attempts: Number(candidate.attempts) || 0,
+      shortlist,
+      rationale: this.normalizeOptionalString(candidate.rationale) ?? `Recovered selected template '${selectedTemplate.data.id}'.`,
+      confidence,
+      validationErrors: this.coerceStringArray(candidate.validationErrors)
+    };
+  }
+
+  private normalizeHtmlPptV2Stage(input: unknown): HtmlPptV2ResumeStage | null {
+    const value = this.normalizeOptionalString(input);
+    if (
+      value === "01-intent" ||
+      value === "01b-template-select" ||
+      value === "02-evidence" ||
+      value === "03-narrative" ||
+      value === "04-design" ||
+      value === "05-layout" ||
+      value === "06-slots" ||
+      value === "07-assets" ||
+      value === "08-choreography" ||
+      value === "09-critic" ||
+      value === "10-render" ||
+      value === "11-verify" ||
+      value === "12-artifacts" ||
+      value === "13-publish" ||
+      value === "completed"
+    ) {
+      return value;
+    }
+    return null;
   }
 
   private normalizeStoredAgentCheckpoint(input: unknown): HtmlPptAgentCheckpoint | null {
@@ -4084,6 +5575,14 @@ export class PptChatService {
 
     const value = input.trim();
     return value.length > 0 ? value : null;
+  }
+
+  private normalizeResumeMode(input: unknown): "resume" | "adopt" | "template" {
+    const value = this.normalizeOptionalString(input);
+    if (value === "adopt" || value === "template") {
+      return value;
+    }
+    return "resume";
   }
 
   private normalizeFiles(input: unknown): PptMessageAttachment[] {

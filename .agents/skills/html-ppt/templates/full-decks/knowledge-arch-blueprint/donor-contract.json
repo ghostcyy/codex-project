@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["Karpathy Stack", "skills/wiki-feedback/SKILL.md"],
+  "forbiddenTextPatterns": ["Karpathy\\s+Stack", "skills/wiki-feedback/SKILL\\.md"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["kb-grid-bg"],
   "decorativeOnlyClasses": [],

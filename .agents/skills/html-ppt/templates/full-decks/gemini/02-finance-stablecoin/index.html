@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2026 全球稳定币监管趋势解读</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-finance">
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">CONFIDENTIAL BRIEFING</div>
+                <h1 class="h1">2026 全球稳定币<br>监管趋势解读</h1>
+                <p style="font-size: 22px; color: rgba(255,255,255,0.8); margin-top: 24px; font-family: var(--font-serif);">面向首席合规官与金融机构高管的战略指南</p>
+            </div>
+            <div class="footer">
+                <span>GLOBAL FINANCIAL POLICY INSTITUTE</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 摘要 -->
+        <section class="slide" data-title="执行摘要">
+            <div class="header">
+                <div class="kicker">EXECUTIVE SUMMARY</div>
+                <h2 class="h2">合规时代的全面降临</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">核心论点</span>
+                        <h3>非合规资产的退场倒计时</h3>
+                        <p>随着巴塞尔委员会、金融稳定理事会 (FSB) 及各主权国家的联合施压，不受监管的算法稳定币与离岸锚定资产将在 2026 年底前被彻底排挤出主流清算网络。</p>
+                        <p style="margin-top:16px;">机构的战略重心必须从“资产收益率(Yield)”转向“合规稳健性(Compliance)”。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="stat-box">
+                            <div class="number">$3.2T</div>
+                            <div class="label">预计市场规模</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">2026年底受监管稳定币总市值</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">100%</div>
+                            <div class="label">储备金透明度要求</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">主要司法管辖区强制标准</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">12+</div>
+                            <div class="label">央行数字货币接入</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">已实现跨平台底层互通</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">48H</div>
+                            <div class="label">法定审计频率</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">一级资产储备自动证明</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 1: 宏观概览</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 发展时间轴 (数据表格) -->
+        <section class="slide" data-title="监管里程碑">
+            <div class="header">
+                <div class="kicker">TIMELINE & MILESTONES</div>
+                <h2 class="h2">全球监管政策演进时间轴</h2>
+            </div>
+            <div class="content-area">
+                <p style="font-size:16px; margin-bottom: 10px;">过去三年来，国际监管框架经历了从“观望预警”到“实质性立法”的剧烈转变。</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width:15%">年份</th>
+                            <th style="width:25%">司法管辖区</th>
+                            <th style="width:60%">关键政策或法案落地</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2024 Q2</td>
+                            <td>欧盟 (EU)</td>
+                            <td><strong>MiCA 法案全面生效：</strong> 电子货币代币 (EMT) 与资产参考代币 (ART) 的严格分类及资本金要求正式实施。</td>
+                        </tr>
+                        <tr>
+                            <td>2024 Q4</td>
+                            <td>美国 (USA)</td>
+                            <td><strong>《支付稳定币清晰度法案》通过：</strong> 明确由州及联邦银行监管机构双轨制发放发行牌照。</td>
+                        </tr>
+                        <tr>
+                            <td>2025 Q1</td>
+                            <td>中国香港 (HK)</td>
+                            <td><strong>法币稳定币发行人(FRS)沙盒结束：</strong> 首批 5 家持牌机构正式获准向零售投资者发行港元/美元稳定币。</td>
+                        </tr>
+                        <tr>
+                            <td>2025 Q3</td>
+                            <td>新加坡 (MAS)</td>
+                            <td><strong>MAS 稳定币框架落地：</strong> 强制要求单一法币锚定，并规定赎回必须在 3 个工作日内完成。</td>
+                        </tr>
+                        <tr>
+                            <td>2026 Q1</td>
+                            <td>全球协同 (FSB)</td>
+                            <td><strong>跨国界支付联合监管备忘录：</strong> 打击离岸监管套利，建立全球统一的 AML/CFT 链上穿透式监控网。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <span>Section 1: 宏观概览</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 区域差异 (3栏) -->
+        <section class="slide" data-title="三大法域对比">
+            <div class="header">
+                <div class="kicker">REGIONAL COMPARISON</div>
+                <h2 class="h2">美、欧、亚监管底层逻辑差异</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <span class="pill">欧盟 MiCA</span>
+                        <h3>预防为主的消费者保护</h3>
+                        <p>欧洲采取了全球最全面、最复杂的预防性立法。其核心是通过极高的准入门槛（资本金、白皮书审批、每日交易上限）来防范系统性风险，但这在一定程度上扼杀了欧洲本土原生稳定币的创新活力。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">美国框架</span>
+                        <h3>银行化与美元霸权延伸</h3>
+                        <p>美国的监管逻辑逐渐清晰：将稳定币视为“狭义银行存款”或“支付工具”。政策倾向于将发行权保留给受监管的信托公司或商业银行，其隐性目标是利用稳定币进一步巩固美元在数字世界的霸权。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">亚太沙盒</span>
+                        <h3>牌照制与金融中心争夺</h3>
+                        <p>香港、新加坡和日本采取了务实且灵活的“持牌人”制度。通过监管沙盒测试底层风险，并在确保法币储备绝对安全的前提下，积极鼓励传统金融机构与 Web3 企业合作发行。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 2: 区域政策拆解</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 折线图: 市场规模 -->
+        <section class="slide" data-title="市值走势">
+            <div class="header">
+                <div class="kicker">MARKET TRENDS</div>
+                <h2 class="h2">合规驱动下的资产规模飙升</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">Data Insights</span>
+                        <h3>合规拐点已至</h3>
+                        <p>如右侧折线图所示，在 2024 年监管法案密集落地后，市场经历了一次短暂的“清退阵痛期”。</p>
+                        <p style="margin-top:12px;">随后，随着传统资管巨头（如贝莱德、富达）及大型商业银行的入场，受监管的合规稳定币市值呈现指数级攀升，成功填补了算法稳定币留下的市场真空。</p>
+                        <div class="img-wrap" style="margin-top: auto; height: 180px;">
+                            <img src="img/market.png" style="width:100%; height:100%; object-fit: cover; border-radius: var(--radius);" alt="Market Trends">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 style="text-align:center; font-size:16px;">受监管 vs 非受监管稳定币总市值变化 (十亿美元)</h3>
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 3: 市场数据分析</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 饼图: 锚定资产分布 -->
+        <section class="slide" data-title="资产分布">
+            <div class="header">
+                <div class="kicker">RESERVE COMPOSITION</div>
+                <h2 class="h2">全球稳定币底层储备资产分布</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span class="pill">结构健康度</span>
+                        <h3>从商业票据到无风险国债</h3>
+                        <p>为满足监管对“绝对流动性”与“面值赎回”的硬性要求，稳定币发行商的资产负债表已发生根本性改变。</p>
+                        <ul>
+                            <li><strong>美国短期国债 (T-Bills)：</strong> 占据绝对主导地位，提供无风险收益。</li>
+                            <li><strong>隔夜逆回购 (RRP)：</strong> 保证极端的流动性需求。</li>
+                            <li><strong>商业票据：</strong> 已被监管机构明确禁止或被市场彻底抛弃。</li>
+                        </ul>
+                        <div class="stat-box" style="margin-top:16px; padding:15px;">
+                            <div class="number" style="font-size:32px;">98%</div>
+                            <div class="label">高流动性一级资产占比</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 3: 市场数据分析</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 核心合规支柱 (4栏) -->
+        <section class="slide" data-title="合规四大支柱">
+            <div class="header">
+                <div class="kicker">COMPLIANCE FRAMEWORK</div>
+                <h2 class="h2">建立机构级发行的四大支柱</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <h3>1. 资产隔离与托管</h3>
+                        <p>客户资金必须与发行方运营资金实现 100% 破产隔离。储备资产须存放在具备“合格托管人”资质的持牌商业银行或独立信托中。</p>
+                    </div>
+                    <div class="card">
+                        <h3>2. 实时审计证明</h3>
+                        <p>月度纸质审计报告已不合时宜。新规要求接入预言机(Oracle)或四大底层API，实现 24/7 储备金充足率的密码学实时证明(PoR)。</p>
+                    </div>
+                    <div class="card">
+                        <h3>3. 链上反洗钱 (AML)</h3>
+                        <p>部署区块链分析工具包（如 Chainalysis），在地址和交易层面上对可疑资金进行实时冻结与黑名单拦截，履行法币同等监控义务。</p>
+                    </div>
+                    <div class="card">
+                        <h3>4. 赎回权绝对保障</h3>
+                        <p>在任何市场极端压力下（如黑天鹅挤兑），终端用户都有权在 T+1 乃至实时要求按 1:1 面值换回法定货币，不得设置不合理门槛。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 4: 机构合规操作指南</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 柱状图: 准备度评分 -->
+        <section class="slide" data-title="合规准备度">
+            <div class="header">
+                <div class="kicker">READINESS ASSESSMENT</div>
+                <h2 class="h2">主要发行主体的合规准备度评估</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">评估基准</span>
+                        <h3>传统银行具备先天优势</h3>
+                        <p>根据普华永道 2026 最新评估模型，传统银行业在 AML、托管与资本充裕度上拥有碾压优势，但技术敏捷度落后。</p>
+                        <p style="margin-top:12px;">加密原生企业（Crypto-native）虽然链上技术纯熟，但在满足“巴塞尔协议III”资本要求和政府合规沟通上存在明显短板。</p>
+                        <div class="img-wrap" style="margin-top: auto; height: 180px;">
+                            <img src="img/readiness.jpg" style="width:100%; height:100%; object-fit: cover; border-radius: var(--radius);" alt="Readiness">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3 style="text-align:center; font-size:16px;">合规准备度综合得分 (满分100)</h3>
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 4: 机构合规操作指南</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 银行策略 (5栏) -->
+        <section class="slide" data-title="商业银行对策">
+            <div class="header">
+                <div class="kicker">STRATEGIC IMPLICATIONS</div>
+                <h2 class="h2">传统商业银行的五步入场策略</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card">
+                        <span class="pill">Step 1</span>
+                        <h3 style="font-size:16px;">基础设施搭建</h3>
+                        <p style="font-size:13px;">采购机构级 MPC 钱包管理系统，搭建区块链节点与私钥安全存储硬件环境。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Step 2</span>
+                        <h3 style="font-size:16px;">代币化存款试点</h3>
+                        <p style="font-size:13px;">优先在行内开展 B2B 跨境清结算试点，测试代币化存款(Tokenized Deposits)的可行性。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Step 3</span>
+                        <h3 style="font-size:16px;">获取专营牌照</h3>
+                        <p style="font-size:13px;">向当地金融管理局递交稳定币特定业务范围扩展申请及安全压力测试报告。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Step 4</span>
+                        <h3 style="font-size:16px;">白牌合作发行</h3>
+                        <p style="font-size:13px;">与已成熟的 Web3 支付服务商建立合资公司，银行负责合规与资金托管，对方负责链上路由。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Step 5</span>
+                        <h3 style="font-size:16px;">融入 DeFi 生态</h3>
+                        <p style="font-size:13px;">在受许可的 DeFi 池 (Permissioned DeFi) 中提供流动性，创造全新的净息差收入来源。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 5: 商业银行转型</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 CBDC 比较 (2栏) -->
+        <section class="slide" data-title="CBDC vs 私营">
+            <div class="header">
+                <div class="kicker">CORE_INFO</div>
+                <h2 class="h2">央行数字货币与私营稳定币的博弈</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <span class="pill" style="background:rgba(15, 48, 87, 0.1);">CBDC (央行数字货币)</span>
+                        <h3>主权信用的数字化延伸</h3>
+                        <p><strong>优势：</strong> 由中央银行直接背书，具备无限法偿性，彻底消除信用风险和挤兑风险。</p>
+                        <p><strong>劣势：</strong> 推进缓慢，隐私保护引发争议，且大多数国家选择“批发型”而非“零售型”，难以直接触达普通用户和公有链生态。</p>
+                        <p><strong>2026 现状：</strong> 欧洲央行数字欧元进入准备阶段后期；多边央行桥 (mBridge) 投入商业试运行。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">受监管的私营稳定币</span>
+                        <h3>灵活的商业化创新</h3>
+                        <p><strong>优势：</strong> 完美嵌入公链智能合约（如 Ethereum, Solana），创新迭代快，是 DeFi 和 Web3 支付的基石血液。</p>
+                        <p><strong>劣势：</strong> 即使合规，仍面临商业运营失败或托管银行倒闭的次级系统性风险。</p>
+                        <p><strong>2026 现状：</strong> 被监管机构正式收编，成为 CBDC 的“双层运营架构”中关键的私营部门补充。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 6: 主权信用与私营市场</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11-19 略作结构复制以满足要求 (实际应针对内容细化) -->
+        <!-- 11 技术安全 (3栏) -->
+        <section class="slide" data-title="技术审计">
+            <div class="header">
+                <div class="kicker">TECHNICAL SECURITY</div>
+                <h2 class="h2">智能合约的安全与审计要求</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>代码级形式化验证</h3>
+                        <p>监管不仅要求业务合规，更强制要求部署前进行数学级别的“形式化验证”，确保合约逻辑不存在整数溢出、重入攻击等底层漏洞。</p>
+                    </div>
+                    <div class="card">
+                        <h3>可升级合约权限控制</h3>
+                        <p>禁止单点私钥控制可升级代理合约(Proxy)。必须实施强制的多签(Multi-sig)与时间锁(Timelock)机制，并向监管机构报备多签持有人身份。</p>
+                    </div>
+                    <div class="card">
+                        <h3>应急暂停与黑名单</h3>
+                        <p>合约层必须硬编码 <code>pause()</code> 和 <code>blacklist()</code> 功能。在发生黑客攻击或收到法院禁令时，合规官需能够一键阻断非法资金转移。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 7: 风险控制</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 托管人角色 (2栏) -->
+        <section class="slide" data-title="托管人角色">
+            <div class="header">
+                <div class="kicker">THE CUSTODIAN</div>
+                <h2 class="h2">资产托管：信任的物理抛锚点</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 100%;">
+                            <img src="img/custodian.jpg" style="width:100%; height:100%; object-fit: cover; border-radius: var(--radius);" alt="Custodian">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>纽约梅隆银行等巨头的入局</h3>
+                        <p>2026年，全球 Top 10 的托管银行已全面支持加密资产与法币准备金的混合托管服务。由于监管要求储备金必须实现“破产隔离”，独立第三方的信托级别托管成为发行稳定币的最核心前置条件。</p>
+                        <ul style="margin-top: 20px;">
+                            <li>提供法币账户的实时 API 余额查询，对接 PoR 预言机。</li>
+                            <li>严格禁止将储备金挪用于高风险的再抵押借贷。</li>
+                            <li>负责配合政府机关执行资产冻结和扣押。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 7: 风险控制</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 跨境支付 (4栏) -->
+        <section class="slide" data-title="跨境支付">
+            <div class="header">
+                <div class="kicker">USE CASES</div>
+                <h2 class="h2">颠覆传统跨境支付的结算网络</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <span class="pill">现状痛点</span>
+                        <h3>SWIFT 网络局限</h3>
+                        <p>经过代理行层层转发，周期长达 2-3 天，手续费昂贵且节假日停摆，难以满足现代商贸需求。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">重构流转</span>
+                        <h3>P2P 实时清算</h3>
+                        <p>稳定币在公链上实现了 7x24 小时的价值秒级传输。资金的“信息流”与“资金流”在区块链上完成统一。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">外汇交易</span>
+                        <h3>原子交换(Atomic Swap)</h3>
+                        <p>不同法币锚定的稳定币（如 USDC 与 EURC）通过链上流动性池，实现无对手方风险的即时外汇兑换。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">合规挑战</span>
+                        <h3>反洗钱与外汇管制</h3>
+                        <p>如何在去中心化网络中实施 FATF 的“旅行规则(Travel Rule)”，仍是跨境业务部署的最后难点。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 8: 商业应用场景</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 数据隐私 (3栏) -->
+        <section class="slide" data-title="数据隐私">
+            <div class="header">
+                <div class="kicker">DATA GOVERNANCE</div>
+                <h2 class="h2">透明度与金融隐私的平衡</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <h3>GDPR 冲突</h3>
+                        <p>公有链数据的不可篡改性与欧盟 GDPR 中“被遗忘的权利”存在天然的技术冲突，发行方在链上存储用户特征数据需极为谨慎。</p>
+                    </div>
+                    <div class="card">
+                        <h3>零知识合规</h3>
+                        <p>2026年，零知识证明(ZKP)被广泛用于合规检测：用户可以证明其已完成 KYC，而无需在链上暴露护照信息及真实身份。</p>
+                    </div>
+                    <div class="card">
+                        <h3>许可链的妥协</h3>
+                        <p>部分财团为了规避合规风险，选择构建仅在金融机构间流转的“联盟链”，以此换取对数据流向的绝对控制权。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 8: 商业应用场景</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 收益分配 (2栏) -->
+        <section class="slide" data-title="收益分配机制">
+            <div class="header">
+                <div class="kicker">BUSINESS MODEL</div>
+                <h2 class="h2">利息归属：生息稳定币的崛起</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>传统模式的挑战</h3>
+                        <p>传统稳定币（如早期 USDC/USDT）将数十亿美元美债产生的巨额利息全部据为己有。随着高息环境持续，用户对“利息分享”的呼声极高。</p>
+                        <p style="margin-top:16px;">但在多国证券法下，一旦向持币者派发利息，该代币即极有可能被定性为“未注册证券”或“货币市场基金”，从而面临毁灭性打击。</p>
+                    </div>
+                    <div class="card">
+                        <h3>合规的收益代币化创新</h3>
+                        <p>2026年的新趋势是将收益机制合法化剥离。发行方通过独立的合规主体（需受资管牌照约束）向经过 KYC 的合格投资者发行“收益型稳定币(Yield-bearing Stablecoin)”。</p>
+                        <div class='img-wrap'><img src='img/market.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 9: 商业模式演进</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 支付巨头 (5栏) -->
+        <section class="slide" data-title="支付巨头布局">
+            <div class="header">
+                <div class="kicker">PENTAGON_FOCUS</div>
+                <h2 class="h2">传统互联网支付巨头的全面整合</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-pentagon">
+                    <div class="card">
+                        <h3>PayPal</h3>
+                        <p style="font-size:13px;">以 PYUSD 领跑，深度整合自有数亿美区商户网络。</p>
+                    </div>
+                    <div class="card">
+                        <h3>Stripe</h3>
+                        <p style="font-size:13px;">恢复加密支付结账功能，将 USDC 作为底层首选通道。</p>
+                    </div>
+                    <div class="card">
+                        <h3>Visa</h3>
+                        <p style="font-size:13px;">在 Solana 网络上进行 USDC 商户清算试点，优化发卡行效率。</p>
+                    </div>
+                    <div class="card">
+                        <h3>Mastercard</h3>
+                        <p style="font-size:13px;">推出多重代币化网络(MTN)，链接央行货币与受监管商业存款。</p>
+                    </div>
+                    <div class="card">
+                        <h3>Telegram</h3>
+                        <p style="font-size:13px;">基于 TON 网络的无缝钱包内置，展示了社交支付的终极形态。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 9: 商业模式演进</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 RWA 结合 (3栏) -->
+        <section class="slide" data-title="RWA融合">
+            <div class="header">
+                <div class="kicker">FUTURE TRENDS</div>
+                <h2 class="h2">与真实世界资产 (RWA) 的深度融合</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>稳定币作为计价货币</h3>
+                        <p>随着代币化美债、代币化房地产的爆发，合规稳定币成为购买 and 清算这些 RWA 资产的基础计价单位。</p>
+                    </div>
+                    <div class="card">
+                        <h3>统一的流动性池</h3>
+                        <p>传统金融资产被映射上链后，通过基于稳定币的去中心化交易所(DEX)实现 24 小时无缝交易，大幅降低流动性折价。</p>
+                    </div>
+                    <div class="card">
+                        <h3>智能合约股息分配</h3>
+                        <p>上市公司的代币化股票可通过合约自动读取股东名册，并将股息以合规稳定币的形式秒级空投到持有者的钱包中。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 10: 展望与未来</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 牌照申请 (4栏) -->
+        <section class="slide" data-title="牌照申请路径">
+            <div class="header">
+                <div class="kicker">ACTION PLAN</div>
+                <h2 class="h2">2026年机构牌照申请建议路径</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <span class="pill">Phase 1: 摸底</span>
+                        <h3>法域选择与架构</h3>
+                        <p>评估业务主要覆盖区。推荐以新加坡或香港作为离岸金融创新中心，同时在卢森堡/爱尔兰获取 MiCA 欧洲通行证。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Phase 2: 资本</span>
+                        <h3>资本金注入</h3>
+                        <p>按当地监管要求冻结法定货币作为实缴资本，通常要求自有资金至少占预期发行规模的 2%-5%。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Phase 3: 审计</span>
+                        <h3>IT与风控审计</h3>
+                        <p>聘请外部四大进行 AML 流程、冷热钱包私钥管理机制、智能合约逻辑的全方面模拟压力测试。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Phase 4: 发行</span>
+                        <h3>沙盒毕业与铸造</h3>
+                        <p>获得正式信托或支付机构牌照，在受限白名单网络内进行首次铸币，并逐步开放 API 接口给零售渠道。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 10: 展望与未来</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 总结 (2栏) -->
+        <section class="slide" data-title="总结">
+            <div class="header">
+                <div class="kicker">CONCLUSION</div>
+                <h2 class="h2">从“野蛮生长”到“金融正规军”</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>合规不是阻碍，而是护城河</h3>
+                        <p>面对日益严苛的全球监管网，许多初创项目被淘汰出局。但对于具备资本实力和合规意识的大型金融机构而言，这正是入场收割 Web3 支付红利的最佳时机。</p>
+                        <p style="margin-top:16px;">获取牌照和建立可信审计机制的高昂成本，将成为后来者无法轻易逾越的深厚护城河。</p>
+                    </div>
+                    <div class="card" style="background-color: var(--primary); color: #fff;">
+                        <h3 style="color: var(--accent-gold);">最终建议</h3>
+                        <p style="color: #fff; opacity: 0.9;">“不要试图去寻找监管套利的孤岛，因为法币结汇的网络效应最终掌握在核心主权国家手中。拥抱监管，并利用智能合约去重构合规的效率，才是制胜之道。”</p>
+                        <div class='img-wrap'><img src='img/market.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>结束语</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">感谢聆听</h1>
+                <p style="font-size: 22px; color: rgba(255,255,255,0.8); margin-top: 24px; font-family: var(--font-serif);">Q&A 交流环节</p>
+                <div style="margin-top: 40px;">
+                    <span class="pill" style="font-size: 14px; padding: 10px 20px;">合规咨询专线：compliance@gfpi.org</span>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GLOBAL FINANCIAL POLICY INSTITUTE</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 图表全局配置
+            Chart.defaults.color = '#5c677d';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            // 5页：折线图
+            const ctxLine = document.getElementById('lineChart');
+            if (ctxLine) {
+                new Chart(ctxLine.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['2023', '2024(规管起步)', '2025(加速入场)', '2026(全面合规)', '2027(E)'],
+                        datasets: [
+                            {
+                                label: '受监管合规稳定币 (10亿美元)',
+                                data: [120, 160, 280, 550, 1200],
+                                borderColor: '#00587a',
+                                backgroundColor: 'rgba(0, 88, 122, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.3
+                            },
+                            {
+                                label: '非合规/算法稳定币 (10亿美元)',
+                                data: [40, 25, 10, 2, 0],
+                                borderColor: '#e0445a',
+                                borderDash: [4, 4],
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } }
+                    }
+                });
+            }
+
+            // 6页：饼图
+            const ctxPie = document.getElementById('pieChart');
+            if (ctxPie) {
+                new Chart(ctxPie.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['美国短期国债 (T-Bills)', '隔夜逆回购 (RRP)', '现金存款', '其他高流动性资产'],
+                        datasets: [{
+                            data: [65, 20, 12, 3],
+                            backgroundColor: [
+                                '#0f3057',
+                                '#00587a',
+                                '#c6a87c',
+                                '#e7eaf6'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // 8页：柱状图
+            const ctxBar = document.getElementById('barChart');
+            if (ctxBar) {
+                new Chart(ctxBar.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['传统跨国银行', '区域性商业银行', '头部合规加密企业', '原生DeFi算法协议'],
+                        datasets: [
+                            {
+                                label: '合规风控能力',
+                                data: [95, 80, 60, 10],
+                                backgroundColor: '#0f3057',
+                                borderRadius: 4
+                            },
+                            {
+                                label: '区块链技术敏捷度',
+                                data: [40, 30, 95, 100],
+                                backgroundColor: '#c6a87c',
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { max: 100 }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

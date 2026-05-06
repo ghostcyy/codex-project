@@ -3,11 +3,17 @@ import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { NextResponse } from "next/server";
+import { getCurrentUser } from "../../../../../lib/server-auth";
 import { buildMetadata, runFfprobe } from "../../../../../lib/video-server";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const formData = await request.formData().catch(() => null);
   const uploadedFile = formData?.get("file");
 

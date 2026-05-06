@@ -1,0 +1,79 @@
+{
+  "id": "xhs-white-editorial",
+  "label": {
+    "zh-CN": "白底杂志",
+    "en": "White Editorial"
+  },
+  "description": {
+    "zh-CN": "适合知识科普、审美内容和社媒长图的白底杂志模板。",
+    "en": "A clean editorial template for knowledge explainers, aesthetic content, and social long-form cards."
+  },
+  "donorTemplateId": "xhs-white-editorial",
+  "deckClass": "tpl-xhs-white-editorial",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "editorial-serif",
+  "themeAlternates": [
+    "xhs-pastel",
+    "japanese-minimal",
+    "sunset-warm"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "quote",
+      "image-hero",
+      "bullet-list",
+      "comparison",
+      "timeline"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "consumers",
+    "designers",
+    "general-public"
+  ],
+  "formatFit": [
+    "showcase",
+    "briefing",
+    "tutorial"
+  ],
+  "toneFit": [
+    "friendly",
+    "narrative",
+    "analytical"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 10,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "rise-in",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 3
+  },
+  "embeddingPrompt": "White editorial magazine deck, clean knowledge cards, lifestyle education, elegant social explainer.",
+  "promptSignals": [
+    "白底",
+    "杂志",
+    "科普",
+    "审美",
+    "长图",
+    "editorial",
+    "magazine",
+    "clean",
+    "explainer"
+  ],
+  "forbidPromptSignals": [
+    "黑客",
+    "终端"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

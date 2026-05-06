@@ -1,0 +1,28 @@
+<section class="slide" data-title="代码实现" data-page-type="grid-2">
+            <div class="header">
+                <span class="kicker">DEVELOPER REFERENCE</span>
+                <h2 class="h2">可编程的<strong>安全策略定义</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Security as Code</h3>
+                        <p>通过声明式语法定义安全策略。所有的治理规则均可作为代码进行版本控制与自动化部署。</p>
+                    </div>
+                    <div class="code-box" style="margin-top: 0; font-size: 12px;">
+                        policy "DataProtection" {<br>
+                        &nbsp;&nbsp;scope = "UserPii"<br>
+                        &nbsp;&nbsp;action "mask" {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;algorithm = "SHA-256"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;salt = env.SECRET_KEY<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;allow role("Auditor")<br>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_08 // POLICY_ENGINE</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>

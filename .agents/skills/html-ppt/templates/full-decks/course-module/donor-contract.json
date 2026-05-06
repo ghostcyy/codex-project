@@ -1,8 +1,8 @@
 {
   "forbiddenTextExamples": ["Define recursion", "Correct.", "No base case"],
   "forbiddenTextPatterns": ["Define\\s+recursion", "No\\s+base\\s+case", "\\bCorrect\\b"],
-  "forbiddenClasses": [],
+  "forbiddenClasses": ["correct"],
   "coverOnlyClasses": [],
-  "decorativeOnlyClasses": [],
-  "cssRedactClasses": []
+  "decorativeOnlyClasses": ["concept-box"],
+  "cssRedactClasses": ["correct", "concept-box"]
 }

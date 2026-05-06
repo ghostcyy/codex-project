@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ConfirmSubmitButton } from "../../../components/admin/confirm-submit-button";
 import { getAdminLlmConfigs, getAdminLlmLogs, getAdminLlmStats, requireLlmManagerUser } from "../../../lib/server-auth";
 import { createLlmConfigAction, deleteLlmConfigAction, updateLlmConfigAction } from "./actions";
 
@@ -9,6 +10,15 @@ const HTML_PPT_MODEL_STAGES = [
   { key: "section", label: "Section", hint: "05 内容/HTML" },
   { key: "css", label: "CSS", hint: "06 样式生成" },
   { key: "qa", label: "QA Repair", hint: "08 定点修复" }
+] as const;
+
+const LLM_PROVIDER_OPTIONS = [
+  { value: "minimax-cli", label: "MiniMax CLI JSON", hint: "mmx --output json" },
+  { value: "minimax", label: "MiniMax HTTP", hint: "Prompt-only JSON contract" },
+  { value: "openai-compatible", label: "OpenAI Compatible HTTP", hint: "Generic /chat/completions" },
+  { value: "openai", label: "OpenAI JSON Mode", hint: "response_format json_object" },
+  { value: "openrouter", label: "OpenRouter JSON Mode", hint: "response_format json_object" },
+  { value: "azure-openai", label: "Azure OpenAI JSON Mode", hint: "response_format json_object" }
 ] as const;
 
 type PageProps = {
@@ -105,7 +115,14 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <label className="grid gap-2">
                       <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Provider</span>
-                      <input name="providerType" defaultValue={config.providerType} className="text-input text-sm h-12" />
+                      <select name="providerType" defaultValue={config.providerType || "minimax-cli"} className="text-input text-sm h-12">
+                        {LLM_PROVIDER_OPTIONS.map((provider) => (
+                          <option key={provider.value} value={provider.value}>{provider.label}</option>
+                        ))}
+                      </select>
+                      <span className="px-1 text-[10px] leading-4 text-[var(--muted)]">
+                        MiniMax CLI uses the server-side <code>mmx text chat --output json</code> path.
+                      </span>
                     </label>
                     <label className="grid gap-2">
                       <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Model ID</span>
@@ -160,7 +177,13 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
                 </div>
 
                 <div className="flex items-center justify-between mt-4 pt-6 border-t border-[var(--line)]">
-                  <button formAction={deleteLlmConfigAction} className="text-sm font-semibold text-rose-500 hover:text-rose-600 transition-colors px-2">Remove Provider</button>
+                  <ConfirmSubmitButton
+                    action={deleteLlmConfigAction}
+                    className="text-sm font-semibold text-rose-500 hover:text-rose-600 transition-colors px-2"
+                    message={`确认删除模型配置「${config.name}」？`}
+                  >
+                    Remove Provider
+                  </ConfirmSubmitButton>
                   <button type="submit" className="primary-button text-sm px-8 h-12 shadow-lg shadow-gray-900/10">Save Configuration</button>
                 </div>
               </form>
@@ -185,11 +208,18 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
               <div className="grid grid-cols-2 gap-4">
                 <label className="grid gap-2">
                   <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Provider Type</span>
-                  <input name="providerType" defaultValue="openai-compatible" className="text-input text-sm h-12 bg-white" />
+                  <select name="providerType" defaultValue="minimax-cli" className="text-input text-sm h-12 bg-white">
+                    {LLM_PROVIDER_OPTIONS.map((provider) => (
+                      <option key={provider.value} value={provider.value}>{provider.label}</option>
+                    ))}
+                  </select>
+                  <span className="px-1 text-[10px] leading-4 text-[var(--muted)]">
+                    Default: MiniMax CLI JSON. Requires <code>mmx</code> on the backend PATH.
+                  </span>
                 </label>
                 <label className="grid gap-2">
                   <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Model Name</span>
-                  <input name="model" className="text-input text-sm h-12 bg-white" placeholder="gpt-4o" required />
+                  <input name="model" className="text-input text-sm h-12 bg-white" defaultValue="MiniMax-M2.7-highspeed" placeholder="MiniMax-M2.7-highspeed" required />
                 </label>
               </div>
               <div className="rounded-[22px] border border-[var(--line)] bg-white/55 p-4">
@@ -210,11 +240,18 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
               </div>
               <label className="grid gap-2">
                 <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">Base URL</span>
-                <input name="baseUrl" className="text-input text-sm h-12 bg-white" placeholder="https://api.openai.com/v1" required />
+                <input name="baseUrl" className="text-input text-sm h-12 bg-white" defaultValue="https://api.minimax.io/v1" placeholder="https://api.minimax.io/v1" required />
               </label>
               <label className="grid gap-2">
                 <span className="text-[11px] font-bold text-[var(--muted)] uppercase tracking-wider px-1">API Secret</span>
                 <input name="apiKey" type="password" className="text-input text-sm h-12 bg-white" placeholder="sk-..." required />
+              </label>
+              <label className="flex items-center gap-4 cursor-pointer group">
+                <div className="relative inline-flex items-center h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ring-0">
+                  <input name="enabled" type="checkbox" className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[var(--ink)]"></div>
+                </div>
+                <span className="text-sm font-medium text-[var(--ink)]">创建后立即启用</span>
               </label>
               <button type="submit" className="primary-button w-full h-14 mt-4 bg-[var(--ink)] text-white shadow-xl shadow-gray-900/10">Initialize Provider</button>
             </form>

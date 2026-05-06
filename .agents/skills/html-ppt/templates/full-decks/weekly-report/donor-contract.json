@@ -2,7 +2,7 @@
   "forbiddenTextExamples": ["FIN · week 15"],
   "forbiddenTextPatterns": ["FIN\\s*·\\s*week\\s*\\d+"],
   "forbiddenClasses": [],
-  "coverOnlyClasses": [],
+  "coverOnlyClasses": ["cover-head", "week-chip"],
   "decorativeOnlyClasses": [],
-  "cssRedactClasses": []
+  "cssRedactClasses": ["cover-head", "week-chip"]
 }

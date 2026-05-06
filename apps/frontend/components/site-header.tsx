@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { ADMIN_ACCESS_PERMISSION, hasPermission } from "../lib/auth";
+import { isAdminUser } from "../lib/auth";
 import { getCurrentUser } from "../lib/server-auth";
 import { LogoutButton } from "./auth/logout-button";
 import { SmartHeader } from "./smart-header";
 
 export async function SiteHeader() {
   const user = await getCurrentUser();
-  const canAccessAdmin = hasPermission(user, ADMIN_ACCESS_PERMISSION);
+  const canAccessAdmin = isAdminUser(user);
 
   return (
     <SmartHeader>
@@ -39,14 +39,14 @@ export async function SiteHeader() {
           </div>
 
           <div className="group relative">
-            <Link href="/tools/html-ppt" className="hover:text-[var(--ink)] transition-colors py-2">
+            <Link href="/tools/html-ppt-v3" className="hover:text-[var(--ink)] transition-colors py-2">
               HTML-PPT
             </Link>
             <div className="absolute left-0 top-full h-4 min-w-[140px]" aria-hidden="true" />
             <div className="pointer-events-none invisible absolute left-0 top-full z-40 min-w-[140px] pt-2 opacity-0 transition duration-200 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100">
               <div className="rounded-[16px] border border-[var(--line-strong)] bg-white p-2 shadow-[var(--shadow-float)]">
                 <Link
-                  href="/tools/html-ppt"
+                  href="/tools/html-ppt-v3"
                   className="block rounded-[10px] px-4 py-2.5 text-sm text-[var(--ink)] hover:bg-[var(--bg-deep)] transition"
                 >
                   HTML-PPT
@@ -109,20 +109,12 @@ export async function SiteHeader() {
                 </div>
               </>
             ) : (
-              <>
-                <Link
-                  href="/register"
-                  className="text-[var(--ink)] hover:text-[var(--accent)] font-medium transition-colors"
-                >
-                  注册
-                </Link>
-                <Link
-                  href="/login"
-                  className="text-[var(--accent)] hover:text-[var(--accent-strong)] font-semibold transition-colors"
-                >
-                  登录
-                </Link>
-              </>
+              <Link
+                href="/login"
+                className="text-[var(--accent)] hover:text-[var(--accent-strong)] font-semibold transition-colors"
+              >
+                登录
+              </Link>
             )}
           </div>
         </nav>

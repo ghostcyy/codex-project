@@ -1,0 +1,2415 @@
+{
+  "schemaVersion": 2,
+  "id": "17-cyber-security",
+  "deckClass": "tpl-cyber",
+  "label": {
+    "zh-CN": "模板 17-cyber-security",
+    "en": "Template 17-cyber-security"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "deckEffects": {
+    "htmlFile": "fragments/deck-effects.html",
+    "jsFile": "assets/deck-effects.js",
+    "elementIds": [
+      "matrix-canvas"
+    ]
+  },
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "CYBERDEFENSE"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-wrapper:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "[ SECURITY_CLEARANCE_LEVEL_5 ]"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INTEL_OPS // NODE_0x17 // [SECURED]"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 16,
+          "maxChars": 31,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "全球数字化主权的堡垒 // 2026 战略白皮书"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > div",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "STATUS: [ ENCRYPTED_TRANSMISSION_ACTIVE ]"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "STAYSECURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INTEL_OPS // NODE_0x17 // [SECURED]"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "永不信任 // 始终验证"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > div > div",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "SEC_OPS@CYBER.FORTRESS"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "背景",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x1 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 2,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 113,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全球网络空间对抗态势"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_INTEL"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "THREAT_INTEL // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "无形的前线"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 226,
+          "maxChars": 452,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "2026 年，网络攻击已从单纯的经济犯罪演变为针对关键基础设施的战略打击。平均每 11 秒就会发生一次勒索软件攻击。传统的防火墙边界已经瓦解，我们正处于“零信任”时代的黎明。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "核心威胁",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "两大高危威胁演变"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "ATTACK_VECTORS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "VECTOR_ANALYSIS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "勒索软件即服务 (RaaS)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 124,
+          "maxChars": 248,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "攻击门槛大幅降低。地下黑客组织通过订阅制模式分发高强度加密脚本，实现了攻击行为的规模化与工业化。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "零日漏洞供应链"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "针对核心开源组件与商业软件的深层渗透。在漏洞公开之前，攻击者已潜伏在网络心脏数月之久。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "通信拦截",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "text page with card x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "card": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "已拦截的加密通信日志"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SIGNAL_INTELLIGENCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SIGINT_LOGS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.card > h3",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "DECRYPTED_LOG_0x42.MP3"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.card > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "“正在尝试破解 RSA-4096 握手包... 剩余时间：12 小时。”"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div.audio-ui > div:nth-of-type(3)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "03:12"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "video",
+        "audio"
+      ]
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "纵深防御",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "纵深防御体系矩阵"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DEFENSE_STRATEGY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "STRATEGIC_DEFENSE // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "SIEM/SOAR 联动"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过全量日志审计与自动化响应，在攻击发生的秒级内完成自动封禁与隔离。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "EDR/XDR 端点增强"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "从单一服务器到边缘终端的全场景监控，精准识别并拦截勒索程序的恶意加密行为。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "零信任架构"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "永不信任，始终验证。基于身份、环境与设备健康度，动态授予最小权限访问权限。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "泄漏趋势",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 85,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全球敏感数据泄露体量趋势"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DATA_BREACH_STATS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "TREND_ANALYSIS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "失控的数据指数"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 170,
+          "maxChars": 340,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "尽管防御手段在升级，但由于数字化资产的爆发式增长，数据泄露的潜在风险仍呈指数级上升。单次泄露的平均修复成本已突破 500 万美元。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "加密标准",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全时加密技术栈"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CRYPTOGRAPHY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "CRYPTO_SPEC // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AES-256"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "对称加密标准。用于海量存储数据的静态保护。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "抗量子加密"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "预研 PQC 算法。防范未来量子计算机的暴力破解威胁。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "ECC 椭圆曲线"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "轻量级非对称加密。为移动端提供高效的安全握手。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全同态加密"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "允许在密文上进行计算。实现极致的云端隐私保护。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "响应演练",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "text page with card x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "card": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 68,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "重大漏洞应急响应演练"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INCIDENT_RESPONSE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "RESPONSE_VOD // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "战术复盘"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(2) > p",
+          "tarChars": 136,
+          "maxChars": 272,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "视频记录了从监测到异常流量、到触发阻断策略、直至系统热备份恢复的全过程。响应时间被压缩至 480 毫秒。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div > div.media-container:nth-of-type(1) > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "[ FEED: LIVE_EXERCISE_07 ]"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "video"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "image-full",
+      "sourcePageType": "image-full",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "安全运营",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:image-full, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-full",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "下一代安全运营中心 (SOC)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SOC_OPERATIONS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "FACILITY_PREVIEW // 2026"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "24/7/365 全时守候"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "集成 AI 自动判研与多维可视化大屏，实现对全球威胁的实时感知与精准阻击。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "身份管理",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "身份：网络空间的数字化护照"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "IDENTITY_ACCESS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "IAM_STACK // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "多因素认证 (MFA)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "结合硬件令牌与生物识别。即使密码泄露，也能为账号提供最后一道屏障。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "行为建模"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "学习用户的日常操作习惯。一旦出现异常位置或非常规时间登录，立即触发二次验证。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "单点登录 (SSO)"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在确保安全的前提下，提供丝滑的跨应用访问体验。减少弱密码重复使用的风险。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "攻击向量",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "攻击初始向量分布图"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "THREAT_LANDSCAPE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "VECTOR_STATS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "人为因素仍是核心"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "近 80% 的入侵始于社会工程学或钓鱼邮件。人是防御体系中最脆弱、也最重要的环节。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "image-full",
+      "sourcePageType": "image-full",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "物理安全",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:image-full, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-full",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "数据中心的物理硬核防护"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "PHYSICAL_LAYER"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "DATA_CENTER // 2026"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "云安全",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全云环境的安全治理"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CLOUD_POSTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "CLOUD_SECURITY // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CSPM"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "实时监控云资源配置错误。防止因 S3 存储桶公开导致的数据泄漏。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CWPP"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "保护云工作负载。针对容器与无服务器函数提供深度安全检测。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CASB"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "云访问安全代理。管控员工在 SaaS 应用中的敏感数据流动。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "网格化隔离"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在云端构建精细化的安全隔离域，防止攻击者在 VPC 内横向平移。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "安全投入",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 66,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "网络安全年度预算配比"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INVESTMENT_ROI"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "BUDGET_ANALYSIS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "合规性驱动转向风险驱动"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 132,
+          "maxChars": 264,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "企业不再仅仅为了拿证而投入安全。基于业务风险的精准配置正成为主流趋势，特别是针对高净值资产的专项防护。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "合规路线",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x1; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全球合规化演进时间轴"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "COMPLIANCE_ROADMAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PROJECT_SCHEDULE // 2026"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE_1: AUDIT"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE_2: REMEDIATION"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(3)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE_3: CERTIFICATION"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(4)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE_4: CONTINUOUS_MONITORING"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "威胁画像",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "暗处威胁者的数字化画像"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "THREAT_INTEL // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "APT 组织"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "国家级支撑。长期潜伏，针对性极强。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "黑客主义者"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "意识形态驱动。通过 DDoD 或涂鸦表达诉求。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "内部威胁"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "不满的员工或被收买的内线。防不胜防。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "网络佣兵"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "受雇于第三方。只为金钱，不择手段。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "脚本小子"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "使用现成工具。虽无深度，但数量庞大。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "监管合规",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "法律合规的边界与基石"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "REGULATORY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "LEGAL_BOUNDARIES // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "GDPR 2.0"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "更严格的跨境数据流动监管。违反者可能面临全球年度营收 4% 的巨额罚款。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "ISO 27001:2025"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "新一代信息安全管理体系。将 AI 安全与云安全纳入核心审计范畴。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "关键基础设施保护"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "针对电力、金融、能源等民生领域的专项立法。强制要求实施冗余灾备与主动防御。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "红蓝对抗",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-overlap-diag",
+            "kind": "grid",
+            "subtype": "layout-overlap-diag",
+            "selector": ".layout-overlap-diag",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-overlap-diag": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "在对抗中淬炼防御"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KINETIC_OVERLAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "WAR_GAMING // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "红队 (Red Team)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "模拟最真实的攻击手段。不设预案，旨在发现企业防御链条中最隐蔽的短板。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "蓝队 (Blue Team)"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "磨砺监测与阻断能力。在压力测试下不断优化 SOAR 剧本与响应时效。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "image-full",
+      "sourcePageType": "image-full",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "数字主权",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:image-full, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-full",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "守护数字世界的最后疆域"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DIGITAL_FORTRESS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "VISIONary_OPS // 2026"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "CYBER_FORTRESS_v2026"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "安全没有终点，只有不断动态演进的平衡。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": true,
+    "hasAudioPages": true
+  }
+}

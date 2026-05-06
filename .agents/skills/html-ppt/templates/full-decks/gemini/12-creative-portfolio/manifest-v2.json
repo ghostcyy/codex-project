@@ -1,0 +1,2320 @@
+{
+  "schemaVersion": 2,
+  "id": "12-creative-portfolio",
+  "deckClass": "tpl-creative-portfolio",
+  "label": {
+    "zh-CN": "模板 12-creative-portfolio",
+    "en": "Template 12-creative-portfolio"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "01 Cover",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "用创意点亮世界。"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "创意工作室 2026"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "简介"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div:nth-of-type(1) > p.lede",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "一家专注于打造大胆、纯粹的数字体验的独立设计机构。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "19 Contact",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "让我们共同创造史诗级作品。"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "取得联系"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "联系我们"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "hello@creativestudio.com"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "02 Manifesto",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "设计不仅是外观的呈现，更是其运作的方式。"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "宣言"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "宣言"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(1) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "我们坚信打破常规与边界，在千篇一律的海洋中创造令人难忘的互动体验。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "03 Selected Works",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x3 x1 + card x3 + image x3; pageType:grid-3, layout:media, grid:1x3",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x3 x1 + card x3 + image x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-2",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-3",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6,
+          "image": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:media",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "近期作品呈现"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "精选作品"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "作品"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "霓虹之夜"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "品牌视觉"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "回声空间"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "网页体验"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "天鹅绒之音"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "应用设计"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']",
+        "img[data-image-slot='1']",
+        "img[data-image-slot='2']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "04 Case Study 1",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "霓虹之夜"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "案例研究 01"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "案例研究"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "为欧洲最大型的电子音乐节进行全面的品牌重塑。我们从零开始，重新设计了他们的视觉语言。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "05 Case Study 2",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "回声空间"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "案例研究 02"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "案例研究"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(1) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "一个展示建筑声学的沉浸式 webGL 体验，荣获 Awwwards 月度最佳网站。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "06 Case Study 3",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "天鹅绒之音"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "案例研究 03"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "案例研究"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "高保真音频流媒体的移动应用设计。专注于极简的用户界面和最大化的内容发现。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "07 Philosophy",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "text page with text x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "少，即是更好。"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "设计哲学"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "设计哲学"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "08 Services",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "我们的服务"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "专业能力"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "服务内容"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "01."
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "标志、排版、调色板及品牌指南。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "02."
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "网站、应用程序及互动体验。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "03."
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "2D/3D动画、视频制作与视觉特效。"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "品牌视觉"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "数字设计"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "动态图形"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "09 Process 1",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "探索"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "流程 · 第一阶段"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "设计流程"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "我们从倾听开始。在设计任何细节之前，深入了解您的品牌、受众和目标至关重要。"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.grid-2:nth-of-type(2) > div.number-huge:nth-of-type(1)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "1"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "10 Process 2",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "构思"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "流程 · 第二阶段"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "设计流程"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "头脑风暴、线框图设计与快速原型制作。我们探索多种方向，以找到完美的解决方案。"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.grid-2:nth-of-type(2) > div.number-huge:nth-of-type(1)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "2"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "11 Process 3",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "执行"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "流程 · 第三阶段"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "设计流程"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div:nth-of-type(2) > p.lede",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "通过像素级的设计、流畅的动画和强大的开发技术，将概念化为现实。"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.grid-2:nth-of-type(2) > div.number-huge:nth-of-type(1)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "3"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "12 Awards",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "屡获殊荣的设计"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "行业认可"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "荣誉奖项"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Awwwards"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "月度最佳网站 (x3)每日最佳网站 (x12)"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "FWA"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "FWA每日最佳 (x5)"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Webby Awards"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "最佳 UI/UX 提名"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "13 Team",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x3 x1 + card x3 + image x3; pageType:grid-3, layout:media, grid:1x3",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x3 x1 + card x3 + image x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-2",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-3",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6,
+          "image": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:media",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "核心团队"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "领导团队"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "团队介绍"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "张三"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "创意总监"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "李四"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "首席设计师"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "王五"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > p.lede",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "技术主管"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']",
+        "img[data-image-slot='1']",
+        "img[data-image-slot='2']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "14 Clients",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x3 x1 + card x6; pageType:grid-3, layout:grid, grid:2x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x3 x1 + card x6",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 2,
+              "cols": 3,
+              "items": 6,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-6",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x3": 1,
+          "card": 12
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:2x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 6,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "精选客户"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "合作伙伴"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "合作客户"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "耐克"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "苹果"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "索尼"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(4)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "特斯拉"
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(5)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "奥多比"
+        },
+        {
+          "slotId": "body-6",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(6)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "HBO"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "15 Product - 2 Col",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "旗舰级解决方案"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CORE_INFO"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "产品介绍"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > div.card-title:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "企业版 Pro Max"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > div.card-title:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "团队版 Standard"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > div.card-desc:nth-of-type(3)",
+          "tarChars": 28,
+          "maxChars": 56,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "专为大型企业打造的终极解决方案。提供全天候技术支持，独享专属服务器资源，确保业务连续性与数据安全。"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > div.card-desc:nth-of-type(3)",
+          "tarChars": 28,
+          "maxChars": 56,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "适合中小型敏捷团队。支持无限次云端同步协作，内置数百种精美模板，让创意和生产力同时起飞。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > div.card-tag:nth-of-type(4)",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "了解更多 →"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > div.card-tag:nth-of-type(4)",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "了解更多 →"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "16 Product - 3 Col",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "三大核心模块"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "产品矩阵"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "产品介绍"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div.card-title:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "自动化引擎"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div.card-title:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "数据可视化"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div.card-title:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "安全堡垒"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div.card-desc:nth-of-type(3)",
+          "tarChars": 25,
+          "maxChars": 50,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "大幅减少重复劳动，将复杂的工作流自动化。支持多种第三方服务的一键接入。"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div.card-desc:nth-of-type(3)",
+          "tarChars": 25,
+          "maxChars": 49,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "通过交互式图表和实时仪表盘，让庞杂的数据变得清晰直观，助力精准决策。"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div.card-desc:nth-of-type(3)",
+          "tarChars": 25,
+          "maxChars": 49,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "采用金融级加密算法，多重身份验证，为您的数据资产提供坚不可摧的保护。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "17 Product - 4 Col",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "重新定义高效"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "功能特性"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "产品介绍"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(1) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "极速同步"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(2) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "智能分析"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(3) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "无缝协作"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(4) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "全平台覆盖"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(1) > div.card-desc:nth-of-type(2)",
+          "tarChars": 16,
+          "maxChars": 31,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "毫秒级云端同步，随时随地保持最新状态。"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(2) > div.card-desc:nth-of-type(2)",
+          "tarChars": 16,
+          "maxChars": 32,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "基于深度学习算法，自动提炼核心数据见解。"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(3) > div.card-desc:nth-of-type(2)",
+          "tarChars": 16,
+          "maxChars": 32,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "支持多人实时在线编辑，评论反馈即刻送达。"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.grid-4:nth-of-type(2) > div.card:nth-of-type(4) > div.card-desc:nth-of-type(2)",
+          "tarChars": 16,
+          "maxChars": 31,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "打通网页、桌面与移动端，体验始终如一。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "18 Product - 5 Col",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全方位覆盖您的需求"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "产品介绍"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(1) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "策略规划"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(2) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "产品设计"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(3) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "技术研发"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(4) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "市场营销"
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(5) > div.card-title:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "客户成功"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(1) > div.card-desc:nth-of-type(2)",
+          "tarChars": 13,
+          "maxChars": 25,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "提供行业洞察与商业策略建议。"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(2) > div.card-desc:nth-of-type(2)",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "从用户体验到界面的全链条设计。"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(3) > div.card-desc:nth-of-type(2)",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "采用前沿技术栈的高效研发交付。"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(4) > div.card-desc:nth-of-type(2)",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "数据驱动的增长黑客与营销策略。"
+        },
+        {
+          "slotId": "stat-label-5",
+          "selector": "div.grid-5:nth-of-type(2) > div.card:nth-of-type(5) > div.card-desc:nth-of-type(2)",
+          "tarChars": 14,
+          "maxChars": 28,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "专属顾问团队，确保您的商业成功。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [],
+    "hasImagePages": true,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

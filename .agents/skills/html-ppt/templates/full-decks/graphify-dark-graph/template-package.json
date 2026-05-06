@@ -1,0 +1,82 @@
+{
+  "id": "graphify-dark-graph",
+  "label": {
+    "zh-CN": "暗色图谱",
+    "en": "Graphify Dark"
+  },
+  "description": {
+    "zh-CN": "适合知识图谱、数据网络、AI 和复杂系统解释的暗色模板。",
+    "en": "A dark graph-style template for knowledge maps, data networks, AI topics, and complex systems."
+  },
+  "donorTemplateId": "graphify-dark-graph",
+  "deckClass": "tpl-graphify-dark-graph",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "graphify-dark",
+  "themeAlternates": [
+    "terminal-cyber",
+    "knowledge-blueprint",
+    "engineering-whiteprint"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "chart",
+      "kpi-grid",
+      "stat-highlight",
+      "process",
+      "comparison",
+      "timeline"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "engineers",
+    "researchers",
+    "executives"
+  ],
+  "formatFit": [
+    "analysis",
+    "briefing",
+    "lecture"
+  ],
+  "toneFit": [
+    "analytical",
+    "rigorous",
+    "authoritative"
+  ],
+  "defaultDensity": "dense",
+  "defaultSlideCount": 12,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "stagger-list",
+      "scale-in",
+      "none"
+    ],
+    "allowedFx": [
+      "grid-lines",
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 3
+  },
+  "embeddingPrompt": "Dark graph deck, knowledge graph, AI network, metrics, complex systems, data relationships.",
+  "promptSignals": [
+    "知识图谱",
+    "网络",
+    "AI",
+    "数据关系",
+    "复杂系统",
+    "graph",
+    "network",
+    "dark",
+    "data"
+  ],
+  "forbidPromptSignals": [
+    "小清新",
+    "亲子"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

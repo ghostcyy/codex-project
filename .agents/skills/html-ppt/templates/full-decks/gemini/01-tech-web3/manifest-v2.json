@@ -1,0 +1,2535 @@
+{
+  "schemaVersion": 2,
+  "id": "01-tech-web3",
+  "deckClass": "tpl-web3",
+  "label": {
+    "zh-CN": "模板 01-tech-web3",
+    "en": "Template 01-tech-web3"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "SMART CITYDATA SECURITY"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-wrapper:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INITIALIZING GOVERNANCE PROTOCOL v2.0"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "0xDE4DBEEF // SECURE_CITY_ARCH"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 29,
+          "maxChars": 57,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "[STATUS: SECURE] // [AUTHORITY: DEV_LEVEL_0]"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "GET CONNECTED"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "0xDE4DBEEF // SECURE_CITY_ARCH"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 27,
+          "maxChars": 53,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "JOIN THE NETWORK // BUILD THE SECURE CITY"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "0x1234...ABCD // PGP_SIGNED"
+        },
+        {
+          "slotId": "cta-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > div:nth-of-type(1) > button",
+          "tarChars": 19,
+          "maxChars": 38,
+          "optional": false,
+          "kind": "cta",
+          "sourceText": "GITHUB.COM/SMART-CITY-DAO"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "治理背景",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 68,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "未来城市的底层安全逻辑"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM CONTEXT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_02 // VULNERABILITY_ASSESSMENT"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数字化演进中的漏洞"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-sidebar > div.card:nth-of-type(1) > p",
+          "tarChars": 136,
+          "maxChars": 272,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "传统智慧城市采用中心化存储，极易成为单点故障攻击目标。我们需要从“被动修补”转向“内生安全”的开发模式。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "核心协议",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "分布式信任锚点"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CORE PROTOCOLS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_03 // PROTOCOL_STACK"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "DID 去中心化身份"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于 W3C 标准的自主身份协议，用户完全掌握自己的数字主权。消除中心化数据库被拖库的风险。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "ZKP 零知识证明"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在不泄露隐私原始数据的前提下，实现数据的合法性验证。真正做到“可用不可见”。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "技术分层",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "多维防护技术框架"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "STACK LAYERS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_04 // SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "L1. 存储层"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 122,
+          "maxChars": 244,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "分布式加密文件系统（IPFS/Filecoin）。数据分片存储，具备极高的抗篡改与高可用特性。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "L2. 网络层"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "零信任网络架构（ZTA）。所有请求均需持续验证，默认“不信任任何设备或用户”。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "L3. 应用层"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "隐私计算与联邦学习。数据在加密容器内流转，保障计算过程的绝对隐私。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "数据吞吐",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 62,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "数据流量并发处理能力"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "METRICS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_05 // PERFORMANCE_LOGS"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "高并发下的稳定性"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 124,
+          "maxChars": 248,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "系统采用异步并发处理机制，确保在智慧交通等高频传感器场景下，数据处理延迟保持在 50ms 以内。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "攻击向量",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全域威胁覆盖矩阵"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "VECTORS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_06 // ATTACK_SURFACE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "API 泄露"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "防范接口越权访问与注入攻击。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "IoT 边缘"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "端到端加密防止物理劫持与重放攻击。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Cloud 安全"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "容器逃逸防御与资源逻辑隔离。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "内部人威胁"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于 RBAC 的精细化权限动态变更。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "数据流程",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "流水线式的治理过程"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "PIPELINE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_07 // DATA_FLOW"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "INPUT"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "清洗、格式校验、合法性打标。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "PROCESS"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "脱敏、加密处理、特征提取。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "SYNC"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "分布式同步、多副本确认机制。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "OUTPUT"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "动态水印、权限校验、日志留痕。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "PURGE"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "彻底粉碎、秘钥销毁、合规清理。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "代码实现",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "可编程的安全策略定义"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DEVELOPER REFERENCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_08 // POLICY_ENGINE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Security as Code"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过声明式语法定义安全策略。所有的治理规则均可作为代码进行版本控制与自动化部署。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "image-full",
+      "sourcePageType": "image-full",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "基础设施",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:image-full, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-full",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "下一代安全物理底座"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INFRASTRUCTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_09 // HARDWARE_LAYER"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "[HARDWARE_SECURE_ENCLAVE]"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "异常检测",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "实时异动感知系统"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MONITORING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_10 // LOG_ANALYSIS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AI 行为指纹"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过强化学习建立流量基准，毫秒级识别偏离预期的可疑操作。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全量审计日志"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "所有系统调用均记录至不可篡改的分布式账本中。具备永久追溯能力。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "自动化沙箱"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "对所有不确定脚本进行隔离运行，评估潜在风险后再进行生产部署。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "威胁分析",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "攻击向量分布画像"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "THREAT_MODEL"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_11 // RISK_ASSESSMENT"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "持续演进的对手"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "攻击手段已呈现高度专业化与组织化。系统必须具备“持续自愈”的能力，而非静态防御。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "image-full",
+      "sourcePageType": "image-full",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "节点分布",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:image-full, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-full",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全球去中心化共识网络"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "NETWORK_TOPOLOGY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_12 // NODE_CONSENSUS"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "ACTIVE_NODES: 14,922"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "审计流程",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "敏捷安全审计流程"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "AUDIT_CYCLE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_13 // DEVSEC_OPS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "INIT"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "确立审计范围与权限分配。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "SCAN"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "全量漏洞扫描与代码静态分析。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "PATCH"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "热修复补丁推送到边缘节点。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "VERIFY"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "多重签名确认修复完成。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "成熟度",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 61,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "治理体系演进路线"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MATURITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_14 // EVOLUTION_METRICS"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "向自治进化"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 122,
+          "maxChars": 244,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "从单纯的“人力审计”进化到“机器自治”。通过智能合约自动触发补救方案，将响应速度提升至微秒级。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "展望展望",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-overlap-diag",
+            "kind": "grid",
+            "subtype": "layout-overlap-diag",
+            "selector": ".layout-overlap-diag",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-overlap-diag": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 61,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "向自主自治进发"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KINETIC_OVERLAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_15 // VISION_GATEWAY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "完全去中心化治理"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > p",
+          "tarChars": 140,
+          "maxChars": 280,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "引入 DAO（去中心化自治组织）管理模式。所有安全协议的变更均通过社区共识投票决定，彻底消除超级管理员风险。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "量子安全加密"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "前瞻性部署抗量子计算加密算法。确保在未来的算力飞跃中，城市核心数据依然不可破译。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "试点方案",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x4; pageType:grid-4, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-quad",
+            "kind": "grid",
+            "subtype": "layout-quad",
+            "selector": ".layout-quad",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-quad": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "区域级技术栈试点"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BETA_TESTING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_16 // DEPLOYMENT_STRATEGY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "SANDBOX"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "低风险区域先行试运行，收集性能瓶颈数据。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CANARY"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "灰度发布，针对 5% 的节点进行协议热更新测试。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "STAGING"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "全链路模拟运行，压力测试最高并发场景。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "PROD"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "正式环境全面切流，实现全球同步治理。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "应用场景",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "当智慧城市遇见 Web3"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "USE_CASES"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_17 // REAL_WORLD_SYNC"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "共享出行"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过智能合约自动结算租借费用，保障用户位置隐私不被滥用。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "绿电交易"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "居民分布式光伏发电接入电网，点对点透明交易，收益自动到账。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "社区投票"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于区块链的无记名投票系统。确保选举结果的真实性与可核查性。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "指标体系",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x3 x1 + card x5; pageType:grid-5, layout:grid, grid:2x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x3 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-pentagon",
+            "kind": "grid",
+            "subtype": "layout-pentagon",
+            "selector": ".layout-pentagon",
+            "layout": {
+              "rows": 2,
+              "cols": 3,
+              "items": 5,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-pentagon": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:2x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全栈治理指标看板"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "PENTAGON_FOCUS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_18 // TELEMETRY_DATA"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "UPTIME"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "集群在线率达 99.999% 以上。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "LATENCY"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "共识确认延迟控制在 100ms 左右。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "TPS"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "峰值处理能力支持 10k/sec。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "COST"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "单次验证 Gas 损耗优化至极低水平。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "TRUST"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-pentagon > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "节点去中心化系数 (Nakamoto) > 100。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "使命愿景",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "text page with text x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "PAGE_19 // THE_END_OF_TRUST_GAPS"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "ENCRYPT THE FUTURE."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 260,
+          "maxChars": 520,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "> building a trustless, transparent, and resilient digital infrastructure for the next billion users."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.title-wrapper:nth-of-type(1) > div",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "[ SYSTEM_SYNC_COMPLETE ]"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

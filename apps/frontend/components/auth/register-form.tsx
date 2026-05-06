@@ -4,10 +4,39 @@ import Link from "next/link";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
-export function RegisterForm() {
+type RegisterFormProps = {
+  initialIdentifier?: string;
+  showLoginLink?: boolean;
+};
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function deriveInitialValues(initialIdentifier?: string) {
+  const value = initialIdentifier?.trim() ?? "";
+
+  if (EMAIL_PATTERN.test(value)) {
+    const username = value
+      .split("@")[0]
+      ?.replace(/[^a-zA-Z0-9_-]+/g, "_")
+      .slice(0, 32);
+
+    return {
+      email: value.toLowerCase(),
+      username: username && username.length >= 3 ? username : ""
+    };
+  }
+
+  return {
+    email: "",
+    username: /^[a-zA-Z0-9_-]{3,32}$/.test(value) ? value : ""
+  };
+}
+
+export function RegisterForm({ initialIdentifier, showLoginLink = true }: RegisterFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const initialValues = deriveInitialValues(initialIdentifier);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -16,8 +45,15 @@ export function RegisterForm() {
     setIsSubmitting(true);
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const email = String(formData.get("email") ?? "").trim().toLowerCase();
     const password = String(formData.get("password") ?? "");
     const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+    if (!EMAIL_PATTERN.test(email)) {
+      setError("请输入有效邮箱地址，例如 name@example.com。");
+      setIsSubmitting(false);
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("两次输入的密码不一致，请重新检查。");
@@ -28,7 +64,7 @@ export function RegisterForm() {
     const payload = {
       username: String(formData.get("username") ?? ""),
       displayName: String(formData.get("displayName") ?? ""),
-      email: String(formData.get("email") ?? ""),
+      email,
       password
     };
 
@@ -60,7 +96,7 @@ export function RegisterForm() {
     <form className="mt-8 grid gap-5" onSubmit={(event) => void onSubmit(event)}>
       <label className="block">
         <span className="mb-2 block text-sm font-medium text-[var(--ink)]">用户名</span>
-        <input name="username" className="text-input" autoComplete="username" required />
+        <input name="username" className="text-input" autoComplete="username" defaultValue={initialValues.username} required />
       </label>
 
       <label className="block">
@@ -70,7 +106,17 @@ export function RegisterForm() {
 
       <label className="block">
         <span className="mb-2 block text-sm font-medium text-[var(--ink)]">邮箱</span>
-        <input name="email" type="email" className="text-input" autoComplete="email" required />
+        <input
+          name="email"
+          type="email"
+          inputMode="email"
+          className="text-input"
+          autoComplete="email"
+          defaultValue={initialValues.email}
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+          title="请输入有效邮箱地址，例如 name@example.com"
+          required
+        />
       </label>
 
       <label className="block">
@@ -102,10 +148,15 @@ export function RegisterForm() {
       ) : null}
       {success ? (
         <p className="rounded-[18px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-          {success}{" "}
-          <Link href="/login?registered=1" className="font-semibold underline underline-offset-4">
-            前往登录
-          </Link>
+          {success}
+          {showLoginLink ? (
+            <>
+              {" "}
+              <Link href="/login?registered=1" className="font-semibold underline underline-offset-4">
+                前往登录
+              </Link>
+            </>
+          ) : null}
         </p>
       ) : null}
 

@@ -1,0 +1,386 @@
+.tpl-experimental {
+  --bg: #0f0f0f;
+  --surface: #1a1a1a;
+  --primary: #00ff88;
+  --secondary: #ff0077;
+  --accent: #00ccff;
+  --text-main: #ffffff;
+  --text-muted: #666666;
+  --border: rgba(255, 255, 255, 0.1);
+  --radius: 4px; /* Sharp and raw */
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: 'JetBrains Mono', 'Courier New', monospace; /* Informal/Code feel */
+  overflow: hidden;
+}
+
+.tpl-experimental .slide {
+  position: absolute;
+  inset: 0;
+  padding: 60px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Resident Effect: Floating Code Bits */
+#experimental-canvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.15;
+}
+
+.tpl-experimental .header {
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.tpl-experimental .kicker {
+  font-size: 14px;
+  color: var(--secondary);
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.tpl-experimental .h2 {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  margin: 0;
+}
+
+.tpl-experimental .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+/* --- EXPERIMENTAL LAYOUTS --- */
+
+/* 1. Zig-Zag Flow (Inherited from Page 6) */
+.tpl-experimental .grid-zigzag {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  flex: 1;
+}
+.tpl-experimental .grid-zigzag .card:nth-child(odd) { transform: translateY(40px); }
+.tpl-experimental .grid-zigzag .card:nth-child(even) { transform: translateY(-40px); }
+
+/* 2. Sticky Notes: Overlapping & Rotated */
+.tpl-experimental .layout-sticky {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 40px;
+}
+.tpl-experimental .layout-sticky .card {
+  box-shadow: 10px 10px 0 rgba(0,0,0,0.5);
+  border: 2px solid var(--primary);
+}
+.tpl-experimental .layout-sticky .card:nth-child(1) { transform: rotate(-3deg); }
+.tpl-experimental .layout-sticky .card:nth-child(2) { transform: rotate(2deg) translateY(20px); }
+.tpl-experimental .layout-sticky .card:nth-child(3) { transform: rotate(-1deg) translateY(-10px); }
+
+/* 3. The Dialogue: Chat Bubbles */
+.tpl-experimental .layout-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+.tpl-experimental .chat-bubble {
+  max-width: 70%;
+  padding: 20px;
+  background: var(--surface);
+  border-radius: 20px;
+  position: relative;
+}
+.tpl-experimental .chat-bubble.left { align-self: flex-start; border-bottom-left-radius: 0; border: 1px solid var(--accent); }
+.tpl-experimental .chat-bubble.right { align-self: flex-end; border-bottom-right-radius: 0; border: 1px solid var(--secondary); text-align: right; }
+
+/* 4. The Spotlight: One huge, many tiny */
+.tpl-experimental .layout-spotlight {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 2fr 1fr;
+  gap: 20px;
+  flex: 1;
+}
+.tpl-experimental .layout-spotlight .card.hero {
+  grid-column: span 4;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 4px solid var(--primary);
+  font-size: 32px;
+}
+
+/* 5. Terminal Console */
+.tpl-experimental .layout-terminal {
+  background: #000;
+  border: 1px solid #333;
+  padding: 20px;
+  flex: 1;
+  font-family: 'Courier New', monospace;
+  color: #0f0;
+  display: flex;
+  flex-direction: column;
+}
+.tpl-experimental .terminal-line::before { content: "> "; color: var(--secondary); }
+
+/* 6. Random Scatter */
+.tpl-experimental .layout-scatter {
+  position: relative;
+  flex: 1;
+}
+.tpl-experimental .layout-scatter .card {
+  position: absolute;
+  width: 250px;
+  padding: 15px;
+}
+
+/* Standard Cards */
+.tpl-experimental .card {
+  background: var(--surface);
+  padding: 20px;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+.tpl-experimental .card:hover {
+  background: #222;
+  transform: scale(1.05) !important;
+  z-index: 100;
+}
+
+/* 7. Quad Grid: 2x2 symmetry with slight offset */
+.tpl-experimental .layout-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 40px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-experimental .layout-quad .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-width: 2px;
+}
+.tpl-experimental .layout-quad .card:nth-child(1) { border-color: var(--primary); transform: translateX(-10px); }
+.tpl-experimental .layout-quad .card:nth-child(2) { border-color: var(--secondary); transform: translateX(10px); }
+.tpl-experimental .layout-quad .card:nth-child(3) { border-color: var(--accent); transform: translateX(-10px); }
+.tpl-experimental .layout-quad .card:nth-child(4) { border-color: var(--text-muted); transform: translateX(10px); }
+
+/* 9. Staircase: Indented hierarchy */
+.tpl-experimental .layout-staircase {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  flex: 1;
+  padding: 40px 0 40px 10%;
+}
+.tpl-experimental .layout-staircase .card {
+  width: 70%;
+  border-left: 10px solid var(--border);
+  padding: 25px 40px;
+}
+.tpl-experimental .layout-staircase .card:nth-child(1) { border-color: var(--primary); transform: translateX(0); }
+.tpl-experimental .layout-staircase .card:nth-child(2) { border-color: var(--secondary); transform: translateX(100px); }
+.tpl-experimental .layout-staircase .card:nth-child(3) { border-color: var(--accent); transform: translateX(200px); }
+
+/* 10. Pentagon (5-Card): Center Focus */
+.tpl-experimental .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-experimental .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-experimental .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-experimental .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-experimental .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-experimental .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--bg);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* 11. Mosaic Focus (5-Card): Dynamic Grid Shifting */
+.tpl-experimental .layout-mosaic-focus {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 10px;
+  perspective: 1000px;
+}
+
+.tpl-experimental .layout-mosaic-focus .card {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  border-width: 2px;
+}
+
+.tpl-experimental .layout-mosaic-focus .card h3 { font-size: 18px; color: var(--primary); }
+.tpl-experimental .layout-mosaic-focus .card p { font-size: 13px; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; max-width: 80%; }
+
+/* Default state: Card 1 is the Hero */
+.tpl-experimental .layout-mosaic-focus .card:nth-child(1) { grid-area: 1 / 1 / 3 / 3; }
+.tpl-experimental .layout-mosaic-focus .card:nth-child(1) h3 { font-size: 40px; }
+.tpl-experimental .layout-mosaic-focus .card:nth-child(1) p { opacity: 1; transform: translateY(0); }
+
+/* Other cards */
+.tpl-experimental .layout-mosaic-focus .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; }
+.tpl-experimental .layout-mosaic-focus .card:nth-child(3) { grid-area: 2 / 3 / 3 / 4; }
+/* If we have more than 3, we need to handle them carefully or adjust the grid */
+
+/* Interactive: On hover, that card becomes the Hero?
+   Wait, doing this in pure CSS for 5 cards is tricky without fixed positions.
+   Let's use a simpler 5-card approach: "The Kinetic Hub"
+*/
+
+/* 11. Kinetic Hub (5-Card): Central Axis with Floating Satellites */
+.tpl-experimental .layout-hub {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tpl-experimental .layout-hub .card {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 30px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tpl-experimental .layout-hub .card:nth-child(1) { /* The Nucleus */
+  width: 300px;
+  height: 300px;
+  z-index: 10;
+  border: 4px solid var(--primary);
+  background: var(--bg);
+  box-shadow: 0 0 50px rgba(0, 255, 136, 0.1);
+}
+
+.tpl-experimental .layout-hub .card:nth-child(2) { transform: translate(-300px, -150px) scale(0.8); border-color: var(--secondary); }
+.tpl-experimental .layout-hub .card:nth-child(3) { transform: translate(300px, -150px) scale(0.8); border-color: var(--accent); }
+.tpl-experimental .layout-hub .card:nth-child(4) { transform: translate(-300px, 150px) scale(0.8); border-color: var(--secondary); }
+.tpl-experimental .layout-hub .card:nth-child(5) { transform: translate(300px, 150px) scale(0.8); border-color: var(--accent); }
+
+.tpl-experimental .layout-hub .card h3 { font-size: 18px; margin: 0; color: var(--primary); }
+.tpl-experimental .layout-hub .card p { font-size: 12px; margin-top: 10px; color: var(--text-muted); line-height: 1.4; opacity: 0; }
+
+.tpl-experimental .layout-hub .card:nth-child(1) p { opacity: 1; font-size: 14px; }
+.tpl-experimental .layout-hub .card:nth-child(1) h3 { font-size: 28px; }
+
+.tpl-experimental .layout-hub .card:hover {
+  transform: translate(0, 0) scale(1.4) !important;
+  z-index: 100;
+  background: var(--surface);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.tpl-experimental .layout-hub .card:hover p { opacity: 1; }
+
+/* 12. Split-v2 (2-Card): Interlocking Slants */
+
+
+.tpl-experimental .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+}
+.tpl-experimental .layout-split-v2 .card {
+  height: 100%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+}
+.tpl-experimental .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+  border-right: 8px solid var(--primary);
+}
+.tpl-experimental .layout-split-v2 .card:nth-child(2) {
+  background: #222;
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  margin-left: -10%;
+  padding-left: 15%;
+}
+
+/* 13. Overlap-Diag (2-Card): Kinetic Contrast */
+.tpl-experimental .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+}
+.tpl-experimental .layout-overlap-diag .card {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-experimental .layout-overlap-diag .card:nth-child(1) {
+  top: 0; left: 0;
+  z-index: 1;
+  border-bottom: 10px solid var(--secondary);
+}
+.tpl-experimental .layout-overlap-diag .card:nth-child(2) {
+  bottom: 0; right: 0;
+  z-index: 2;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  box-shadow: -20px -20px 40px rgba(0,0,0,0.5);
+}
+
+.tpl-experimental .footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}

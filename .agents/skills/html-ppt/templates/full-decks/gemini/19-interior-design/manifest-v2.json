@@ -1,0 +1,2452 @@
+{
+  "schemaVersion": 2,
+  "id": "19-interior-design",
+  "deckClass": "tpl-interior",
+  "label": {
+    "zh-CN": "模板 19-interior-design",
+    "en": "Template 19-interior-design"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "deckEffects": {
+    "htmlFile": "fragments/deck-effects.html",
+    "jsFile": "assets/deck-effects.js",
+    "elementIds": [
+      "bokeh-canvas"
+    ]
+  },
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "ARCHITECTURALHARMONY"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-wrapper:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "THE ART OF LIVING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INTERIOR_ARCH // v1.9 // [PREMIUM]"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "空间美学与感官重构 // 2026 趋势白皮书"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > div",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Curated by Antigravity Studio"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "DEFINEYOUR SPACE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INTERIOR_ARCH // v1.9 // [PREMIUM]"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "让空间成为你灵魂的延伸"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.title-wrapper:nth-of-type(1) > div > div",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "CONSULT@HARMONY.ARCH"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "设计之魂",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x1 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 2,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 94,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "赋予物理空间以情感灵魂"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INTRODUCTION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "DESIGN_PHILOSOPHY // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "超越装饰"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 188,
+          "maxChars": 376,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "室内设计不仅仅是家具的堆砌，而是对光线、比例与材质的交响指挥。在 2026 年，我们更关注空间如何与人的潜意识对话，通过流线设计引导情绪的流动。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > div",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "\"Space is the breath of art.\""
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "材质肌理",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "触觉的叙事：材质与肌理"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MATERIALITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "TACTILE_STORY // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "原生石材的张力"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "未经过度抛光的天然大理石与花岗岩，保留了地质变迁的纹理，为空间带来永恒的厚重感。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "拉丝黄铜的温度"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "作为视觉焦点，黄铜在光影照射下呈现出柔和的香槟金色泽，是精致主义的完美代言。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "声学氛围",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "text page with text x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "空间声学：静谧的隐形设计"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "ACOUSTICS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SOUNDSCAPE // 2026"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.media-box > div > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "AMBIENT_WHITE_NOISE_01.MP3"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.media-box > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "“声音是空间的第四维度。通过声学面板的隐形集成，我们能过滤城市杂音，还原宁静。”"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.media-box > div > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "02:15"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.media-box > div > div:nth-of-type(2) > div:nth-of-type(2) > span:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "05:00"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "video",
+        "audio"
+      ]
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "生态设计",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "亲生物设计：呼吸的建筑"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BIOPHILIC"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "ECO_HARMONY // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "室内森林"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "将热带或温带植物群落引入客厅中心，实现自然与居住的零距离接触。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "垂直绿墙"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "利用自动灌溉系统，在立面上构建生态循环，不仅净化空气更调节湿度。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "光合采光"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过天窗与折射镜组，将日光引入地下空间，模拟自然光照周期。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "材料趋势",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 61,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "可持续材料的市场渗透率"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "TRENDS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "MATERIAL_DATA // 2026"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "环保即奢华"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 122,
+          "maxChars": 244,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "再生软木、菌丝体皮革与循环金属不再是廉价的代名词。高端定制市场正在全面转向可追溯的绿色供应链。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "灯光编排",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x4; pageType:grid-4, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-quad",
+            "kind": "grid",
+            "subtype": "layout-quad",
+            "selector": ".layout-quad",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-quad": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "灯光层次：空间的雕塑刀"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "LIGHTING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "LIGHT_ORCHESTRATION // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "昼夜节律同步"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "色温随时间自动调节，助力褪黑素分泌。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "重点照明"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "精准的光束角聚焦艺术品，强化空间主次。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "任务焦点"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "无影照明技术，为阅读与烹饪提供高清晰度支持。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "氛围漫射"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "隐藏式灯带勾勒轮廓，营造悬浮的视觉特效。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "空间展示",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "text page with card x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "card": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 65,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "极简顶层公寓空间巡礼"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "VIRTUAL TOUR"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SPATIAL_VIDEO // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "流动性的边界"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(2) > p",
+          "tarChars": 130,
+          "maxChars": 260,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "视频展示了如何通过可移动屏风实现空间的动态分区。白天是开放式的社交场所，夜晚则是极致私密的静修港湾。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "image",
+        "video"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "image-full",
+      "sourcePageType": "image-full",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "橡木美学",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:image-full, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-full",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "橡木与暖白的永恒对话"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "AESTHETICS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "INTERIOR_VISUAL // 2026"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "NORDIC_WARMTH"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.img-wrap > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "通过大面积天然橡木地坪与暖白墙面的对比，我们能在现代都市中找回那份遗失已久的温润触感。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "智能集成",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "隐形科技：智能家居进化"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INTELLIGENCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SMART_INTEGRATION // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "无痕交互"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "传感器隐藏于材质之下。轻触木质桌面即可调节全屋遮光与温控系统。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "能源AI管家"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "实时分析用电习惯。自动调度储能设备，实现碳中和居住体验。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "沉浸式安防"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过微型雷达监测生命体征。为全家提供非侵入式的健康与安全守护。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "风格调研",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 86,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "主流室内设计风格偏好分布"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MARKET INSIGHT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "MARKET_SHARE // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "侘寂与极简的合流"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 172,
+          "maxChars": 344,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "调研显示，超过 60% 的高端业主倾向于带有自然残缺美的 Wabi-sabi 风格，而非冰冷的极简主义。情感连接成为设计的核心诉求。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "社交厨房",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "media page with card x1 + image x1; pageType:title-text, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "card": 2,
+          "image": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "社交厨房：家庭的重力中心"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KITCHEN_CORE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "KITCHEN_DESIGN // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "大理石中岛"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "中岛不再只是备餐台，更是家庭办公与社交的枢纽。一体化的石材设计将极简美学推向极致。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "色彩心理",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "色彩心理：调动空间情绪"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "PSYCHOLOGY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "COLOUR_PALETTE // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "陶土红"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "提升社交热情与归属感。适用于餐厅区域。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "鼠尾草绿"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "舒缓视觉疲劳。打造宁静的书房与卧室环境。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "深海蓝"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "增加空间的深邃感。引导深度思考与高质睡眠。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "骨白色"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "经典的底色。在反射自然光的同时保持温润感。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "行业投入",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全球年度家庭翻新支出规模"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "EXPENDITURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "ECON_METRICS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "重资产投入时代"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "后疫情时代，人们更愿意将储蓄投入到改善居住品质上。智能化与全案定制成为支出的主要增长点。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "项目周期",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x1; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全案设计与施工管理周期表"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "PROJECT_MGNT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "RENO_TIMELINE // 2026"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE 1: CONCEPT"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE 2: DETAIL"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(3)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE 3: BUILD"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.card > div:nth-of-type(2) > span:nth-of-type(4)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "PHASE 4: STYLING"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "家具软装",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "软装策展：点亮空间的笔触"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "DECOR_ELEMENTS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "定制木作"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "量身打造的储物系统。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "中古名作"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "极具收藏价值的设计经典。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "手工玻璃"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "带有流动感的艺术摆件。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "羊毛织物"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "增加触觉层级的舒适度。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "雕塑灯具"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "关灯时亦是精美的艺术品。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "共享生活",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "共享生活的未来：共生与私密"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CO-LIVING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "LIVING_FUTURE // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "流动共享区"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "模块化家具允许空间在咖啡厅与研讨室之间无缝切换。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "私密圣殿"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "强化卧室的声学隔离，打造完全属于个人的能量补给站。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "社区中心"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过公共厨房与露台，激发高品质的邻里互动与共识。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "风格对比",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-overlap-diag",
+            "kind": "grid",
+            "subtype": "layout-overlap-diag",
+            "selector": ".layout-overlap-diag",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-overlap-diag": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "北欧极简 vs Japandi 融合"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KINETIC_OVERLAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "STYLE_DYNAMICS // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Scandinavian"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "强调冷色调与明亮光照。更注重实用性与功能的直白表达。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Japandi"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "融合了日式的侘寂与北欧的舒适。更注重禅意与自然材质的原始质感。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "静谧卧室",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "media page with card x1 + image x1; pageType:title-text, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x1 + image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "card": 2,
+          "image": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "静谧卧室：意识的最后防线"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SANCTUARY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "BEDROOM_DESIGN // 2026"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "零干扰环境"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过无拉手设计与隐藏式收纳，视觉上的杂讯被降至最低。床铺高度的降低引导了更沉稳的心理感受。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": true,
+    "hasAudioPages": true
+  }
+}

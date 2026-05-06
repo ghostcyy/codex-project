@@ -1,0 +1,124 @@
+{
+  "prompts": [
+    {
+      "name": "Corpus 01 Low Altitude Economy",
+      "templateId": "knowledge-arch-blueprint",
+      "expectedSlides": 6,
+      "content": "制作一个 6 页 HTML-PPT，主题为城市低空经济入门，900 字左右，要求横版 16:9，风格清晰稳重。"
+    },
+    {
+      "name": "Corpus 02 Edge AI Inspection",
+      "templateId": "course-module",
+      "expectedSlides": 10,
+      "content": "制作一个 10 页 HTML-PPT，主题为边缘 AI 在工业质检中的应用和未来，1500 字以上，包含背景、架构、案例、挑战和趋势。"
+    },
+    {
+      "name": "Corpus 03 Fish Oil Guide",
+      "templateId": "xhs-white-editorial",
+      "expectedSlides": 8,
+      "content": "制作一个 8 页 HTML-PPT，主题为深海鱼油的科学补充指南，1200 字左右，要求色彩温和、卡片统一、不要出现运行说明文字。"
+    },
+    {
+      "name": "Corpus 04 Hotpot Culture",
+      "templateId": "editorial-serif",
+      "expectedSlides": 9,
+      "content": "制作一个 9 页 HTML-PPT，主题为中国火锅文化的地域流派与商业演化，1300 字左右，要求有时间线、地域对比和结尾总结。"
+    },
+    {
+      "name": "Corpus 05 Cloud Server Future",
+      "templateId": "tech-sharing",
+      "expectedSlides": 8,
+      "content": "制作一个 8 页 HTML-PPT，主题为云服务器的应用和未来，1200 字左右，面向非技术管理者，要求解释清楚基础概念和未来趋势。"
+    },
+    {
+      "name": "Corpus 06 Powerlifting History",
+      "templateId": "graphify-dark-graph",
+      "expectedSlides": 12,
+      "content": "制作一个 12 页 HTML-PPT，主题为力量举的前世今生和国内外冠军，1500 字以上，要求有历史阶段、三项动作、代表人物和训练风险。"
+    },
+    {
+      "name": "Corpus 07 Trust Industry",
+      "templateId": "business-report",
+      "expectedSlides": 10,
+      "content": "制作一个 10 页 HTML-PPT，主题为中国信托业务模式与当前格局，1600 字左右，要求包含资金信托、服务信托、监管变化和趋势判断。"
+    },
+    {
+      "name": "Corpus 08 Gaming Industry",
+      "templateId": "pitch-deck",
+      "expectedSlides": 10,
+      "content": "制作一个 10 页 HTML-PPT，主题为全球游戏产业现状与未来增长点，1400 字左右，要求数据感强，包含电竞、移动游戏、主机游戏和 AI 内容生产。"
+    },
+    {
+      "name": "Corpus 09 Chengdu Transformation",
+      "templateId": "magazine-bold",
+      "expectedSlides": 9,
+      "content": "制作一个 9 页 HTML-PPT，主题为成都从西部城市到国际消费中心的转型，1300 字左右，要求城市叙事、产业变化和生活方式并重。"
+    },
+    {
+      "name": "Corpus 10 River Snail Rice Noodles",
+      "templateId": "sunset-warm",
+      "expectedSlides": 7,
+      "content": "制作一个 7 页 HTML-PPT，主题为柳州螺蛳粉的地方小吃到全国品牌之路，1000 字左右，要求风格热烈、有烟火气，不要过度科技感。"
+    },
+    {
+      "name": "Corpus 11 Semiconductor Fab",
+      "templateId": "engineering-whiteprint",
+      "expectedSlides": 12,
+      "content": "制作一个 12 页 HTML-PPT，主题为半导体晶圆厂的建设逻辑和供应链挑战，1600 字左右，要求结构清晰、技术解释准确、有流程图。"
+    },
+    {
+      "name": "Corpus 12 Japanese Tea Ceremony",
+      "templateId": "japanese-minimal",
+      "expectedSlides": 8,
+      "content": "制作一个 8 页 HTML-PPT，主题为日本茶道的美学、礼法和现代传播，1200 字左右，要求留白感强、语气克制。"
+    },
+    {
+      "name": "Corpus 13 Space Commercialization",
+      "templateId": "hermes-cyber-terminal",
+      "expectedSlides": 10,
+      "content": "制作一个 10 页 HTML-PPT，主题为中国商业航天企业崛起，1500 字左右，要求包含产业链、火箭、卫星、应用场景和风险。"
+    },
+    {
+      "name": "Corpus 14 Senior Nutrition",
+      "templateId": "course-module",
+      "expectedSlides": 8,
+      "content": "制作一个 8 页 HTML-PPT，主题为中老年营养补充的科学原则，1200 字左右，要求面向普通家庭，避免医疗夸大。"
+    },
+    {
+      "name": "Corpus 15 Museum Night Economy",
+      "templateId": "xhs-white-editorial",
+      "expectedSlides": 8,
+      "content": "制作一个 8 页 HTML-PPT，主题为博物馆夜间经济与年轻人文化消费，1100 字左右，要求有案例、有消费场景、有运营建议。"
+    },
+    {
+      "name": "Corpus 16 Robotics Warehouse",
+      "templateId": "tech-sharing",
+      "expectedSlides": 10,
+      "content": "制作一个 10 页 HTML-PPT，主题为仓储机器人如何重塑电商履约，1500 字左右，要求包含系统架构、ROI、案例和落地难点。"
+    },
+    {
+      "name": "Corpus 17 Family Trust",
+      "templateId": "business-report",
+      "expectedSlides": 9,
+      "content": "制作一个 9 页 HTML-PPT，主题为家族信托的财富传承与资产保护，1300 字左右，要求面向高净值客户经理，表达专业但易懂。"
+    },
+    {
+      "name": "Corpus 18 Urban Cycling",
+      "templateId": "magazine-bold",
+      "expectedSlides": 7,
+      "content": "制作一个 7 页 HTML-PPT，主题为城市骑行复兴：从通勤工具到生活方式，1000 字左右，要求视觉轻快、适合城市生活分享。"
+    },
+    {
+      "name": "Corpus 19 New Energy Storage",
+      "templateId": "knowledge-arch-blueprint",
+      "expectedSlides": 10,
+      "content": "制作一个 10 页 HTML-PPT，主题为新型储能技术路线与商业化挑战，1500 字左右，要求包含锂电、钠电、液流电池和政策场景。"
+    },
+    {
+      "name": "Corpus 20 AI Education",
+      "templateId": "obsidian-claude-gradient",
+      "expectedSlides": 9,
+      "content": "制作一个 9 页 HTML-PPT，主题为 AI 如何改变中小学教育，1300 字左右，要求包含课堂、作业、教师角色、风险治理和未来展望。"
+    }
+  ]
+}

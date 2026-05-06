@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS operation_logs (
 
 CREATE TABLE IF NOT EXISTS llm_provider_settings (
   id BIGSERIAL PRIMARY KEY,
-  provider_type VARCHAR(64) NOT NULL DEFAULT 'openai-compatible',
+  provider_type VARCHAR(64) NOT NULL DEFAULT 'minimax-cli',
   base_url TEXT NOT NULL,
   api_key_ciphertext TEXT NOT NULL,
   model VARCHAR(255) NOT NULL,
@@ -115,6 +115,22 @@ CREATE TABLE IF NOT EXISTS ppt_project_summaries (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS ppt_v2_deck_jobs (
+  id VARCHAR(64) PRIMARY KEY,
+  user_id BIGINT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  prompt TEXT NOT NULL,
+  status VARCHAR(32) NOT NULL,
+  stages JSONB NOT NULL DEFAULT '[]'::JSONB,
+  result JSONB,
+  error TEXT,
+  model_calls INTEGER NOT NULL DEFAULT 0,
+  allow_verification_failure BOOLEAN NOT NULL DEFAULT FALSE,
+  started_at TIMESTAMPTZ,
+  ended_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 CREATE INDEX IF NOT EXISTS idx_news_articles_publish_date ON news_articles (publish_date DESC);
 CREATE INDEX IF NOT EXISTS idx_news_articles_status ON news_articles (status);
 CREATE INDEX IF NOT EXISTS idx_users_status ON users (status);
@@ -125,3 +141,5 @@ CREATE INDEX IF NOT EXISTS idx_ppt_projects_user_id ON ppt_projects (user_id, up
 CREATE INDEX IF NOT EXISTS idx_ppt_projects_status ON ppt_projects (status);
 CREATE INDEX IF NOT EXISTS idx_ppt_messages_project_id ON ppt_messages (project_id, created_at ASC);
 CREATE INDEX IF NOT EXISTS idx_ppt_project_summaries_updated_at ON ppt_project_summaries (updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_ppt_v2_deck_jobs_user_updated ON ppt_v2_deck_jobs (user_id, updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_ppt_v2_deck_jobs_status ON ppt_v2_deck_jobs (status);

@@ -1,0 +1,81 @@
+{
+  "id": "obsidian-claude-gradient",
+  "label": {
+    "zh-CN": "黑曜渐变",
+    "en": "Obsidian Gradient"
+  },
+  "description": {
+    "zh-CN": "适合 AI、创意科技和高端品牌叙事的深色渐变模板。",
+    "en": "A dark gradient template for AI, creative technology, and premium brand narratives."
+  },
+  "donorTemplateId": "obsidian-claude-gradient",
+  "deckClass": "tpl-obsidian-claude-gradient",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "obsidian-gradient",
+  "themeAlternates": [
+    "graphify-dark",
+    "magazine-bold",
+    "terminal-cyber"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "image-hero",
+      "quote",
+      "stat-highlight",
+      "kpi-grid",
+      "comparison"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "executives",
+    "designers",
+    "engineers"
+  ],
+  "formatFit": [
+    "showcase",
+    "briefing",
+    "pitch"
+  ],
+  "toneFit": [
+    "inspirational",
+    "authoritative",
+    "narrative"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 10,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "rise-in",
+      "fade-up",
+      "zoom-pop",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "spotlight",
+      "none"
+    ],
+    "maxAccentSlides": 4
+  },
+  "embeddingPrompt": "Premium dark gradient deck, AI product, creative technology, high-end brand, Claude-like elegance.",
+  "promptSignals": [
+    "AI",
+    "创意科技",
+    "高端",
+    "品牌",
+    "渐变",
+    "premium",
+    "gradient",
+    "future",
+    "brand"
+  ],
+  "forbidPromptSignals": [
+    "安全警示",
+    "红色告警"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>工业边缘计算架构与智能制造</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-industry">
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
+                <h1 class="h1">工业边缘计算架构<br>驱动下一代智能制造</h1>
+                <p style="font-family: var(--font-mono); font-size: 18px; margin-top: 30px; color: rgba(255,255,255,0.7);">[ 降低延迟 | 数据驻留 | 算力下沉 ]</p>
+            </div>
+            <div class="footer">
+                <span>V2.4 / INDUSTRIAL INTELLIGENCE GROUP</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 传统痛点 (3栏) -->
+        <section class="slide" data-title="云端架构局限性">
+            <div class="header">
+                <div class="kicker">SEC_01 // THE BOTTLENECK</div>
+                <h2 class="h2">纯云端架构在工业现场的<strong>致命短板</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h3>不可容忍的延迟 (Latency)</h3>
+                        <p>在高速运转的冲压机床中，控制指令的延迟必须低于 5 毫秒。将传感器数据传到几百公里外的公有云再返回，物理距离导致的延迟可能引发严重的设备损坏或人员伤亡。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🌊</div>
+                        <h3>带宽海啸 (Bandwidth)</h3>
+                        <p>一台工业级高帧率质检相机，每天产生超过 2TB 的未经压缩的图像数据。一家拥有百台设备的工厂，根本无法承担将所有海量原始数据上传至云端的昂贵带宽成本。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔒</div>
+                        <h3>数据孤岛与断网焦虑</h3>
+                        <p>军工或高端制造业对生产数据的保密性要求极高，数据绝不可离开厂区出网。且一旦遭遇外部断网，纯云端架构将导致整条产线瞬间瘫痪停工。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: ANALYSIS_MODE</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 执行摘要 (侧边栏) -->
+        <section class="slide" data-title="什么是边缘计算">
+            <div class="header">
+                <div class="kicker">SEC_02 // THE SOLUTION</div>
+                <h2 class="h2">算力下沉：<strong>在数据产生的地方处理数据</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">CORE.CONCEPT</span>
+                        <h3>Edge Computing</h3>
+                        <p>边缘计算是指将计算、网络、存储能力从云端推向网络边缘（即靠近工业现场的网关、工控机或微型服务器中）。</p>
+                        <p style="margin-top:16px;">边缘节点充当了设备的“现场大脑”，它能在毫秒级内完成数据的清洗、过滤、本地 AI 推理与实时控制，仅将经过压缩和提炼的“结果数据”周期性上报给云端。</p>
+                    </div>
+                    <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="data-label">AVERAGE CLOUD LATENCY</div>
+                            <div class="data-readout warning">> 120 MS</div>
+                        </div>
+                        <div>
+                            <div class="data-label">EDGE NODE LATENCY</div>
+                            <div class="data-readout">< 5 MS</div>
+                        </div>
+                        <div>
+                            <div class="data-label">DATA UPLOAD REDUCTION</div>
+                            <div class="data-readout">95.00 %</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: ARCHITECTURE_REVIEW</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 核心技术 (4栏) -->
+        <section class="slide" data-title="支撑技术底座">
+            <div class="header">
+                <div class="kicker">SEC_03 // CORE TECHNOLOGIES</div>
+                <h2 class="h2">边缘计算的<strong>四大支撑底座</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <span class="pill">5G URLLC</span>
+                        <h3>超低时延专网</h3>
+                        <p>5G 的高可靠低延迟通信(URLLC)切片技术，彻底剪断了工厂内的线缆，让移动 AGV 小车和机械臂实现毫秒级无线协同。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">TSN</span>
+                        <h3>时间敏感网络</h3>
+                        <p>在标准以太网上提供确定性传输。确保紧急的控制指令(如急停)能以绝对的优先级在微秒级时间内准时送达设备终端。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">DOCKER</span>
+                        <h3>容器化部署</h3>
+                        <p>抛弃沉重的虚拟机。将 AI 质检、协议解析等工业微服务打包成轻量级 Docker 容器，实现从云端向成百上千个边缘节点的一键下发。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">NPU/TPU</span>
+                        <h3>异构边缘算力</h3>
+                        <p>在被动散热、体积狭小的工控机内集成专用 AI 加速芯片，提供高达几十 TOPS 的算力，足以支撑 4K 视频流的实时推理。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: TECH_STACK_OVERVIEW</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 流程图 (箭头箭头) -->
+        <section class="slide" data-title="端边云协同架构">
+            <div class="header">
+                <div class="kicker">SEC_04 // TOPOLOGY</div>
+                <h2 class="h2">数据流转的<strong>端-边-云协同闭环</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="flow-container">
+                    <div class="flow-step">
+                        <h3>01. 端 (DEVICE)</h3>
+                        <p>PLC / 机械臂 / 传感器<br><span style="color:var(--primary); font-size:11px; margin-top:5px; display:block;">[ 数据产生层 - 频率 1000Hz ]</span></p>
+                    </div>
+                    <div class="flow-step">
+                        <h3>02. 边 (EDGE NODE)</h3>
+                        <p>协议转换 / 数据清洗 / 实时 AI<br><span style="color:var(--primary); font-size:11px; margin-top:5px; display:block;">[ 边缘推理层 - 延迟 <5ms ]</span></p>
+                    </div>
+                    <div class="flow-step">
+                        <h3>03. 厂 (FACTORY)</h3>
+                        <p>SCADA / MES / 车间大屏<br><span style="color:var(--primary); font-size:11px; margin-top:5px; display:block;">[ 业务管理层 - 局域网 ]</span></p>
+                    </div>
+                    <div class="flow-step">
+                        <h3>04. 云 (CLOUD)</h3>
+                        <p>模型训练 / 大数据分析 / 报表<br><span style="color:var(--primary); font-size:11px; margin-top:5px; display:block;">[ 决策层 - 非实时处理 ]</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: NETWORK_TOPOLOGY</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 延迟对比折线图 -->
+        <section class="slide" data-title="控制延迟对比">
+            <div class="header">
+                <div class="kicker">SEC_05 // PERFORMANCE</div>
+                <h2 class="h2">实时控制：<strong>毫秒级的生死时速</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">BENCHMARK</span>
+                        <h3>边缘计算带来的确定性</h3>
+                        <p>在工业闭环控制中，可怕的不仅是延迟高，更是<strong>抖动(Jitter)大</strong>。传统云端架构受到公网拥堵影响，延迟曲线极不稳定，这会导致机器人动作变形。</p>
+                        <p style="margin-top:12px;">右侧图表显示了边缘节点将控制延迟死死钉在 5 毫秒以下，且方差极小，满足了 CNC 机床和高频焊接的高精密控制需求。</p>
+                    </div>
+                    <div class="card chart-card" style="padding: 10px;">
+                        <div class="chart-container">
+                            <canvas id="lineChart" width="500" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: PERFORMANCE_MONITOR</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 仪表盘 (2栏) -->
+        <section class="slide" data-title="实时设备监测">
+            <div class="header">
+                <div class="kicker">SEC_06 // DASHBOARD</div>
+                <h2 class="h2">产线大屏：<strong>数字孪生与实时映射</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>CNC-04 实时运行状态</h3>
+                        <p>通过边缘网关采集 OPC-UA 协议数据，无缝对接车间数字大屏。主轴转速、刀具磨损度、冷却液温度一览无余。</p>
+                        <div class='img-wrap'><img src='img/robotics.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                    <div class="card" style="justify-content: center; background: #111;">
+                        <div class="data-label">SPINDLE SPEED (RPM)</div>
+                        <div class="data-readout">14,250</div>
+                        <div class="data-label">TOOL WEAR INDEX</div>
+                        <div class="data-readout warning">82.4 %</div>
+                        <div class="data-label">VIBRATION ANOMALY</div>
+                        <div class="data-readout" style="color:#0f0;">NORMAL</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: TELEMETRY_ACTIVE</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 停机原因 (饼图) -->
+        <section class="slide" data-title="非计划停机分析">
+            <div class="header">
+                <div class="kicker">SEC_07 // DOWNTIME ANALYSIS</div>
+                <h2 class="h2">工厂最大的毒药：<strong>非计划停机 (Downtime)</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card chart-card" style="padding: 10px;">
+                        <div class="chart-container">
+                            <canvas id="pieChart" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>为何必须引入智能维护？</h3>
+                        <p>在汽车总装线上，非计划停机导致的损失高达每分钟 20,000 美元。传统基于经验的“定期更换”策略往往会导致过度维护或零件突然损毁。</p>
+                        <p style="margin-top:16px;">图表显示，轴承磨损与电机过热是导致停机的首要物理原因。通过边缘 AI 提前捕捉高频声音或震动的微小异常，可将这些停机扼杀在摇篮中。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: FAILURE_ANALYSIS</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 预测性维护 (3栏) -->
+        <section class="slide" data-title="预测性维护">
+            <div class="header">
+                <div class="kicker">SEC_08 // MAINTENANCE STRATEGY</div>
+                <h2 class="h2">从“坏了再修”到<strong>“预测性维护 (PdM)”</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <div class="card-icon">1</div>
+                        <h3>反应式 (Reactive)</h3>
+                        <p><strong>策略：</strong> 机器冒烟/停摆了再修。<br><strong>结果：</strong> 漫长的备件等待时间，巨额的停机损失。属于最原始的工业管理。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">2</div>
+                        <h3>预防式 (Preventive)</h3>
+                        <p><strong>策略：</strong> 无论好坏，每运行 1000 小时强行更换零件。<br><strong>结果：</strong> 浪费了仍有 30% 寿命的完好零件，且可能因人工拆装引入新故障。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon" style="color:var(--secondary); border-color:var(--secondary);">3</div>
+                        <h3 style="color:var(--secondary);">预测性 (Predictive)</h3>
+                        <p><strong>策略：</strong> 边缘端 AI 实时监控波形，在即将发生故障的前 72 小时发出预警。<br><strong>结果：</strong> 零件寿命榨干到最后一滴，维修安排在计划停机期内进行。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: PREDICTIVE_ALGORITHMS_RUNNING</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 机器视觉 (2栏) -->
+        <section class="slide" data-title="边缘机器视觉">
+            <div class="header">
+                <div class="kicker">SEC_09 // MACHINE VISION</div>
+                <h2 class="h2">毫秒级的鹰眼：<strong>AI 表面缺陷检测</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>流水线上的“打假”专家</h3>
+                        <p>在 PCB 电路板或锂电池电芯的生产线上，产品以每秒 5 件的速度飞驰而过。传统的质检女工容易出现视觉疲劳导致漏检。</p>
+                        <p style="margin-top:16px;">利用边缘部署的 YOLO 模型，高速工业相机能在 20 毫秒内识别出划痕、缺角、漏焊等微小瑕疵，并立即联动剔除机构踢出废品。准确率稳定在 99.9% 以上。</p>
+                    </div>
+                    <div class="card" style="padding: 0;">
+                        <div class='img-wrap'><img src='img/robotics.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                            <!-- 模拟 AI 识别框 -->
+                            <div style="position:absolute; top:40%; left:30%; width:80px; height:80px; border:2px dashed #0f0; box-shadow: 0 0 10px #0f0 inset;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: VISION_AI_ACTIVE</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 硬件标准 (3栏) -->
+        <section class="slide" data-title="边缘硬件标准">
+            <div class="header">
+                <div class="kicker">SEC_10 // HARDWARE SPECS</div>
+                <h2 class="h2">能在炼狱中生存的<strong>工业级硬件</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <div class="card-icon">🌡️</div>
+                        <h3>宽温与被动散热</h3>
+                        <p>工厂车间没有机房的空调。边缘主机必须能在 -20℃ 至 70℃ 的极端环境下稳定运行，且采用无风扇的铝鳍片被动散热，防止粉尘吸入导致短路。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h3>强抗电磁干扰</h3>
+                        <p>机床启停会产生巨大的电涌与电磁干扰 (EMI)。工业边缘设备主板需经过严苛的抗静电打火测试，双路宽压电源输入，确保永不掉电。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔌</div>
+                        <h3>海量异构接口</h3>
+                        <p>服务器只有网线接口，而工业边缘网关必须同时兼容 RS232/485 串口、CAN 总线、DI/DO 继电器接口，才能接管那些服役了 20 年的老爷机。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: HARDWARE_CHECK_PASS</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 工业安全 (侧边栏) -->
+        <section class="slide" data-title="工业网络安全">
+            <div class="header">
+                <div class="kicker">SEC_11 // CYBER SECURITY</div>
+                <h2 class="h2">抵御震网病毒：<strong>纵深防御体系</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">ISOLATION</span>
+                        <h3>IT 与 OT 的物理隔离</h3>
+                        <p>震网病毒 (Stuxnet) 曾瘫痪了离网的核设施，证明了工业安全不能仅靠防火墙。边缘网关扮演了 IT（信息网络）与 OT（操作网络）之间的“数字单向闸门”。</p>
+                        <p style="margin-top:16px;">边缘设备通过硬件级的安全芯片 (TPM)，在向云端发送数据时建立加密 VPN 通道，且严格禁止从外网直接向工厂内的 PLC 发送写入指令（Air-gapped 隔离）。</p>
+                    </div>
+                    <div class="card">
+                        <div class='img-wrap'><img src='img/robotics.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: FIREWALL_ENFORCED</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 部署拓扑 (4栏) -->
+        <section class="slide" data-title="灵活的部署层级">
+            <div class="header">
+                <div class="kicker">SEC_12 // DEPLOYMENT TOPOLOGY</div>
+                <h2 class="h2">像搭乐高一样构建<strong>边缘算力网络</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <span class="pill">设备级 (Device)</span>
+                        <h3>嵌入式边缘</h3>
+                        <p>将极小算力的 AI 芯片直接做进传感器内部或智能摄像头里。成本极低，实现最前端的即时感知。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">产线级 (Line)</span>
+                        <h3>边缘工控机</h3>
+                        <p>部署在某条产线的电气柜中。汇聚该产线 10 台设备的 PLC 数据，执行闭环联动控制和质检。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">车间级 (Factory)</span>
+                        <h3>边缘微型服务器</h3>
+                        <p>放置在厂区弱电间，提供强大的 GPU 集群算力，运行全厂的 MES 系统与数字孪生大屏渲染。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">区域级 (MEC)</span>
+                        <h3>运营商边缘</h3>
+                        <p>由电信运营商部署在工业园区基站下的机房内，为整个园区的多个无人工厂提供 5G 切片后的公共算力底座。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: CLUSTER_READY</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 成本节约 (柱状图) -->
+        <section class="slide" data-title="成本效益分析">
+            <div class="header">
+                <div class="kicker">SEC_13 // COST REDUCTION</div>
+                <h2 class="h2">实打实的财务账本：<strong>综合成本节约率</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card" style="padding: 10px;">
+                        <div class="chart-container">
+                            <canvas id="barChart" width="400" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span class="pill">ROI METRICS</span>
+                        <h3>用省下的钱买单</h3>
+                        <p>工业边缘改造并非单纯的花钱买炫酷。大量项目在上线 18 个月内即可收回硬件投资成本。</p>
+                        <p style="margin-top:16px;">最大的节省来源并非裁员，而是通过精益控制大幅降低了<strong>废品率 (Scrap Rate)</strong>，通过本地数据过滤节省了巨额的<strong>云端宽带与存储费</strong>，以及避免停机挽回的产量损失。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: FINANCIAL_MODEL_RENDERED</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 标杆案例 (2栏) -->
+        <section class="slide" data-title="汽车压铸案例">
+            <div class="header">
+                <div class="kicker">INTERLOCK_SPLIT</div>
+                <h2 class="h2">新能源汽车<strong>一体化压铸车间</strong>改造实践</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-split-v2">
+                    <div class="card">
+                        <h3>挑战：海量数据与黑盒工艺</h3>
+                        <p>一台 9000 吨级巨型压铸机，每次压射瞬间会在 30 毫秒内产生上万个关于压力、温度、流速的数据点。传统方案完全无法实时采集这些瞬态数据，导致铸件内部气孔成为“黑盒玄学”。</p>
+                    </div>
+                    <div class="card">
+                        <h3>方案：高频采集与微秒级干预</h3>
+                        <p>在压铸机旁部署高算力边缘节点。以 10,000Hz 频率实时抓取压射曲线，通过部署在边缘侧的深度学习模型比对“黄金曲线”。一旦发现熔铝流动异常，立刻在微秒级调整阀门开度。</p>
+                        <p style="margin-top:12px; color:var(--primary); font-family:var(--font-mono);">>> 良品率从 82% 跃升至 96%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: PRODUCTION_OPTIMIZED</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 数据表格 -->
+        <section class="slide" data-title="效益指标对比表">
+            <div class="header">
+                <div class="kicker">SEC_15 // METRICS</div>
+                <h2 class="h2">改造前后的<strong>核心 KPI 指标变动</strong></h2>
+            </div>
+            <div class="content-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width:30%">制造效能指标 (KPIs)</th>
+                            <th style="width:25%">改造前 (Legacy)</th>
+                            <th style="width:25%">改造后 (Edge AI)</th>
+                            <th style="width:20%">优化幅度 (Δ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>视觉质检误报率 (False Reject)</td>
+                            <td>4.20%</td>
+                            <td>0.15%</td>
+                            <td style="color:var(--secondary); font-weight:bold;">- 96.4%</td>
+                        </tr>
+                        <tr>
+                            <td>云端宽带占用量 (Bandwidth)</td>
+                            <td>1250 GB / Day</td>
+                            <td>35 GB / Day</td>
+                            <td style="color:var(--secondary); font-weight:bold;">- 97.2%</td>
+                        </tr>
+                        <tr>
+                            <td>设备综合效率 (OEE)</td>
+                            <td>68.5%</td>
+                            <td>85.2%</td>
+                            <td style="color:var(--primary); font-weight:bold;">+ 24.3%</td>
+                        </tr>
+                        <tr>
+                            <td>控制指令往返延迟 (Round-trip)</td>
+                            <td>115.0 ms</td>
+                            <td>2.4 ms</td>
+                            <td style="color:var(--secondary); font-weight:bold;">- 97.9%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: DATA_TABLE_LOADED</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 遗留系统集成 (3栏) -->
+        <section class="slide" data-title="无损升级旧产线">
+            <div class="header">
+                <div class="kicker">SEC_16 // INTEGRATION</div>
+                <h2 class="h2">给 20 年树龄的老机床<strong>装上智能大脑</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <div class="card-icon">🪛</div>
+                        <h3>非侵入式外挂传感器</h3>
+                        <p>对于不允许破线改装的进口精密机床，我们采用外贴式的三轴震动传感器与电流钳，通过监测马达震动与电流波动侧面推断机床运行状态。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔤</div>
+                        <h3>协议翻译万能插座</h3>
+                        <p>内置 300+ 种工业协议解析库。将西门子 S7、三菱、Modbus 等七国八语言的方言，统一翻译为标准 MQTT 格式发给边缘节点。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🛑</div>
+                        <h3>零停机割接方案</h3>
+                        <p>通过旁路镜像抓取流量进行模型灰度测试。在确认边缘模型 100% 准确之前，只给出建议，不接管设备的实际控制权。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: LEGACY_COMPATIBILITY_MODE</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 人工技能 (3栏) -->
+        <section class="slide" data-title="工人技能重塑">
+            <div class="header">
+                <div class="kicker">SEC_17 // HUMAN CAPITAL</div>
+                <h2 class="h2">人机协作时代的<strong>蓝领技能重塑</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <h3 style="color:var(--secondary);">告别危险恶劣环境</h3>
+                        <p>工人不再需要在喷漆房吸入有毒气体，或在炼钢炉旁承受高温。他们坐在装有空调的中控室，通过边缘计算传回的高清 AR 画面远程操控机械臂作业。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:var(--secondary);">从“操作工”变“指挥官”</h3>
+                        <p>体力劳动被彻底取代，取而代之的是对生产逻辑的管理。一线工人升级为“异常处理专家”，只有当 AI 遇到无法处理的复杂边缘情况 (Edge Cases) 时，才需要人工介入决策。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:var(--secondary);">降低新人培训门槛</h3>
+                        <p>过去培养一名熟练老师傅需要 10 年，老员工退休即面临技术断层。如今，老专家的经验被固化在边缘 AI 模型中，新人只需佩戴 AR 眼镜按照系统分布提示操作即可。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: HUMAN_MACHINE_INTERFACE</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 扩展演进 (5栏) -->
+        <section class="slide" data-title="规模化演进路径">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">从试点工位到<strong>黑灯工厂的演进路线</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card" style="padding: 15px;">
+                        <div class="card-icon" style="width:30px; height:30px; font-size:14px; margin-bottom:10px;">L1</div>
+                        <h3 style="font-size:13px;">数据透明化</h3>
+                        <p style="font-size:12px;">打破信息黑盒，所有设备联网，大屏可视。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <div class="card-icon" style="width:30px; height:30px; font-size:14px; margin-bottom:10px;">L2</div>
+                        <h3 style="font-size:13px;">被动式告警</h3>
+                        <p style="font-size:12px;">设定阈值，一旦超标立即触发蜂鸣与短信告警。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <div class="card-icon" style="width:30px; height:30px; font-size:14px; margin-bottom:10px;">L3</div>
+                        <h3 style="font-size:13px;">诊断与预测</h3>
+                        <p style="font-size:12px;">引入 AI，不仅告诉你哪里坏了，还能告诉你明天哪可能会坏。</p>
+                    </div>
+                    <div class="card" style="padding: 15px; border-top-color:var(--secondary);">
+                        <div class="card-icon" style="width:30px; height:30px; font-size:14px; margin-bottom:10px; color:var(--secondary);">L4</div>
+                        <h3 style="font-size:13px; color:var(--secondary);">闭环自适应</h3>
+                        <p style="font-size:12px;">系统发现偏差后，直接跳过人工，自动下发微调指令给机床。</p>
+                    </div>
+                    <div class="card" style="padding: 15px; border-top-color:var(--primary);">
+                        <div class="card-icon" style="width:30px; height:30px; font-size:14px; margin-bottom:10px; color:var(--primary); border-color:var(--primary);">L5</div>
+                        <h3 style="font-size:13px; color:var(--primary);">自主无人工厂</h3>
+                        <p style="font-size:12px;">柔性制造排产，多机器人集群自治协同，“黑灯工厂”达成。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SYSTEM_STATUS: EVOLUTION_MAP_LOADED</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;">
+                <h1 class="h1">SYSTEM.SHUTDOWN()</h1>
+                <p style="font-family: var(--font-mono); font-size: 20px; color: rgba(255,255,255,0.7); margin-top: 24px;">
+                    边缘计算：在隆隆机器声中，聆听数据的低语。
+                </p>
+                <div style="margin-top: 50px;">
+                    <span class="kicker" style="font-size: 14px; padding: 12px 30px; background: rgba(0,0,0,0.5); border: 1px solid var(--primary);">> 执行接入测试：EDGE.FACTORY.IO</span>
+                </div>
+            </div>
+            <div class="footer">
+                <span>V2.4 / INDUSTRIAL INTELLIGENCE GROUP</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 图表全局配置 - 极客工业风
+            Chart.defaults.color = '#888888';
+            Chart.defaults.font.family = "'JetBrains Mono', 'Fira Code', monospace";
+            Chart.defaults.scale.grid.color = '#333333';
+
+            // 6页：折线图
+            const ctxLine = document.getElementById('lineChart');
+            if (ctxLine) {
+                new Chart(ctxLine.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['0s', '1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s'],
+                        datasets: [
+                            {
+                                label: '边缘节点控制延迟 (ms)',
+                                data: [3, 4, 3, 5, 2, 4, 3, 4, 3],
+                                borderColor: '#ff6b00', // Primary Orange
+                                backgroundColor: 'rgba(255, 107, 0, 0.2)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.1, // 棱角分明更符合工业感
+                                pointBackgroundColor: '#ffffff'
+                            },
+                            {
+                                label: '传统公有云延迟 (ms)',
+                                data: [85, 120, 95, 210, 110, 88, 305, 150, 90], // 高抖动
+                                borderColor: '#00e5ff', // Cyan
+                                borderDash: [4, 4],
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.1,
+                                pointRadius: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: { y: { title: { display: true, text: 'LATENCY (MS)' } } }
+                    }
+                });
+            }
+
+            // 8页：饼图
+            const ctxPie = document.getElementById('pieChart');
+            if (ctxPie) {
+                new Chart(ctxPie.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: ['主轴轴承磨损(45%)', '电机过热宕机(25%)', '液压系统漏油(15%)', '皮带断裂(10%)', '其他(5%)'],
+                        datasets: [{
+                            data: [45, 25, 15, 10, 5],
+                            backgroundColor: [
+                                '#ff6b00', // Orange
+                                '#b34a00', // Darker Orange
+                                '#00e5ff', // Cyan
+                                '#555555', // Grey
+                                '#222222'  // Dark
+                            ],
+                            borderWidth: 1,
+                            borderColor: '#111111'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'right' } }
+                    }
+                });
+            }
+
+            // 14页：柱状图
+            const ctxBar = document.getElementById('barChart');
+            if (ctxBar) {
+                new Chart(ctxBar.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['云端带宽费', '非计划停机损失', '人工质检成本', '废品报废成本'],
+                        datasets: [
+                            {
+                                label: '部署边缘AI前 (K$)',
+                                data: [120, 450, 200, 350],
+                                backgroundColor: '#444444',
+                                borderRadius: 0
+                            },
+                            {
+                                label: '部署边缘AI后 (K$)',
+                                data: [15, 80, 40, 60],
+                                backgroundColor: '#00e5ff',
+                                borderRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { title: { display: true, text: 'ANNUAL COST ($USD)' } }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

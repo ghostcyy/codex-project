@@ -51,28 +51,215 @@ interface Template {
   label: string;
   emoji: string;
   desc: string;
+  description?: string;
+  isAuto?: boolean;
+  donorTemplateId?: string | null;
+  themeId?: string | null;
+  audienceFit?: string[];
+  formatFit?: string[];
   previewSlides?: string[];
   previewCss?: string;
   deckClass?: string;
 }
 
-const TEMPLATE_METADATA: Record<string, { label: string; emoji: string; desc: string }> = {
-  'pitch-deck': { label: 'Pitch Deck', emoji: 'VC', desc: '投资人路演 / VC风格' },
-  'product-launch': { label: 'Product Launch', emoji: 'PL', desc: '产品发布会' },
-  'tech-sharing': { label: 'Tech Sharing', emoji: 'TS', desc: '技术分享 / 工程师风格' },
-  'weekly-report': { label: 'Weekly Report', emoji: 'WR', desc: '周报 / 数据汇报' },
-  'xhs-post': { label: '小红书图文', emoji: 'XHS', desc: '9页 / 3:4比例' },
-  'course-module': { label: 'Course Module', emoji: 'EDU', desc: '教学模块' },
-  'presenter-mode-reveal': { label: 'Presenter Mode', emoji: 'PM', desc: '带逐字稿 · 演讲者模式' },
-  'xhs-white-editorial': { label: 'XHS White Editorial', emoji: 'WE', desc: '小红书白底杂志风' },
-  'graphify-dark-graph': { label: 'Graphify Dark', emoji: 'GD', desc: '暗底知识图谱' },
-  'knowledge-arch-blueprint': { label: 'Blueprint', emoji: 'BP', desc: '蓝图 / 架构图风' },
-  'hermes-cyber-terminal': { label: 'Cyber Terminal', emoji: 'CT', desc: '终端 Cyberpunk 风' },
-  'obsidian-claude-gradient': { label: 'Obsidian Gradient', emoji: 'OG', desc: '紫色渐变卡' },
-  'xhs-pastel-card': { label: 'XHS Pastel', emoji: 'XP', desc: '柔和马卡龙图文' },
-  'dir-key-nav-minimal': { label: 'Minimal Nav', emoji: 'NAV', desc: '方向键极简' },
-  'testing-safety-alert': { label: 'Safety Alert', emoji: 'SA', desc: '红色警示风格' },
+type TemplateCatalogItem = Partial<Template> & {
+  id?: string;
+  labelI18n?: Record<string, string>;
+  descriptionI18n?: Record<string, string>;
 };
+
+const SKILL_TEMPLATE_FALLBACKS: Template[] = [
+  {
+    id: 'auto',
+    label: 'Auto',
+    emoji: 'AUTO',
+    desc: '自动选择最适合本次主题的模板。',
+    isAuto: true,
+  },
+  {
+    id: 'course-module',
+    label: '课程模块',
+    emoji: 'COURSE',
+    desc: '适合课程、教学、知识拆解和培训材料的循序渐进模板。',
+    donorTemplateId: 'course-module',
+    themeId: 'japanese-minimal',
+  },
+  {
+    id: 'dir-key-nav-minimal',
+    label: '极简导航',
+    emoji: 'MIN',
+    desc: '适合简洁演示、信息卡片和克制风格汇报的极简模板。',
+    donorTemplateId: 'dir-key-nav-minimal',
+    themeId: 'minimal-nav',
+  },
+  {
+    id: 'graphify-dark-graph',
+    label: '暗色图谱',
+    emoji: 'GRAPH',
+    desc: '适合知识图谱、数据网络、AI 和复杂系统解释的暗色模板。',
+    donorTemplateId: 'graphify-dark-graph',
+    themeId: 'graphify-dark',
+  },
+  {
+    id: 'hermes-cyber-terminal',
+    label: '赛博终端',
+    emoji: 'TERM',
+    desc: '适合安全、开发者、系统底层和未来科技主题的终端风模板。',
+    donorTemplateId: 'hermes-cyber-terminal',
+    themeId: 'terminal-cyber',
+  },
+  {
+    id: 'knowledge-arch-blueprint',
+    label: '知识蓝图',
+    emoji: 'BLUE',
+    desc: '适合知识体系、架构图、方法论和学习路径的蓝图模板。',
+    donorTemplateId: 'knowledge-arch-blueprint',
+    themeId: 'knowledge-blueprint',
+  },
+  {
+    id: 'obsidian-claude-gradient',
+    label: '黑曜渐变',
+    emoji: 'DARK',
+    desc: '适合 AI、创意科技和高端品牌叙事的深色渐变模板。',
+    donorTemplateId: 'obsidian-claude-gradient',
+    themeId: 'obsidian-gradient',
+  },
+  {
+    id: 'pitch-deck',
+    label: '投资人路演',
+    emoji: 'PITCH',
+    desc: '适合融资、战略汇报和高层决策的强叙事商业路演模板。',
+    donorTemplateId: 'pitch-deck',
+    themeId: 'magazine-bold',
+  },
+  {
+    id: 'presenter-mode-reveal',
+    label: '演讲展示',
+    emoji: 'STAGE',
+    desc: '适合正式演讲、主题分享和舞台展示的节奏型模板。',
+    donorTemplateId: 'presenter-mode-reveal',
+    themeId: 'editorial-serif',
+  },
+  {
+    id: 'product-launch',
+    label: '产品发布',
+    emoji: 'LAUNCH',
+    desc: '面向产品发布、功能展示和市场传播的高能视觉模板。',
+    donorTemplateId: 'product-launch',
+    themeId: 'sunset-warm',
+  },
+  {
+    id: 'tech-sharing',
+    label: '技术分享',
+    emoji: 'TECH',
+    desc: '适合工程团队、架构拆解和技术原理讲解的清晰结构模板。',
+    donorTemplateId: 'tech-sharing',
+    themeId: 'engineering-whiteprint',
+  },
+  {
+    id: 'testing-safety-alert',
+    label: '安全警示',
+    emoji: 'ALERT',
+    desc: '适合风险提示、测试复盘、安全事故和应急预案的高对比警示模板。',
+    donorTemplateId: 'testing-safety-alert',
+    themeId: 'safety-alert',
+  },
+  {
+    id: 'weekly-report',
+    label: '周报汇报',
+    emoji: 'WEEK',
+    desc: '适合周期复盘、经营数据、项目进展和管理层同步的稳定模板。',
+    donorTemplateId: 'weekly-report',
+    themeId: 'minimal-nav',
+  },
+  {
+    id: 'xhs-pastel-card',
+    label: '柔和彩卡',
+    emoji: 'PASTEL',
+    desc: '适合消费科普、生活建议和轻内容分享的柔和卡片模板。',
+    donorTemplateId: 'xhs-pastel-card',
+    themeId: 'xhs-pastel',
+  },
+  {
+    id: 'xhs-post',
+    label: '小红书图文',
+    emoji: 'XHS',
+    desc: '适合轻知识、生活方式、消费内容和社媒图文的强标题模板。',
+    donorTemplateId: 'xhs-post',
+    themeId: 'xhs-pastel',
+  },
+  {
+    id: 'xhs-white-editorial',
+    label: '白底杂志',
+    emoji: 'MAG',
+    desc: '适合知识科普、审美内容和社媒长图的白底杂志模板。',
+    donorTemplateId: 'xhs-white-editorial',
+    themeId: 'editorial-serif',
+  },
+];
+
+const TEMPLATE_FALLBACK_BY_ID = new Map(SKILL_TEMPLATE_FALLBACKS.map(template => [template.id, template]));
+const TEMPLATE_ORDER = SKILL_TEMPLATE_FALLBACKS.map(template => template.id);
+
+function normalizeTemplateCatalog(raw: TemplateCatalogItem[]) {
+  const merged = new Map<string, Template>(SKILL_TEMPLATE_FALLBACKS.map(template => [template.id, { ...template }]));
+  const extras: Template[] = [];
+
+  for (const item of raw) {
+    if (!item || typeof item.id !== 'string' || !item.id.trim()) {
+      continue;
+    }
+
+    const id = item.id === 'html-ppt-v2' ? 'auto' : item.id;
+    const fallback = TEMPLATE_FALLBACK_BY_ID.get(id);
+    const template: Template = {
+      ...(fallback ?? {
+        id,
+        label: id,
+        emoji: 'TPL',
+        desc: 'Skill template',
+      }),
+      ...item,
+      id,
+      label:
+        (typeof item.label === 'string' && item.label.trim()) ||
+        item.labelI18n?.['zh-CN'] ||
+        fallback?.label ||
+        id,
+      emoji:
+        (typeof item.emoji === 'string' && item.emoji.trim()) ||
+        fallback?.emoji ||
+        (id === 'auto' ? 'AUTO' : 'TPL'),
+      desc:
+        (typeof item.desc === 'string' && item.desc.trim()) ||
+        (typeof item.description === 'string' && item.description.trim()) ||
+        item.descriptionI18n?.['zh-CN'] ||
+        fallback?.desc ||
+        'Skill template',
+      isAuto: id === 'auto' ? true : Boolean(item.isAuto),
+      previewSlides: Array.isArray(item.previewSlides) ? item.previewSlides : fallback?.previewSlides ?? [],
+    };
+
+    if (id === 'auto') {
+      template.label = 'Auto';
+      template.emoji = 'AUTO';
+      template.desc = fallback?.desc ?? template.desc;
+      template.isAuto = true;
+    }
+
+    if (TEMPLATE_FALLBACK_BY_ID.has(id)) {
+      merged.set(id, template);
+    } else {
+      extras.push(template);
+    }
+  }
+
+  const ordered = TEMPLATE_ORDER
+    .map(id => merged.get(id))
+    .filter((template): template is Template => Boolean(template));
+
+  return [...ordered, ...extras.filter(extra => !merged.has(extra.id))];
+}
 
 /* ── Shadow Root Wrapper for Previews ── */
 function ShadowPreview({ html, css, deckClass }: { html: string; css: string; deckClass?: string }) {
@@ -84,7 +271,7 @@ function ShadowPreview({ html, css, deckClass }: { html: string; css: string; de
     if (containerRef.current && !shadowRef.current) {
       shadowRef.current = containerRef.current.attachShadow({ mode: 'open' });
     }
-    
+
     // Measure actual width and update scale
     const observer = new ResizeObserver(entries => {
       for (const entry of entries) {
@@ -106,12 +293,12 @@ function ShadowPreview({ html, css, deckClass }: { html: string; css: string; de
     if (shadowRef.current) {
       shadowRef.current.innerHTML = `
         <style>
-          :host { 
-            display: block; 
-            width: 100%; 
+          :host {
+            display: block;
+            width: 100%;
             aspect-ratio: 16/9;
-            overflow: hidden; 
-            background: white; 
+            overflow: hidden;
+            background: white;
           }
           .scaler {
             transform: scale(${scale});
@@ -144,7 +331,7 @@ function fmt(size: number) {
   return (size / 1024 / 1024).toFixed(1) + ' MB';
 }
 
-function fmtDuration(
+function durationMsFromRange(
   startedAt: string,
   endedAt: string,
   status?: PptGenerationOrchestration['steps'][number]['status']
@@ -152,12 +339,51 @@ function fmtDuration(
   const start = new Date(startedAt).getTime();
   const end = status === 'running' ? Date.now() : new Date(endedAt).getTime();
   if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) {
-    return '--';
+    return null;
   }
+  return end - start;
+}
 
-  const ms = end - start;
-  if (ms < 1000) return `${ms}ms`;
-  return `${(ms / 1000).toFixed(2)}s`;
+function fmtMilliseconds(ms: number | null | undefined) {
+  if (!Number.isFinite(ms ?? NaN)) return '--';
+  const value = Math.max(0, Math.round(ms ?? 0));
+  if (value < 1000) return `${value}ms`;
+  if (value < 60_000) return `${(value / 1000).toFixed(2)}s`;
+  const minutes = Math.floor(value / 60_000);
+  const seconds = Math.round((value % 60_000) / 1000);
+  return `${minutes}m ${seconds}s`;
+}
+
+function fmtStepDuration(step: PptGenerationOrchestration['steps'][number]) {
+  const ms = typeof step.durationMs === 'number'
+    ? step.durationMs
+    : durationMsFromRange(step.startedAt, step.endedAt, step.status);
+  return fmtMilliseconds(ms);
+}
+
+function stepObservabilityText(step: PptGenerationOrchestration['steps'][number]) {
+  const parts: string[] = [];
+  if (typeof step.modelCalls === 'number') parts.push(`${step.modelCalls} calls`);
+  if (typeof step.retryCount === 'number') parts.push(`${step.retryCount} retries`);
+  return parts.join(' · ');
+}
+
+function stepFailureText(step: PptGenerationOrchestration['steps'][number]) {
+  return step.failureReason || (step.status === 'failed' || step.status === 'timeout' ? step.detail : '');
+}
+
+function templateSelectionText(
+  selection: PptDeckRender['templateSelection'] | undefined,
+  templates: Template[]
+) {
+  if (!selection) return '';
+  const label = templates.find((template) => template.id === selection.chosenTemplateId)?.label ?? selection.chosenTemplateId;
+  const mode = selection.mode === 'pinned'
+    ? 'Pinned template'
+    : selection.mode === 'auto-llm'
+      ? 'Auto-selected by model'
+      : 'Auto-selected';
+  return `${mode}: ${label} · confidence=${selection.confidence}`;
 }
 
 function orchestrationStatusLabel(status: PptGenerationOrchestration['steps'][number]['status']) {
@@ -322,7 +548,7 @@ export default function HtmlPptPage() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   /* Template selector */
-  const [templates, setTemplates] = useState<Template[]>([]);
+  const [templates, setTemplates] = useState<Template[]>(SKILL_TEMPLATE_FALLBACKS);
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [hoveredTemplateId, setHoveredTemplateId] = useState<string | null>(null);
   const [hoverProgress, setHoverProgress] = useState(0);
@@ -331,14 +557,11 @@ export default function HtmlPptPage() {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const raw = await requestJson<any[]>('/api/ppt/projects/templates/catalog');
-        const enriched = raw.map(tpl => ({
-          ...tpl,
-          ...(TEMPLATE_METADATA[tpl.id] || { label: tpl.id, emoji: '📄', desc: 'Custom template' })
-        }));
-        setTemplates(enriched);
+        const raw = await requestJson<TemplateCatalogItem[]>('/api/ppt/projects/templates/catalog');
+        setTemplates(normalizeTemplateCatalog(Array.isArray(raw) ? raw : []));
       } catch (err) {
         console.error('Failed to fetch template catalog:', err);
+        setTemplates(SKILL_TEMPLATE_FALLBACKS);
       }
     };
     fetchTemplates();
@@ -456,7 +679,7 @@ export default function HtmlPptPage() {
             method: 'POST',
             body: JSON.stringify({
               name: 'My First Deck',
-              templateId: 'pitch-deck',
+              templateId: 'auto',
             }),
           });
           summaries = [initialProject];
@@ -572,6 +795,7 @@ export default function HtmlPptPage() {
         method: 'POST',
         body: JSON.stringify({
           name: nextProjectName(projects),
+          templateId: 'auto',
         }),
       });
 
@@ -754,7 +978,11 @@ export default function HtmlPptPage() {
     }
   }, [input, files, activeId, active, hasLiveAssistantProgress, templates]);
 
-  const resumeGeneration = useCallback(async (messageId: string, mode: 'resume' | 'adopt' = 'resume') => {
+  const resumeGeneration = useCallback(async (
+    messageId: string,
+    mode: 'resume' | 'adopt' | 'template' = 'resume',
+    templateId?: string | null
+  ) => {
     if (!activeId || resumingMessageId) {
       return;
     }
@@ -765,7 +993,7 @@ export default function HtmlPptPage() {
     try {
       const response = await requestJson<PptConversationResponse>(
         `/api/ppt/projects/${encodeURIComponent(activeId)}/messages/${encodeURIComponent(messageId)}/resume`,
-        { method: 'POST', body: JSON.stringify({ mode }) }
+        { method: 'POST', body: JSON.stringify({ mode, templateId }) }
       );
 
       setProjects(prev =>
@@ -780,7 +1008,7 @@ export default function HtmlPptPage() {
       );
       setSelectedTemplate(response.project.templateId ?? null);
     } catch (error) {
-      setRequestError(error instanceof Error ? error.message : mode === 'adopt' ? '采用失败。' : '继续生成失败。');
+      setRequestError(error instanceof Error ? error.message : mode === 'adopt' ? '采用失败。' : mode === 'template' ? '模板重跑失败。' : '继续生成失败。');
     } finally {
       setResumingMessageId(null);
     }
@@ -888,7 +1116,7 @@ export default function HtmlPptPage() {
         )}
       </aside>
 
-      <div 
+      <div
         onMouseDown={startResizingLeft}
         style={{
           width: '6px',
@@ -903,7 +1131,7 @@ export default function HtmlPptPage() {
       />
 
       <div style={styles.mainWrap}>
-        
+
         <div style={styles.chatWrap}>
           {/* ── Chat header ── */}
           <div style={styles.chatHeader}>
@@ -1001,6 +1229,24 @@ export default function HtmlPptPage() {
                               <span className="eyebrow" style={{ padding: '2px 8px', fontSize: 10, background: 'var(--bg-deep)' }}>{msg.deckSpec?.template ?? 'HTML-PPT'}</span>
                               &nbsp;· {msg.deckSpec?.slides.length ?? 0} Slides Generated
                             </div>
+                            {msg.deckRender.pipeline === 'html-ppt-v2' && (
+                              <div style={styles.v2DeckMeta}>
+                                <span>v2 IR Pipeline</span>
+                                {msg.deckRender.verificationMode && <span>{msg.deckRender.verificationMode}</span>}
+                                {msg.deckRender.verificationStatus && <span>{msg.deckRender.verificationStatus}</span>}
+                                {typeof msg.deckRender.screenshotCount === 'number' && <span>{msg.deckRender.screenshotCount} screenshots</span>}
+                              </div>
+                            )}
+                            {msg.deckRender.templateSelection && (
+                              <div style={styles.v2TemplateSelection}>
+                                {templateSelectionText(msg.deckRender.templateSelection, templates)}
+                                {msg.deckRender.templateSelection.rationale && (
+                                  <span style={styles.v2TemplateSelectionReason}>
+                                    {msg.deckRender.templateSelection.rationale}
+                                  </span>
+                                )}
+                              </div>
+                            )}
                             {msg.orchestration && (
                               <div style={styles.orchestrationMeta}>
                                 ✓ Orchestration Complete: {msg.orchestration.totalModelCalls} Calls · {msg.orchestration.steps.length} Steps
@@ -1009,9 +1255,38 @@ export default function HtmlPptPage() {
                           </div>
                           <div style={styles.deckPreviewActions}>
                             <a style={styles.deckActionLink} className="ghost-button" href={msg.deckRender.previewUrl} target="_blank" rel="noreferrer">Full View</a>
+                            {msg.deckRender.manifestUrl && (
+                              <a style={styles.deckActionLink} className="ghost-button" href={msg.deckRender.manifestUrl} target="_blank" rel="noreferrer">Manifest</a>
+                            )}
+                            {msg.deckRender.verificationReportUrl && (
+                              <a style={styles.deckActionLink} className="ghost-button" href={msg.deckRender.verificationReportUrl} target="_blank" rel="noreferrer">QA Report</a>
+                            )}
+                            {msg.deckRender.pipeline === 'html-ppt-v2' &&
+                              active?.template &&
+                              active.template !== 'auto' &&
+                              active.template !== msg.deckRender.templateSelection?.chosenTemplateId && (
+                                <button
+                                  type="button"
+                                  style={styles.deckActionLink}
+                                  className="ghost-button"
+                                  disabled={Boolean(resumingMessageId)}
+                                  title="复用当前 deck 的 Intent/Evidence/Narrative，从 04 Design 开始按当前模板重跑"
+                                  onClick={() => void resumeGeneration(msg.id, 'template', active.template)}>
+                                  {resumingMessageId === msg.id ? '重跑中...' : '用当前模板重跑'}
+                                </button>
+                              )}
                             <a style={styles.deckActionLink} className="primary-button" href={msg.deckRender.downloadUrl}>Download</a>
                           </div>
                         </div>
+                        {msg.deckRender.auxiliaryArtifacts && (
+                          <div style={styles.v2ArtifactLinks}>
+                            {Object.entries(msg.deckRender.auxiliaryArtifacts).map(([label, url]) => (
+                              <a key={label} href={url} target="_blank" rel="noreferrer">
+                                {label}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                         {msg.orchestration && msg.orchestration.steps.length > 0 && (
                           <div style={styles.orchestrationPanel}>
                             {msg.orchestration.steps.map((step) => (
@@ -1025,11 +1300,17 @@ export default function HtmlPptPage() {
                                 <div style={styles.orchestrationBody}>
                                   <div style={styles.orchestrationTitle}>{step.name}</div>
                                   <div style={styles.orchestrationDetail}>{step.detail}</div>
+                                  {stepFailureText(step) && (
+                                    <div style={styles.orchestrationFailureReason}>失败原因：{stepFailureText(step)}</div>
+                                  )}
                                 </div>
                                 <div style={styles.orchestrationRightRail}>
                                   <span style={styles.orchestrationDuration}>
-                                    {fmtDuration(step.startedAt, step.endedAt, step.status)}
+                                    {fmtStepDuration(step)}
                                   </span>
+                                  {stepObservabilityText(step) && (
+                                    <span style={styles.orchestrationMetrics}>{stepObservabilityText(step)}</span>
+                                  )}
                                   {canShowStepActions(msg.orchestration, step) && (
                                     <div style={styles.stepActionStack}>
                                       <button
@@ -1080,11 +1361,17 @@ export default function HtmlPptPage() {
                               <div style={styles.orchestrationBody}>
                                 <div style={styles.orchestrationTitle}>{step.name}</div>
                                 <div style={styles.orchestrationDetail}>{step.detail}</div>
+                                {stepFailureText(step) && (
+                                  <div style={styles.orchestrationFailureReason}>失败原因：{stepFailureText(step)}</div>
+                                )}
                               </div>
                               <div style={styles.orchestrationRightRail}>
                                 <span style={styles.orchestrationDuration}>
-                                  {fmtDuration(step.startedAt, step.endedAt, step.status)}
+                                  {fmtStepDuration(step)}
                                 </span>
+                                {stepObservabilityText(step) && (
+                                  <span style={styles.orchestrationMetrics}>{stepObservabilityText(step)}</span>
+                                )}
                                 {canShowStepActions(msg.orchestration, step) && (
                                   <div style={styles.stepActionStack}>
                                     <button
@@ -1177,7 +1464,7 @@ export default function HtmlPptPage() {
           </div>
         </div>
 
-        <div 
+        <div
           onMouseDown={startResizing}
           style={{
             width: '6px',
@@ -1215,7 +1502,7 @@ export default function HtmlPptPage() {
                     overflow: 'hidden',
                   }}
                   onClick={() => applyTemplate(tpl.id)}>
-                  
+
                   {/* Dynamic Slide Projection with Shadow DOM isolation */}
                   {hasPreviews && (
                     <div style={{
@@ -1225,7 +1512,7 @@ export default function HtmlPptPage() {
                       background: 'white',
                       pointerEvents: 'none',
                     }}>
-                      <ShadowPreview 
+                      <ShadowPreview
                         html={tpl.previewSlides?.[isHovered ? Math.min(Math.floor(hoverProgress * tpl.previewSlides.length), tpl.previewSlides.length - 1) : 0] ?? ''}
                         css={tpl.previewCss || ''}
                         deckClass={tpl.deckClass}
@@ -1233,10 +1520,12 @@ export default function HtmlPptPage() {
                     </div>
                   )}
 
-                   {/* We only show the descriptive Chinese label at the bottom corner now */}
-                   <div style={{ ...styles.tplDesc, position: 'absolute', zIndex: 3 }}>
-                     {tpl.desc}
-                   </div>
+                  <div style={{ ...styles.tplLabel, position: 'absolute', zIndex: 3 }}>
+                    {tpl.label}
+                  </div>
+                  <div style={{ ...styles.tplDesc, position: 'absolute', zIndex: 3 }}>
+                    {tpl.desc}
+                  </div>
                   {isSelected && (
                     <div style={{ ...styles.tplCheck, zIndex: 4 }}>✓</div>
                   )}
@@ -1665,6 +1954,46 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'var(--muted)',
     fontWeight: 500,
   },
+  v2DeckMeta: {
+    marginTop: 8,
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 6,
+    fontSize: 10,
+    fontWeight: 800,
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    color: '#0f766e',
+  },
+  v2TemplateSelection: {
+    marginTop: 8,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: 4,
+    maxWidth: 680,
+    borderRadius: 14,
+    border: '1px solid rgba(14,116,144,0.16)',
+    background: 'rgba(240,253,250,0.72)',
+    padding: '8px 10px',
+    fontSize: 11,
+    lineHeight: 1.45,
+    color: '#134e4a',
+    fontWeight: 800,
+  },
+  v2TemplateSelectionReason: {
+    color: '#64748b',
+    fontWeight: 600,
+  },
+  v2ArtifactLinks: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 8,
+    padding: '10px 20px',
+    borderBottom: '1px solid var(--line)',
+    background: '#f6fbf8',
+    fontSize: 11,
+    fontWeight: 700,
+  },
   orchestrationMeta: {
     marginTop: 6,
     fontSize: 11,
@@ -1751,17 +2080,32 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'var(--muted)',
     lineHeight: 1.5,
   },
+  orchestrationFailureReason: {
+    marginTop: 6,
+    fontSize: 11,
+    color: '#b91c1c',
+    lineHeight: 1.45,
+    fontWeight: 600,
+  },
   orchestrationDuration: {
     fontSize: 11,
     color: 'var(--muted)',
     fontFamily: 'ui-monospace, monospace',
     fontWeight: 500,
   },
+  orchestrationMetrics: {
+    fontSize: 11,
+    color: 'var(--muted)',
+    fontFamily: 'ui-monospace, monospace',
+    fontWeight: 500,
+    whiteSpace: 'nowrap',
+  },
   orchestrationRightRail: {
     display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    gap: 10,
+    gap: 4,
   },
   stepActionStack: {
     display: 'flex',
@@ -1976,7 +2320,22 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'none',
   },
   tplLabel: {
-    display: 'none',
+    top: 10,
+    left: 10,
+    fontSize: 12,
+    color: 'var(--ink)',
+    fontWeight: 800,
+    letterSpacing: '-0.02em',
+    padding: '5px 10px',
+    background: 'rgba(255, 255, 255, 0.9)',
+    backdropFilter: 'blur(8px)',
+    borderRadius: 999,
+    border: '1px solid rgba(255, 255, 255, 0.6)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+    maxWidth: '78%',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   tplDesc: {
     bottom: 10,

@@ -1,0 +1,78 @@
+{
+  "id": "knowledge-arch-blueprint",
+  "label": {
+    "zh-CN": "知识蓝图",
+    "en": "Knowledge Blueprint"
+  },
+  "description": {
+    "zh-CN": "适合知识体系、架构图、方法论和学习路径的蓝图模板。",
+    "en": "A blueprint template for knowledge systems, architecture diagrams, methodologies, and learning paths."
+  },
+  "donorTemplateId": "knowledge-arch-blueprint",
+  "deckClass": "tpl-knowledge-arch-blueprint",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "knowledge-blueprint",
+  "themeAlternates": [
+    "engineering-whiteprint",
+    "graphify-dark",
+    "japanese-minimal"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "timeline",
+      "process",
+      "bullet-list",
+      "quote",
+      "comparison"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "engineers",
+    "students",
+    "researchers"
+  ],
+  "formatFit": [
+    "lecture",
+    "tutorial",
+    "analysis"
+  ],
+  "toneFit": [
+    "rigorous",
+    "tutorial",
+    "analytical"
+  ],
+  "defaultDensity": "dense",
+  "defaultSlideCount": 12,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "grid-lines",
+      "none"
+    ],
+    "maxAccentSlides": 2
+  },
+  "embeddingPrompt": "Blueprint knowledge architecture, methodology, learning map, framework, process, structured thinking.",
+  "promptSignals": [
+    "蓝图",
+    "知识体系",
+    "架构图",
+    "方法论",
+    "学习路径",
+    "framework",
+    "blueprint",
+    "methodology",
+    "architecture"
+  ],
+  "forbidPromptSignals": [
+    "消费种草"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

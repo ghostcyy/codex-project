@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>[SYSTEM] 智慧城市数据安全治理体系</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@400;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-web3">
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide" data-title="封面">
+            <div class="title-wrapper">
+                <span class="kicker">INITIALIZING GOVERNANCE PROTOCOL v2.0</span>
+                <h1 class="h1">SMART CITY<br>DATA SECURITY</h1>
+                <p style="font-size: 20px; color: var(--text-muted); margin-top: 30px; font-family: var(--font-mono);">[STATUS: SECURE] // [AUTHORITY: DEV_LEVEL_0]</p>
+                <div style="margin-top: 50px;">
+                    <div style="width: 200px; height: 1px; background: var(--primary); display: inline-block; position: relative;">
+                        <div style="position: absolute; top: -2px; left: 0; width: 5px; height: 5px; background: var(--primary);"></div>
+                        <div style="position: absolute; top: -2px; right: 0; width: 5px; height: 5px; background: var(--secondary);"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>0xDE4DBEEF // SECURE_CITY_ARCH</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 治理背景 -->
+        <section class="slide" data-title="治理背景">
+            <div class="header">
+                <span class="kicker">SYSTEM CONTEXT</span>
+                <h2 class="h2">未来城市的<strong>底层安全逻辑</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-sidebar" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div class="card">
+                        <h3>数字化演进中的漏洞</h3>
+                        <p>传统智慧城市采用中心化存储，极易成为单点故障攻击目标。我们需要从“被动修补”转向“内生安全”的开发模式。</p>
+                        <div class="code-box">
+                            // Anomaly check<br>
+                            if (packet.origin != trusted_node) {<br>
+                            &nbsp;&nbsp;discard(packet);<br>
+                            &nbsp;&nbsp;log_incident(ALERT_CRITICAL);<br>
+                            }
+                        </div>
+                    </div>
+                    <div class="card" style="padding: 0;">
+                        <img src="img/photo-1518770660439-4636190af475.jpg" style="width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius);" alt="Server">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_02 // VULNERABILITY_ASSESSMENT</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 核心协议 (2栏) -->
+        <section class="slide" data-title="核心协议">
+            <div class="header">
+                <span class="kicker">CORE PROTOCOLS</span>
+                <h2 class="h2">分布式<strong>信任锚点</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>DID 去中心化身份</h3>
+                        <p>基于 W3C 标准的自主身份协议，用户完全掌握自己的数字主权。消除中心化数据库被拖库的风险。</p>
+                    </div>
+                    <div class="card">
+                        <h3>ZKP 零知识证明</h3>
+                        <p>在不泄露隐私原始数据的前提下，实现数据的合法性验证。真正做到“可用不可见”。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_03 // PROTOCOL_STACK</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 技术分层 (3栏) -->
+        <section class="slide" data-title="技术分层">
+            <div class="header">
+                <span class="kicker">STACK LAYERS</span>
+                <h2 class="h2">多维防护<strong>技术框架</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>L1. 存储层</h3>
+                        <p>分布式加密文件系统（IPFS/Filecoin）。数据分片存储，具备极高的抗篡改与高可用特性。</p>
+                    </div>
+                    <div class="card">
+                        <h3>L2. 网络层</h3>
+                        <p>零信任网络架构（ZTA）。所有请求均需持续验证，默认“不信任任何设备或用户”。</p>
+                    </div>
+                    <div class="card">
+                        <h3>L3. 应用层</h3>
+                        <p>隐私计算与联邦学习。数据在加密容器内流转，保障计算过程的绝对隐私。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_04 // SYSTEM_ARCHITECTURE</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 吞吐量柱状图 -->
+        <section class="slide" data-title="数据吞吐">
+            <div class="header">
+                <span class="kicker">METRICS</span>
+                <h2 class="h2">数据流量<strong>并发处理能力</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="throughputBarChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>高并发下的稳定性</h3>
+                        <p>系统采用异步并发处理机制，确保在智慧交通等高频传感器场景下，数据处理延迟保持在 50ms 以内。</p>
+                        <div class="code-box">
+                            $ stress-test --nodes 10k --duration 1h<br>
+                            [RESULT] 99.99% Availability
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_05 // PERFORMANCE_LOGS</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 关键向量 (4栏) -->
+        <section class="slide" data-title="攻击向量">
+            <div class="header">
+                <span class="kicker">VECTORS</span>
+                <h2 class="h2">全域<strong>威胁覆盖矩阵</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>API 泄露</h3>
+                        <p>防范接口越权访问与注入攻击。</p>
+                    </div>
+                    <div class="card">
+                        <h3>IoT 边缘</h3>
+                        <p>端到端加密防止物理劫持与重放攻击。</p>
+                    </div>
+                    <div class="card">
+                        <h3>Cloud 安全</h3>
+                        <p>容器逃逸防御与资源逻辑隔离。</p>
+                    </div>
+                    <div class="card">
+                        <h3>内部人威胁</h3>
+                        <p>基于 RBAC 的精细化权限动态变更。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_06 // ATTACK_SURFACE</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 数据流程 (5栏) -->
+        <section class="slide" data-title="数据流程">
+            <div class="header">
+                <span class="kicker">PIPELINE</span>
+                <h2 class="h2">流水线式的<strong>治理过程</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card" style="padding: 15px;">
+                        <h3>INPUT</h3>
+                        <p style="font-size: 13px;">清洗、格式校验、合法性打标。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>PROCESS</h3>
+                        <p style="font-size: 13px;">脱敏、加密处理、特征提取。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>SYNC</h3>
+                        <p style="font-size: 13px;">分布式同步、多副本确认机制。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>OUTPUT</h3>
+                        <p style="font-size: 13px;">动态水印、权限校验、日志留痕。</p>
+                    </div>
+                    <div class="card" style="padding: 15px; border-color: var(--secondary);">
+                        <h3>PURGE</h3>
+                        <p style="font-size: 13px;">彻底粉碎、秘钥销毁、合规清理。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_07 // DATA_FLOW</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 代码示例 -->
+        <section class="slide" data-title="代码实现">
+            <div class="header">
+                <span class="kicker">DEVELOPER REFERENCE</span>
+                <h2 class="h2">可编程的<strong>安全策略定义</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Security as Code</h3>
+                        <p>通过声明式语法定义安全策略。所有的治理规则均可作为代码进行版本控制与自动化部署。</p>
+                    </div>
+                    <div class="code-box" style="margin-top: 0; font-size: 12px;">
+                        policy "DataProtection" {<br>
+                        &nbsp;&nbsp;scope = "UserPii"<br>
+                        &nbsp;&nbsp;action "mask" {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;algorithm = "SHA-256"<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;salt = env.SECRET_KEY<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;allow role("Auditor")<br>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_08 // POLICY_ENGINE</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 基建设施 -->
+        <section class="slide" data-title="基础设施">
+            <div class="header">
+                <span class="kicker">INFRASTRUCTURE</span>
+                <h2 class="h2">下一代<strong>安全物理底座</strong></h2>
+            </div>
+            <div class="content-area" style="align-items: center; justify-content: center;">
+                <div class="img-wrap" style="width: 100%; height: 100%; position: relative;">
+                    <img src="img/photo-1544197150-b99a580bb7a8.jpg" style="width:100%; height:100%; object-fit: cover; border-radius: var(--radius);" alt="Data Center">
+                    <div style="position: absolute; top: 30px; left: 30px; background: rgba(0, 242, 255, 0.9); padding: 10px 20px; color: #000; border-radius: 99px; font-weight: 800; font-family: var(--font-mono);">
+                        [HARDWARE_SECURE_ENCLAVE]
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_09 // HARDWARE_LAYER</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 异常检测 (3栏) -->
+        <section class="slide" data-title="异常检测">
+            <div class="header">
+                <span class="kicker">MONITORING</span>
+                <h2 class="h2">实时<strong>异动感知系统</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>AI 行为指纹</h3>
+                        <p>通过强化学习建立流量基准，毫秒级识别偏离预期的可疑操作。</p>
+                    </div>
+                    <div class="card">
+                        <h3>全量审计日志</h3>
+                        <p>所有系统调用均记录至不可篡改的分布式账本中。具备永久追溯能力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>自动化沙箱</h3>
+                        <p>对所有不确定脚本进行隔离运行，评估潜在风险后再进行生产部署。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_10 // LOG_ANALYSIS</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 威胁占比饼图 -->
+        <section class="slide" data-title="威胁分析">
+            <div class="header">
+                <span class="kicker">THREAT_MODEL</span>
+                <h2 class="h2">攻击向量<strong>分布画像</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="threatPieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>持续演进的对手</h3>
+                        <p>攻击手段已呈现高度专业化与组织化。系统必须具备“持续自愈”的能力，而非静态防御。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_11 // RISK_ASSESSMENT</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 节点分布 -->
+        <section class="slide" data-title="节点分布">
+            <div class="header">
+                <span class="kicker">NETWORK_TOPOLOGY</span>
+                <h2 class="h2">全球<strong>去中心化共识网络</strong></h2>
+            </div>
+            <div class="content-area" style="align-items: center; justify-content: center;">
+                <div class="img-wrap" style="width: 100%; height: 100%; border-radius: var(--radius); border: 2px solid var(--primary);">
+                    <img src="img/photo-1451187580459-43490279c0fa.jpg" style="width:100%; height:100%; object-fit: cover;" alt="Nodes">
+                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);"></div>
+                    <div style="position: absolute; bottom: 30px; left: 30px; color: #fff;">
+                        <span style="font-family: var(--font-mono); color: var(--primary);">ACTIVE_NODES: 14,922</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_12 // NODE_CONSENSUS</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 审计流程 (4栏) -->
+        <section class="slide" data-title="审计流程">
+            <div class="header">
+                <span class="kicker">AUDIT_CYCLE</span>
+                <h2 class="h2">敏捷<strong>安全审计流程</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <h3>INIT</h3>
+                        <p>确立审计范围与权限分配。</p>
+                    </div>
+                    <div class="card">
+                        <h3>SCAN</h3>
+                        <p>全量漏洞扫描与代码静态分析。</p>
+                    </div>
+                    <div class="card">
+                        <h3>PATCH</h3>
+                        <p>热修复补丁推送到边缘节点。</p>
+                    </div>
+                    <div class="card">
+                        <h3>VERIFY</h3>
+                        <p>多重签名确认修复完成。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_13 // DEVSEC_OPS</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 成熟度折线图 -->
+        <section class="slide" data-title="成熟度">
+            <div class="header">
+                <span class="kicker">MATURITY</span>
+                <h2 class="h2">治理体系<strong>演进路线</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="maturityLineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>向自治进化</h3>
+                        <p>从单纯的“人力审计”进化到“机器自治”。通过智能合约自动触发补救方案，将响应速度提升至微秒级。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_14 // EVOLUTION_METRICS</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 展望 2.0 (2栏) -->
+        <section class="slide" data-title="展望展望">
+            <div class="header">
+                <span class="kicker">KINETIC_OVERLAP</span>
+                <h2 class="h2">向<strong>自主自治</strong>进发</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-overlap-diag">
+                    <div class="card">
+                        <h3>完全去中心化治理</h3>
+                        <p>引入 DAO（去中心化自治组织）管理模式。所有安全协议的变更均通过社区共识投票决定，彻底消除超级管理员风险。</p>
+                    </div>
+                    <div class="card">
+                        <h3>量子安全加密</h3>
+                        <p>前瞻性部署抗量子计算加密算法。确保在未来的算力飞跃中，城市核心数据依然不可破译。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_15 // VISION_GATEWAY</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 技术栈试点 -->
+        <section class="slide" data-title="试点方案">
+            <div class="header">
+                <span class="kicker">BETA_TESTING</span>
+                <h2 class="h2">区域级<strong>技术栈试点</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <h3>SANDBOX</h3>
+                        <p>低风险区域先行试运行，收集性能瓶颈数据。</p>
+                    </div>
+                    <div class="card">
+                        <h3>CANARY</h3>
+                        <p>灰度发布，针对 5% 的节点进行协议热更新测试。</p>
+                    </div>
+                    <div class="card">
+                        <h3>STAGING</h3>
+                        <p>全链路模拟运行，压力测试最高并发场景。</p>
+                    </div>
+                    <div class="card">
+                        <h3>PROD</h3>
+                        <p>正式环境全面切流，实现全球同步治理。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_16 // DEPLOYMENT_STRATEGY</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 Web3 应用场景 (3栏) -->
+        <section class="slide" data-title="应用场景">
+            <div class="header">
+                <span class="kicker">USE_CASES</span>
+                <h2 class="h2">当智慧城市遇见 <strong>Web3</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <h3>共享出行</h3>
+                        <p>通过智能合约自动结算租借费用，保障用户位置隐私不被滥用。</p>
+                    </div>
+                    <div class="card">
+                        <h3>绿电交易</h3>
+                        <p>居民分布式光伏发电接入电网，点对点透明交易，收益自动到账。</p>
+                    </div>
+                    <div class="card">
+                        <h3>社区投票</h3>
+                        <p>基于区块链的无记名投票系统。确保选举结果的真实性与可核查性。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_17 // REAL_WORLD_SYNC</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 核心 KPI (5栏) -->
+        <section class="slide" data-title="指标体系">
+            <div class="header">
+                <span class="kicker">PENTAGON_FOCUS</span>
+                <h2 class="h2">全栈<strong>治理指标看板</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-pentagon">
+                    <div class="card" style="padding: 15px;">
+                        <h3>UPTIME</h3>
+                        <p style="font-size: 13px;">集群在线率达 99.999% 以上。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>LATENCY</h3>
+                        <p style="font-size: 13px;">共识确认延迟控制在 100ms 左右。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>TPS</h3>
+                        <p style="font-size: 13px;">峰值处理能力支持 10k/sec。</p>
+                    </div>
+                    <div class="card" style="padding: 15px;">
+                        <h3>COST</h3>
+                        <p style="font-size: 13px;">单次验证 Gas 损耗优化至极低水平。</p>
+                    </div>
+                    <div class="card" style="padding: 15px; border-color: var(--primary);">
+                        <h3>TRUST</h3>
+                        <p style="font-size: 13px;">节点去中心化系数 (Nakamoto) > 100。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_18 // TELEMETRY_DATA</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 加密未来 -->
+        <section class="slide" data-title="使命愿景">
+            <div class="title-wrapper">
+                <h2 style="font-size: 54px; margin-bottom: 20px;">ENCRYPT THE FUTURE.</h2>
+                <p style="font-size: 24px; color: var(--text-muted); max-width: 800px; font-family: var(--font-mono);">
+                    &gt; building a trustless, transparent, and resilient digital infrastructure for the next billion users.
+                </p>
+                <div style="margin-top: 40px; color: var(--primary); font-family: var(--font-mono);">[ SYSTEM_SYNC_COMPLETE ]</div>
+            </div>
+            <div class="footer">
+                <span>PAGE_19 // THE_END_OF_TRUST_GAPS</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide" data-title="结束">
+            <div class="title-wrapper">
+                <h1 class="h1">GET CONNECTED</h1>
+                <p style="font-size: 20px; color: var(--text-muted); margin-top: 30px;">JOIN THE NETWORK // BUILD THE SECURE CITY</p>
+                <div style="margin-top: 50px;">
+                    <button style="background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 15px 40px; border-radius: 99px; font-family: var(--font-mono); font-weight: 700; cursor: pointer;">GITHUB.COM/SMART-CITY-DAO</button>
+                </div>
+                <div style="margin-top: 30px; font-size: 12px; opacity: 0.5;">0x1234...ABCD // PGP_SIGNED</div>
+            </div>
+            <div class="footer">
+                <span>0xDE4DBEEF // SECURE_CITY_ARCH</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Chart.defaults.color = '#64748b';
+            Chart.defaults.font.family = "'JetBrains Mono', monospace";
+
+            // 05 吞吐量柱状图
+            const ctxBar = document.getElementById('throughputBarChart');
+            if (ctxBar) {
+                new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: ['L1', 'L2', 'L3', 'Agg'],
+                        datasets: [{
+                            label: 'Throughput (TPS)',
+                            data: [2500, 4800, 1500, 8800],
+                            backgroundColor: ['#00f2ff', '#ff00ff', '#1e293b', '#64748b'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } } }
+                    }
+                });
+            }
+
+            // 11 威胁饼图
+            const ctxPie = document.getElementById('threatPieChart');
+            if (ctxPie) {
+                new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['DDoS', 'Phishing', 'Sybil', 'Exploit'],
+                        datasets: [{
+                            data: [40, 25, 20, 15],
+                            backgroundColor: ['#00f2ff', '#ff00ff', '#0f172a', '#e2e8f0'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // 14 成熟度折线图
+            const ctxLine = document.getElementById('maturityLineChart');
+            if (ctxLine) {
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['v1.0', 'v1.5', 'v2.0', 'v2.5'],
+                        datasets: [{
+                            label: 'Trustless Index',
+                            data: [0.2, 0.45, 0.85, 0.98],
+                            borderColor: '#ff00ff',
+                            backgroundColor: 'rgba(255, 0, 255, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#00f2ff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

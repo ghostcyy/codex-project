@@ -1,0 +1,302 @@
+.tpl-quantum {
+  --bg: #050510;
+  --surface: #0e0e2a;
+  --primary: #00f2ff;
+  --secondary: #ff00d4;
+  --accent: #7000ff;
+  --text-main: #f0f0f8;
+  --text-muted: #94a3b8;
+  --border: rgba(0, 242, 255, 0.2);
+  --radius: 12px;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Slide Positioning - CRITICAL: Must be absolute to allow layering */
+.tpl-quantum .slide {
+  position: absolute;
+  inset: 0;
+  padding: 60px 80px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Particle Canvas */
+#quantum-canvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5; /* Top layer for resident effect */
+  opacity: 0.5;
+}
+
+/* Header & Typography */
+.tpl-quantum .header {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.tpl-quantum .kicker {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.tpl-quantum .h1 {
+  font-size: clamp(60px, 12vw, 120px);
+  font-weight: 900;
+  line-height: 0.9;
+  margin: 0;
+  text-transform: uppercase;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.5));
+}
+
+.tpl-quantum .h2 {
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+/* Title Slide Centering */
+.tpl-quantum .slide.title-slide {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-quantum .title-content-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+/* Content Area */
+.tpl-quantum .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 10;
+  min-height: 0;
+}
+
+/* Grid Matrix */
+.tpl-quantum .grid-2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0, 1fr); gap: 24px; flex: 1; min-height: 0; }
+.tpl-quantum .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: minmax(0, 1fr); gap: 20px; flex: 1; min-height: 0; }
+.tpl-quantum .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: minmax(0, 1fr); gap: 16px; flex: 1; min-height: 0; }
+.tpl-quantum .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: minmax(0, 1fr); gap: 12px; flex: 1; min-height: 0; }
+.tpl-quantum .grid-layout-sidebar { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: minmax(0, 1fr); gap: 30px; flex: 1; min-height: 0; }
+
+/* Card System */
+.tpl-quantum .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.tpl-quantum .card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
+}
+
+.tpl-quantum .card h3 {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.tpl-quantum .card p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Image Standards */
+.tpl-quantum .img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.tpl-quantum .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tpl-quantum .card:hover .img-wrap img {
+  transform: scale(1.1);
+}
+
+/* Chart Integration */
+.tpl-quantum .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+/* Policy Box */
+.tpl-quantum .policy-box {
+  border-left: 4px solid var(--secondary);
+  background: rgba(255, 0, 212, 0.05);
+  padding: 20px;
+  margin: 10px 0;
+  font-style: italic;
+}
+
+/* Footer */
+.tpl-quantum .footer {
+  position: absolute;
+  bottom: 40px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  z-index: 10;
+}
+
+/* Transitions */
+.tpl-quantum .slide.is-active .card {
+  animation: cardQuantumIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardQuantumIn {
+  from { opacity: 0; transform: scale(0.9) translateY(40px); filter: blur(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+.tpl-quantum .slide.is-active .card:nth-child(1) { animation-delay: 0.1s; }
+.tpl-quantum .slide.is-active .card:nth-child(2) { animation-delay: 0.2s; }
+.tpl-quantum .slide.is-active .card:nth-child(3) { animation-delay: 0.3s; }
+.tpl-quantum .slide.is-active .card:nth-child(4) { animation-delay: 0.4s; }
+.tpl-quantum .slide.is-active .card:nth-child(5) { animation-delay: 0.5s; }
+
+/* --- Diversity Layouts (v2) --- */
+.tpl-quantum .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-quantum .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-quantum .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-quantum .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-quantum .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-quantum .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--surface);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-quantum .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 0;
+}
+.tpl-quantum .layout-split-v2 .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+.tpl-quantum .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  margin-right: -10%;
+  z-index: 2;
+}
+.tpl-quantum .layout-split-v2 .card:nth-child(2) {
+  background: var(--primary);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  color: #fff;
+  z-index: 1;
+  padding-left: 120px;
+}
+.tpl-quantum .layout-split-v2 .card:hover { transform: scale(1.02); z-index: 10; }
+
+.tpl-quantum .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-quantum .layout-overlap-diag .card {
+  position: absolute;
+  width: 45%;
+  height: 60%;
+  padding: 40px;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-quantum .layout-overlap-diag .card:nth-child(1) {
+  top: 10%; left: 10%;
+  background: var(--surface);
+  border: 4px solid var(--primary);
+  z-index: 1;
+}
+.tpl-quantum .layout-overlap-diag .card:nth-child(2) {
+  bottom: 10%; right: 10%;
+  background: var(--bg);
+  border: 2px solid var(--secondary);
+  z-index: 2;
+  box-shadow: -20px -20px 0 rgba(0,0,0,0.2);
+}
+.tpl-quantum .layout-overlap-diag .card:hover {
+  transform: translate(-10px, -10px);
+  z-index: 100;
+  box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+}

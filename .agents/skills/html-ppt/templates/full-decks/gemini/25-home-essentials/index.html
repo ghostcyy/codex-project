@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home Harmony: Daily Essentials Strategy</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-home">
+    <div class="deck">
+        <canvas id="home-canvas"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">BETTER LIVING // 2026</div>
+                <h1 class="h1">Home<br>Harmony</h1>
+                <p style="font-size: 20px; color: var(--text-muted); margin-top: 30px; font-weight: 500; letter-spacing: 5px;">THE ART OF DAILY NECESSITIES</p>
+                <div style="margin-top: 50px;">
+                    <div style="display: inline-block; padding: 10px 30px; border: 2px solid var(--primary); border-radius: 40px; color: var(--primary); font-weight: 900; letter-spacing: 2px;">STRATEGY GUIDE</div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MUJI-LIFE SOLUTIONS</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 概述 (侧边栏) -->
+        <section class="slide" data-title="项目概述">
+            <div class="header">
+                <div class="kicker">OVERVIEW</div>
+                <h2 class="h2">家之和谐：重塑日用品的生命力</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="margin-bottom: 25px;">
+                            <img src="img/title.png" alt="Home Life">
+                        </div>
+                        <h3>日常的诗意</h3>
+                        <p>日用品不应只是消耗品，它们是构建居家幸福感的基石。我们致力于将美学与实用主义融入每一件寻常物件中。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>极简设计语言</h3>
+                            <p>去除冗余装饰，回归功能本质，让产品自然融入各种居家风格。</p>
+                        </div>
+                        <div class="card">
+                            <h3>全生命周期管理</h3>
+                            <p>从选材、使用到回收，全流程考虑环境影响，实现可持续的居家生活。</p>
+                        </div>
+                        <div class="card">
+                            <h3>智慧补给系统</h3>
+                            <p>利用 IoT 技术感知消耗进度，自动提醒并一键下单，让生活永不断供。</p>
+                        </div>
+                        <div class="card">
+                            <h3>极致性价比</h3>
+                            <p>通过供应链优化剔除品牌溢价，让高品质的居家生活触手可及。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SIMPLICITY & COMFORT</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 品类展示 (2栏) -->
+        <section class="slide" data-title="品类展示">
+            <div class="header">
+                <div class="kicker">CATEGORIES</div>
+                <h2 class="h2">精选品类：覆盖居家生活的每一个角落</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img src="img/home1.jpg" alt="Kitchen">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: 2px;">KITCHEN ESSENTIALS</span>
+                        <h3 style="margin-top: 10px;">Ceramic Series 2.0</h3>
+                        <p>采用纳米抗污技术的陶瓷系列，不仅美观大方，更易于清洗。圆润的倒角设计，为每一次下厨增添一份温柔的触感。</p>
+                        <div class="policy-box" style="margin-top: 40px;">
+                            "让烟火气也带有艺术感。"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PRODUCT PORTFOLIO</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 服务承诺 (3栏) -->
+        <section class="slide" data-title="服务承诺">
+            <div class="header">
+                <div class="kicker">OUR PROMISE</div>
+                <h2 class="h2">无忧居家：全方位的售后支持</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
+                        <h3>365 天质保</h3>
+                        <p>针对核心家居件提供长达一年的质保承诺，品质无忧。</p>
+                    </div>
+                    <div class="card">
+                        <h3>闪电送达</h3>
+                        <p>全国 500 个前置仓部署，确保日用消耗品 1 小时内触达。</p>
+                    </div>
+                    <div class="card">
+                        <h3>旧物焕新</h3>
+                        <p>针对床垫、厨具等大件，提供以旧换新与上门回收服务。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SERVICE QUALITY</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 渠道布局 (4栏) -->
+        <section class="slide" data-title="渠道布局">
+            <div class="header">
+                <div class="kicker">CHANNELS</div>
+                <h2 class="h2">触手可及：全场景的零售网络</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 100px; margin-bottom: 15px;"><img src="img/home2.jpg"></div>
+                        <h3>自有电商</h3>
+                        <p>提供最完整的品牌体验与会员权益。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 100px; margin-bottom: 15px;"><img src="img/home3.jpg"></div>
+                        <h3>第三方平台</h3>
+                        <p>入驻主流电商，覆盖海量公域流量。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 100px; margin-bottom: 15px;"><img src="img/home1.jpg"></div>
+                        <h3>社区超市</h3>
+                        <p>深度渗透社区零售，解决即时需求。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 100px; margin-bottom: 15px;"><img src="img/title.png"></div>
+                        <h3>无人零售</h3>
+                        <p>在高端社区部署智能售货机。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>RETAIL NETWORK</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 考核指标 (5栏) -->
+        <section class="slide" data-title="考核指标">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">数据驱动：日用品经营的北极星指标</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card">
+                        <h3 style="font-size: 15px;">DAU</h3>
+                        <p style="font-size: 11px;">活跃用户数。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">AOV</h3>
+                        <p style="font-size: 11px;">客单价增长。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">RR</h3>
+                        <p style="font-size: 11px;">次月留存率。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">STOCK</h3>
+                        <p style="font-size: 11px;">库存周转率。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 15px;">CSAT</h3>
+                        <p style="font-size: 11px;">用户满意度。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>BUSINESS METRICS</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图: 销售增长 -->
+        <section class="slide" data-title="销售增长">
+            <div class="header">
+                <div class="kicker">PERFORMANCE</div>
+                <h2 class="h2">居家消费升级背景下的销售增长曲线</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>消费习惯的变迁</h3>
+                        <p>用户开始愿意为更高品质的洗护、餐具等小件支付溢价。我们在高频日用品品类实现了年复合 40% 的增长。</p>
+                        <div style="margin-top: 30px; background: var(--secondary); padding: 20px; border-radius: 20px;">
+                            <div style="font-size: 32px; font-weight: 900; color: #b45309;">4.2X</div>
+                            <div style="font-size: 12px; color: #92400e; font-weight: 700;">USER LTV INCREASE</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GROWTH DATA</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 饼图: 预算分布 -->
+        <section class="slide" data-title="预算分布">
+            <div class="header">
+                <div class="kicker">BUDGET ALLOCATION</div>
+                <h2 class="h2">2026 年度家庭日用品消费预算分布</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>洗护与软装成为核心</h3>
+                        <p>个人护理与洗护用品占据了预算的大头。同时，旨在提升氛围感的软装配件也逐渐成为刚需。</p>
+                        <ul style="margin-top: 25px; line-height: 2; font-weight: 600;">
+                            <li><span style="color:#a8d5ba">●</span> 个人洗护: 40%</li>
+                            <li><span style="color:#fff3c7">●</span> 家居软装: 25%</li>
+                            <li><span style="color:#f87171">●</span> 厨房用具: 20%</li>
+                            <li><span style="color:#cbd5e1">●</span> 其它消耗品: 15%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>CONSUMER BUDGET</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 柱状图: 用户粘性 -->
+        <section class="slide" data-title="用户粘性">
+            <div class="header">
+                <div class="kicker">USER STICKINESS</div>
+                <h2 class="h2">不同年龄段用户对品牌忠诚度对比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 1fr 1.8fr;">
+                    <div class="card">
+                        <h3>年轻一代的品牌认同</h3>
+                        <p>Z 世代对具备“颜值”与“价值观”的日用品表现出极高的品牌忠诚度，一旦认同便极少更换。</p>
+                        <div class="policy-box" style="margin-top: 25px;">
+                            "颜价比是年轻人的新追求。"
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>USER ANALYTICS</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 甘特图: 供应链优化 -->
+        <section class="slide" data-title="供应链优化">
+            <div class="header">
+                <div class="kicker">SUPPLY CHAIN</div>
+                <h2 class="h2">极致效率：全球柔性供应链升级路径</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OPERATIONAL EXCELLENCE</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 音频 展示 -->
+        <section class="slide" data-title="音频展示">
+            <div class="header">
+                <div class="kicker">AUDIO BRANDING</div>
+                <h2 class="h2">生活之歌：Fresh Life 品牌主题曲</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>声音名片</h3>
+                        <p>我们创作了清新、明快的品牌音效。在用户浏览商品或完成下单时播放，建立独特的声音记忆点。</p>
+                    </div>
+                    <div class="card center" style="background: #f8fafc; border-style: dashed;">
+                        <div style="font-size: 50px; margin-bottom: 25px;">🎵</div>
+                        <audio controls style="width: 80%;">
+                            <source src="audio/home_jingle.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 15px; font-weight: 800; color: var(--primary);">TRACK: MORNING_HARMONY.MP3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SENSORY ASSETS</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 视频 展示 -->
+        <section class="slide" data-title="视频展示">
+            <div class="header">
+                <div class="kicker">VIDEO SHOWCASE</div>
+                <h2 class="h2">产品背后的故事：匠心制造流程</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/manufacturing.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 11px; background: #2d3748; color: #fff; padding: 2px 6px; border-radius: 4px;">FACTORY TOUR</span>
+                        <h3 style="margin-top: 15px;">精益求精</h3>
+                        <p>走进我们的数字化全自动化工厂，见证每一件日用品如何在高精尖设备的协作下诞生。严苛的质检标准，是我们对用户最大的敬畏。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>BRAND STORY</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13-19 填充页面 -->
+        <section class="slide" data-title="全球协作">
+            <div class="header">
+                <div class="kicker">GLOBAL COLLABORATION</div>
+                <h2 class="h2">跨国智造：汇聚全球设计力量</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>北欧美学中心</h3>
+                        <p>位于斯德哥尔摩的设计室，负责品牌整体色调与极简轮廓的把控。</p>
+                    </div>
+                    <div class="card">
+                        <h3>亚洲功能实验室</h3>
+                        <p>位于东京，专注于产品的人机工学细节与小空间收纳方案优化。</p>
+                    </div>
+                    <div class="card">
+                        <h3>全球供应链中枢</h3>
+                        <p>位于深圳，统筹全球生产资源，确保产能的弹性响应。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>NETWORK</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="环保行动">
+            <div class="header">
+                <div class="kicker">SUSTAINABILITY</div>
+                <h2 class="h2">不只是消费，更是对地球的善意</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap"><img src="img/home2.jpg"></div>
+                    </div>
+                    <div class="card">
+                        <h3>海洋塑料回收计划</h3>
+                        <p>我们的部分洗护包材采用 100% 海洋回收塑料制成。每一瓶产品的售出，都意味着有 10 克海洋塑料被成功转化为资源。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GREEN MISSION</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="仓储自动化">
+            <div class="header">
+                <div class="kicker">CORE_INFO</div>
+                <h2 class="h2">智慧仓储：提升最后一公里的效率</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>AGV 机器人集群</h3>
+                        <p>全仓无人化拣选，将出库错误率降低至 0.001% 以下，响应速度提升 3 倍。</p>
+                    </div>
+                    <div class="card">
+                        <h3>动态路径优化</h3>
+                        <p>基于实时交通数据的配送算法，确保订单在最短时间内送达用户手中。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>TECH POWER</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="会员尊享">
+            <div class="header">
+                <div class="kicker">MEMBERSHIP</div>
+                <h2 class="h2">Harmony Club：打造居家生活的专属权益</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>极速退换货</h3>
+                        <p>会员享有无理由免运费退换货特权，购物零负担。</p>
+                    </div>
+                    <div class="card">
+                        <h3>定制化订阅</h3>
+                        <p>针对周期性消耗品，提供灵活的订阅方案，享受更低折扣。</p>
+                    </div>
+                    <div class="card">
+                        <h3>美学沙龙</h3>
+                        <p>定期举办线下收纳课程与居家软装沙龙，提升生活品质。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>COMMUNITY</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="研发实力">
+            <div class="header">
+                <div class="kicker">R&D CAPACITY</div>
+                <h2 class="h2">科技护航：每一件产品背后的严谨</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span style="font-size: 11px; background: var(--primary); padding: 2px 8px; border-radius: 4px; color: #fff;">LAB TESTED</span>
+                        <h3>材料科学突破</h3>
+                        <p>我们与高校实验室合作研发的新型植物基纤维，已成功应用于全线纺织产品中。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>耐用性测试</h3>
+                            <p>模拟 10,000 次日常使用，确保产品持久耐用。</p>
+                        </div>
+                        <div class="card">
+                            <h3>成分透明化</h3>
+                            <p>拒绝隐藏成分，全线洗护产品 100% 透明标注。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>INNOVATION</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="组织文化">
+            <div class="header">
+                <div class="kicker">CULTURE</div>
+                <h2 class="h2">因为热爱生活，所以懂得生活</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>用户共创</h3>
+                        <p>每一款新产品的雏形，都来自于上千名真实用户的深度体验反馈。</p>
+                    </div>
+                    <div class="card">
+                        <h3>极致坦诚</h3>
+                        <p>我们鼓励团队直面产品缺陷，不断迭代优化。</p>
+                    </div>
+                    <div class="card">
+                        <h3>长期主义</h3>
+                        <p>不追求短期爆发，专注于为用户提供穿越周期的价值。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OUR TEAM</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="未来愿景">
+            <div class="header">
+                <div class="kicker">FUTURE VISION</div>
+                <h2 class="h2">连接千万家，温暖平凡事</h2>
+            </div>
+            <div class="content-area">
+                <div class="card center" style="border: none; background: transparent;">
+                    <div class="policy-box" style="font-size: 30px; text-align: center; max-width: 800px; padding: 60px;">
+                        "日用品不应只是沉默的物件。通过设计与科技，我们希望让每一个清晨与黄昏，都因为这些物件的存在而变得更加从容与优雅。"
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OUR VISION</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Stay<br>Simple</h1>
+                <p style="font-size: 24px; color: var(--primary); margin-top: 40px; font-weight: 800; letter-spacing: 10px;">HARMONY IN EVERY DETAIL</p>
+                <div style="margin-top: 60px;">
+                    <button style="padding: 20px 60px; background: var(--primary); color: #fff; border: none; font-weight: 900; cursor: pointer; border-radius: 60px; box-shadow: 0 15px 30px rgba(168, 213, 186, 0.4); text-transform: uppercase; letter-spacing: 2px;">JOIN THE COMMUNITY</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MUJI-LIFE SOLUTIONS // 2026</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Confetti/Dots) ---
+            const canvas = document.getElementById('home-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let dots = [];
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                class Dot {
+                    constructor() { this.init(); }
+                    init() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = -10;
+                        this.size = Math.random() * 8 + 4;
+                        this.color = ['#a8d5ba', '#fff3c7', '#f87171', '#cbd5e1'][Math.floor(Math.random() * 4)];
+                        this.speedY = Math.random() * 1.5 + 0.5;
+                        this.angle = Math.random() * Math.PI * 2;
+                        this.spin = Math.random() * 0.1 - 0.05;
+                    }
+                    update() {
+                        this.y += this.speedY;
+                        this.angle += this.spin;
+                        if (this.y > canvas.height) this.init();
+                    }
+                    draw() {
+                        ctx.save();
+                        ctx.translate(this.x, this.y);
+                        ctx.rotate(this.angle);
+                        ctx.fillStyle = this.color;
+                        ctx.globalAlpha = 0.4;
+                        ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                        ctx.restore();
+                    }
+                }
+                for (let i = 0; i < 40; i++) dots.push(new Dot());
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    dots.forEach(d => { d.update(); d.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2023', '2024', '2025', '2026'],
+                    datasets: [{
+                        label: 'Sales Revenue (M)',
+                        data: [150, 320, 580, 920],
+                        borderColor: '#a8d5ba',
+                        backgroundColor: 'rgba(168, 213, 186, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'pie',
+                data: {
+                    labels: ['洗护', '软装', '厨具', '其它'],
+                    datasets: [{
+                        data: [40, 25, 20, 15],
+                        backgroundColor: ['#a8d5ba', '#fff3c7', '#f87171', '#cbd5e1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['Gen Z', 'Millennial', 'Gen X', 'Boomer'],
+                    datasets: [{
+                        label: 'Loyalty Score',
+                        data: [85, 78, 65, 55],
+                        backgroundColor: '#a8d5ba',
+                        borderRadius: 12
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['原材料溯源系统', '柔性化生产线', '全自动立仓', '跨境物流中枢'],
+                    datasets: [
+                        { data: [0, 3, 6, 8], backgroundColor: 'transparent', stack: 's' },
+                        { data: [4, 5, 4, 3], backgroundColor: '#a8d5ba', stack: 's', borderRadius: 10 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["Graphify 搭建个人知识图谱", "graphify ~/notes --out ./graph"],
+  "forbiddenTextPatterns": ["Graphify\\s+搭建个人知识图谱", "graphify\\s+~/notes"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["gd-ambient", "gd-orb", "gd-orb-1", "gd-orb-2", "gd-orb-3"],
   "decorativeOnlyClasses": [],

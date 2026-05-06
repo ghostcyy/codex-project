@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MODERN ZEN: THE ART OF WELLNESS</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-zen">
+    <!-- Zen Floating Particles Canvas -->
+    <canvas id="zen-canvas"></canvas>
+
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide" data-title="封面">
+            <div class="title-wrapper">
+                <span class="kicker">HAVE A MINDFUL MOMENT</span>
+                <h1 class="h1">MODERN<br>ZEN</h1>
+                <p style="font-size: 20px; color: var(--secondary); margin-top: 40px; letter-spacing: 5px; font-weight: 600;">身心平衡的艺术 // 2026 康养生活白皮书</p>
+                <div style="margin-top: 50px; width: 60px; height: 1px; background: var(--primary); display: inline-block;"></div>
+            </div>
+            <div class="footer">
+                <span>HOLISTIC WELLNESS // v1.8 // [PEACE]</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 核心哲学 -->
+        <section class="slide" data-title="背景">
+            <div class="header">
+                <span class="kicker">THE PHILOSOPHY</span>
+                <h2 class="h2">在快节奏世界中<strong>寻找内在平衡</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>极简与专注</h3>
+                        <p>现代禅宗并非逃离现实，而是在纷杂中建立一个静谧的内核。通过减少不必要的外部干扰，我们将注意力重新导向呼吸与当下，从而激发最深层的创造力与自愈能力。</p>
+                        <div style="margin-top: 20px; font-style: italic; color: var(--primary); font-weight: 600;">“少即是多，慢即是快。”</div>
+                    </div>
+                    <div class="img-wrap">
+                        <img src="img/photo-1544367567-0f2fcb009e0b.jpg" alt="Yoga">
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MIND_BODY_BALANCE // 2026</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 身心连接 (2栏) -->
+        <section class="slide" data-title="身心连接">
+            <div class="header">
+                <span class="kicker">CONNECTION</span>
+                <h2 class="h2">身心互动的<strong>科学基石</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>心理清晰度</h3>
+                        <p>通过冥想降低皮质醇水平，提升大脑前额叶皮层的厚度。这种结构性的改变能显著增强情绪调节能力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>生理活力</h3>
+                        <p>身体是意识的殿堂。健康的神经系统依赖于高质量的睡眠、有规律的律动以及自然的饮食结构。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SCIENCE_OF_ZEN // 2026</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 音频播放器 -->
+        <section class="slide" data-title="声频疗愈">
+            <div class="header">
+                <span class="kicker">SOUND HEALING</span>
+                <h2 class="h2">528Hz <strong>DNA 修复频率音频</strong></h2>
+            </div>
+            <div class="content-area" style="justify-content: center;">
+                <div class="media-box" style="max-width: 800px; margin: 0 auto; width: 100%;">
+                    <h3 style="text-align: center; margin-bottom: 30px;">DEEP_RELAXATION_TRACK.MP3</h3>
+                    <div style="display: flex; align-items: center; gap: 40px;">
+                        <div class="play-btn">▶</div>
+                        <div style="flex: 1; height: 4px; background: #eee; border-radius: 2px; position: relative;">
+                            <div style="position: absolute; left: 0; top: 0; height: 100%; width: 35%; background: var(--primary); border-radius: 2px;"></div>
+                            <div style="position: absolute; left: 35%; top: -8px; width: 20px; height: 20px; background: #fff; border: 2px solid var(--primary); border-radius: 50%;"></div>
+                        </div>
+                        <div style="font-weight: 600; color: var(--secondary);">04:20</div>
+                    </div>
+                    <p style="text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 14px;">“闭上眼睛，感受声音在每一个细胞间的共振。”</p>
+                </div>
+            </div>
+            <div class="footer">
+                <span>AUDITORY_THERAPY // 2026</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 康养支柱 (3栏) -->
+        <section class="slide" data-title="康养支柱">
+            <div class="header">
+                <span class="kicker">PILLARS</span>
+                <h2 class="h2">全面康养的<strong>三位一体矩阵</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>原生膳食</h3>
+                        <p>回归自然的饮食方式。强调季节性、有机性与抗炎性食物的摄入。</p>
+                    </div>
+                    <div class="card">
+                        <h3>意识律动</h3>
+                        <p>不仅仅是锻炼，更是觉察。如瑜伽、太极等强调呼吸与动作合一的运动。</p>
+                    </div>
+                    <div class="card">
+                        <h3>正念生活</h3>
+                        <p>在日常琐事中保持警觉。无论是行走还是饮茶，皆可成为禅修的契机。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>HOLISTIC_MATRIX // 2026</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 市场增长折线图 -->
+        <section class="slide" data-title="市场趋势">
+            <div class="header">
+                <span class="kicker">ECONOMICS</span>
+                <h2 class="h2">全球<strong>康养经济规模预测</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div style="height: 300px;">
+                            <canvas id="marketLineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>庞大的需求缺口</h3>
+                        <p>随着大众对心理健康的重视程度达到历史新高，康养产业已超越单纯的旅游范畴，成为一种全球性的生活方式投资。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GROWTH_STATS // 2026</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 冥想技巧 (4栏) -->
+        <section class="slide" data-title="冥想技巧">
+            <div class="header">
+                <span class="kicker">TECHNIQUES</span>
+                <h2 class="h2">四种<strong>入门级正念练习</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>呼吸观察</h3>
+                        <p>将注意力锁定在鼻尖的进出气感，作为锚点回归当下。</p>
+                    </div>
+                    <div class="card">
+                        <h3>慈悲冥想</h3>
+                        <p>通过正向意念的引导，化解内心冲突，提升社交同理心。</p>
+                    </div>
+                    <div class="card">
+                        <h3>身体扫描</h3>
+                        <p>逐一察觉身体各部位的细微感受，释放累积的紧张压力。</p>
+                    </div>
+                    <div class="card">
+                        <h3>动态行走</h3>
+                        <p>在行走中感受足底与大地的连接，实现动中求静。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MINDFUL_PRACTICE // 2026</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 视频播放器 (左2/3 视频，右1/3 文字) -->
+        <section class="slide" data-title="瑜伽展示">
+            <div class="header">
+                <span class="kicker">VISUAL ZEN</span>
+                <h2 class="h2">晨间<strong>流瑜伽序列演示</strong></h2>
+            </div>
+            <div class="content-area">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; height: 100%;">
+                    <div class="img-wrap" style="display: flex; align-items: center; justify-content: center; background: #fdfaf6;">
+                        <div class="play-btn" style="transform: scale(1.5);">▶</div>
+                    </div>
+                    <div class="card">
+                        <h3>律动中的平衡</h3>
+                        <p>这一序列通过流畅的体式切换，重点激活核心力量并深度拉伸脊柱。建议在日出时分，配合深长的腹式呼吸练习。</p>
+                        <div style="margin-top: auto; padding: 20px; background: var(--bg); border-radius: 12px; font-size: 14px; border: 1px solid var(--border);">
+                            LEVEL: INTERMEDIATE<br>DURATION: 15 MIN
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>YOGA_SEQUENCE // 2026</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 极简空间图片 -->
+        <section class="slide" data-title="环境设计">
+            <div class="header">
+                <span class="kicker">ENVIRONMENT</span>
+                <h2 class="h2">构建<strong>疗愈性家居空间</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="img-wrap">
+                    <img src="img/photo-1494438639946-1ebd1d20bf85.jpg" alt="Zen Space">
+                    <div style="position: absolute; bottom: 40px; right: 40px; background: rgba(255,255,255,0.9); padding: 30px; border-radius: 20px; max-width: 450px; backdrop-filter: blur(20px); border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--secondary); margin-bottom: 12px; font-family: var(--font-header);">光影的治愈</h3>
+                        <p style="margin: 0; font-size: 15px; color: var(--text-main); line-height: 1.6;">自然光的引入与极简的线条能有效降低大脑的视觉过载。选择大地色系作为主调，能营造出极致的安全感与呼吸感。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SPATIAL_DESIGN // 2026</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 营养炼金 (3栏) -->
+        <section class="slide" data-title="营养炼金">
+            <div class="header">
+                <span class="kicker">ALCHEMY</span>
+                <h2 class="h2">从食物中<strong>汲取生命的频率</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>生机饮食</h3>
+                        <p>保留食物中天然的酶与活性营养。最大程度减少过度加工带来的能量损失。</p>
+                    </div>
+                    <div class="card">
+                        <h3>草本疗愈</h3>
+                        <p>利用传统药用植物的根茎叶，调配具有舒缓或提神功能的草本茶饮。</p>
+                    </div>
+                    <div class="card">
+                        <h3>超级能量球</h3>
+                        <p>结合坚果、奇亚籽与生可可。提供持续平稳的血糖供应与大脑补给。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>NUTRITIONAL_ZEN // 2026</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 能量占比饼图 -->
+        <section class="slide" data-title="能量分布">
+            <div class="header">
+                <span class="kicker">ENERGY_FLOW</span>
+                <h2 class="h2">每日<strong>生理能量消耗占比</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="chart-wrapper" style="height: 350px;">
+                        <canvas id="energyPieChart"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>优化你的能量资产</h3>
+                        <p>过度关注体力消耗，而忽略了情绪与认知层面的高额负荷。通过正念干预，我们可以大幅减少无效的“情绪内耗”。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ENERGY_OPTIMIZATION // 2026</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 森林沐浴图片 -->
+        <section class="slide" data-title="自然疗法">
+            <div class="header">
+                <span class="kicker">SHINRIN-YOKU</span>
+                <h2 class="h2">森林沐浴：<strong>回归原始链接</strong></h2>
+            </div>
+            <div class="content-area">
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; height: 100%;">
+                    <div class="img-wrap">
+                        <img src="img/photo-1441974231531-c6227db76b6e.jpg" alt="Forest">
+                        <div style="position: absolute; top: 30px; left: 30px; background: var(--accent); color: #4a4a4a; padding: 10px 20px; font-weight: 700; border-radius: 99px;">
+                            [ PHYTONCIDE_LEVEL: OPTIMAL ]
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>芬多精的力量</h3>
+                        <p>研究表明，在森林中漫步两小时，人体内的天然杀伤细胞（NK细胞）活性会提升 50% 以上。这种效果在离开森林后仍能持续一周。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>NATURE_THERAPY // 2026</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 数字排毒 (4栏) -->
+        <section class="slide" data-title="数字排毒">
+            <div class="header">
+                <span class="kicker">DIGITAL_DETOX</span>
+                <h2 class="h2">建立<strong>健康的数字化边界</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>无屏禁区</h3>
+                        <p>在卧室或餐厅设立手机禁令。夺回深度交流的时间。</p>
+                    </div>
+                    <div class="card">
+                        <h3>离线爱好</h3>
+                        <p>重拾纸质阅读、手工或园艺。训练大脑的耐力与触觉感知。</p>
+                    </div>
+                    <div class="card">
+                        <h3>大自然沉浸</h3>
+                        <p>每周至少 2 小时完全暴露于非人造环境中。重启神经系统。</p>
+                    </div>
+                    <div class="card">
+                        <h3>静默修习</h3>
+                        <p>定期体验 24 小时禁言。在沉默中觉察内心的噪音。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DETOX_PROTOCOL // 2026</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 压力指标柱状图 -->
+        <section class="slide" data-title="压力缓解">
+            <div class="header">
+                <span class="kicker">IMPACT_STUDY</span>
+                <h2 class="h2">冥想对<strong>工作压力的缓解效果</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="chart-wrapper" style="height: 350px;">
+                        <canvas id="stressBarChart"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>可量化的平静</h3>
+                        <p>数据显示，持续 8 周的正念训练能显著降低皮质醇水平，并提升员工的主观幸福感。这不仅是个人修养，更是企业效能的保障。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STRESS_METRICS // 2026</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 路线图甘特图 (模拟) -->
+        <section class="slide" data-title="转化计划">
+            <div class="header">
+                <span class="kicker">TRANSFORMATION</span>
+                <h2 class="h2">12 周<strong>全维身心转化方案</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="card" style="flex:1;">
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="transGanttChart"></canvas>
+                    </div>
+                    <div style="display:flex; justify-content: space-around; margin-top:20px; font-weight: 700; color: var(--primary);">
+                        <span>W1-3 DETOX</span>
+                        <span>W4-6 BUILD</span>
+                        <span>W7-9 DEEPEN</span>
+                        <span>W10-12 INTEGRATE</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ANNUAL_PATHWAY // 2026</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 感官设计 (5栏) -->
+        <section class="slide" data-title="感官设计">
+            <div class="header">
+                <span class="kicker">SYSTEM_ARCHITECTURE</span>
+                <h2 class="h2">五感<strong>协同的疗愈美学</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card" style="padding:15px;">
+                        <h3>芳香疗法</h3>
+                        <p style="font-size:12px;">利用植物精油调节边缘系统。</p>
+                    </div>
+                    <div class="card" style="padding:15px;">
+                        <h3>漫射灯光</h3>
+                        <p style="font-size:12px;">模拟黄昏光影以稳定生理节律。</p>
+                    </div>
+                    <div class="card" style="padding:15px;">
+                        <h3>白噪音环境</h3>
+                        <p style="font-size:12px;">粉红噪音掩蔽城市高频干扰。</p>
+                    </div>
+                    <div class="card" style="padding:15px;">
+                        <h3>触感织物</h3>
+                        <p style="font-size:12px;">天然麻棉材料增强安全感知。</p>
+                    </div>
+                    <div class="card" style="padding:15px; border-color:var(--primary);">
+                        <h3>空间留白</h3>
+                        <p style="font-size:12px;">为意识提供呼吸与流转的余地。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SENSORY_ARCHITECTURE // 2026</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 持续康养 (3栏) -->
+        <section class="slide" data-title="持续康养">
+            <div class="header">
+                <span class="kicker">SUSTAINABILITY</span>
+                <h2 class="h2">可持续<strong>康养的未来伦理</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>纯净美妆</h3>
+                        <p>剔除所有潜在干扰内分泌的化学添加。选择纯植物萃取的皮肤养护。</p>
+                    </div>
+                    <div class="card">
+                        <h3>生态避世所</h3>
+                        <p>建筑与自然环境和谐共生。通过低碳设计减少对生态的影响。</p>
+                    </div>
+                    <div class="card">
+                        <h3>零废弃生活</h3>
+                        <p>将极简主义延伸至消费观。只选择高品质且环境友好的长效产品。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ETHICAL_WELLNESS // 2026</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 蓝区研究 (2栏) -->
+        <section class="slide" data-title="蓝区研究">
+            <div class="header">
+                <span class="kicker">KINETIC_OVERLAP</span>
+                <h2 class="h2">解密<strong>全球长寿蓝区的秘密</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-overlap-diag">
+                    <div class="card">
+                        <h3>日本 · 冲绳</h3>
+                        <p>“Ikigai”的力量。强烈的生存意义感与紧密的社群连接，是长寿的核心基因。</p>
+                    </div>
+                    <div class="card">
+                        <h3>意大利 · 撒丁岛</h3>
+                        <p>高海拔徒步与地中海饮食。自然的运动量与健康的脂肪比例构建了强大的心血管系统。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>BLUE_ZONES_INTEL // 2026</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 禅意花园图片 -->
+        <section class="slide" data-title="最后瞬间">
+            <div class="header">
+                <span class="kicker">ENDLESS_ZEN</span>
+                <h2 class="h2">在<strong>流沙中见证永恒</strong></h2>
+            </div>
+            <div class="content-area">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 30px; height: 100%;">
+                    <div class="card">
+                        <h3>动态的沉思</h3>
+                        <p>耙制流沙不仅是美学实践，更是一种将意识带入身体动作的训练。每一道纹路都代表着当下的全然专注。</p>
+                    </div>
+                    <div class="img-wrap">
+                        <img src="img/photo-1545641203-7d072a14e3b2.jpg" alt="Zen Garden">
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--bg), transparent);"></div>
+                        <div style="position: absolute; bottom: 30px; left: 40px; right: 40px;">
+                            <p style="font-size: 32px; font-family: var(--font-header); font-weight: 700; color: var(--secondary);">NAMASTE.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ZEN_FINAL // 2026</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide" data-title="结束">
+            <div class="title-wrapper">
+                <h1 class="h1">MINDFUL<br>JOURNEY</h1>
+                <p style="font-size: 20px; color: var(--secondary); margin-top: 40px; letter-spacing: 5px;">愿你在当下找到永恒的平衡</p>
+                <div style="margin-top: 60px;">
+                    <div style="display: inline-block; padding: 15px 40px; border: 2px solid var(--primary); border-radius: 99px; font-family: var(--font-header); font-weight: 700; color: var(--primary); cursor: pointer;">
+                        CONNECT@WELLNESS.ZEN
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>HOLISTIC WELLNESS // v1.8 // [PEACE]</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Floating Petals Script
+            const canvas = document.getElementById('zen-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const petals = [];
+            const petalCount = 40;
+
+            class Petal {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = -10;
+                    this.size = Math.random() * 8 + 5;
+                    this.speedY = Math.random() * 1 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 1;
+                    this.angle = Math.random() * Math.PI * 2;
+                    this.spin = Math.random() * 0.02 - 0.01;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    this.angle += this.spin;
+                    if (this.y > canvas.height) this.reset();
+                }
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 163, 115, ${this.opacity})`;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            for (let i = 0; i < petalCount; i++) petals.push(new Petal());
+
+            function animateZen() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                petals.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateZen);
+            }
+            animateZen();
+
+            // Charts
+            Chart.defaults.color = '#a98467';
+            Chart.defaults.font.family = "'Outfit', sans-serif";
+
+            // 06 市场增长
+            const ctxMarket = document.getElementById('marketLineChart');
+            if (ctxMarket) {
+                new Chart(ctxMarket, {
+                    type: 'line',
+                    data: {
+                        labels: ['2022', '2023', '2024', '2025', '2026'],
+                        datasets: [{
+                            label: 'Market Value (Trillion USD)',
+                            data: [4.4, 4.8, 5.2, 5.9, 6.7],
+                            borderColor: '#d4a373',
+                            backgroundColor: 'rgba(212, 163, 115, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 6,
+                            pointBackgroundColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { grid: { color: 'rgba(0,0,0,0.03)' } }, x: { grid: { color: 'rgba(0,0,0,0.03)' } } }
+                    }
+                });
+            }
+
+            // 11 能量分配
+            const ctxEnergy = document.getElementById('energyPieChart');
+            if (ctxEnergy) {
+                new Chart(ctxEnergy, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Physical', 'Emotional', 'Cognitive', 'Social'],
+                        datasets: [{
+                            data: [30, 40, 20, 10],
+                            backgroundColor: ['#d4a373', '#ccd5ae', '#a98467', '#fdfaf6'],
+                            borderWidth: 1,
+                            borderColor: '#eee'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            // 14 压力柱状图
+            const ctxStress = document.getElementById('stressBarChart');
+            if (ctxStress) {
+                new Chart(ctxStress, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Anxiety', 'Insomnia', 'Burnout', 'Focus'],
+                        datasets: [
+                            {
+                                label: 'Before Intervention',
+                                data: [75, 68, 82, 40],
+                                backgroundColor: '#fdfaf6',
+                                borderColor: '#d4a373',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'After 8 Weeks Zen',
+                                data: [32, 25, 38, 88],
+                                backgroundColor: '#ccd5ae'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { grid: { color: 'rgba(0,0,0,0.03)' } } }
+                    }
+                });
+            }
+
+            // 15 甘特图模拟
+            const ctxTrans = document.getElementById('transGanttChart');
+            if (ctxTrans) {
+                new Chart(ctxTrans, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Detox Phase', 'Habit Building', 'Deep Meditation', 'Daily Integration'],
+                        datasets: [
+                            {
+                                label: 'Start Offset',
+                                data: [0, 3, 6, 9],
+                                backgroundColor: 'transparent'
+                            },
+                            {
+                                label: 'Duration (Weeks)',
+                                data: [3, 4, 3, 3],
+                                backgroundColor: '#d4a373',
+                                borderRadius: 20
+                            }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { stacked: true, grid: { display: false } },
+                            y: { stacked: true, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

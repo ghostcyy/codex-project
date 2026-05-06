@@ -1,0 +1,92 @@
+{
+  "mode": "v1-v2-comparison",
+  "startedAt": "2026-04-30T00:00:00.000Z",
+  "finishedAt": "2026-04-30T00:01:00.000Z",
+  "durationMs": 60000,
+  "results": [
+    {
+      "name": "Fixture 01",
+      "expectedSlides": 6,
+      "comparison": {
+        "v2SlideCountExact": true,
+        "v2ForbiddenTextHits": 0,
+        "v2ContrastPassed": true,
+        "v2HardIssueCount": 0,
+        "v2ObstructionIssueCount": 0,
+        "v2GatePassed": true,
+        "v2GateIssues": []
+      },
+      "v2": {
+        "status": "completed",
+        "slideCount": 6,
+        "slideCountExact": true,
+        "previewAnalysis": {
+          "forbiddenTextHits": []
+        },
+        "manifestAnalysis": {
+          "contrastPassed": true
+        },
+        "verificationAnalysis": {
+          "hardIssueCount": 0,
+          "obstructionIssueCount": 0
+        }
+      }
+    },
+    {
+      "name": "Fixture 02",
+      "expectedSlides": 8,
+      "comparison": {
+        "v2SlideCountExact": true,
+        "v2ForbiddenTextHits": 0,
+        "v2ContrastPassed": true,
+        "v2HardIssueCount": 0,
+        "v2ObstructionIssueCount": 0,
+        "v2GatePassed": true,
+        "v2GateIssues": []
+      },
+      "v2": {
+        "status": "completed",
+        "slideCount": 8,
+        "slideCountExact": true,
+        "previewAnalysis": {
+          "forbiddenTextHits": []
+        },
+        "manifestAnalysis": {
+          "contrastPassed": true
+        },
+        "verificationAnalysis": {
+          "hardIssueCount": 0,
+          "obstructionIssueCount": 0
+        }
+      }
+    },
+    {
+      "name": "Fixture 03",
+      "expectedSlides": 10,
+      "comparison": {
+        "v2SlideCountExact": true,
+        "v2ForbiddenTextHits": 0,
+        "v2ContrastPassed": true,
+        "v2HardIssueCount": 0,
+        "v2ObstructionIssueCount": 0,
+        "v2GatePassed": true,
+        "v2GateIssues": []
+      },
+      "v2": {
+        "status": "completed",
+        "slideCount": 10,
+        "slideCountExact": true,
+        "previewAnalysis": {
+          "forbiddenTextHits": []
+        },
+        "manifestAnalysis": {
+          "contrastPassed": true
+        },
+        "verificationAnalysis": {
+          "hardIssueCount": 0,
+          "obstructionIssueCount": 0
+        }
+      }
+    }
+  ]
+}

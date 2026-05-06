@@ -1,0 +1,717 @@
+.tpl-industry {
+  --bg: #111111;
+  /* Deep industrial charcoal */
+  --surface: #1e1e1e;
+  /* Dashboard panel grey */
+  --primary: #ff6b00;
+  /* Safety Orange */
+  --secondary: #00e5ff;
+  /* Cyan for tech accents */
+  --text-main: #e0e0e0;
+  --text-muted: #888888;
+  --border: #333333;
+  --radius: 0px;
+  /* Industrial hard edges */
+  --font-sans: 'Roboto', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Carbon fiber / Grid subtle background */
+.tpl-industry .slide {
+  padding: 50px 70px;
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 4px solid var(--border);
+  /* Industrial outer frame */
+}
+
+.tpl-industry .slide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(45deg, var(--primary), var(--primary) 10px, #000 10px, #000 20px);
+  z-index: 10;
+}
+
+/* Cover Slide */
+.tpl-industry .slide.title-slide {
+  background:
+    linear-gradient(135deg, rgba(17, 17, 17, 0.92), rgba(17, 17, 17, 0.72)),
+    repeating-linear-gradient(45deg, rgba(255, 59, 48, 0.22) 0 8px, transparent 8px 24px) !important;
+  color: #ffffff;
+  border-color: var(--primary);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tpl-industry .slide.title-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 0;
+}
+
+.tpl-industry .slide.title-slide>* {
+  position: relative;
+  z-index: 1;
+}
+
+.tpl-industry .header {
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 12px;
+}
+
+.tpl-industry .kicker {
+  display: inline-block;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  background: rgba(255, 107, 0, 0.1);
+  padding: 4px 12px;
+  border-left: 3px solid var(--primary);
+}
+
+.tpl-industry .slide.title-slide .kicker {
+  border-left: none;
+  border: 1px solid var(--primary);
+  margin-bottom: 24px;
+}
+
+.tpl-industry .h1 {
+  font-family: var(--font-mono);
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
+}
+
+.tpl-industry .slide.title-slide .h1 {
+  font-size: 86px;
+  text-align: center;
+  margin: 20px 0;
+  color: #ffffff;
+  /* Warning Neon Glow Effect */
+  text-shadow: 0 0 10px rgba(255, 107, 0, 0.8), 0 0 20px rgba(255, 107, 0, 0.5), 0 0 40px rgba(255, 107, 0, 0.3);
+  animation: glitchText 4s infinite;
+}
+
+@keyframes glitchText {
+  0%, 100% { text-shadow: 0 0 10px rgba(255, 107, 0, 0.8), 0 0 20px rgba(255, 107, 0, 0.5); transform: translate(0); }
+  92% { text-shadow: 0 0 10px rgba(255, 107, 0, 0.8), 0 0 20px rgba(255, 107, 0, 0.5); transform: translate(0); }
+  94% { text-shadow: 4px 0 0 rgba(0, 229, 255, 0.8), -4px 0 0 rgba(255, 107, 0, 0.8); transform: translate(-2px, 1px); }
+  96% { text-shadow: -4px 0 0 rgba(0, 229, 255, 0.8), 4px 0 0 rgba(255, 107, 0, 0.8); transform: translate(2px, -1px); }
+  98% { text-shadow: 0 0 10px rgba(255, 107, 0, 0.8), 0 0 20px rgba(255, 107, 0, 0.5); transform: translate(0); }
+}
+
+.tpl-industry .h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.tpl-industry .h2 strong {
+  color: var(--primary);
+}
+
+/* Content Area filling */
+.tpl-industry .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.tpl-industry .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+}
+
+.tpl-industry .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  flex: 1;
+}
+
+.tpl-industry .grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  flex: 1;
+}
+
+.tpl-industry .grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  flex: 1;
+}
+
+.tpl-industry .grid-layout-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  flex: 1;
+}
+
+/* Dashboard Panel Style Card */
+.tpl-industry .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid #444;
+  padding: 24px;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease;
+}
+
+/* Hover Effect: Dashboard Panel Activation */
+.tpl-industry .card:hover {
+  border-top-color: var(--primary);
+  background: #222222;
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.1);
+}
+
+/* Decorative panel screws */
+.tpl-industry .card::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #444;
+  box-shadow: 0 0 1px #000 inset;
+}
+
+.tpl-industry .card::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #444;
+  box-shadow: 0 0 1px #000 inset;
+}
+
+.tpl-industry .card-icon {
+  width: 44px;
+  height: 44px;
+  background: #111;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: var(--primary);
+  font-size: 20px;
+}
+
+.tpl-industry .card h3 {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tpl-industry .card p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tpl-industry .card ul {
+  padding-left: 20px;
+  margin: 12px 0 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tpl-industry .card ul li {
+  margin-bottom: 8px;
+}
+
+/* Monospace Data Displays (Dashboard) */
+.tpl-industry .data-readout {
+  font-family: var(--font-mono);
+  font-size: 32px;
+  color: var(--secondary);
+  background: #0a0a0a;
+  border: 1px solid #333;
+  padding: 12px;
+  text-align: right;
+  margin-bottom: 16px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 5px var(--secondary);
+}
+
+.tpl-industry .data-readout.warning {
+  color: var(--primary);
+  text-shadow: 0 0 5px var(--primary);
+}
+
+.tpl-industry .data-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Flowchart Arrow Steps */
+.tpl-industry .flow-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.tpl-industry .flow-step {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Arrow pointing right */
+.tpl-industry .flow-step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--primary);
+  z-index: 10;
+}
+
+.tpl-industry .flow-step h3 {
+  font-family: var(--font-mono);
+  color: var(--secondary);
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.tpl-industry .flow-step p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Image Placeholders */
+.tpl-industry .image-ph {
+  background: repeating-linear-gradient(45deg, #1e1e1e, #1e1e1e 10px, #252525 10px, #252525 20px);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  min-height: 180px;
+  width: 100%;
+}
+
+.tpl-industry .img-wrap {
+  width: 100%;
+  height: 160px;
+  margin-top: 15px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.tpl-industry .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tpl-industry .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 220px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  padding: 10px;
+  border: 1px solid var(--border);
+}
+
+.tpl-industry .slide[data-title="控制延迟对比"] .chart-card,
+.tpl-industry .slide[data-title="非计划停机分析"] .chart-card {
+  justify-content: center;
+}
+
+.tpl-industry .slide[data-title="控制延迟对比"] .chart-container,
+.tpl-industry .slide[data-title="非计划停机分析"] .chart-container {
+  flex: 0 1 min(56vh, 560px);
+  height: min(56vh, 560px);
+  max-height: min(56vh, 560px);
+  min-height: 0;
+}
+
+.tpl-industry .slide[data-title="控制延迟对比"] .chart-container canvas,
+.tpl-industry .slide[data-title="非计划停机分析"] .chart-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100%;
+}
+
+.tpl-industry .footer {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #555;
+  text-transform: uppercase;
+  border-top: 1px solid var(--border);
+}
+
+.tpl-industry .pill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border: 1px solid var(--secondary);
+  margin-bottom: 12px;
+}
+
+/* Data Table - Terminal Style */
+.tpl-industry .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+}
+
+.tpl-industry .data-table th {
+  background: #1e1e1e;
+  color: #fff;
+  font-weight: normal;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tpl-industry .data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e1e1e;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.tpl-industry .data-table tr:hover td {
+  background: #151515;
+  color: var(--secondary);
+}
+
+/* Glitch/Industrial entry animations */
+.tpl-industry .slide.is-active .header,
+.tpl-industry .slide.is-active .content-area>* {
+  animation: crtOn 0.5s ease-out both;
+}
+
+.tpl-industry .slide.is-active .header {
+  animation-delay: 0.1s;
+}
+
+.tpl-industry .slide.is-active .content-area>.card:nth-child(1),
+.tpl-industry .slide.is-active .content-area>.grid-2>.card:nth-child(1),
+.tpl-industry .slide.is-active .content-area>.grid-3>.card:nth-child(1),
+.tpl-industry .slide.is-active .content-area>.grid-4>.card:nth-child(1),
+.tpl-industry .slide.is-active .content-area>.grid-5>.card:nth-child(1),
+.tpl-industry .slide.is-active .flow-container>.flow-step:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.tpl-industry .slide.is-active .content-area>.card:nth-child(2),
+.tpl-industry .slide.is-active .content-area>.grid-2>.card:nth-child(2),
+.tpl-industry .slide.is-active .content-area>.grid-3>.card:nth-child(2),
+.tpl-industry .slide.is-active .content-area>.grid-4>.card:nth-child(2),
+.tpl-industry .slide.is-active .content-area>.grid-5>.card:nth-child(2),
+.tpl-industry .slide.is-active .flow-container>.flow-step:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.tpl-industry .slide.is-active .content-area>.card:nth-child(3),
+.tpl-industry .slide.is-active .content-area>.grid-3>.card:nth-child(3),
+.tpl-industry .slide.is-active .content-area>.grid-4>.card:nth-child(3),
+.tpl-industry .slide.is-active .content-area>.grid-5>.card:nth-child(3),
+.tpl-industry .slide.is-active .flow-container>.flow-step:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.tpl-industry .slide.is-active .content-area>.card:nth-child(4),
+.tpl-industry .slide.is-active .content-area>.grid-4>.card:nth-child(4),
+.tpl-industry .slide.is-active .content-area>.grid-5>.card:nth-child(4),
+.tpl-industry .slide.is-active .flow-container>.flow-step:nth-child(4) {
+  animation-delay: 0.5s;
+}
+
+.tpl-industry .slide.is-active .content-area>.card:nth-child(5),
+.tpl-industry .slide.is-active .content-area>.grid-5>.card:nth-child(5) {
+  animation-delay: 0.6s;
+}
+
+@keyframes crtOn {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.01) scaleX(0);
+    filter: brightness(3);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(0.01) scaleX(1);
+    filter: brightness(1.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scaleY(1) scaleX(1);
+    filter: brightness(1);
+  }
+}
+
+/* --- NEW DIVERSIFIED LAYOUTS --- */
+
+/* 1. Layout Sticky (Slide 9, 11, 17, 18) */
+.tpl-industry .layout-sticky {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 40px;
+}
+.tpl-industry .layout-sticky .card:nth-child(1) { rotate: -2deg; }
+.tpl-industry .layout-sticky .card:nth-child(2) { rotate: 2deg; translate: 0 15px; }
+.tpl-industry .layout-sticky .card:nth-child(3) { rotate: -1deg; translate: 0 -10px; }
+
+.tpl-industry .layout-sticky .card:hover {
+  rotate: 0deg;
+  transform: translateY(-8px) scale(1.03) !important;
+  border-top-color: var(--primary);
+  z-index: 100;
+  background: #222;
+}
+
+/* 2. Layout Zig-Zag (Slide 13) */
+.tpl-industry .layout-zigzag {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  flex: 1;
+  padding: 40px 0;
+}
+.tpl-industry .layout-zigzag .card:nth-child(odd) { translate: 0 20px; }
+.tpl-industry .layout-zigzag .card:nth-child(even) { translate: 0 -20px; }
+
+.tpl-industry .layout-zigzag .card:hover {
+  translate: 0 0 !important;
+  transform: translateY(-6px) scale(1.02) !important;
+  z-index: 100;
+  border-top-color: var(--secondary);
+}
+
+/* 3. Layout Staircase (Slide 11, 18) */
+.tpl-industry .layout-staircase {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  padding: 10px 0 10px 10%;
+}
+.tpl-industry .layout-staircase .card {
+  width: 75%;
+  padding: 15px 25px;
+  border-left: 4px solid var(--secondary);
+}
+.tpl-industry .layout-staircase .card h3 { margin-bottom: 5px; font-size: 20px; }
+.tpl-industry .layout-staircase .card .card-icon { font-size: 24px; margin-bottom: 5px; }
+.tpl-industry .layout-staircase .card p { font-size: 14px; line-height: 1.4; }
+.tpl-industry .layout-staircase .card:nth-child(1) { translate: 0 0; }
+.tpl-industry .layout-staircase .card:nth-child(2) { translate: 80px 0; border-left-color: var(--primary); }
+.tpl-industry .layout-staircase .card:nth-child(3) { translate: 160px 0; border-left-color: var(--secondary); }
+
+/* 4. Layout Quad (Slide 13) */
+.tpl-industry .layout-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-industry .layout-quad .card:nth-child(1) { translate: -15px -15px; border-color: var(--primary); }
+.tpl-industry .layout-quad .card:nth-child(2) { translate: 15px -15px; border-color: var(--secondary); }
+.tpl-industry .layout-quad .card:nth-child(3) { translate: -15px 15px; border-color: var(--primary); }
+.tpl-industry .layout-quad .card:nth-child(4) { translate: 15px 15px; border-color: var(--secondary); }
+
+.tpl-industry .layout-quad .card:hover {
+  translate: 0 0 !important;
+  transform: scale(1.03) !important;
+  z-index: 100;
+  box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
+}
+
+
+/* --- Diversity Layouts (v2) --- */
+.tpl-industry .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-industry .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-industry .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-industry .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-industry .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-industry .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--surface);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-industry .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 0;
+}
+.tpl-industry .layout-split-v2 .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+.tpl-industry .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  margin-right: -10%;
+  z-index: 2;
+}
+.tpl-industry .layout-split-v2 .card:nth-child(2) {
+  background: var(--primary);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  color: #fff;
+  z-index: 1;
+  padding-left: 120px;
+}
+.tpl-industry .layout-split-v2 .card:hover { transform: scale(1.02); z-index: 10; }
+
+.tpl-industry .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-industry .layout-overlap-diag .card {
+  position: absolute;
+  width: 45%;
+  height: 60%;
+  padding: 40px;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-industry .layout-overlap-diag .card:nth-child(1) {
+  top: 10%; left: 10%;
+  background: var(--surface);
+  border: 4px solid var(--primary);
+  z-index: 1;
+}
+.tpl-industry .layout-overlap-diag .card:nth-child(2) {
+  bottom: 10%; right: 10%;
+  background: var(--bg);
+  border: 2px solid var(--secondary);
+  z-index: 2;
+  box-shadow: -20px -20px 0 rgba(0,0,0,0.2);
+}
+.tpl-industry .layout-overlap-diag .card:hover {
+  transform: translate(-10px, -10px);
+  z-index: 100;
+  box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+}

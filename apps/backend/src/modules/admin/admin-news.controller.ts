@@ -12,10 +12,12 @@ import {
 } from "@nestjs/common";
 import { CurrentUser } from "../../common/auth/current-user.decorator";
 import { RequirePermissions } from "../../common/auth/permissions.decorator";
+import { RequireRoles } from "../../common/auth/roles.decorator";
 import type { AuthenticatedUser } from "../auth/auth.types";
 import { NewsService } from "../news/news.service";
 
 @Controller("admin/news")
+@RequireRoles("ADMIN")
 export class AdminNewsController {
   constructor(@Inject(NewsService) private readonly newsService: NewsService) {}
 

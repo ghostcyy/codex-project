@@ -1,0 +1,82 @@
+{
+  "id": "tech-sharing",
+  "label": {
+    "zh-CN": "技术分享",
+    "en": "Tech Sharing"
+  },
+  "description": {
+    "zh-CN": "适合工程团队、架构拆解和技术原理讲解的清晰结构模板。",
+    "en": "A clear structured template for engineering talks, architecture breakdowns, and technical explainers."
+  },
+  "donorTemplateId": "tech-sharing",
+  "deckClass": "tpl-tech-sharing",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "engineering-whiteprint",
+  "themeAlternates": [
+    "knowledge-blueprint",
+    "graphify-dark",
+    "terminal-cyber"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "bullet-list",
+      "process",
+      "chart",
+      "timeline",
+      "comparison"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "engineers",
+    "researchers",
+    "students"
+  ],
+  "formatFit": [
+    "lecture",
+    "tutorial",
+    "briefing",
+    "analysis"
+  ],
+  "toneFit": [
+    "rigorous",
+    "tutorial",
+    "analytical"
+  ],
+  "defaultDensity": "dense",
+  "defaultSlideCount": 12,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "grid-lines",
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 2
+  },
+  "embeddingPrompt": "Technical sharing, engineering architecture, code system, AI infrastructure, cloud, developer education.",
+  "promptSignals": [
+    "技术",
+    "架构",
+    "工程",
+    "代码",
+    "AI",
+    "云服务器",
+    "developer",
+    "architecture",
+    "technical",
+    "system design"
+  ],
+  "forbidPromptSignals": [
+    "小红书",
+    "生活方式"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

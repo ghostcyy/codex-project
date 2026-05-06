@@ -1,0 +1,80 @@
+{
+  "id": "course-module",
+  "label": {
+    "zh-CN": "课程模块",
+    "en": "Course Module"
+  },
+  "description": {
+    "zh-CN": "适合课程、教学、知识拆解和培训材料的循序渐进模板。",
+    "en": "A step-by-step template for courses, teaching, knowledge modules, and training material."
+  },
+  "donorTemplateId": "course-module",
+  "deckClass": "tpl-course-module",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "japanese-minimal",
+  "themeAlternates": [
+    "engineering-whiteprint",
+    "xhs-pastel",
+    "editorial-serif"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "bullet-list",
+      "process",
+      "two-column",
+      "quote"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "students",
+    "general-public",
+    "engineers"
+  ],
+  "formatFit": [
+    "lecture",
+    "tutorial",
+    "briefing"
+  ],
+  "toneFit": [
+    "tutorial",
+    "friendly",
+    "rigorous"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 10,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "rise-in",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 2
+  },
+  "embeddingPrompt": "Course module, teaching deck, training lesson, structured learning, concepts, exercises, summary.",
+  "promptSignals": [
+    "课程",
+    "教学",
+    "培训",
+    "教程",
+    "知识点",
+    "lesson",
+    "course",
+    "training",
+    "tutorial",
+    "learning"
+  ],
+  "forbidPromptSignals": [
+    "融资",
+    "投融资"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

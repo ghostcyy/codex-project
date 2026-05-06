@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Academic Lecture</title>
+<link rel="stylesheet" href="assets/fonts.css"><link rel="stylesheet" href="assets/base.css"><link rel="stylesheet" href="style.css">
+</head>
+<body class="tpl-academic-lecture"><div class="deck">
+
+<section class="slide title-slide" data-title="01 Title">
+  <h1>The Impact of Deep Learning on Computational Linguistics</h1>
+  <div class="author">Dr. Jane Smith<br>Department of Computer Science<br>University of Technology</div>
+</section>
+
+<section class="slide" data-title="02 Outline">
+  <div class="header"><h2>Lecture Outline</h2></div>
+  <div class="content">
+    <ul>
+      <li>1. Introduction to Computational Linguistics</li>
+      <li>2. Historical Background and Pre-Deep Learning Methods</li>
+      <li>3. Literature Review</li>
+      <li>4. Methodology: Transformer Architectures</li>
+      <li>5. Data Collection and Preprocessing</li>
+      <li>6. Experimental Setup</li>
+      <li>7. Results and Analysis</li>
+      <li>8. Discussion and Limitations</li>
+      <li>9. Future Directions</li>
+      <li>10. Conclusion</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Outline</span><span class="slide-number" data-current="2" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="03 Introduction">
+  <div class="header"><h2>1. Introduction</h2></div>
+  <div class="content">
+    <p>Computational linguistics is an interdisciplinary field concerned with the statistical or rule-based modeling of natural language from a computational perspective.</p>
+    <p><strong>Key Questions:</strong></p>
+    <ul>
+      <li>How can computers process and understand human language?</li>
+      <li>What are the limitations of traditional rule-based systems?</li>
+      <li>How has the paradigm shifted with the advent of neural networks?</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Introduction</span><span class="slide-number" data-current="3" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="04 Background">
+  <div class="header"><h2>2. Historical Background</h2></div>
+  <div class="content">
+    <div class="grid-2">
+      <div class="box">
+        <h4>Rule-Based Systems (1950s-1980s)</h4>
+        <p>Relied heavily on hand-crafted grammar rules. Brittle and unable to scale to broad coverage of natural language.</p>
+      </div>
+      <div class="box">
+        <h4>Statistical NLP (1990s-2010s)</h4>
+        <p>Utilized probabilistic models (e.g., Hidden Markov Models). Better generalization but limited by feature engineering.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>Background</span><span class="slide-number" data-current="4" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="05 Lit Review 1">
+  <div class="header"><h2>3. Literature Review: Early Neural Nets</h2></div>
+  <div class="content">
+    <ul>
+      <li><strong>Bengio et al. (2003):</strong> A Neural Probabilistic Language Model. Introduced distributed representations for words (word embeddings).</li>
+      <li><strong>Mikolov et al. (2013):</strong> Efficient Estimation of Word Representations in Vector Space (Word2Vec). Scaled up embedding generation.</li>
+      <li><strong>Sutskever et al. (2014):</strong> Sequence to Sequence Learning with Neural Networks. Established the encoder-decoder architecture for translation.</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Lit Review</span><span class="slide-number" data-current="5" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="06 Lit Review 2">
+  <div class="header"><h2>3. Literature Review: The Transformer Era</h2></div>
+  <div class="content">
+    <ul>
+      <li><strong>Vaswani et al. (2017):</strong> Attention Is All You Need. Replaced recurrent layers with self-attention mechanisms.</li>
+      <li><strong>Devlin et al. (2018):</strong> BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding.</li>
+      <li><strong>Brown et al. (2020):</strong> Language Models are Few-Shot Learners (GPT-3). Demonstrated the power of massive scaling.</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Lit Review</span><span class="slide-number" data-current="6" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="07 Methodology">
+  <div class="header"><h2>4. Methodology</h2></div>
+  <div class="content">
+    <p>Our research focuses on fine-tuning pre-trained transformer models for low-resource languages.</p>
+    <div class="box" style="margin-top:20px;">
+      <h4>The Approach</h4>
+      <ol>
+        <li>Select a multilingual base model (e.g., mBERT, XLM-R).</li>
+        <li>Compile a domain-specific corpus in the target language.</li>
+        <li>Apply continued pre-training using Masked Language Modeling (MLM).</li>
+        <li>Fine-tune on downstream tasks (NER, Sentiment Analysis).</li>
+      </ol>
+    </div>
+  </div>
+  <div class="footer"><span>Methodology</span><span class="slide-number" data-current="7" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="08 Data">
+  <div class="header"><h2>5. Data Collection</h2></div>
+  <div class="content">
+    <p>Data is the bottleneck for low-resource NLP. We utilized several strategies:</p>
+    <ul>
+      <li><strong>Web Scraping:</strong> Automated crawlers targeting local news websites and forums.</li>
+      <li><strong>Crowdsourcing:</strong> Engaging native speakers for annotation and validation tasks.</li>
+      <li><strong>Synthetic Data:</strong> Utilizing high-resource language models to generate parallel corpora via translation, followed by human filtering.</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Data Collection</span><span class="slide-number" data-current="8" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="09 Experiment">
+  <div class="header"><h2>6. Experimental Setup</h2></div>
+  <div class="content">
+    <div class="grid-2">
+      <div>
+        <strong>Hardware Configuration:</strong>
+        <ul>
+          <li>4x NVIDIA A100 GPUs</li>
+          <li>512GB System RAM</li>
+        </ul>
+        <br>
+        <strong>Software Stack:</strong>
+        <ul>
+          <li>PyTorch 2.0</li>
+          <li>HuggingFace Transformers</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Hyperparameters:</strong>
+        <ul>
+          <li>Batch size: 32</li>
+          <li>Learning rate: 2e-5</li>
+          <li>Epochs: 10 (early stopping applied)</li>
+          <li>Optimizer: AdamW</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>Experiment Setup</span><span class="slide-number" data-current="9" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="10 Results 1">
+  <div class="header"><h2>7. Results: Named Entity Recognition</h2></div>
+  <div class="content">
+    <p>Evaluation using standard CoNLL-2003 metrics (Macro F1-Score).</p>
+    <table style="width:100%; border-collapse:collapse; margin-top:20px; text-align:left;">
+      <tr style="border-bottom:2px solid var(--border);"><th>Model</th><th>Precision</th><th>Recall</th><th>F1-Score</th></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td>Baseline (BiLSTM-CRF)</td><td>68.4</td><td>65.2</td><td>66.8</td></tr>
+      <tr style="border-bottom:1px solid var(--border);"><td>mBERT (Zero-shot)</td><td>72.1</td><td>70.5</td><td>71.3</td></tr>
+      <tr style="border-bottom:1px solid var(--border);font-weight:bold;color:var(--primary);"><td>Our Model (Fine-tuned)</td><td>84.5</td><td>86.1</td><td>85.3</td></tr>
+    </table>
+  </div>
+  <div class="footer"><span>Results</span><span class="slide-number" data-current="10" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="11 Results 2">
+  <div class="header"><h2>7. Results: Sentiment Analysis</h2></div>
+  <div class="content">
+    <p>Accuracy on a manually annotated dataset of 5,000 product reviews.</p>
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="box" style="text-align:center;">
+        <h4 style="font-size:36px; margin:0;">74.2%</h4>
+        <p>mBERT Baseline Accuracy</p>
+      </div>
+      <div class="box" style="text-align:center; border-color:var(--primary);">
+        <h4 style="font-size:36px; margin:0; color:var(--primary);">89.7%</h4>
+        <p>Our Model Accuracy</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>Results</span><span class="slide-number" data-current="11" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="12 Discussion">
+  <div class="header"><h2>8. Discussion</h2></div>
+  <div class="content">
+    <p>The significant performance gains demonstrate the efficacy of continued pre-training on domain-specific, low-resource corpora.</p>
+    <ul>
+      <li>Transfer learning mitigates the lack of massive annotated datasets.</li>
+      <li>However, the model still struggles with idiomatic expressions and code-switching, which are prevalent in the target language.</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Discussion</span><span class="slide-number" data-current="12" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="13 Limitations">
+  <div class="header"><h2>9. Limitations</h2></div>
+  <div class="content">
+    <ul>
+      <li><strong>Dataset Bias:</strong> Our web-scraped corpus heavily over-represents formal news text, potentially reducing performance on informal social media text.</li>
+      <li><strong>Computational Cost:</strong> Fine-tuning large language models requires significant GPU resources, making deployment difficult in resource-constrained environments.</li>
+      <li><strong>Evaluation Scope:</strong> The study is currently limited to two downstream tasks.</li>
+    </ul>
+  </div>
+  <div class="footer"><span>Limitations</span><span class="slide-number" data-current="13" data-total="15"></span></div>
+</section>
+
+<section class="slide" data-title="14 Future Work">
+  <div class="header"><h2>10. Future Directions</h2></div>
+  <div class="content">
+    <p>Subsequent research will focus on addressing current limitations:</p>
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="box">
+        <h4>Model Distillation</h4>
+        <p>Compressing the fine-tuned model to run efficiently on mobile devices or edge servers.</p>
+      </div>
+      <div class="box">
+        <h4>Multimodal Expansion</h4>
+        <p>Integrating acoustic and visual data to improve context understanding in spoken interactions.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>Future Work</span><span class="slide-number" data-current="14" data-total="15"></span></div>
+</section>
+
+<section class="slide title-slide" data-title="15 Conclusion">
+  <h1>Thank You</h1>
+  <div class="author" style="margin-top:40px;">Questions & Answers<br><span style="font-size:16px;">contact: jane.smith@university.edu</span></div>
+</section>
+
+</div>
+<script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+</body></html>

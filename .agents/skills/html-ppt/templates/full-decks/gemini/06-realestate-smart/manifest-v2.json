@@ -1,0 +1,2955 @@
+{
+  "schemaVersion": 2,
+  "id": "06-realestate-smart",
+  "deckClass": "tpl-realestate",
+  "label": {
+    "zh-CN": "模板 06-realestate-smart",
+    "en": "Template 06-realestate-smart"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "AI赋能的未来人居高端智慧地产解决方案"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "LUXURY INTELLIGENCE RESIDENCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "AURA INTELLIGENT SYSTEMS"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "重新定义豪宅标准 · 为塔尖圈层定制的生活哲学"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "定义您的传世之作"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div:nth-of-type(1) > div > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "预约专享样板间品鉴：VIP@AURA-SMART.COM"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "AURA INTELLIGENT SYSTEMS"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "将百年奢华底蕴，交予未来科技守护。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "高端地产的范式转移",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 77,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "传统豪宅面临的价值瓶颈"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INDUSTRY EVOLUTION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 01: MARKET TRENDS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "堆砌名贵建材的边际递减"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 156,
+          "maxChars": 312,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "进口大理石与奢华水晶灯已成为高端楼盘的标配。单纯依赖昂贵硬件的堆砌，已无法在同质化严重的高净值客户群中形成核心溢价壁垒。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "伪智能带来的碎片化体验"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 170,
+          "maxChars": 340,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "许多开发商采购了不同品牌的智能单品（窗帘、空调、门锁），导致业主需要打开 5 个不同的 App 才能控制房屋，体验极度割裂且繁琐。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "缺乏生命周期的成长性"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 136,
+          "maxChars": 272,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "传统精装房在交付的一刻即开始折旧变旧。缺乏底层计算中心和可升级架构，无法适应业主未来十年的生活方式变迁。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "什么是智慧大宅",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x1 + stat x4; pageType:sidebar, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x1 + stat x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-2",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-3",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-4",
+            "kind": "stat",
+            "subtype": "stat"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x2": 1,
+          "card": 2,
+          "stat": 8
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 87,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "会思考的房子：全屋智能 3.0"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "EXECUTIVE SUMMARY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 02: THE SOLUTION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "无感交互，主动服务"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Aura 智能家居系统并非让您用手机代替遥控器，而是通过隐形分布在墙体内的百余个毫米波雷达与环境传感器，让房屋拥有“视觉”与“触觉”。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 238,
+          "maxChars": 476,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "它能主动感知您的情绪、作息与偏好。当您深夜起夜时，地脚灯以 10% 的微光渐渐亮起；当检测到西晒阳光强烈时，自动下调百叶窗角度保护实木地板。真正的奢华，是看不见科技，却处处被科技照顾。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "秒"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "键"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "120+"
+        },
+        {
+          "slotId": "stat-number-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 11,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "0秒"
+        },
+        {
+          "slotId": "stat-number-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 11,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "1键"
+        },
+        {
+          "slotId": "stat-number-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "OTA"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "无感传感节点"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "全屋设备级联响应"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "极简中控中岛"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "云端持续进化"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 12,
+          "maxChars": 23,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "CORE CONCEPT"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "底层技术架构",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 75,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "稳定压倒一切：工业级底层架构"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 03: TECHNOLOGY & HARDWARE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "有线无线双擎"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "主干网络采用欧洲 KNX 工业级总线标准，确保灯光窗帘万无一失；外围拓展使用 Zigbee/蓝牙无线技术，兼顾稳定性与灵活性。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "边缘计算中枢"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 170,
+          "maxChars": 340,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "将 AI 计算能力下沉至弱电箱内的边缘主机。即使小区光缆被挖断，全屋的语音控制、自动化场景与安防依然可以 100% 本地离线运行。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "毫米波雷达"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 140,
+          "maxChars": 280,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "彻底淘汰红外感应(人在沙发静止会关灯). 毫米波可穿透玻璃，精准探测微小的呼吸与心跳，实现人车无感定位与跟随。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "银行级加密"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > p",
+          "tarChars": 128,
+          "maxChars": 256,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "所有的家庭影像视频流均在本地加密计算，不出户。外部黑客即使破解了局域网，也无法获取私密摄像头权限。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "高端大平层与别墅对网络断联“零容忍”。我们采用金融级分布式架构保障运行。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 9,
+          "maxChars": 17,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "KNX/PLC"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 9,
+          "maxChars": 17,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "EDGE AI"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "RADAR"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 9,
+          "maxChars": 18,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "SECURITY"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "一天生活场景",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 88,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "从晨曦到入眠的全场景沉浸体验"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "A DAY IN THE LIFE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 04: LIFESTYLE DESIGN"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "07:00 唤醒晨间曲"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 190,
+          "maxChars": 380,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "不再是刺耳的闹钟。遮光帘缓缓开启 30%，让自然光逐渐洒入。背景音响播放舒缓白噪音，地暖已将浴室地板提前加热至 26℃，咖啡机准时萃取第一杯美式。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "18:30尊崇归家礼"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "车辆驶入地库瞬间，电梯提前下行等候。指纹解锁推门，玄关灯光亮起，新风系统已将全屋二氧化碳降至最低，客厅自动切换为“晚间休闲”色温氛围。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "23:30 沉浸助眠境"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "系统侦测到主人躺下，全屋灯光缓缓熄灭，安防系统自动布防。睡眠监测雷达实时守护健康数据，适时微调空调风向，避免冷风直吹引发不适。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "房产溢价走势",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 83,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "科技加持下的核心资产升值曲线"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "MARKET PREMIUM"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 05: DEVELOPER ROI"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "智慧住宅的流动性溢价"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 166,
+          "maxChars": 332,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "根据莱坊 (Knight Frank) 最新的全球豪宅指数报告，买家愿意为配备了全屋深度智能的二手豪宅支付超过 15% 的溢价。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 14,
+          "maxChars": 28,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "智慧住宅 vs 传统豪宅 二手溢价走势 (%)"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 206,
+          "maxChars": 412,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "在当前低迷的房地产大周期中，前置化部署高科技系统的楼盘，其去化速度（开盘售罄率）和二手市场的抗跌能力，显著优于传统的奢华装修楼盘。科技正在成为豪宅的第一防线。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "DATA INSIGHTS"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "低碳与可持续",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 92,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "绿色建筑的隐形引擎：全域能耗优化"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SUSTAINABILITY & ESG"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 05: DEVELOPER ROI"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "主动式节能管理"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 184,
+          "maxChars": 368,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "高端住宅面积通常超过 300 平米，中央空调与新风设备的常开造成了巨大的能源浪费。系统通过热成像与门窗传感器，精确判断每个房间的实际使用状态。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 218,
+          "maxChars": 436,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "当房间无人超过 15 分钟，系统自动将空调温度调高 2 度或进入休眠；当感应到外窗开启时，立即切断对应区域的地暖输出。在不牺牲一丝一毫舒适感的前提下，实现极简低碳生活。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div > div > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "LEED 铂金级认证标准支持"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "能耗节约对比",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 90,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "大平层全年能耗节约数据验证"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "ENERGY EFFICIENCY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 05: DEVELOPER ROI"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "长效节省运营成本"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 180,
+          "maxChars": 360,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "左侧数据来自某 350 平米大平层项目，长达一年的真实电表比对。引入 AI 气候调节与照明策略后，该户每年节约用电超过 12,000 度。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 212,
+          "maxChars": 424,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "对于整栋公寓或别墅群的开发商而言，智能系统的预装直接大幅降低了物业的公区能耗支出，并显著提高了该楼盘的 ESG (环境、社会和治理) 评级，吸引更多国际高端买家。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "ECONOMIC IMPACT"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "主动安防",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 95,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "看不见的保镖：全域立体安防网"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "ADVANCED SECURITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 06: SAFETY & WELLNESS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "周界防御与入侵检测"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 224,
+          "maxChars": 448,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "别墅外围的 AI 摄像头不仅能录像，还能精准区分“摇晃的树枝”、“流浪猫”与“越轨的人类”，过滤 95% 的无效警报。一旦确认非法闯入，全屋灯光警报闪烁，自动上报物业中心。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "水电气生命线熔断"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "厨房部署高灵敏度燃气与烟雾探头，洗手间安装水浸传感器。一旦发生管道破裂漏水或燃气泄露，系统立即自动关闭电磁总阀门，将财产损失降到最低。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "适老化跌倒看护"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "无需佩戴手环。卫生间顶部的毫米波雷达实时捕捉体态数据。若老人意外滑倒并在地上静止超过 1 分钟，系统立刻拨打紧急联系人及医疗急救电话。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "美学与隐藏设计",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:sidebar, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-split-v2",
+            "kind": "grid",
+            "subtype": "layout-split-v2",
+            "selector": ".layout-split-v2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-split-v2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 91,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "科技隐于无形：少即是多的美学"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INTERLOCK_SPLIT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 07: INTERIOR INTEGRATION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "化繁为简的墙面革命"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 182,
+          "maxChars": 364,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "传统豪宅的墙面上往往密密麻麻排布着 7、8 个不同面板（空调、地暖、新风、灯光开关），如同长满“牛皮癣”，严重破坏大理石或木饰面的整体美感。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 45,
+          "maxChars": 90,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "我们将所有功能集成于一块极致纤薄、CNC 阳极氧化铝切削而成的 智能中控屏 (Smart Panel) 中。墙面回归极简，科技退居幕后。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2 > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 15,
+          "maxChars": 29,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "DESIGN PHILOSOPHY"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "光影艺术",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x4; pageType:grid-4, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-quad",
+            "kind": "grid",
+            "subtype": "layout-quad",
+            "selector": ".layout-quad",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-quad": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 80,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "调配空间情绪的人本光环境"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "LIGHTING ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 07: INTERIOR INTEGRATION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "无极平滑渐变"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > p",
+          "tarChars": 172,
+          "maxChars": 344,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "摒弃劣质智能灯的闪烁感。采用专业级 DALI 调光驱动，实现 0.01% 至 100% 的丝滑亮暗渐变，起夜灯光如月光般柔和漫反射。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "昼夜节律同步"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > p",
+          "tarChars": 184,
+          "maxChars": 368,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "室内灯光的色温 (2700K - 6500K) 随着室外日照轨迹自动漂移。正午提供高色温冷白光提升专注力，傍晚转为低色温暖黄光促进褪黑素分泌。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "还原艺术品本色"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > p",
+          "tarChars": 130,
+          "maxChars": 260,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "提供博物馆级显色指数的射灯方案，精准打亮墙面的油画或摆件，让家具与地毯的真实色彩与质感得以完美呈现。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "一键情绪切换"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "预设“阅读”、“会客”、“微醺”、“观影”模式。点击微醺模式，吊灯熄灭，暗藏的线性洗墙灯与灯带勾勒出空间的建筑轮廓。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "万分之一调光"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 9,
+          "maxChars": 18,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "HCL 节律照明"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "CRI 98 高显指"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "场景模式"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "高净值人群偏好",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "高净值买家最看重的智能化配置"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "HNWI PREFERENCES"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 01: MARKET TRENDS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "从“奢华”向“健康”的转变"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "经过后疫情时代的洗礼，超高净值购房群体 (HNWI) 的关注焦点已经发生了深刻变化。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "高端买家对智能功能购买意愿占比"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 212,
+          "maxChars": 424,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "比起夸张的家庭影院或酒窖，他们现在更愿意为“健康的空气”、“绝对的隐私安全”以及“恒温恒湿的室内微气候”买单。这一数据直接指导了我们在顶层设计时的模块优先级分配。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "恒态健康微气候",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 85,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "打造五恒空间：恒温恒湿恒氧恒洁恒静"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "WELLNESS & CLIMATE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 06: SAFETY & WELLNESS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "智能微气候中枢"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "联动毛细管网、地源热泵与中央空调，彻底消除室内温差与冷风直吹的刺骨感。系统根据室内外温差，自动调节水温与风量，保持四季如春的 24℃。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "鲜氧与湿度自平衡"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "实时监测甲醛、PM2.5、TVOC。在梅雨季节自动启动除湿模块，在干燥冬季开启加湿。时刻保持 45%-55% 的黄金舒适相对湿度区间。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全屋水质监测与管理"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 162,
+          "maxChars": 324,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "监控前置过滤、中央软水机、末端净水的滤芯寿命。一旦侦测到重金属超标或滤芯失效，自动通知物业管家上门更换，保障婴儿级饮水安全。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "数字管家与服务整合",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-overlap-diag",
+            "kind": "grid",
+            "subtype": "layout-overlap-diag",
+            "selector": ".layout-overlap-diag",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-overlap-diag": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 99,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "打通软件硬件的数字大管家"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KINETIC_OVERLAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 08: PLATFORM & ECOSYSTEM"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "打破物理边界的社区服务"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > p",
+          "tarChars": 188,
+          "maxChars": 376,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "家中的中控大屏不仅仅控制灯光，它是连接业主与顶级物业服务的专属枢纽。业主可通过语音或屏幕一键呼叫私人会所定餐、预约健身教练、或呼叫保洁阿姨上门。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "无感访客通行"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > p",
+          "tarChars": 208,
+          "maxChars": 416,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "朋友来访时，业主在手机端生成单次使用的动态二维码并分享。访客凭借该码，可一路无缝通过小区大闸、地下车库、电梯梯控并直达入户门，全程免除保安盘问的尴尬，尽显尊贵。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "全球顶级生态圈",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1 + list x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2,
+          "list": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 124,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "携手全球顶级品牌的互联互通"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "HARDWARE ECOSYSTEM"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 08: PLATFORM & ECOSYSTEM"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "拒绝生态孤岛的开放协议"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 248,
+          "maxChars": 496,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "高端业主购买的往往是德国美诺(Miele)的厨电、丹麦 B&O 的音响、法国尚飞(Somfy)的电机。我们的中控系统全面支持 Matter 协议与主流 API 对接，不强制绑定任何单一品牌。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "影音娱乐："
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "语音生态："
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 26,
+          "maxChars": 52,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "影音娱乐： 完美对接 Control4, Savant 等专业影音矩阵。"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 44,
+          "maxChars": 88,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "语音生态： 支持 Siri (HomeKit), Alexa 以及本地深度定制的隐私语音引擎，无需死记硬背指令名，支持模糊语义理解。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "table",
+      "sourcePageType": "table",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "开发商 ROI",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "table page with table x1; pageType:table, layout:table",
+        "layoutFamily": "table",
+        "componentSignature": "table x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "table-1",
+            "kind": "table",
+            "subtype": "table"
+          }
+        ],
+        "componentCounts": {
+          "table": 2
+        },
+        "tags": [
+          "pageType:table",
+          "layout:table"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "为开发商创造明确的商业杠杆"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DEVELOPER ROI"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 05: DEVELOPER ROI"
+        },
+        {
+          "slotId": "table-header-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(1)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "核心价值维度"
+        },
+        {
+          "slotId": "table-header-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(2)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "无科技赋能的传统交付"
+        },
+        {
+          "slotId": "table-header-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(3)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "前装智慧系统的综合效益"
+        },
+        {
+          "slotId": "table-row-1-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "直接溢价与利润率"
+        },
+        {
+          "slotId": "table-row-1-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "售价依赖地段与学区，溢价空间被严格锁死。"
+        },
+        {
+          "slotId": "table-row-1-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "每平米增加 ¥1000 成本，可支撑每平米 ¥3000-5000 的售价提升。"
+        },
+        {
+          "slotId": "table-row-2-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "营销话题与差异化"
+        },
+        {
+          "slotId": "table-row-2-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "只能宣传外立面与户型，难以引起媒体与客户兴奋感。"
+        },
+        {
+          "slotId": "table-row-2-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "打造炫酷的 AI 沉浸式样板间，极大提升案场转化率与高端话题性。"
+        },
+        {
+          "slotId": "table-row-3-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "交付后长尾运营收益"
+        },
+        {
+          "slotId": "table-row-3-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "交房即结束，后续物业管理费收取困难。"
+        },
+        {
+          "slotId": "table-row-3-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "通过中控屏掌控社区流量入口，将低频物业升级为高频增值服务订阅。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "个性化定制服务",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 84,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "拒绝千篇一律：高定级私享方案"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BESPOKE CUSTOMIZATION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 09: SERVICE EXCELLENCE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "专属面板刻字"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 156,
+          "maxChars": 312,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "为每套大宅的智能面板提供激光雕刻服务。面板材质可选择胡桃木、拉丝黑钛金、或天然大理石贴面，完美融入室内设计师的原作肌理。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极客编程支持"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 188,
+          "maxChars": 376,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "针对喜欢折腾科技设备的男主人，系统底层开放 Node-RED 与 Home Assistant 接口权限，允许其自由编写极为复杂的联动逻辑脚本。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "终身金牌维保"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 162,
+          "maxChars": 324,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "设备隐蔽工程一旦出问题极难排查。我们提供 24 小时响应的“只换不修”白金维保服务，远程后台主动探测设备掉线并提前上门维护。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "标杆案例",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 92,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "上海“天幕·壹号” 亿元级顶层复式"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CASE STUDY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 10: PORTFOLIO"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "项目背景与挑战"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 140,
+          "maxChars": 280,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "该项目位于黄浦江畔，单套面积 800 平方米。室内拥有大量挑高 6 米的落地玻璃幕墙以及错综复杂的环形动线。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Aura 全案部署方案"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 226,
+          "maxChars": 452,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "我们部署了 4 组边缘计算主机，60 多个高精度毫米波雷达。创新性地引入了追光算法，室内的 20 组电动遮阳帘会根据太阳的高度角和经纬度，自动进行每隔 10 分钟一次的微调。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "业主痛点：如此巨大的面积，传统的面板控制极为不便；且江边光线变化剧烈，极易造成室内强光炫目或西晒过热。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "交付后，系统运转极度稳定，被诸多建筑设计杂志评为“光影与智能交融的完美典范”。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "系统可成长性",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "一套永远不会过时的数字基础设施"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 03: TECHNOLOGY & HARDWARE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "OTA 升级"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "像特斯拉一样，通过云端每月推送新功能，算法越用越聪明。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "模块化扩展"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "轨道式配电箱设计，未来想增加模块只需插拔，无需破墙凿洞。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AI 模型迭代"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "底层大模型持续更新，语音理解能力每年指数级增强。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "协议前瞻"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "网关内嵌预留了最新的 Matter/Thread 射频芯片模块。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数据私有化"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "支持业主后期私有化部署 NAS，建立完全独立的家庭数据中心。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

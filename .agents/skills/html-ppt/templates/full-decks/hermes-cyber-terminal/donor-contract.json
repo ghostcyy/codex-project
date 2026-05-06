@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["HERMES AGENT / v0.9.2", "hermes run \"refactor auth module to use pkce\""],
+  "forbiddenTextPatterns": ["HERMES\\s+AGENT\\s*/\\s*v\\d", "hermes\\s+run\\s+\"refactor auth module"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["hc-scanlines"],
   "decorativeOnlyClasses": ["dots"],

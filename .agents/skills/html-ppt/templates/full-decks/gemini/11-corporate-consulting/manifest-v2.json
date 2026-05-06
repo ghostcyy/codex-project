@@ -1,0 +1,2707 @@
+{
+  "schemaVersion": 2,
+  "id": "11-corporate-consulting",
+  "deckClass": "tpl-corporate-consulting",
+  "label": {
+    "zh-CN": "模板 11-corporate-consulting",
+    "en": "Template 11-corporate-consulting"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "Cover",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Global Market Entry Strategy 2026"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div > p.kicker:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "Confidential & Proprietary"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div > p.text-block:nth-of-type(2)",
+          "tarChars": 78,
+          "maxChars": 155,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Comprehensive analysis of emerging markets, competitive landscape, and operational readiness for Q3 expansion initiatives."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div > div > p:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Prepared For"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div > div > p:nth-of-type(2)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Board of Directors"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "Conclusion",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Ready for Execution."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div > p.text-block",
+          "tarChars": 254,
+          "maxChars": 508,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "The window of opportunity is open. With board approval, we initiate Phase 1 deployment immediately."
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div > div:nth-of-type(2) > span.pill",
+          "tarChars": 12,
+          "maxChars": 23,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Open for Q&A"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "Executive Summary",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 196,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Key Takeaways & Strategic Imperatives"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "01 · Executive Summary"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Rapid APAC Growth"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > p",
+          "tarChars": 422,
+          "maxChars": 844,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "APAC represents a 45% YoY growth opportunity, driven by rising middle-class digitization. However, local regulatory compliance requires a $12M upfront investment."
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 14,
+          "maxChars": 28,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Incumbent Consolidation"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > p",
+          "tarChars": 380,
+          "maxChars": 760,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Top 3 competitors have acquired 14 regional startups in the past 6 months, effectively raising the barrier to entry and creating pricing pressure."
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Localized Operations"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > p",
+          "tarChars": 374,
+          "maxChars": 748,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "We propose establishing 3 regional hubs. This reduces latency by 60% and aligns our data governance with strict localized data sovereignty laws."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.text-block:nth-of-type(1)",
+          "tarChars": 520,
+          "maxChars": 1040,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "The global market is shifting towards decentralized service models. To capture the $4.2B opportunity in APAC and EMEA regions, we must pivot from our centralized infrastructure to a highly localized, agile deployment strategy within the next 18 months."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Market Dynamics"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Competitive Threat"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Action Plan"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "Market Analysis",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x2 + grid:1x3 x1 + card x1 + stat x2; pageType:grid-2, layout:grid, grid:1x2, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x2 + grid:1x3 x1 + card x1 + stat x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "grid-2",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "grid-3",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-2",
+            "kind": "stat",
+            "subtype": "stat"
+          }
+        ],
+        "componentCounts": {
+          "grid": 3,
+          "grid-1x2": 2,
+          "grid-1x3": 1,
+          "card": 2,
+          "stat": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 73,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "TAM Expansion and Regional Penetration"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "02 · Market Analysis"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 18,
+          "maxChars": 35,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Regional Breakdown & Strategy"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > div.grid-3 > div:nth-of-type(1) > p",
+          "tarChars": 146,
+          "maxChars": 292,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Mature market. Focus on enterprise upsell and retention."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.text-block:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 520,
+          "maxChars": 1040,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Our analysis indicates a Total Addressable Market (TAM) expansion from $12B to $18.5B by 2028. This growth is highly skewed towards emerging economies where mobile-first infrastructure bypasses traditional desktop legacy systems."
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.text-block:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 276,
+          "maxChars": 552,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "To succeed, we must tailor our product offerings. A one-size-fits-all approach will yield a sub-optimal ROI."
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > div.grid-3 > div:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "North America"
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > div.grid-3 > div:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "EMEA"
+        },
+        {
+          "slotId": "body-6",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > div.grid-3 > div:nth-of-type(2) > p",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Fragmented. Requires country-specific compliance adaptations."
+        },
+        {
+          "slotId": "body-7",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > div.grid-3 > div:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "APAC"
+        },
+        {
+          "slotId": "body-8",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(2) > div.grid-3 > div:nth-of-type(3) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Hyper-growth. Aggressive customer acquisition required."
+        },
+        {
+          "slotId": "body-9",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "B"
+        },
+        {
+          "slotId": "body-10",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "%"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 14,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "18.5B"
+        },
+        {
+          "slotId": "stat-number-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "45%"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.label:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Projected TAM"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.desc:nth-of-type(3)",
+          "tarChars": 21,
+          "maxChars": 42,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Expected market size by 2028"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.label:nth-of-type(2)",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "APAC Growth"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(1) > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.desc:nth-of-type(3)",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Year-over-year expansion rate"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "Financial Metrics",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + grid:1x2 x1 + card x2 + stat x4 + list x2; pageType:grid-2, layout:grid, grid:1x4, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + grid:1x2 x1 + card x2 + stat x4 + list x2",
+        "density": "high",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "grid-2",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-2",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-3",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-4",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-2",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 2,
+          "grid-1x4": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "stat": 8,
+          "list": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x4",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Capital Allocation & Projected ROI"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "03 · Financial Overview"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Cost Drivers"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > h3",
+          "tarChars": 12,
+          "maxChars": 23,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Revenue Projections"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "M"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "mo"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "%"
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(4) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "M"
+        },
+        {
+          "slotId": "body-6",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Infrastructure Setup:"
+        },
+        {
+          "slotId": "body-7",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Regulatory Compliance:"
+        },
+        {
+          "slotId": "body-8",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Talent Acquisition:"
+        },
+        {
+          "slotId": "body-9",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Year 1:"
+        },
+        {
+          "slotId": "body-10",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Year 2:"
+        },
+        {
+          "slotId": "body-11",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Year 3:"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > ul > li:nth-of-type(1)",
+          "tarChars": 39,
+          "maxChars": 78,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Infrastructure Setup: $5.5M for localized server clusters."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > ul > li:nth-of-type(2)",
+          "tarChars": 39,
+          "maxChars": 77,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Regulatory Compliance: $2.0M in legal and licensing fees."
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(1) > ul > li:nth-of-type(3)",
+          "tarChars": 48,
+          "maxChars": 95,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Talent Acquisition: $4.5M for regional sales and engineering leadership."
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Year 1: $15M (Focus on early adopters and channel partners)."
+        },
+        {
+          "slotId": "list-item-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 39,
+          "maxChars": 77,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Year 2: $42M (Scale marketing, activate enterprise tier)."
+        },
+        {
+          "slotId": "list-item-6",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2:nth-of-type(2) > div.card:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 36,
+          "maxChars": 72,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Year 3: $85M (Market saturation phase, optimization)."
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "$12M"
+        },
+        {
+          "slotId": "stat-number-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "18mo"
+        },
+        {
+          "slotId": "stat-number-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "32%"
+        },
+        {
+          "slotId": "stat-number-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(4) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "$85M"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(1) > div.label:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Initial Capex"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(2) > div.label:nth-of-type(2)",
+          "tarChars": 13,
+          "maxChars": 25,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Payback Period"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(3) > div.label:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Projected IRR"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4:nth-of-type(1) > div.stat-box:nth-of-type(4) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Year 3 ARR"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "Strategic Pillars",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3 + list x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3 + list x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-2",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-3",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6,
+          "list": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 129,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Three Pillars of Execution"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "04 · Strategy"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(1) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Product Localization"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(1) > p",
+          "tarChars": 248,
+          "maxChars": 496,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Adapting the core software suite to meet local linguistic, cultural, and workflow requirements."
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(1) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Go-to-Market Agility"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(1) > p",
+          "tarChars": 254,
+          "maxChars": 508,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Deploying targeted marketing campaigns and establishing strong channel partnerships in key cities."
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(1) > h3",
+          "tarChars": 13,
+          "maxChars": 25,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Compliance & Security"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(1) > p",
+          "tarChars": 270,
+          "maxChars": 540,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Ensuring absolute adherence to local data protection laws (e.g., GDPR, PDPA) to avoid operational halts."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.text-block:nth-of-type(1)",
+          "tarChars": 416,
+          "maxChars": 832,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "To achieve our financial targets and mitigate execution risks, the operational plan is built around three core pillars. Each pillar has dedicated leadership and OKRs."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Lead: Product VP"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Lead: Marketing CMO"
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Lead: Chief Legal Officer"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(1)",
+          "tarChars": 23,
+          "maxChars": 46,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "UI/UX translation (8 languages)"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(2)",
+          "tarChars": 25,
+          "maxChars": 49,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Local payment gateway integrations"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(1) > ul > li:nth-of-type(3)",
+          "tarChars": 19,
+          "maxChars": 38,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Region-specific templates"
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(1) > ul > li:nth-of-type(1)",
+          "tarChars": 22,
+          "maxChars": 44,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Onboard 50 tier-1 distributors"
+        },
+        {
+          "slotId": "list-item-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(1) > ul > li:nth-of-type(2)",
+          "tarChars": 22,
+          "maxChars": 44,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Launch digital brand awareness"
+        },
+        {
+          "slotId": "list-item-6",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(1) > ul > li:nth-of-type(3)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Host regional roadshows"
+        },
+        {
+          "slotId": "list-item-7",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(1) > ul > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "ISO 27001 Certification"
+        },
+        {
+          "slotId": "list-item-8",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(1) > ul > li:nth-of-type(2)",
+          "tarChars": 19,
+          "maxChars": 38,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Data sovereignty auditing"
+        },
+        {
+          "slotId": "list-item-9",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(1) > ul > li:nth-of-type(3)",
+          "tarChars": 21,
+          "maxChars": 42,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Local legal counsel retainer"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(1) > div:nth-of-type(1) > span.pill",
+          "tarChars": 9,
+          "maxChars": 18,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Pillar I"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(2) > div:nth-of-type(1) > span.pill",
+          "tarChars": 10,
+          "maxChars": 19,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Pillar II"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.card:nth-of-type(3) > div:nth-of-type(1) > span.pill",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Pillar III"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "Competition",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-split-v2",
+            "kind": "grid",
+            "subtype": "layout-split-v2",
+            "selector": ".layout-split-v2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-split-v2": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 107,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Competitive Positioning Matrix"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "INTERLOCK_SPLIT"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(1) > h3",
+          "tarChars": 16,
+          "maxChars": 32,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Incumbent A (Market Leader)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 196,
+          "maxChars": 392,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Strengths: High brand recognition, vast distribution network, deep pockets."
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Startup B (Aggressive Challenger)"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 232,
+          "maxChars": 464,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Strengths: Highly agile, innovative UI/UX, strong adoption among Gen-Z and tech startups."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.text-block:nth-of-type(2) > p",
+          "tarChars": 484,
+          "maxChars": 968,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Conclusion: We occupy the \"sweet spot\" — enterprise reliability combined with startup agility. By messaging this effectively, we can capture dissatisfied customers from both ends of the spectrum."
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 64,
+          "maxChars": 127,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Weaknesses: Legacy tech stack, slow feature deployment, premium pricing model alienates mid-market."
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 61,
+          "maxChars": 122,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Weaknesses: Poor enterprise security credentials, unstable infrastructure, limited cash runway."
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(1) > div > strong",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Our Edge:"
+        },
+        {
+          "slotId": "body-6",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-split-v2:nth-of-type(1) > div.card:nth-of-type(2) > div > strong",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Our Edge:"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "Risks",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x4; pageType:grid-2, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x2": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 117,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Risk Identification & Mitigation"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "06 · Risk Management"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Regulatory Shifts"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 266,
+          "maxChars": 532,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Impact: Sudden changes in data sovereignty laws could render our localized architecture non-compliant."
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Talent Shortage"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 248,
+          "maxChars": 496,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Impact: Inability to hire specialized regional sales engineers delays GTM motion by 3-6 months."
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(3) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Currency Fluctuation"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(3) > p:nth-of-type(1)",
+          "tarChars": 224,
+          "maxChars": 448,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Impact: Depreciation of local currencies heavily impacts USD-reported ARR and margins."
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(4) > h3",
+          "tarChars": 15,
+          "maxChars": 29,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Tech Stack Compatibility"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(4) > p:nth-of-type(1)",
+          "tarChars": 202,
+          "maxChars": 404,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Impact: Client legacy systems unable to integrate with our API-first platform."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 392,
+          "maxChars": 784,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Mitigation: Implement a highly decoupled cloud architecture that allows for 48-hour migration of data clusters. Maintain active lobbying via local partners."
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 396,
+          "maxChars": 792,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Mitigation: Launch aggressive pre-emptive hiring campaigns and partner with top-tier local recruitment agencies. Implement strong remote-onboarding protocols."
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(3) > p:nth-of-type(2)",
+          "tarChars": 302,
+          "maxChars": 604,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Mitigation: Implement quarterly financial hedging strategies and dynamic local pricing models based on CPI adjustments."
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(4) > p:nth-of-type(2)",
+          "tarChars": 304,
+          "maxChars": 608,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Mitigation: Deploy a suite of middleware adaptors specifically built for the top 5 legacy CRM/ERP systems in the region."
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 10,
+          "maxChars": 19,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "High Risk"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Medium Risk"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Medium Risk"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 9,
+          "maxChars": 18,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Low Risk"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "Timeline",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4 + list x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4 + list x4",
+        "density": "high",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x4",
+            "selector": ".grid-4",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-2",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-3",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-4",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x4": 1,
+          "card": 8,
+          "list": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "12-Month Implementation Roadmap"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "07 · Execution"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Q1 · Foundation"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Q2 · Beta Launch"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Q3 · Go To Market"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Q4 · Optimization"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > ul > li:nth-of-type(1)",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Incorporate regional entities"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > ul > li:nth-of-type(2)",
+          "tarChars": 21,
+          "maxChars": 41,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Secure initial data centers"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > ul > li:nth-of-type(3)",
+          "tarChars": 21,
+          "maxChars": 41,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Hire GM and core leadership"
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(1) > ul > li:nth-of-type(4)",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Initiate localization efforts"
+        },
+        {
+          "slotId": "list-item-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Complete ISO certification"
+        },
+        {
+          "slotId": "list-item-6",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Onboard top 5 pilot customers"
+        },
+        {
+          "slotId": "list-item-7",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 19,
+          "maxChars": 37,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Launch localized website"
+        },
+        {
+          "slotId": "list-item-8",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(2) > ul > li:nth-of-type(4)",
+          "tarChars": 19,
+          "maxChars": 37,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Sign 10 channel partners"
+        },
+        {
+          "slotId": "list-item-9",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > ul > li:nth-of-type(1)",
+          "tarChars": 21,
+          "maxChars": 42,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "General availability release"
+        },
+        {
+          "slotId": "list-item-10",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > ul > li:nth-of-type(2)",
+          "tarChars": 24,
+          "maxChars": 47,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Initiate multi-channel marketing"
+        },
+        {
+          "slotId": "list-item-11",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > ul > li:nth-of-type(3)",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Host 3 regional launch events"
+        },
+        {
+          "slotId": "list-item-12",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(3) > ul > li:nth-of-type(4)",
+          "tarChars": 21,
+          "maxChars": 41,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Scale sales team to 20 FTEs"
+        },
+        {
+          "slotId": "list-item-13",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > ul > li:nth-of-type(1)",
+          "tarChars": 19,
+          "maxChars": 38,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Review and adjust pricing"
+        },
+        {
+          "slotId": "list-item-14",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > ul > li:nth-of-type(2)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Expand to tier-2 cities"
+        },
+        {
+          "slotId": "list-item-15",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > ul > li:nth-of-type(3)",
+          "tarChars": 23,
+          "maxChars": 46,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Launch v1.2 with local features"
+        },
+        {
+          "slotId": "list-item-16",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-4 > div.card:nth-of-type(4) > ul > li:nth-of-type(4)",
+          "tarChars": 19,
+          "maxChars": 38,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Achieve $15M ARR run-rate"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "chart",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "Market Trends",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:line x1 + card x2 + stat x1 + list x1; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:line x1 + card x2 + stat x1 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "line-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "line-chart": 1,
+          "chart:line": 1,
+          "card": 4,
+          "stat": 2,
+          "list": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:line"
+        ],
+        "useCases": [
+          "数据分析",
+          "趋势分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 164,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Market Trend Analysis (Line Chart)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "08 · Analysis Report"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Growth Momentum"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 468,
+          "maxChars": 936,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "The following line chart illustrates the upward trajectory of digital adoption across target regions. We observe a clear 3.5x multiplier effect following infrastructure deployment."
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Forecast Methodology"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 190,
+          "maxChars": 380,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Our projections are based on a weighted average of three primary indices:"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div.stat-box > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "x"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 19,
+          "maxChars": 38,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Regional GDP growth (30%)"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 21,
+          "maxChars": 42,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Digital maturity index (50%)"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 21,
+          "maxChars": 42,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Competitive saturation (20%)"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div.stat-box > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "3.5x"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div.stat-box > div.label:nth-of-type(2)",
+          "tarChars": 15,
+          "maxChars": 29,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Growth Multiplier"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "line",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "chart",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "Regional Distribution",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:pie x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:pie x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-overlap-diag",
+            "kind": "grid",
+            "subtype": "layout-overlap-diag",
+            "selector": ".layout-overlap-diag",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "pie-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-overlap-diag": 1,
+          "chart": 1,
+          "pie-chart": 1,
+          "chart:pie": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:pie"
+        ],
+        "useCases": [
+          "数据分析",
+          "占比分布"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 151,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Regional Revenue Distribution (Pie Chart)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KINETIC_OVERLAP"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Market Allocation"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > p",
+          "tarChars": 302,
+          "maxChars": 604,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "Resources are being shifted towards high-alpha regions. APAC continues to lead in unit economics and LTV/CAC ratios."
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > div.image-placeholder > span",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "[ Regional Heatmap Placeholder ]"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "pie",
+          "defaultRenderType": "pie",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "chart",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "Product Performance",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x3 x1 + chart:bar x1 + card x1 + stat x3; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x3",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x3 x1 + chart:bar x1 + card x1 + stat x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "bar-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-2",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-3",
+            "kind": "stat",
+            "subtype": "stat"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "chart": 1,
+          "bar-chart": 1,
+          "chart:bar": 1,
+          "card": 2,
+          "stat": 6
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x3",
+          "chart:bar"
+        ],
+        "useCases": [
+          "数据分析",
+          "指标对比"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 156,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Product Performance Metrics (Bar Chart)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "10 · Analysis Report"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.card:nth-of-type(1) > h3",
+          "tarChars": 19,
+          "maxChars": 37,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Tier-based Revenue Contribution"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "%"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "k"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "%"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "75%"
+        },
+        {
+          "slotId": "stat-number-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 14,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "$2.4k"
+        },
+        {
+          "slotId": "stat-number-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "12%"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.label:nth-of-type(2)",
+          "tarChars": 14,
+          "maxChars": 28,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Enterprise Share"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Avg ACV"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "Churn Rate"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "bar",
+          "defaultRenderType": "bar",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "Leadership",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header-bar:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Steering Committee"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header-bar:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "08 · Leadership"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(1) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Elena Rostova"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "David Chen"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(3) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Sarah Jenkins"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.footer-bar:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Strategic Analysis Report"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Chief Executive Officer"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(1) > p.text-block:nth-of-type(2)",
+          "tarChars": 208,
+          "maxChars": 416,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Former VP at GlobalCorp. 15 years experience in international expansion and M&A."
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Head of APAC Operations"
+        },
+        {
+          "slotId": "body-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(2) > p.text-block:nth-of-type(2)",
+          "tarChars": 220,
+          "maxChars": 440,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Scaled two SaaS unicorns in the Asian market. Expert in cross-cultural team building."
+        },
+        {
+          "slotId": "body-6",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(3) > p:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Chief Legal Officer"
+        },
+        {
+          "slotId": "body-7",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div:nth-of-type(3) > p.text-block:nth-of-type(2)",
+          "tarChars": 182,
+          "maxChars": 364,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Specialist in international data privacy and compliance architecture."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": false,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

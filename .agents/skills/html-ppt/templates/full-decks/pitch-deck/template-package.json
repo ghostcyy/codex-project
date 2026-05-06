@@ -1,0 +1,83 @@
+{
+  "id": "pitch-deck",
+  "label": {
+    "zh-CN": "投资人路演",
+    "en": "Pitch Deck"
+  },
+  "description": {
+    "zh-CN": "适合融资、战略汇报和高层决策的强叙事商业路演模板。",
+    "en": "A strong business narrative template for fundraising, strategy updates, and executive decisions."
+  },
+  "donorTemplateId": "pitch-deck",
+  "deckClass": "tpl-pitch-deck",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "magazine-bold",
+  "themeAlternates": [
+    "sunset-warm",
+    "editorial-serif",
+    "minimal-nav"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "stat-highlight",
+      "kpi-grid",
+      "comparison",
+      "process",
+      "chart"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "investors",
+    "executives",
+    "sales"
+  ],
+  "formatFit": [
+    "pitch",
+    "briefing",
+    "showcase"
+  ],
+  "toneFit": [
+    "authoritative",
+    "inspirational",
+    "analytical"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 10,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "rise-in",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "spotlight",
+      "none"
+    ],
+    "maxAccentSlides": 3
+  },
+  "embeddingPrompt": "VC pitch deck, fundraising story, bold business claim, traction, market, team, financial upside.",
+  "promptSignals": [
+    "融资",
+    "路演",
+    "投资人",
+    "商业计划",
+    "Series A",
+    "pitch",
+    "fundraising",
+    "investor",
+    "market size",
+    "traction"
+  ],
+  "forbidPromptSignals": [
+    "课堂",
+    "教程",
+    "安全警示"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

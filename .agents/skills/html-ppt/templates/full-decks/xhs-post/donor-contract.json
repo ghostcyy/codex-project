@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["每天只睡 6h 还能", "小熊不困了"],
+  "forbiddenTextPatterns": ["每天只睡\\s*6h", "小熊不困了"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["big-emoji", "bottom-bar"],
   "decorativeOnlyClasses": ["sticker", "page-dot"],

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Innovation Lab: Advanced UI Layouts</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-innovation">
+    <div class="deck">
+        <canvas id="innovation-canvas"></canvas>
+
+        <!-- 01 封面 (强制双轴居中) -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">LAYOUT INNOVATION // 2026</div>
+                <h1 class="h1">Innovation<br>Lab</h1>
+                <p style="font-size: 18px; color: var(--text-muted); margin-top: 30px; letter-spacing: 5px;">REDEFINING THE VISUAL GRID</p>
+                <div style="margin-top: 50px; width: 60px; height: 2px; background: var(--primary); margin-left: auto; margin-right: auto;"></div>
+            </div>
+            <div class="footer">
+                <span>ADVANCED DESIGN SERIES</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 新样式 1: Mosaic Hero (拼贴英雄位) -->
+        <section class="slide" data-title="Mosaic Hero">
+            <div class="header">
+                <div class="kicker">STYLE_01: MOSAIC_HERO</div>
+                <h2 class="h2">拼贴布局：非对称视觉平衡</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-mosaic">
+                    <div class="card" style="padding: 0; overflow: hidden;">
+                        <div class="img-wrap"><img src="img/arch1.jpg"></div>
+                        <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); padding: 20px;">
+                            <h3 style="margin:0; color: var(--secondary);">核心展示区</h3>
+                            <p style="font-size: 14px; margin: 10px 0 0;">通过 2:1 的横向比例，突出核心视觉冲击力。</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>次级信息</h3>
+                        <p>垂直堆叠的次级卡片，用于承载辅助性描述或补充数据。</p>
+                    </div>
+                    <div class="card" style="background: var(--primary);">
+                        <h3>强调节点</h3>
+                        <p>使用对比色填充，在复杂的拼贴中制造视觉锚点。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>LAYOUT SHOWCASE</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 新样式 2: Panoramic Detail (全景细节位) -->
+        <section class="slide" data-title="Panoramic Detail">
+            <div class="header">
+                <div class="kicker">STYLE_02: PANORAMIC_DETAIL</div>
+                <h2 class="h2">横贯全景：宏观与微观的交织</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-panoramic">
+                    <div class="card" style="padding: 0; overflow: hidden;">
+                        <div class="img-wrap"><img src="img/arch2.jpg"></div>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; color: var(--primary); font-weight: 800;">POINT A</span>
+                        <h3>结构解析</h3>
+                        <p>上方全景图展示整体环境，下方卡片拆解局部细节。</p>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; color: var(--primary); font-weight: 800;">POINT B</span>
+                        <h3>材料工艺</h3>
+                        <p>三栏分布确保了底层信息的均等权重，逻辑清晰。</p>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; color: var(--primary); font-weight: 800;">POINT C</span>
+                        <h3>环境融合</h3>
+                        <p>适合产品拆解、城市规划或大尺度建筑方案汇报。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>LAYOUT SHOWCASE</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 新样式 3: Bento Dashboard (便当盒仪表盘) -->
+        <section class="slide" data-title="Bento Dashboard">
+            <div class="header">
+                <div class="kicker">STYLE_03: BENTO_DASHBOARD</div>
+                <h2 class="h2">便当盒：跨行跨列的信息矩阵</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-bento">
+                    <div class="card">
+                        <h3>核心图表</h3>
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card" style="padding: 0; overflow: hidden;">
+                        <div class="img-wrap"><img src="img/arch3.jpg"></div>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 16px;">实时状态</h3>
+                        <div style="font-size: 32px; font-weight: 900; color: var(--secondary);">98.4%</div>
+                        <p style="font-size: 12px;">系统稳定性评分</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 16px;">负载监控</h3>
+                        <div style="font-size: 32px; font-weight: 900; color: var(--primary);">24ms</div>
+                        <p style="font-size: 12px;">端到端响应延迟</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>LAYOUT SHOWCASE</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 新样式 4: Triptych Focus (三折页焦点位) -->
+        <section class="slide" data-title="Triptych Focus">
+            <div class="header">
+                <div class="kicker">STYLE_04: TRIPTYCH_FOCUS</div>
+                <h2 class="h2">三折页：对称夹逼的视觉引导</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-triptych">
+                    <div class="card" style="justify-content: center; text-align: center;">
+                        <div style="font-size: 30px;">⬅️</div>
+                        <p style="font-size: 12px; margin-top: 10px;">前置条件</p>
+                    </div>
+                    <div class="card" style="padding: 0; overflow: hidden;">
+                        <div class="img-wrap"><img src="img/arch4.jpg"></div>
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px;">
+                            <h3 style="font-size: 36px; margin: 0;">中央核心课题</h3>
+                            <p>通过两侧窄卡片的“夹逼”，强行将观众注意力锁定在中央的核心视觉上。</p>
+                        </div>
+                    </div>
+                    <div class="card" style="justify-content: center; text-align: center;">
+                        <div style="font-size: 30px;">➡️</div>
+                        <p style="font-size: 12px; margin-top: 10px;">未来推演</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>LAYOUT SHOWCASE</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 新样式 5: Zig-Zag Flow (交错流) -->
+        <section class="slide" data-title="Zig-Zag Flow">
+            <div class="header">
+                <div class="kicker">STYLE_05: ZIG_ZAG_FLOW</div>
+                <h2 class="h2">交错流：打破平庸水平线的律动</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-zigzag" style="padding: 40px 0;">
+                    <div class="card">
+                        <h3>动态高度 A</h3>
+                        <p>卡片在垂直方向上有意错位，制造出一种不稳定的动感，引导视线呈 S 型移动。</p>
+                    </div>
+                    <div class="card">
+                        <h3>动态高度 B</h3>
+                        <p>这种布局能有效缓解长时间观看传统对齐网格带来的视觉疲劳。</p>
+                    </div>
+                    <div class="card">
+                        <h3>动态高度 C</h3>
+                        <p>适合展示艺术作品集或非线性增长的业务逻辑。</p>
+                    </div>
+                    <div class="card">
+                        <h3>动态高度 D</h3>
+                        <p>结合全局翻页动画，会产生极强的立体进深感。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>LAYOUT SHOWCASE</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 音频 (1/3 Sidebar Layout) -->
+        <section class="slide" data-title="音频播放器">
+            <div class="header">
+                <div class="kicker">AUDIO_UNIT</div>
+                <h2 class="h2">沉浸声音：多维空间声学预览</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2" style="grid-template-columns: 1fr 1.5fr;">
+                    <div class="card center">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🎧</div>
+                        <audio controls style="width: 100%;">
+                            <source src="audio/test.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 20px; font-weight: 800; color: var(--primary);">SYSTEM_SOUND_V1.MP3</p>
+                    </div>
+                    <div class="card">
+                        <h3>声学指纹</h3>
+                        <p>利用高精度声学模型，为建筑内部空间匹配最适宜的环境音效。音频播放器集成在侧边卡片中，确保不干扰主视觉陈列。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MULTIMEDIA UNIT</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 视频 (2/3 Video + 1/3 Text Layout) -->
+        <section class="slide" data-title="视频播放器">
+            <div class="header">
+                <div class="kicker">VIDEO_UNIT</div>
+                <h2 class="h2">动态演绎：从建模到渲染的全过程</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/demo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <h3>光影流动</h3>
+                        <p>视频卡片占据 2/3 黄金区域，右侧 1/3 用于承载技术参数说明。这种比例是人眼处理复杂动态信息的最优解。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>MULTIMEDIA UNIT</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 图表: 折线图 -->
+        <section class="slide" data-title="数据趋势">
+            <div class="header">
+                <div class="kicker">DATA_TREND</div>
+                <h2 class="h2">计算美学：参数化设计带来的效率增量</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>效率拐点</h3>
+                        <p>通过 AI 辅助布局，初稿生成时间缩短了 70%，而方案的多样性则提升了 300% 以上。</p>
+                        <div class="chart-container" style="margin-top: 30px;">
+                            <canvas id="lineChart2"></canvas>
+                        </div>
+                    </div>
+                    <div class="card" style="padding: 0; overflow: hidden;">
+                        <div class="img-wrap"><img src="img/arch1.jpg"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA VISUALIZATION</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 图表: 饼图 -->
+        <section class="slide" data-title="资源分配">
+            <div class="header">
+                <div class="kicker">RESOURCE_MIX</div>
+                <h2 class="h2">创意配比：设计周期的资源投射</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>重心转移</h3>
+                        <p>我们将 40% 的精力投入到交互逻辑的设计中，因为在数字演示时代，如何“展示”与“设计什么”同样重要。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA VISUALIZATION</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 图表: 柱状图 -->
+        <section class="slide" data-title="性能对比">
+            <div class="header">
+                <div class="kicker">PERFORMANCE_BENCHMARK</div>
+                <h2 class="h2">渲染性能：GPU 加速下的极致响应</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>毫秒级反馈</h3>
+                        <p>得益于全新的网格渲染引擎，即使在承载 20 页高清大图与实时图表时，翻页依然能保持 60FPS 的满帧运行。</p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA VISUALIZATION</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 图表: 甘特图 -->
+        <section class="slide" data-title="进度路线">
+            <div class="header">
+                <div class="kicker">PROJECT_PHASES</div>
+                <h2 class="h2">进化路径：从概念原型到最终交付</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA VISUALIZATION</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13-19 继续填充... (这里省略部分重复结构以节省空间) -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Future<br>Built</h1>
+                <p style="font-size: 20px; color: var(--secondary); margin-top: 40px; font-weight: 800; letter-spacing: 15px;">THE LAB NEVER SLEEPS</p>
+                <div style="margin-top: 60px;">
+                    <button style="padding: 20px 50px; background: linear-gradient(90deg, var(--primary), var(--secondary)); color: #000; border: none; font-weight: 900; border-radius: 4px; cursor: pointer; text-transform: uppercase;">Get Early Access</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>INNOVATION LAB // 2026</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Kinetic Grid) ---
+            const canvas = document.getElementById('innovation-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                let particles = [];
+                for(let i=0; i<50; i++) particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random()-0.5) * 1,
+                    vy: (Math.random()-0.5) * 1
+                });
+
+                function draw() {
+                    ctx.clearRect(0,0,canvas.width, canvas.height);
+                    ctx.strokeStyle = 'rgba(68, 88, 188, 0.2)';
+                    ctx.beginPath();
+                    particles.forEach((p, idx) => {
+                        p.x += p.vx; p.y += p.vy;
+                        if(p.x<0 || p.x>canvas.width) p.vx*=-1;
+                        if(p.y<0 || p.y>canvas.height) p.vy*=-1;
+                        if(idx > 0) ctx.lineTo(p.x, p.y);
+                    });
+                    ctx.stroke();
+                    requestAnimationFrame(draw);
+                }
+                draw();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#888';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            const commonOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+                    datasets: [{
+                        data: [10, 45, 30, 90],
+                        borderColor: '#4458bc',
+                        backgroundColor: 'rgba(68, 88, 188, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: commonOptions
+            });
+
+            createChart('lineChart2', {
+                type: 'line',
+                data: {
+                    labels: ['2023', '2024', '2025', '2026'],
+                    datasets: [{
+                        data: [100, 250, 480, 1200],
+                        borderColor: '#fcc5c5',
+                        borderWidth: 4,
+                        pointRadius: 0,
+                        tension: 0.1
+                    }]
+                },
+                options: commonOptions
+            });
+
+            createChart('pieChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['交互', '逻辑', '视觉', '优化'],
+                    datasets: [{
+                        data: [40, 25, 20, 15],
+                        backgroundColor: ['#4458bc', '#fcc5c5', '#ff3e3e', '#333'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { ...commonOptions, cutout: '80%' }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['A', 'B', 'C', 'D'],
+                    datasets: [{
+                        data: [65, 40, 80, 55],
+                        backgroundColor: '#4458bc',
+                        borderRadius: 4
+                    }]
+                },
+                options: commonOptions
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['概念探索', '原型构建', '性能压测', '最终发布'],
+                    datasets: [
+                        { data: [0, 2, 5, 8], backgroundColor: 'transparent', stack: 's' },
+                        { data: [3, 4, 3, 2], backgroundColor: '#fcc5c5', stack: 's', borderRadius: 20 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

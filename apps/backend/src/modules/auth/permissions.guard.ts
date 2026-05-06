@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable }
 import { Reflector } from "@nestjs/core";
 import { PERMISSIONS_KEY } from "../../common/auth/permissions.decorator";
 import { PUBLIC_ROUTE_KEY } from "../../common/auth/public.decorator";
+import { ROLES_KEY } from "../../common/auth/roles.decorator";
 import type { AuthenticatedUser } from "./auth.types";
 
 @Injectable()
@@ -23,8 +24,13 @@ export class PermissionsGuard implements CanActivate {
         context.getHandler(),
         context.getClass()
       ]) ?? [];
+    const requiredRoles =
+      this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
+        context.getHandler(),
+        context.getClass()
+      ]) ?? [];
 
-    if (requiredPermissions.length === 0) {
+    if (requiredPermissions.length === 0 && requiredRoles.length === 0) {
       return true;
     }
 
@@ -33,6 +39,11 @@ export class PermissionsGuard implements CanActivate {
 
     if (!user) {
       throw new ForbiddenException("User context is unavailable.");
+    }
+
+    const hasAllRoles = requiredRoles.every((role) => user.roles.includes(role));
+    if (!hasAllRoles) {
+      throw new ForbiddenException("Missing required role.");
     }
 
     const hasAllPermissions = requiredPermissions.every((permission) =>

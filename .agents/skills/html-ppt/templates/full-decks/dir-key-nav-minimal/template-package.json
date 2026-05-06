@@ -1,0 +1,75 @@
+{
+  "id": "dir-key-nav-minimal",
+  "label": {
+    "zh-CN": "极简导航",
+    "en": "Minimal Nav"
+  },
+  "description": {
+    "zh-CN": "适合简洁演示、信息卡片和克制风格汇报的极简模板。",
+    "en": "A minimal navigation template for concise presentations, information cards, and restrained reports."
+  },
+  "donorTemplateId": "dir-key-nav-minimal",
+  "deckClass": "tpl-dir-key-nav-minimal",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "minimal-nav",
+  "themeAlternates": [
+    "japanese-minimal",
+    "engineering-whiteprint",
+    "editorial-serif"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "bullet-list",
+      "two-column",
+      "timeline",
+      "quote"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "executives",
+    "general-public",
+    "designers"
+  ],
+  "formatFit": [
+    "briefing",
+    "report",
+    "analysis"
+  ],
+  "toneFit": [
+    "analytical",
+    "authoritative",
+    "friendly"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 8,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "none"
+    ],
+    "allowedFx": [
+      "none"
+    ],
+    "maxAccentSlides": 1
+  },
+  "embeddingPrompt": "Minimal clean deck, navigation-first, concise briefing, restrained information design.",
+  "promptSignals": [
+    "极简",
+    "简洁",
+    "克制",
+    "导航",
+    "minimal",
+    "clean",
+    "concise",
+    "brief"
+  ],
+  "forbidPromptSignals": [
+    "赛博",
+    "炫酷"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, UnauthorizedException } from "@nestjs/common";
 import { CurrentUser } from "../../common/auth/current-user.decorator";
 import { RequirePermissions } from "../../common/auth/permissions.decorator";
+import { RequireRoles } from "../../common/auth/roles.decorator";
 import type { AuthenticatedUser } from "../auth/auth.types";
 import { LlmConfigService } from "./llm-config.service";
 import type { LlmConfigInput } from "./llm-config.types";
 
 @Controller("admin/llm-config")
+@RequireRoles("ADMIN")
 @RequirePermissions("llm.manage")
 export class LlmConfigController {
   constructor(@Inject(LlmConfigService) private readonly llmConfigService: LlmConfigService) {}

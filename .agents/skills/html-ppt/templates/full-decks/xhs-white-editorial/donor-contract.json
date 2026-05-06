@@ -1,8 +1,8 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["AI 时代 · 职业判断", "我越来越确定的一件事", "Cover · 01", "Section Divider"],
+  "forbiddenTextPatterns": ["AI 时代", "职业判断", "Cover · 01", "Section Divider"],
   "forbiddenClasses": [],
-  "coverOnlyClasses": [],
-  "decorativeOnlyClasses": [],
-  "cssRedactClasses": []
+  "coverOnlyClasses": ["xw-topline"],
+  "decorativeOnlyClasses": ["xw-page", "xw-footer"],
+  "cssRedactClasses": ["xw-page", "xw-footer", "xw-topline"]
 }

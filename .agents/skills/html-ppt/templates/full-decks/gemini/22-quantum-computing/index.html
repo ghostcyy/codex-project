@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quantum Pulse: The Future of Computing</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-quantum">
+    <div class="deck">
+        <canvas id="quantum-canvas"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">QUANTUM SUPREMACY // 2026</div>
+                <h1 class="h1">Quantum<br>Pulse</h1>
+                <p style="font-size: 20px; color: var(--primary); margin-top: 20px; font-family: var(--font-mono);">DECODING THE NEXT DIMENSION</p>
+                <div style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
+                    <span style="font-size: 14px; color: var(--text-muted);">INITIALIZING SYSTEM... OK</span>
+                </div>
+            </div>
+            <div class="footer">
+                <span>NEURAL QUANTUM LABS</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 概述 (侧边栏) -->
+        <section class="slide" data-title="项目概述">
+            <div class="header">
+                <div class="kicker">SYSTEM OVERVIEW</div>
+                <h2 class="h2">量子计算：重构计算范式</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="margin-bottom: 20px;">
+                            <img src="img/title.png" alt="Quantum Processor">
+                        </div>
+                        <h3>超越摩尔定律</h3>
+                        <p>传统半导体技术已接近物理极限。量子计算利用量子叠加与纠缠，在特定复杂算法上实现指数级的性能飞跃。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>叠加态 (Superposition)</h3>
+                            <p>量子比特可同时处于 0 和 1 的状态，极大扩展了并行计算的深度。</p>
+                        </div>
+                        <div class="card">
+                            <h3>纠缠 (Entanglement)</h3>
+                            <p>比特间的瞬时关联，构建起超越地理限制的高速信息通道。</p>
+                        </div>
+                        <div class="card">
+                            <h3>相干性 (Coherence)</h3>
+                            <p>极低温环境下的精密控制，确保量子状态的稳定性与计算精度。</p>
+                        </div>
+                        <div class="card">
+                            <h3>逻辑门 (Quantum Gates)</h3>
+                            <p>全新的逻辑门操作，针对传统难题如大数分解提供革命性解法。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Core Fundamentals</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 硬件架构 (2栏) -->
+        <section class="slide" data-title="硬件架构">
+            <div class="header">
+                <div class="kicker">HARDWARE ARCHITECTURE</div>
+                <h2 class="h2">超导量子处理器架构</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img src="img/center.png" alt="Data Center">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Q-CORE 1024 系列</h3>
+                        <p>我们最新的超导量子芯片实现了 1024 个物理量子比特的稳定排布。采用三维超导布线技术，有效降低了比特间的串扰。</p>
+                        <div class="policy-box">
+                            "量子体积 (Quantum Volume) 同比提升 300%，逻辑纠错率进入工业级应用区间。"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Hardware Systems</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 算法优势 (3栏) -->
+        <section class="slide" data-title="算法优势">
+            <div class="header">
+                <div class="kicker">ALGORITHM DOMINANCE</div>
+                <h2 class="h2">量子加速的关键应用场景</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div style="font-size: 32px; margin-bottom: 15px;">🧪</div>
+                        <h3>分子模拟</h3>
+                        <p>精确模拟复杂化学反应，加速新药研发与新材料发现，缩短研发周期 90%。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 32px; margin-bottom: 15px;">💹</div>
+                        <h3>金融建模</h3>
+                        <p>利用量子蒙特卡洛算法进行风险评估与资产组合优化，实现毫秒级响应。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 32px; margin-bottom: 15px;">🛡️</div>
+                        <h3>后量子加密</h3>
+                        <p>开发抵御量子攻击的全新加密算法，守护数字时代的底座安全。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Software & Logic</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 研发矩阵 (4栏) -->
+        <section class="slide" data-title="研发矩阵">
+            <div class="header">
+                <div class="kicker">R&D MATRIX</div>
+                <h2 class="h2">全球研发节点与技术路线</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/viz.png"></div>
+                        <h3>超导路线</h3>
+                        <p>目前最成熟的路径，支持高扩展性。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/key.png"></div>
+                        <h3>离子阱</h3>
+                        <p>具备极长的相干时间与超高门保真度。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/title.png"></div>
+                        <h3>光量子</h3>
+                        <p>室温下运行，具备分布式计算潜力。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/center.png"></div>
+                        <h3>拓扑量子</h3>
+                        <p>理论上最具免疫性的量子计算形态。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Global Strategy</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 性能指标 (5栏) -->
+        <section class="slide" data-title="性能指标">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">量子系统核心评价维度</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card">
+                        <h3 style="font-size: 14px;">Q-BITS</h3>
+                        <p style="font-size: 12px;">物理比特数量上限。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">GATE FIDELITY</h3>
+                        <p style="font-size: 12px;">逻辑门操作的准确度。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">VOLUME</h3>
+                        <p style="font-size: 12px;">系统的综合处理能力。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">ERROR RATE</h3>
+                        <p style="font-size: 12px;">比特读取与运算的错误率。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">COOLING</h3>
+                        <p style="font-size: 12px;">极低温环境下的能效比。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Metrics & KPI</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图: 算力增长 -->
+        <section class="slide" data-title="算力增长趋势">
+            <div class="header">
+                <div class="kicker">DATA ANALYSIS</div>
+                <h2 class="h2">量子比特数量与逻辑门保真度增长曲线</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>指数级跃迁</h3>
+                        <p>过去三年中，量子比特的数量正遵循“量子版摩尔定律”实现跨越。预计 2027 年将实现百万级比特突破。</p>
+                        <div style="margin-top: 30px; border-left: 4px solid var(--primary); padding-left: 20px;">
+                            <div style="font-size: 32px; font-weight: 800; color: var(--primary);">2048</div>
+                            <div style="font-size: 12px; color: var(--text-muted);">ACTIVE QUBITS IN CLUSTER</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Data Visualization</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 饼图: 行业渗透 -->
+        <section class="slide" data-title="行业渗透率">
+            <div class="header">
+                <div class="kicker">MARKET ADOPTION</div>
+                <h2 class="h2">量子计算各领域应用潜能占比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>制药与材料领跑</h3>
+                        <p>生物制药领域的分子模拟需求最为迫切，占据了近一半的早期市场份额。</p>
+                        <ul style="margin-top: 20px; color: var(--text-muted); font-family: var(--font-mono); font-size: 13px;">
+                            <li>[PHARMA]: 45%</li>
+                            <li>[FINANCE]: 25%</li>
+                            <li>[LOGISTICS]: 15%</li>
+                            <li>[SECURITY]: 15%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Market Insights</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 柱状图: 投入对比 -->
+        <section class="slide" data-title="投入对比">
+            <div class="header">
+                <div class="kicker">INVESTMENT SCALE</div>
+                <h2 class="h2">全球主要经济体量子研发投入对比 (2024-2026)</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 1fr 1.5fr;">
+                    <div class="card">
+                        <h3>主权级战略竞赛</h3>
+                        <p>量子计算已成为大国科技博弈的核心战场。公共事业预算占比正逐年攀升。</p>
+                        <div class="policy-box">
+                            "量子基础设施建设已纳入 2026 数字化主干规划。"
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Investment Trends</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 甘特图: 路线图 -->
+        <section class="slide" data-title="技术路线图">
+            <div class="header">
+                <div class="kicker">MISSION ROADMAP</div>
+                <h2 class="h2">从 NISQ 到容错量子计算的进阶之路</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Future Outlook</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 音频 Exhibit -->
+        <section class="slide" data-title="系统环境音">
+            <div class="header">
+                <div class="kicker">AUDIO EXHIBIT</div>
+                <h2 class="h2">液氦循环系统：量子芯片的“呼吸”</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>极低温环境挑战</h3>
+                        <p>为了保持超导状态，芯片必须工作在接近绝对零度 (15mK) 的环境中。您所听到的是超低温稀释制冷机的运行噪音。</p>
+                    </div>
+                    <div class="card center">
+                        <div style="font-size: 50px; margin-bottom: 20px;">❄️</div>
+                        <audio controls style="width: 80%;">
+                            <source src="audio/cryo_ambient.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 15px; font-family: var(--font-mono); color: var(--secondary);">FILE: SYSTEM_COOLING_LOG.WAV</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>System Operations</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 视频 Case Study -->
+        <section class="slide" data-title="视频纪实">
+            <div class="header">
+                <div class="kicker">VIDEO CASE STUDY</div>
+                <h2 class="h2">实录：世界首个逻辑量子比特纠错实验</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #000;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/quantum_lab.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <span class="pill" style="background: var(--primary); color: #000;">BREAKTHROUGH</span>
+                        <h3>纠错即未来</h3>
+                        <p>在这段实验室实录中，我们展示了如何通过辅助比特实时监控并修正量子逻辑门的运行错误，这是实现通用量子计算的关键基石。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Lab Experiments</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 典型案例 (2栏) -->
+        <section class="slide" data-title="典型案例">
+            <div class="header">
+                <div class="kicker">CASE STUDY</div>
+                <h2 class="h2">大数分解：RSA 加密的黄昏</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>Shor 算法实战</h3>
+                        <p>通过逻辑纠错量子位，我们成功在 30 分钟内完成了传统超算需要 1000 年才能完成的质因数分解任务。</p>
+                        <div class="img-wrap" style="margin-top: 20px;"><img src="img/key.png"></div>
+                    </div>
+                    <div class="card">
+                        <h3>防御升级</h3>
+                        <p>此实验标志着传统公钥加密体系的终结，促使全球主流银行加速向格密码学 (Lattice-based) 迁移。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Security Case Study</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 产业链布局 (3栏) -->
+        <section class="slide" data-title="产业链布局">
+            <div class="header">
+                <div class="kicker">ECOSYSTEM MAP</div>
+                <h2 class="h2">量子产业的全链路协作网络</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 150px; margin-bottom: 15px;"><img src="img/title.png"></div>
+                        <h3>上游：核心组件</h3>
+                        <p>包括稀释制冷机、超导线缆、低温电子学套件等精密硬件供应。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 150px; margin-bottom: 15px;"><img src="img/center.png"></div>
+                        <h3>中游：系统集成</h3>
+                        <p>量子芯片设计、整机组装及量子操作系统的开发与维护。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 150px; margin-bottom: 15px;"><img src="img/viz.png"></div>
+                        <h3>下游：行业应用</h3>
+                        <p>面向化工、金融、人工智能等行业的定制化算法服务。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Ecosystem Map</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 技术规格 (4栏) -->
+        <section class="slide" data-title="技术规格">
+            <div class="header">
+                <div class="kicker">TECHNICAL SPECS</div>
+                <h2 class="h2">Q-CORE 1024 详细技术参数</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <h3>基准频率</h3>
+                        <p>4.5 GHz 超导谐振腔频率。</p>
+                    </div>
+                    <div class="card">
+                        <h3>相干时间</h3>
+                        <p>T1/T2 均值突破 500μs。</p>
+                    </div>
+                    <div class="card">
+                        <h3>读取精度</h3>
+                        <p>99.9% 单比特非破坏性读取。</p>
+                    </div>
+                    <div class="card">
+                        <h3>互联带宽</h3>
+                        <p>10 Gbps 低温微波控制链路。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Technical Specifications</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 商业模式 (侧边栏) -->
+        <section class="slide" data-title="商业模式">
+            <div class="header">
+                <div class="kicker">BUSINESS MODEL</div>
+                <h2 class="h2">QaaS：算力即服务的商业逻辑</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill" style="background: var(--secondary); color:#fff">PREMIUM</span>
+                        <h3>按需订阅模式</h3>
+                        <p>企业无需承担昂贵的维护费用，通过云端 API 即可按计算任务量支付费用，极大地降低了量子门槛。</p>
+                    </div>
+                    <div class="grid-3">
+                        <div class="card">
+                            <h3 style="font-size: 16px;">基础版</h3>
+                            <p style="font-size: 13px;">适用于算法验证与学生教育。</p>
+                        </div>
+                        <div class="card">
+                            <h3 style="font-size: 16px;">专业版</h3>
+                            <p style="font-size: 13px;">提供真机优先权与 128Q 仿真。</p>
+                        </div>
+                        <div class="card">
+                            <h3 style="font-size: 16px;">企业版</h3>
+                            <p style="font-size: 13px;">独占算力池与私有部署支持。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Business Operations</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 伦理与标准 (2栏) -->
+        <section class="slide" data-title="伦理与标准">
+            <div class="header">
+                <div class="kicker">CORE_INFO</div>
+                <h2 class="h2">负责任的量子：安全与治理</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>算法中立性</h3>
+                        <p>确保量子算法在复杂决策（如信贷、资源分配）中不产生歧视性偏差。</p>
+                    </div>
+                    <div class="card">
+                        <h3>全球公约</h3>
+                        <p>推动建立《全球量子计算安全公约》，防止量子武器化与极端算力垄断。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Ethics & Governance</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 团队力量 (3栏) -->
+        <section class="slide" data-title="团队力量">
+            <div class="header">
+                <div class="kicker">THE CORE TEAM</div>
+                <h2 class="h2">汇聚全球顶尖量子智慧</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>物理学家</h3>
+                        <p>深耕凝聚态物理，探索拓扑保护的新边界。</p>
+                    </div>
+                    <div class="card">
+                        <h3>架构工程师</h3>
+                        <p>打造极低温下的高频控制系统与微波链路。</p>
+                    </div>
+                    <div class="card">
+                        <h3>算法专家</h3>
+                        <p>将复杂的数学模型翻译为高效的量子线路。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Human Capital</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Infinite<br>States</h1>
+                <p style="font-size: 24px; color: var(--secondary); margin-top: 30px; letter-spacing: 5px; font-family: var(--font-mono);">TERMINATING SESSION... SYSTEM STANDBY</p>
+                <div style="margin-top: 50px;">
+                    <button style="padding: 15px 40px; background: transparent; border: 2px solid var(--primary); color: var(--primary); font-weight: 700; cursor: pointer; letter-spacing: 2px;">REBOOT SYSTEM</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>NEURAL QUANTUM LABS // 2026</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Quantum Nodes) ---
+            const canvas = document.getElementById('quantum-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let nodes = [];
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                class Node {
+                    constructor() { this.init(); }
+                    init() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.size = Math.random() * 3 + 1;
+                        this.speedX = (Math.random() - 0.5) * 1;
+                        this.speedY = (Math.random() - 0.5) * 1;
+                        this.color = Math.random() > 0.5 ? '#00f2ff' : '#ff00d4';
+                    }
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color;
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = this.color;
+                        ctx.fill();
+
+                        // Entanglement lines
+                        nodes.forEach(n => {
+                            let dist = Math.sqrt((this.x - n.x)**2 + (this.y - n.y)**2);
+                            if (dist < 150) {
+                                ctx.strokeStyle = this.color;
+                                ctx.globalAlpha = (150 - dist) / 600;
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(this.x, this.y);
+                                ctx.lineTo(n.x, n.y);
+                                ctx.stroke();
+                                ctx.globalAlpha = 1;
+                            }
+                        });
+                    }
+                }
+                for (let i = 0; i < 40; i++) nodes.push(new Node());
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    nodes.forEach(n => { n.update(); n.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.font.family = "'JetBrains Mono', monospace";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2022', '2024', '2026'],
+                    datasets: [
+                        { label: 'Qubits', data: [53, 127, 433, 2048], borderColor: '#00f2ff', tension: 0.4 },
+                        { label: 'Fidelity', data: [99.1, 99.4, 99.8, 99.95], borderColor: '#ff00d4', tension: 0.4 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['制药', '金融', '物流', '安全'],
+                    datasets: [{
+                        data: [45, 25, 15, 15],
+                        backgroundColor: ['#00f2ff', '#ff00d4', '#7000ff', '#00ffaa'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['USA', 'CHINA', 'EU', 'JAPAN'],
+                    datasets: [{
+                        label: 'Investment (Billion $)',
+                        data: [15, 18, 12, 6],
+                        backgroundColor: '#7000ff',
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['NISQ 时代', '纠错里程碑', '逻辑比特规模化', '通用量子元年'],
+                    datasets: [
+                        { data: [0, 2, 5, 8], backgroundColor: 'transparent', stack: 's' },
+                        { data: [3, 4, 4, 5], backgroundColor: '#00f2ff', stack: 's', borderRadius: 20 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

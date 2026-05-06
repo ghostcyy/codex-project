@@ -1,8 +1,10 @@
 import { Controller, Get, Inject, Param, Query } from "@nestjs/common";
 import { RequirePermissions } from "../../common/auth/permissions.decorator";
+import { RequireRoles } from "../../common/auth/roles.decorator";
 import { LlmLoggingService } from "./llm-logging.service";
 
 @Controller("admin/llm-logs")
+@RequireRoles("ADMIN")
 @RequirePermissions("llm.manage")
 export class LlmLoggingController {
   constructor(@Inject(LlmLoggingService) private readonly llmLoggingService: LlmLoggingService) {}

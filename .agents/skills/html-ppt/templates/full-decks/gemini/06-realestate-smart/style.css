@@ -1,0 +1,549 @@
+.tpl-realestate {
+  --bg: #fdfcfb; /* Cream White */
+  --surface: rgba(255, 255, 255, 0.95);
+  --primary: #121212; /* Ink Black */
+  --accent-gold: #c5a880; /* Champagne Gold */
+  --accent-gold-light: #e6d8c3;
+  --text-main: #1a1a1a;
+  --text-muted: #666666;
+  --border: rgba(197, 168, 128, 0.3); /* Thin gold borders */
+  --radius: 0px; /* Sharp elegant corners for luxury feel */
+  --font-sans: 'Montserrat', 'Helvetica Neue', system-ui, sans-serif;
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle Marble Texture on all slides */
+.tpl-realestate .slide {
+  padding: 60px 80px;
+  background:
+    linear-gradient(rgba(253, 252, 251, 0.94), rgba(253, 252, 251, 0.94)),
+    repeating-linear-gradient(135deg, rgba(197, 168, 128, 0.08) 0 1px, transparent 1px 22px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Cover Slide with Luxury Real Estate Image */
+.tpl-realestate .slide.title-slide {
+  background:
+    linear-gradient(rgba(18, 18, 18, 0.62), rgba(18, 18, 18, 0.62)),
+    url('img/smart_home.png') center / cover no-repeat !important;
+  color: #ffffff;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Dark elegant overlay for cover */
+.tpl-realestate .slide.title-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.65);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tpl-realestate .slide.title-slide > * {
+  position: relative;
+  z-index: 1;
+}
+
+.tpl-realestate .header {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+
+.tpl-realestate .kicker {
+  display: inline-block;
+  color: var(--accent-gold);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+.tpl-realestate .slide.title-slide .kicker {
+  font-size: 16px;
+  color: var(--accent-gold-light);
+  border-bottom: 1px solid var(--accent-gold-light);
+  padding-bottom: 8px;
+  animation: titleReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.tpl-realestate .h1 {
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--text-main);
+  margin: 0 0 16px 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.tpl-realestate .slide.title-slide .h1 {
+  font-size: 76px;
+  font-weight: 400;
+  margin: 24px 0;
+  /* Luxury gold metallic text effect */
+  background: linear-gradient(to right, #e6d8c3 0%, #c5a880 20%, #ffffff 50%, #c5a880 80%, #e6d8c3 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 15px 40px rgba(0,0,0,0.5); /* Drop shadow behind text block */
+  animation: goldShimmer 4s linear infinite, titleReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: 0.1s;
+}
+
+.tpl-realestate .slide.title-slide p {
+  animation: titleReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: 0.3s;
+}
+
+@keyframes goldShimmer {
+  to { background-position: 200% center; }
+}
+@keyframes titleReveal {
+  0% { opacity: 0; transform: translateY(30px); filter: blur(4px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.tpl-realestate .h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--primary);
+  margin: 0;
+  letter-spacing: 1px;
+}
+.tpl-realestate .h2 strong {
+  font-weight: 600;
+  color: var(--accent-gold);
+}
+
+/* Content Area filling */
+.tpl-realestate .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.tpl-realestate .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; }
+.tpl-realestate .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; flex: 1; }
+.tpl-realestate .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; flex: 1; }
+.tpl-realestate .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; flex: 1; }
+.tpl-realestate .grid-layout-sidebar { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; flex: 1; }
+
+/* Elegant Card Style with Fine Gold Border */
+.tpl-realestate .card {
+  background: var(--surface);
+  border: 1px solid rgba(197, 168, 128, 0.2);
+  padding: 35px 30px;
+  border-radius: var(--radius);
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+/* Hover Effect: Gold glow and subtle lift */
+.tpl-realestate .card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 15px 35px rgba(197, 168, 128, 0.15);
+  background: #ffffff;
+}
+
+.tpl-realestate .card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 0;
+  background: var(--accent-gold);
+  transition: height 0.5s ease;
+}
+.tpl-realestate .card:hover::before {
+  height: 100%;
+}
+
+.tpl-realestate .card-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+  color: var(--accent-gold);
+  font-size: 28px;
+}
+
+.tpl-realestate .card h3 {
+  font-size: 18px;
+  color: var(--primary);
+  margin-bottom: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.tpl-realestate .card p {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.tpl-realestate .card ul {
+  padding-left: 20px;
+  margin: 16px 0 0 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.tpl-realestate .card ul li { margin-bottom: 10px; }
+
+/* Stat Box - Luxury Minimalist */
+.tpl-realestate .stat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  background: var(--primary);
+  color: #ffffff;
+  border: 1px solid var(--accent-gold);
+  text-align: center;
+  transition: transform 0.4s ease;
+}
+.tpl-realestate .stat-box:hover {
+  transform: scale(1.02);
+}
+.tpl-realestate .stat-box .number {
+  font-family: var(--font-sans);
+  font-size: 46px;
+  font-weight: 300;
+  color: var(--accent-gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.tpl-realestate .stat-box .label {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Image Placeholders / Full backgrounds in cards */
+.tpl-realestate .image-ph {
+  background: var(--primary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  min-height: 180px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s ease;
+}
+.tpl-realestate .card:hover .image-ph {
+  transform: scale(1.01);
+}
+
+.tpl-realestate .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 250px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tpl-realestate .footer {
+  margin-top: auto;
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+.tpl-realestate .slide.title-slide .footer {
+  position: absolute;
+  bottom: 60px; /* Matching slide padding */
+  left: 80px;
+  right: 80px;
+  color: rgba(255,255,255,0.6);
+}
+
+.tpl-realestate .pill {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--primary);
+  color: var(--accent-gold);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+/* Data Table Elegant Mode */
+.tpl-realestate .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.tpl-realestate .data-table th {
+  background: rgba(197, 168, 128, 0.1);
+  color: var(--primary);
+  font-weight: 500;
+  text-align: left;
+  padding: 20px 24px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+.tpl-realestate .data-table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.15);
+  color: var(--text-main);
+  font-size: 14px;
+}
+.tpl-realestate .data-table tr:hover td { background: rgba(197, 168, 128, 0.03); }
+.tpl-realestate .data-table tr:last-child td { border-bottom: none; }
+
+/* Elegant Slide-in & Fade Animations */
+.tpl-realestate .slide.is-active .header,
+.tpl-realestate .slide.is-active .content-area > * {
+  animation: elegantReveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.tpl-realestate .slide.is-active .header { animation-delay: 0.1s; }
+.tpl-realestate .slide.is-active .content-area > .card:nth-child(1),
+.tpl-realestate .slide.is-active .content-area > .grid-2 > .card:nth-child(1),
+.tpl-realestate .slide.is-active .content-area > .grid-3 > .card:nth-child(1),
+.tpl-realestate .slide.is-active .content-area > .grid-4 > .card:nth-child(1),
+.tpl-realestate .slide.is-active .content-area > .grid-5 > .card:nth-child(1) { animation-delay: 0.2s; }
+
+.tpl-realestate .slide.is-active .content-area > .card:nth-child(2),
+.tpl-realestate .slide.is-active .content-area > .grid-2 > .card:nth-child(2),
+.tpl-realestate .slide.is-active .content-area > .grid-3 > .card:nth-child(2),
+.tpl-realestate .slide.is-active .content-area > .grid-4 > .card:nth-child(2),
+.tpl-realestate .slide.is-active .content-area > .grid-5 > .card:nth-child(2) { animation-delay: 0.35s; }
+
+.tpl-realestate .slide.is-active .content-area > .card:nth-child(3),
+.tpl-realestate .slide.is-active .content-area > .grid-3 > .card:nth-child(3),
+.tpl-realestate .slide.is-active .content-area > .grid-4 > .card:nth-child(3),
+.tpl-realestate .slide.is-active .content-area > .grid-5 > .card:nth-child(3) { animation-delay: 0.5s; }
+
+.tpl-realestate .slide.is-active .content-area > .card:nth-child(4),
+.tpl-realestate .slide.is-active .content-area > .grid-4 > .card:nth-child(4),
+.tpl-realestate .slide.is-active .content-area > .grid-5 > .card:nth-child(4) { animation-delay: 0.65s; }
+
+.tpl-realestate .slide.is-active .content-area > .card:nth-child(5),
+.tpl-realestate .slide.is-active .content-area > .grid-5 > .card:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes elegantReveal {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- NEW DIVERSIFIED LAYOUTS --- */
+
+/* 1. Layout Sticky (Slide 5, 9, 13, 17) */
+.tpl-realestate .layout-sticky {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 40px;
+}
+.tpl-realestate .layout-sticky .card:nth-child(1) { rotate: -2deg; }
+.tpl-realestate .layout-sticky .card:nth-child(2) { rotate: 2deg; translate: 0 15px; }
+.tpl-realestate .layout-sticky .card:nth-child(3) { rotate: -1deg; translate: 0 -10px; }
+
+.tpl-realestate .layout-sticky .card:hover {
+  rotate: 0deg;
+  transform: translateY(-10px) scale(1.03) !important;
+  border-color: var(--accent-gold);
+  z-index: 100;
+  background: white;
+}
+
+/* 2. Layout Zig-Zag (Slide 4, 11) */
+.tpl-realestate .layout-zigzag {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  flex: 1;
+  padding: 40px 0;
+}
+.tpl-realestate .layout-zigzag .card:nth-child(odd) { translate: 0 20px; }
+.tpl-realestate .layout-zigzag .card:nth-child(even) { translate: 0 -20px; }
+
+.tpl-realestate .layout-zigzag .card:hover {
+  translate: 0 0 !important;
+  transform: translateY(-8px) scale(1.02) !important;
+  z-index: 100;
+  border-color: var(--accent-gold);
+}
+
+/* 3. Layout Staircase (Slide 9, 17) */
+.tpl-realestate .layout-staircase {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  padding: 10px 0 10px 10%;
+}
+.tpl-realestate .layout-staircase .card {
+  width: 75%;
+  padding: 15px 25px;
+  border-left: 4px solid var(--accent-gold);
+}
+.tpl-realestate .layout-staircase .card h3 { margin-bottom: 5px; font-size: 20px; }
+.tpl-realestate .layout-staircase .card .card-icon { font-size: 24px; margin-bottom: 5px; }
+.tpl-realestate .layout-staircase .card p { font-size: 14px; line-height: 1.4; }
+.tpl-realestate .layout-staircase .card:nth-child(1) { translate: 0 0; }
+.tpl-realestate .layout-staircase .card:nth-child(2) { translate: 80px 0; border-left-color: var(--primary); }
+.tpl-realestate .layout-staircase .card:nth-child(3) { translate: 160px 0; border-left-color: var(--accent-gold); }
+
+/* 4. Layout Quad (Slide 11) */
+.tpl-realestate .layout-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-realestate .layout-quad .card:nth-child(1) { translate: -15px -15px; border-color: var(--accent-gold); }
+.tpl-realestate .layout-quad .card:nth-child(2) { translate: 15px -15px; border-color: var(--primary); }
+.tpl-realestate .layout-quad .card:nth-child(3) { translate: -15px 15px; border-color: var(--primary); }
+.tpl-realestate .layout-quad .card:nth-child(4) { translate: 15px 15px; border-color: var(--accent-gold); }
+
+.tpl-realestate .layout-quad .card:hover {
+  translate: 0 0 !important;
+  transform: scale(1.03) !important;
+  z-index: 100;
+  box-shadow: 0 20px 40px rgba(197, 168, 128, 0.2);
+}
+
+
+/* --- Diversity Layouts (v2) --- */
+.tpl-realestate .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-realestate .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-realestate .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-realestate .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-realestate .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-realestate .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--surface);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-realestate .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 0;
+}
+.tpl-realestate .layout-split-v2 .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+.tpl-realestate .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  margin-right: -10%;
+  z-index: 2;
+}
+.tpl-realestate .layout-split-v2 .card:nth-child(2) {
+  background: var(--primary);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  color: #fff;
+  z-index: 1;
+  padding-left: 120px;
+}
+.tpl-realestate .layout-split-v2 .card:hover { transform: scale(1.02); z-index: 10; }
+
+.tpl-realestate .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-realestate .layout-overlap-diag .card {
+  position: absolute;
+  width: 45%;
+  height: 60%;
+  padding: 40px;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-realestate .layout-overlap-diag .card:nth-child(1) {
+  top: 10%; left: 10%;
+  background: var(--surface);
+  border: 4px solid var(--primary);
+  z-index: 1;
+}
+.tpl-realestate .layout-overlap-diag .card:nth-child(2) {
+  bottom: 10%; right: 10%;
+  background: var(--bg);
+  border: 2px solid var(--secondary);
+  z-index: 2;
+  box-shadow: -20px -20px 0 rgba(0,0,0,0.2);
+}
+.tpl-realestate .layout-overlap-diag .card:hover {
+  transform: translate(-10px, -10px);
+  z-index: 100;
+  box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+}

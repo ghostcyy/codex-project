@@ -1,0 +1,80 @@
+{
+  "id": "weekly-report",
+  "label": {
+    "zh-CN": "周报汇报",
+    "en": "Weekly Report"
+  },
+  "description": {
+    "zh-CN": "适合周期复盘、经营数据、项目进展和管理层同步的稳定模板。",
+    "en": "A stable reporting template for periodic reviews, operating metrics, project status, and management updates."
+  },
+  "donorTemplateId": "weekly-report",
+  "deckClass": "tpl-weekly-report",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "minimal-nav",
+  "themeAlternates": [
+    "engineering-whiteprint",
+    "editorial-serif",
+    "sunset-warm"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "kpi-grid",
+      "chart",
+      "bullet-list",
+      "process",
+      "timeline"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "executives",
+    "sales",
+    "general-public"
+  ],
+  "formatFit": [
+    "report",
+    "briefing",
+    "analysis"
+  ],
+  "toneFit": [
+    "analytical",
+    "authoritative",
+    "rigorous"
+  ],
+  "defaultDensity": "balanced",
+  "defaultSlideCount": 8,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "none",
+      "grid-lines"
+    ],
+    "maxAccentSlides": 1
+  },
+  "embeddingPrompt": "Weekly report, monthly report, KPI review, progress update, business metrics, operations summary.",
+  "promptSignals": [
+    "周报",
+    "月报",
+    "复盘",
+    "进展",
+    "数据汇报",
+    "KPI",
+    "report",
+    "weekly",
+    "monthly",
+    "progress"
+  ],
+  "forbidPromptSignals": [
+    "路演",
+    "发布会"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

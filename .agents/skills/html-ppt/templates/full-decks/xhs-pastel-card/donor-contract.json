@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["Living With AI · 2026", "A soft manifesto"],
+  "forbiddenTextPatterns": ["Living\\s+With\\s+AI", "soft\\s+manifesto"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["xp-blob"],
   "decorativeOnlyClasses": [],

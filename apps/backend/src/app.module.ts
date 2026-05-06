@@ -8,6 +8,7 @@ import { LlmConfigModule } from "./modules/llm-config/llm-config.module";
 import { LlmLoggingModule } from "./modules/llm-logging/llm-logging.module";
 import { NewsModule } from "./modules/news/news.module";
 import { PptChatModule } from "./modules/ppt-chat/ppt-chat.module";
+import { HtmlPptV3Module } from "./modules/ppt-chat/html-ppt-v3/html-ppt-v3.module";
 import { VideoModule } from "./modules/video/video.module";
 
 @Module({
@@ -21,7 +22,8 @@ import { VideoModule } from "./modules/video/video.module";
     LlmConfigModule,
     LlmLoggingModule,
     HtmlPptRendererModule,
-    PptChatModule
+    PptChatModule,
+    HtmlPptV3Module
   ]
 })
 export class AppModule {}

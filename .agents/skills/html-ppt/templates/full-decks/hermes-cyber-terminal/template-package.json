@@ -1,0 +1,81 @@
+{
+  "id": "hermes-cyber-terminal",
+  "label": {
+    "zh-CN": "赛博终端",
+    "en": "Cyber Terminal"
+  },
+  "description": {
+    "zh-CN": "适合安全、开发者、系统底层和未来科技主题的终端风模板。",
+    "en": "A terminal-inspired template for security, developer, systems, and future-tech topics."
+  },
+  "donorTemplateId": "hermes-cyber-terminal",
+  "deckClass": "tpl-hermes-cyber-terminal",
+  "aspectRatio": "16:9",
+  "rendererProfile": "standard-wide",
+  "themeId": "terminal-cyber",
+  "themeAlternates": [
+    "graphify-dark",
+    "engineering-whiteprint",
+    "knowledge-blueprint"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "bullet-list",
+      "chart",
+      "process",
+      "comparison",
+      "timeline"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "engineers",
+    "researchers",
+    "policy-makers"
+  ],
+  "formatFit": [
+    "briefing",
+    "analysis",
+    "lecture"
+  ],
+  "toneFit": [
+    "rigorous",
+    "analytical",
+    "authoritative"
+  ],
+  "defaultDensity": "dense",
+  "defaultSlideCount": 11,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "fade-up",
+      "scale-in",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "grid-lines",
+      "particles-subtle",
+      "none"
+    ],
+    "maxAccentSlides": 3
+  },
+  "embeddingPrompt": "Cyber terminal presentation, security, systems, infrastructure, developer console, command-line aesthetic.",
+  "promptSignals": [
+    "终端",
+    "赛博",
+    "安全",
+    "网络安全",
+    "底层系统",
+    "cyber",
+    "terminal",
+    "security",
+    "infra"
+  ],
+  "forbidPromptSignals": [
+    "儿童",
+    "小红书"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

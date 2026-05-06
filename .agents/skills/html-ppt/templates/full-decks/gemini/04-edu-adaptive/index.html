@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI驱动的自适应学习系统 (Adaptive Learning)</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-edu">
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">NEXT-GEN EDTECH PLATFORM</div>
+                <h1 class="h1">AI驱动的自适应<br>学习系统与教改实践</h1>
+                <p style="font-size: 22px; margin-top: 24px; font-weight: 600;">因材施教：为每个孩子计算出最适合的学习路径</p>
+            </div>
+            <div class="footer">
+                <span>EduMind 智能教育科技集团</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 背景痛点 (3栏) -->
+        <section class="slide" data-title="传统教育痛点">
+            <div class="header">
+                <div class="kicker">THE CHALLENGE</div>
+                <h2 class="h2">“一刀切”式教育的系统性困境</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-icon">🥱</div>
+                        <h3>学优生“吃不饱”</h3>
+                        <p>传统课堂按照平均进度推进，导致处于头部的学优生大量时间被浪费在已经掌握的知识点上，逐渐丧失学习兴趣与挑战欲。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">😫</div>
+                        <h3>后进生“跟不上”</h3>
+                        <p>一旦在某个前置知识点（如分数乘法）卡壳，后续的课程（如代数方程）将完全听不懂，最终导致隐性辍学和严重偏科。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">😰</div>
+                        <h3>教师精力透支</h3>
+                        <p>一名教师面对 40-50 名学生，根本无法做到真正意义上的“因材施教”与“个性化辅导”，只能依赖极其耗时的题海战术。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>01 教育现状剖析</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 执行摘要 (侧边栏) -->
+        <section class="slide" data-title="方案概述">
+            <div class="header">
+                <div class="kicker">EXECUTIVE SUMMARY</div>
+                <h2 class="h2">什么是真正的自适应学习？</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">核心理念</span>
+                        <h3>让算法成为学生的“一对一私教”</h3>
+                        <p>基于人工智能与认知科学，自适应学习系统 (Adaptive Learning) 能够实时采集学生在答题、阅读时的交互数据。</p>
+                        <p style="margin-top:16px;">系统不仅知道学生做错了哪道题，更知道<strong>为什么错</strong>，并立即动态调整下一道题的难度和知识点，绘制专属于个人的知识图谱。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="stat-box">
+                            <div class="number">30<span style="font-size:24px">%</span></div>
+                            <div class="label">平均节省学习时间</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">1.5<span style="font-size:24px">x</span></div>
+                            <div class="label">知识点掌握牢固度</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">98<span style="font-size:24px">%</span></div>
+                            <div class="label">系统自动批改率</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">MS</div>
+                            <div class="label">毫秒级难度调节</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>02 破局与创新</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 核心引擎：知识图谱 (4栏) -->
+        <section class="slide" data-title="底层技术：知识图谱">
+            <div class="header">
+                <div class="kicker">CORE TECH: KNOWLEDGE GRAPH</div>
+                <h2 class="h2">拆解教材：纳米级知识图谱</h2>
+            </div>
+            <div class="content-area">
+                <p style="font-size: 16px; margin-bottom: 10px;">我们将 K12 阶段的国家统编教材拆解为数万个互相连接的细微节点，形成一张庞大的知识网。</p>
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <span class="pill">01 拆解节点</span>
+                        <h3>知识点纳米化</h3>
+                        <p>将传统的“一元二次方程”章节，拆解为“配方法”、“因式分解”、“判别式”等 15 个独立原子概念。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">02 建立依赖</span>
+                        <h3>前置/后置关系</h3>
+                        <p>如果学生在 D 节点出错，系统会自动追溯到基础的 A 节点或 B 节点，寻找真正的认知漏洞。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">03 认知能力</span>
+                        <h3>多维评估标签</h3>
+                        <p>除了知识点，题目还被打上“计算能力”、“空间想象”、“逻辑推理”等深层次的思维能力标签。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">04 题库映射</span>
+                        <h3>海量内容挂载</h3>
+                        <p>拥有超过 500 万道精加工题目及微课视频，精准映射到图谱的每一个微小坐标上。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>03 AI引擎解析</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 核心引擎：IRT (2栏) -->
+        <section class="slide" data-title="底层技术：IRT模型">
+            <div class="header">
+                <div class="kicker">CORE TECH: IRT ALGORITHM</div>
+                <h2 class="h2">项目反应理论 (IRT)：测量真实的学习能力</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>超越传统的“正确率”</h3>
+                        <p>在传统测试中，做对 8 道题的学生分数都是 80 分。但在自适应系统中，做对 8 道“难题”和做对 8 道“简单题”的学生，其能力值 (Theta) 截然不同。</p>
+                        <ul style="margin-top:16px;">
+                            <li><strong>题目难度参数 (a)：</strong> 这道题区分高低分学生的能力。</li>
+                            <li><strong>区分度参数 (b)：</strong> 题目的固有难度阈值。</li>
+                            <li><strong>猜测系数 (c)：</strong> 学生靠瞎猜做对的概率。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>贝叶斯知识追踪 (BKT)</h3>
+                        <p>随着学生每做完一道题，系统都会使用贝叶斯公式重新计算其掌握该知识点的概率。一旦概率超过 95%，系统将判定为“已掌握”，自动跳过后续重复性练习。</p>
+                        <div class='img-wrap'><img src='img/classroom.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>03 AI引擎解析</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 学习旅程 (Timeline) -->
+        <section class="slide" data-title="学生端体验">
+            <div class="header">
+                <div class="kicker">STUDENT JOURNEY</div>
+                <h2 class="h2">一堂典型的自适应数学课</h2>
+            </div>
+            <div class="content-area" style="padding-top: 10px;">
+                <div class="path-step">
+                    <div class="path-number">1</div>
+                    <div>
+                        <h3 style="margin:0 0 8px 0; font-size:18px;">极速前测 (Diagnostic)</h3>
+                        <p style="margin:0; font-size:15px; color:var(--text-muted);">只需完成 5 道经过精心挑选的测试题，系统瞬间定位该章节的薄弱点，免去无效做题。</p>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-number">2</div>
+                    <div>
+                        <h3 style="margin:0 0 8px 0; font-size:18px;">个性化任务推送</h3>
+                        <p style="margin:0; font-size:15px; color:var(--text-muted);">系统为该生生成专属挑战路径。由于前测发现“去括号法则”薄弱，系统优先推送了一段 3 分钟的微课动画。</p>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-number">3</div>
+                    <div>
+                        <h3 style="margin:0 0 8px 0; font-size:18px;">动态闯关练习</h3>
+                        <p style="margin:0; font-size:15px; color:var(--text-muted);">学生开始答题。连续答对两道后，系统悄然提升难度；一旦答错，系统立刻退回降低难度，并提供阶梯式提示(Scaffolding)。</p>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-number">4</div>
+                    <div>
+                        <h3 style="margin:0 0 8px 0; font-size:18px;">知识点点亮</h3>
+                        <p style="margin:0; font-size:15px; color:var(--text-muted);">完成训练后，屏幕上的“知识树”长出新叶，获得虚拟成就徽章，正向反馈极大激发内驱力。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>04 用户体验与旅程</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图 -->
+        <section class="slide" data-title="学习专注度跟踪">
+            <div class="header">
+                <div class="kicker">ENGAGEMENT METRICS</div>
+                <h2 class="h2">传统课堂 vs 自适应学习的专注度变化</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">数据洞察</span>
+                        <h3>心流状态 (Flow State)</h3>
+                        <p>根据心理学研究，只有当挑战难度与学生能力完美匹配时，学生才会进入专注的“心流”状态。</p>
+                        <p style="margin-top:12px;">右图显示，传统课堂在 15 分钟后由于内容难度无法兼顾所有人，导致大量学生走神（专注度断崖下跌）。而自适应系统通过动态调节，能将专注度维持在 80% 以上长达一节课的时间。</p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>05 教学效果验证</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 教师驾驶舱 (2栏) -->
+        <section class="slide" data-title="教师数据看板">
+            <div class="header">
+                <div class="kicker">TEACHER DASHBOARD</div>
+                <h2 class="h2">赋予教师“上帝视角”</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>实时全息学情</h3>
+                        <p>教师的平板端会实时显示全班 40 名学生的进度红绿灯。谁正卡在第一题、谁已经超前完成，一目了然。</p>
+                        <ul style="margin-top:16px;">
+                            <li><strong>共性错题抓取：</strong> 自动统计全班错误率最高的知识点，方便教师直接停下来针对性集中讲授。</li>
+                            <li><strong>预警系统：</strong> 当某学生连续出错出现情绪挫败时，系统闪烁提示教师进行情感干预。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>一键分层作业生成</h3>
+                        <p>告别抄黑板和统一发卷子。下课前，教师只需点击生成，系统就会根据每个学生今天的掌握情况，直接打印/下发完全不同的个性化家庭作业（千人千卷）。</p>
+                        <div class='img-wrap'><img src='img/classroom.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>06 教师赋能系统</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 分层提分 (柱状图) -->
+        <section class="slide" data-title="提分效能验证">
+            <div class="header">
+                <div class="kicker">EFFICACY & OUTCOMES</div>
+                <h2 class="h2">实验班期末标准化测试成绩对比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span class="pill">显著提升</span>
+                        <h3>全面超越常模</h3>
+                        <p>在某省重点初中进行的为期一学期的对比实验中，使用自适应系统的实验班，在期末区级统考中实现了大幅跃升。</p>
+                        <p style="margin-top:16px;">最令人振奋的是，<strong>提升幅度最大的是原本成绩排在后 30% 的尾部学生</strong>（平均提升 18 分）。系统精准填补了他们长期缺失的基础漏洞，重新点燃了学习希望。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>05 教学效果验证</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 成绩分布改善 (饼图) -->
+        <section class="slide" data-title="缩小教育差距">
+            <div class="header">
+                <div class="kicker">CLOSING THE GAP</div>
+                <h2 class="h2">消除两极分化，促进教育公平</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>从“正态分布”到“偏态优秀”</h3>
+                        <p>传统教育的成绩往往呈现残酷的钟形曲线（两头小中间大）。但在自适应教育的介入下，我们看到了成绩分布向高分段发生显著的整体右移。</p>
+                        <p style="margin-top:16px;">右图展示了实验班期末优秀率、良好率与不及格率的结构性变化。不及格率几乎被完全消除。</p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>05 教学效果验证</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 终端兼容 (3栏) -->
+        <section class="slide" data-title="硬件兼容性">
+            <div class="header">
+                <div class="kicker">MULTI-DEVICE COMPATIBILITY</div>
+                <h2 class="h2">无需换代，全面兼容公立校存量硬件</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>机房/PC端</h3>
+                        <p>完全适配学校微机室的陈旧 Windows 系统，纯 B/S 网页架构，无需安装庞大的客户端，打开浏览器即可高速刷题。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📱</div>
+                        <h3>智能平板 (Pad)</h3>
+                        <p>支持学校采购的各类 Android/iPad 智慧课堂终端。内置深度护眼模式与防沉迷应用锁，确保设备纯粹用于学习。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🖨️</div>
+                        <h3>纸笔互动 (智能笔)</h3>
+                        <p>考虑到视力保护要求，我们支持点阵纸+智能笔技术。学生在普通纸张上书写，笔记轨迹实时蓝牙同步至云端批改。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>07 实施与部署准备</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 课程融合 (4栏) -->
+        <section class="slide" data-title="无缝教学融合">
+            <div class="header">
+                <div class="kicker">CURRICULUM INTEGRATION</div>
+                <h2 class="h2">完美嵌入学校常态化教学环节</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <span class="pill">课前</span>
+                        <h3>自适应预习</h3>
+                        <p>学生在家完成 10 分钟微课与预习测验。教师第二天上课前即可看到热力图，知道哪些概念不用讲，哪些需要重点讲。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">课中</span>
+                        <h3>互动随堂测</h3>
+                        <p>讲完重难点后立刻发起 3 分钟限时作答，系统秒级收集全班答案并投屏，极大活跃课堂气氛与反馈效率。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">课后</span>
+                        <h3>个性化作业</h3>
+                        <p>布置“千人千卷”作业，学优生做拓展挑战，基础差的学生只做巩固题。避免无效刷题造成的厌学情绪。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">考前</span>
+                        <h3>错题本复习</h3>
+                        <p>考前一键生成该生本学期全部遗漏知识点的“智能错题重练卷”，实现高维度的精准复习，不留死角。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>07 实施与部署准备</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 教师角色重塑 (2栏) -->
+        <section class="slide" data-title="人机协同教学">
+            <div class="header">
+                <div class="kicker">EMPOWERING EDUCATORS</div>
+                <h2 class="h2">AI 绝不替代老师，而是解放老师</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="color:var(--secondary)">机器负责“教书”</h3>
+                        <p>批改海量作业、寻找成绩规律、出卷子、播放基础知识动画……这些低创造性、高重复性的体力活，统统交给 AI 系统。</p>
+                        <p style="margin-top:16px;">机器不知疲倦，能实现绝对客观的标准评价。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:var(--primary)">人类负责“育人”</h3>
+                        <p>当老师从题海中被解放出来后，他们终于有时间去关注教育的灵魂：发现学生的闪光点、进行心理疏导、激发好奇心、组织团队协作与项目制学习 (PBL)。</p>
+                        <p style="margin-top:16px;"><strong>教师将从“知识灌输者”转型为“学习设计师”。</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>08 教育哲学与伦理</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 隐私保护 (3栏) -->
+        <section class="slide" data-title="学生数据安全">
+            <div class="header">
+                <div class="kicker">DATA PRIVACY & SECURITY</div>
+                <h2 class="h2">最高规格的未成年人隐私保护</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <div class="card-icon">🔒</div>
+                        <h3>脱敏存储</h3>
+                        <p>学生的真实姓名与学籍号在上传云端前全部哈希加密。AI 引擎只认“加密ID”不认人，杜绝泄露风险。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⚖️</div>
+                        <h3>COPPA 标准认证</h3>
+                        <p>产品严格遵从国内外未成年人数据保护法案（如美国COPPA），无任何广告植入，绝不向第三方贩卖数据。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🗑️</div>
+                        <h3>被遗忘权</h3>
+                        <p>毕业或转学后，家长或学校可一键彻底销毁该生在系统内的所有学习轨迹、作答音频及行为数据。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>08 教育哲学与伦理</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 案例研究 (2栏) -->
+        <section class="slide" data-title="标杆案例">
+            <div class="header">
+                <div class="kicker">INTERLOCK_SPLIT</div>
+                <h2 class="h2">XX市第一中学的数字化转型</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-split-v2">
+                    <div class="card">
+                        <h3>从抵触到离不开</h3>
+                        <p>在试点初期，许多老教师对“算法教书”抱有严重抵触。然而在经历了第一次期中考试阅卷的“一秒出分并附带详细错因分析报告”后，全校数学组主动申请扩大使用规模。</p>
+                    </div>
+                    <div class="card">
+                        <h3>显著的减负增效指标</h3>
+                        <ul style="margin-top:0;">
+                            <li>教师日均批改作业时间：从 <strong>2.5小时</strong> 降至 <strong>20分钟</strong>。</li>
+                            <li>学生日均作业量：从 <strong>6页</strong> 缩减为 <strong>2页(全是弱点)</strong>，但总成绩平均提升 11 分。</li>
+                            <li>错题本整理：变为系统 <strong>一键导出打印</strong>。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>09 落地成果展示</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 投资回报 ROI 表格 -->
+        <section class="slide" data-title="经济与管理效益">
+            <div class="header">
+                <div class="kicker">VALUE PROPOSITION & ROI</div>
+                <h2 class="h2">为学校/教育局带来的管理价值评估</h2>
+            </div>
+            <div class="content-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">核心痛点</th>
+                            <th style="width:35%">传统应对方式成本</th>
+                            <th style="width:40%">自适应系统带来的增益效益</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>教学质量监控盲区</td>
+                            <td>依赖期中期末两场大考，数据滞后数月，无法及时纠偏。</td>
+                            <td style="color:var(--primary); font-weight:bold;">教育局级看板实时更新，精确到某学校某班的某个具体知识点盲区。</td>
+                        </tr>
+                        <tr>
+                            <td>教辅材料采购</td>
+                            <td>每年巨额采购大量纸质教辅题册，重复率极高且笨重。</td>
+                            <td style="color:var(--primary); font-weight:bold;">云端活体题库每日更新，彻底取代教辅采购支出，实现无纸化或少纸化。</td>
+                        </tr>
+                        <tr>
+                            <td>校外培训溢出</td>
+                            <td>学生因课内听不懂，家长每年花费数万元报校外辅导班。</td>
+                            <td style="color:var(--primary); font-weight:bold;">极高性价比的校内个性化辅导，完美响应国家“双减”政策，减轻家庭经济负担。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <span>10 商业合作与规划</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 实施培训 (3栏) -->
+        <section class="slide" data-title="实施路径">
+            <div class="header">
+                <div class="kicker">IMPLEMENTATION ROADMAP</div>
+                <h2 class="h2">平滑无感的落地交付体系</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>M1: 基础建设打通</h3>
+                        <p>派驻技术团队，完成系统与学校现有身份认证体系(SSO)对接，导入课表与学籍名册，跑通网络压测。</p>
+                    </div>
+                    <div class="card">
+                        <h3>M2: 骨干教师集训</h3>
+                        <p>并非空洞讲理论。直接让各科教研组长上机操作布置作业、查看学情，培养第一批“种子用户”去带动全校。</p>
+                    </div>
+                    <div class="card">
+                        <h3>M3: 伴随式驻场服务</h3>
+                        <p>开学前两个月，我们的运营专家常驻学校教务处，随时解决操作疑问，确保系统常态化使用率达标。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>10 商业合作与规划</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 资金申请支持 (侧边栏) -->
+        <section class="slide" data-title="资金与立项">
+            <div class="header">
+                <div class="kicker">FUNDING & GRANTS</div>
+                <h2 class="h2">教育信息化专项资金申报支持</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class='img-wrap'><img src='img/classroom.png' style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                    <div class="card">
+                        <h3>协助学校申报专项</h3>
+                        <p>引入本系统不一定是学校财务纯支出。我们的政策专家库将协助公立学校与教育局，撰写符合国家导向的《教育数字化转型项目申报书》。</p>
+                        <ul style="margin-top:16px;">
+                            <li><strong>贴息贷款政策：</strong> 完美匹配近期国家推动的教育新型基础设施建设(新基建)贴息贷款范畴。</li>
+                            <li><strong>科研课题联合：</strong> 我们可与贵校联合申报省级教育科学规划课题，产出高水平教改论文与奖项。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>10 商业合作与规划</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 未来路线图 (4栏) -->
+        <section class="slide" data-title="产品未来路线图">
+            <div class="header">
+                <div class="kicker">FUTURE ROADMAP</div>
+                <h2 class="h2">教育 AI 的下一步是什么？</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <span class="pill">2026 Q3</span>
+                        <h3>生成式辅导老师</h3>
+                        <p>基于大语言模型(LLM)的苏格拉底式对话机器人。它不会直接给答案，而是通过连续提问引导学生自己顿悟。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">2027 Q1</span>
+                        <h3>情绪计算与关怀</h3>
+                        <p>通过终端前置摄像头检测到学生眉头紧锁时，系统将主动暂停习题，播放舒缓音乐或提供心理减压小游戏。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">2027 Q4</span>
+                        <h3>跨学科融合网络</h3>
+                        <p>打通物理与数学的壁垒。如果物理计算卡壳，系统能自动跳转到数学一元一次方程的补救模块。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">2028+</span>
+                        <h3>VR 虚拟实验沙盒</h3>
+                        <p>危险的化学实验或微观细胞观察，直接在空间计算设备中生成，学生可自由探索试错，且百分百安全。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>结束语</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">预见教育的未来</h1>
+                <p style="font-size: 24px; color: rgba(255,255,255,0.9); margin-top: 24px; font-weight: 500;">
+                    让每一颗不同的种子，都在最适合的温度下发芽。
+                </p>
+                <div style="margin-top: 50px;">
+                    <span class="pill" style="font-size: 15px; padding: 12px 28px; background: rgba(255,255,255,0.25); color: #fff;">索取免费试用账号：hello@edumind-ai.com</span>
+                </div>
+            </div>
+            <div class="footer">
+                <span>EduMind 智能教育科技集团</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script src="assets/edit-mode.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 图表全局配置
+            Chart.defaults.color = '#64748b';
+            Chart.defaults.font.family = "'Nunito', sans-serif";
+
+            // 7页：折线图
+            const ctxLine = document.getElementById('lineChart');
+            if (ctxLine) {
+                new Chart(ctxLine.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['0分', '5分', '10分', '15分', '20分', '30分', '40分'],
+                        datasets: [
+                            {
+                                label: '自适应系统辅助课堂',
+                                data: [85, 90, 88, 92, 85, 82, 80],
+                                borderColor: '#4f46e5',
+                                backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                                borderWidth: 4,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: '传统听讲式课堂',
+                                data: [85, 82, 75, 60, 45, 30, 25],
+                                borderColor: '#ec4899',
+                                borderDash: [5, 5],
+                                borderWidth: 3,
+                                fill: false,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } },
+                        scales: { y: { min: 0, max: 100, title: { display: true, text: '学生专注度指数 (%)' } } }
+                    }
+                });
+            }
+
+            // 9页：柱状图
+            const ctxBar = document.getElementById('barChart');
+            if (ctxBar) {
+                new Chart(ctxBar.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['初一期中(未使用)', '初一期末(使用一学期)', '初二期中(使用一年)'],
+                        datasets: [
+                            {
+                                label: '实验班平均分',
+                                data: [76, 84, 89],
+                                backgroundColor: '#4f46e5',
+                                borderRadius: 6
+                            },
+                            {
+                                label: '对照班(年级均分)',
+                                data: [75, 76, 77],
+                                backgroundColor: '#e2e8f0',
+                                borderRadius: 6
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { min: 60, title: { display: true, text: '数学统考标准分' } }
+                        }
+                    }
+                });
+            }
+
+            // 10页：饼图
+            const ctxPie = document.getElementById('pieChart');
+            if (ctxPie) {
+                new Chart(ctxPie.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['优秀 (90分以上)', '良好 (75-89分)', '及格 (60-74分)', '不及格 (<60分)'],
+                        datasets: [{
+                            data: [35, 45, 18, 2],
+                            backgroundColor: [
+                                '#4f46e5',
+                                '#818cf8',
+                                '#c7d2fe',
+                                '#f97316'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#ffffff',
+                            hoverOffset: 5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        plugins: { legend: { position: 'right' } }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3112 @@
+{
+  "schemaVersion": 2,
+  "id": "03-medical-ai",
+  "deckClass": "tpl-medical",
+  "label": {
+    "zh-CN": "模板 03-medical-ai",
+    "en": "Template 03-medical-ai"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "AI辅助诊断在基层医院的应用实践"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SMART HEALTHCARE INITIATIVE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "中华医学会 · 智能医疗分会"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "科技赋能，让优质医疗资源触手可及"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "感谢您的聆听"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "中华医学会 · 智能医疗分会"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > p",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "携手推进中国基层医疗数字化普惠"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.title-content-wrapper:nth-of-type(1) > div > span.pill",
+          "tarChars": 19,
+          "maxChars": 37,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "商务合作：bd@smart-med-ai.com"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "基层医疗痛点",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 62,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "当前基层医疗面临的核心困境"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "BACKGROUND & CHALLENGES"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "01 项目背景"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "优质医生资源匮乏"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "县级及乡镇卫生院极度缺乏经验丰富的影像科、病理科主任医师。常见病的漏诊误诊率远高于三甲医院。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "筛查诊断效率低下"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 122,
+          "maxChars": 244,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "面对庞大的基层初诊人群，单日几十至上百份的 CT 与心电图阅片量让仅有的几位全科医生不堪重负。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "设备闲置与能力错配"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 132,
+          "maxChars": 264,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "虽然国家补贴采购了先进的 DR/CT 硬件设备，但由于缺乏能准确解读高阶影像的专家，导致设备长期闲置。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "方案概述",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x1 + stat x4; pageType:sidebar, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x1 + stat x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-2",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-3",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-4",
+            "kind": "stat",
+            "subtype": "stat"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x2": 1,
+          "card": 2,
+          "stat": 8
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 78,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "AI 辅助诊断系统的战略介入"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "EXECUTIVE SUMMARY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "01 项目背景"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "打造永不疲倦的“数字专家”"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 156,
+          "maxChars": 312,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过在基层 HIS 和 PACS 系统中无缝嵌入深度学习算法，AI 可以在医生阅片前完成 90% 的病灶标记与初筛工作。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "这并非替代医生，而是为全科医生配备了一位具有三甲医院专家水平的“副手(Copilot)”。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "%"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "min"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 14,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "94.5%"
+        },
+        {
+          "slotId": "stat-number-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1)",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "2.3min"
+        },
+        {
+          "slotId": "stat-number-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "15+"
+        },
+        {
+          "slotId": "stat-number-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.number:nth-of-type(1)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "0"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "肺结节综合检出率"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.desc:nth-of-type(3)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "持平省级三甲水平"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "平均单例耗时缩短"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.desc:nth-of-type(3)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "相较于纯人工阅片"
+        },
+        {
+          "slotId": "stat-label-5",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "覆盖常见病种群"
+        },
+        {
+          "slotId": "stat-label-6",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.desc:nth-of-type(3)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "涵盖心肺、眼底、骨龄"
+        },
+        {
+          "slotId": "stat-label-7",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "基层硬件改造成本"
+        },
+        {
+          "slotId": "stat-label-8",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.desc:nth-of-type(3)",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "基于云端API直连部署"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "核心价值"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "系统架构",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 61,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "云-边-端 一体化医疗架构"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "02 技术实现"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "基层 PACS 直连"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "兼容院内老旧的 DICOM 影像格式，拍摄完成后自动触发脱敏推流，无需医生额外点击导出上传。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "前置脱敏网关"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在医院内网部署轻量级网关，自动剔除患者姓名、身份证号等敏感信息，仅保留纯净影像特征。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "GPU 弹性推理集群"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 124,
+          "maxChars": 248,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "汇聚数百万三甲医院金标准病历训练出的三维卷积神经网络(3D-CNN)，在毫秒级生成病灶三维重建。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "结构化报告生成"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > p",
+          "tarChars": 138,
+          "maxChars": 276,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "自动高亮可疑区域并出具标准化(如 BI-RADS/Lung-RADS)的辅助文本报告，供主治医生审核签字。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "01 终端接入 (Terminal)"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 13,
+          "maxChars": 25,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "02 边缘计算 (Edge)"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 13,
+          "maxChars": 26,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "03 云端算力 (Cloud)"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 14,
+          "maxChars": 28,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "04 结果回传 (Output)"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "肺部筛查",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 82,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "早期肺癌/肺结节精准筛查"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CLINICAL SCENARIO 01"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "03 核心临床应用"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极大降低漏诊率"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "对于 3mm 以下的微小磨玻璃结节(GGO)，人工在疲劳状态下极易漏诊。AI 系统通过层间连续性分析，可实现像素级的三维捕捉。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AI 引入前后早期肺结节月度检出例数对比"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "右图展示了某基层试点医院引入 AI 系统后 6 个月内，早期微小结节检出数量的显著爬坡趋势。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "应用成效"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "眼底筛查",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x2 + image x2; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x2 + image x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "image-2",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "image": 4
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 71,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "糖尿病视网膜病变 (DR) 自动分级"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CLINICAL SCENARIO 02"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "03 核心临床应用"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "痛点：无眼科专家的慢病管理"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "中国有上亿糖尿病患者，基层慢病管理严重缺乏眼底阅片能力，导致大量患者错过最佳治疗期走向失明。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "方案：便携眼底机 + AI 秒级分级"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "只需基层护士操作免散瞳眼底相机，图像自动上传。AI 在 5 秒内精准标定微血管瘤、硬性渗出，并输出国际标准的 5 级分类建议。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']",
+        "img[data-image-slot='1']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "心电筛查",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 69,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "动态心电图(Holter)异常捕捉"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CLINICAL SCENARIO 03"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "03 核心临床应用"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "海量数据挑战"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 122,
+          "maxChars": 244,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "24 小时动态心电图会产生超过 10 万个心动周期，人工逐一排查不仅耗时极长，且极易疲劳出错。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "毫秒级波形识别"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于 RNN/LSTM 时序模型，AI 可在 1 分钟内完成全天数据分析，精准捕捉早搏、房颤、房室传导阻滞等 30 多种异常。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "急救绿色通道"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 128,
+          "maxChars": 256,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "当系统检测到急性心肌梗死(STEMI)高危波段时，将直接触发院内短信熔断报警，为抢救赢下黄金时间。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "效率提升对比",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2 + list x1; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4,
+          "list": 2
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 66,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "医生工作流耗时对比评估"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "EFFICIENCY METRICS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "04 效能评估报告"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "将时间还给医患沟通"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 132,
+          "maxChars": 264,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "数据表明，在引入 AI 辅助后，全科医生在“影像寻找病灶”与“书写标准报告”环节的耗时减少了 70%。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 164,
+          "maxChars": 328,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "医生不再是“看片机器”，而是成为最终结果的“复核者(Reviewer)”，从而有更多时间用于对患者进行病情解释和人文关怀。"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "单日门诊吞吐量提升 45%"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "医疗纠纷投诉率下降 12%"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 9,
+          "maxChars": 17,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "显著释放生产力"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "检出病种分布",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 64,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "基层 AI 辅助检出高频阳性病种占比"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "DIAGNOSTIC DISTRIBUTION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "04 效能评估报告"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "防范“因病致贫”的公共卫生防线"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 128,
+          "maxChars": 256,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "通过长达一年的区域卫生数据追踪，我们发现 AI 极大地提升了慢病和早期重症在基层的“首诊拦截率”。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "这有效阻断了小病拖成大病，真正落实了国家“分级诊疗，首诊在基层”的宏观医改目标。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "grid-5",
+      "sourcePageType": "grid-5",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "多学科协同",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x5 x1 + card x5; pageType:grid-5, layout:grid, grid:1x5",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x5 x1 + card x5",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x5",
+            "selector": ".grid-5",
+            "layout": {
+              "rows": 1,
+              "cols": 5,
+              "items": 5,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-5",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x5": 1,
+          "card": 10
+        },
+        "tags": [
+          "pageType:grid-5",
+          "layout:grid",
+          "grid:1x5"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 5,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "基于云端 AI 报告的远程 MDT 协同"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SYSTEM_ARCHITECTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "05 医联体业务流"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "基层初筛"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(1) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "全科医生使用 AI 发现疑难阴影并勾选“发起会诊”。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数据封包"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "包含原始 DICOM 及 AI 三维渲染标注的资料自动云端加密。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "专家复核"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "上级三甲医院专家在移动端/PC端直接查看结构化高亮病历。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "结论下发"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "专家出具权威诊断指导，报告同步至基层 HIS 系统。"
+        },
+        {
+          "slotId": "card-5-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "双向转诊"
+        },
+        {
+          "slotId": "card-5-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-5 > div.card:nth-of-type(5) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "确诊重症直接开通住院绿色通道；轻症则留存基层随访。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "当 AI 在基层给出高危预警后，系统将自动触发向三甲医联体上级医院的远程会诊请求流。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "文本NLP处理",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x4; pageType:grid-4, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-quad",
+            "kind": "grid",
+            "subtype": "layout-quad",
+            "selector": ".layout-quad",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-quad": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "电子病历 (EMR) 的自然语言理解"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CLINICAL NLP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "05 医联体业务流"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "非结构化破壁"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > p",
+          "tarChars": 130,
+          "maxChars": 260,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基层医生书写的门诊日志多为自由文本。大语言模型(LLM)可自动提取其中的主诉、现病史等关键医学实体。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "ICD-10 自动编码"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "精准理解医生的口语化描述，并自动映射为标准的 ICD-10 疾病分类代码，规范医保结算。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "用药冲突预警"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "关联提取处方数据，实时比对医学知识图谱，拦截基层常见的配伍禁忌 and 超适应症开药。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "随访表单自动填充"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "基于本次就诊对话，自动为高血压/糖尿病患者生成国家要求的公卫标准化随访建档表单。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "数据安全与合规",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 69,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "坚守医疗隐私底线的合规架构"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "SECURITY & COMPLIANCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "06 基础设施支撑"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "院内脱敏机制"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 144,
+          "maxChars": 288,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "所有医学影像在离开医院防火墙前，必须经过前置机对 DICOM 头部标签进行不可逆哈希模糊，确保“可用不可见”。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "等保三级与合规"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "云端计算节点全部部署于通过国家信息安全等级保护三级认证的医疗专属云，符合《数据安全法》要求。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "联邦学习模型进化"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "采用联邦学习(Federated Learning)技术，各基层医院数据不出域，仅在本地更新模型梯度，实现联合训练。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "人机协作模式",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x2 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x2 + image x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 97,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "医生主导的人机协作新范式"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "HUMAN-IN-THE-LOOP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "07 临床人文思考"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "传统迷思：AI 会取代医生吗？"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 198,
+          "maxChars": 396,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "不会。医学具有强烈的伦理属性与复杂性，代码无法承担最终的生命责任。我们设计的原则是：AI 负责“地毯式搜索与概率提示”，医生负责“最终判决与治疗决策”。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "系统闭环反馈"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 190,
+          "maxChars": 380,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "当医生在软件界面修改了 AI 的错误勾画框时，这些“修正”行为将被匿名化收集，成为下一代模型最宝贵的困难样本(Hard Examples)训练集。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "AI 就像自动驾驶的 L2 级别，它不是为了让司机睡觉，而是为了让司机在长途驾驶中不致疲劳撞车。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "table",
+      "sourcePageType": "table",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "投资回报率",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "table page with table x1; pageType:table, layout:table",
+        "layoutFamily": "table",
+        "componentSignature": "table x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "table-1",
+            "kind": "table",
+            "subtype": "table"
+          }
+        ],
+        "componentCounts": {
+          "table": 2
+        },
+        "tags": [
+          "pageType:table",
+          "layout:table"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "某县级医院引入 AI 后的年度成本评估"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "RETURN ON INVESTMENT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "08 商业与社会价值"
+        },
+        {
+          "slotId": "table-header-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(1)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "指标维度"
+        },
+        {
+          "slotId": "table-header-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(2)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "引入前 (人工模式)"
+        },
+        {
+          "slotId": "table-header-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(3)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "引入后 (AI 辅助)"
+        },
+        {
+          "slotId": "table-header-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(4)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "年度经济效益转化"
+        },
+        {
+          "slotId": "table-row-1-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "外包阅片支出"
+        },
+        {
+          "slotId": "table-row-1-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "约 ¥350,000 /年"
+        },
+        {
+          "slotId": "table-row-1-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "仅支付 API 调用费 ¥80,000"
+        },
+        {
+          "slotId": "table-row-1-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "节省 ¥270,000 纯支出"
+        },
+        {
+          "slotId": "table-row-2-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "DR/CT 设备运转率"
+        },
+        {
+          "slotId": "table-row-2-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "单台设备日均 30 人次"
+        },
+        {
+          "slotId": "table-row-2-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "单台设备日均 85 人次"
+        },
+        {
+          "slotId": "table-row-2-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "硬件资产利用率提升 180%"
+        },
+        {
+          "slotId": "table-row-3-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "本院初诊截留率"
+        },
+        {
+          "slotId": "table-row-3-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "45% (大量轻症流失至市级)"
+        },
+        {
+          "slotId": "table-row-3-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "72% (有底气给出初步诊断)"
+        },
+        {
+          "slotId": "table-row-3-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "门诊及后续治疗收入大幅增加"
+        },
+        {
+          "slotId": "table-row-4-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "漏诊引发的医疗赔偿"
+        },
+        {
+          "slotId": "table-row-4-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "年均发生 1-2 起纠纷"
+        },
+        {
+          "slotId": "table-row-4-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "系统全覆盖二次复核，降至 0"
+        },
+        {
+          "slotId": "table-row-4-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "规避了不可估量的法律风险"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "基层人员培训",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 68,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "零门槛的用户培训落地策略"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "STAFF ONBOARDING"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "08 商业与社会价值"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "侵入感极低的 UI"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 156,
+          "maxChars": 312,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "不要求医生切换学习新的独立软件。我们将 AI 结果以悬浮插件的形式直接打入现有的医生工作站浏览器，保持原有工作习惯不变。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "驻场护士辅导"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 124,
+          "maxChars": 248,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "前期派遣临床实施工程师下乡驻场一周，手把手教会乡镇卫生院的护士或技师如何规范拍摄设备并上传影像。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "线上 CME 认证"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 130,
+          "maxChars": 260,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "将系统的熟练使用教程与国家级继续医学教育(CME)学分挂钩，极大调动基层医生主动学习新技术的积极性。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "政策支持",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1 + list x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2,
+          "list": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 90,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "国家宏观政策红利与财政补贴"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "GOVERNMENT SUPPORT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "08 商业与社会价值"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "顺应医改大势"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 180,
+          "maxChars": 360,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "国家卫健委明确提出要“推动人工智能技术在医疗影像、病理分析、医学影像辅助诊断中的应用”，并将其作为衡量区域紧密型医共体建设水平的核心指标。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "专项资金："
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "医保物价："
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "考核加分："
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 29,
+          "maxChars": 58,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "专项资金： 各省市设立了“基层医疗数字化转型”专项财政拨款，可全额覆盖软硬件采购。"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 24,
+          "maxChars": 47,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "医保物价： 部分省份已将“AI 辅助阅片”纳入医保单独收费目录。"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 28,
+          "maxChars": 55,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "考核加分： 使用智能系统可提升乡镇卫生院在“优质服务基层行”评比中的综合评分。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "推广蓝图",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 72,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "未来三年的全域推广路线图"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "EXPANSION ROADMAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "09 未来展望"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "树立标杆"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 138,
+          "maxChars": 276,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在东部医疗发达省份挑选 5 个强基县进行深度试点，打磨出经得起考验的基层产品形态与实施交付标准化 SOP。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "医共体打包"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 144,
+          "maxChars": 288,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "以“1家县医院 + 10家乡镇卫生院”为单元，利用县域紧密型医共体的行政力量进行整包式的 SaaS 云化推广。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "村医终端"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 140,
+          "maxChars": 280,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "将超轻量化的辅助诊断模型部署到便携式设备(如智能平板+手持超声)，使先进诊断能力跨越最后一公里抵达村卫生室。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "多模态大模型"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > p",
+          "tarChars": 154,
+          "maxChars": 308,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "融合影像、文本病历与基因组学数据，向真正的全科医疗大脑(Generalist Medical AI)方向持续进化升级。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Phase 1: 破冰"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Phase 2: 复制"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Phase 3: 下沉"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Phase 4: 演进"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "典型案例",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2 + stat x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2 + stat x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "stat": 2
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 81,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "改变命运的“五分钟”"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "CORE_INFO"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "09 未来展望"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "真实案例回溯"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 166,
+          "maxChars": 332,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "贵州某偏远山区卫生院，一名 65 岁患者因轻微胸痛就诊。由于缺乏专科经验，值班医生初步判断为普通胃食管反流，拟开具胃药让其回家。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "结果反馈"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 156,
+          "maxChars": 312,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "该预警立刻触发了市级胸痛中心的强制接管。急救车在患者离开卫生院前赶到，3小时内完成了 PCI 支架手术，成功挽救了生命。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "但在将常规心电图接入 AI 系统后，系统在 5 秒内爆发最高级红色警报：疑似广泛前壁心肌梗死超急性期。"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > div.stat-box > div.label",
+          "tarChars": 13,
+          "maxChars": 25,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "“这就是我们为之奋斗的意义”"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "核心愿景",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "media page with image x1; pageType:title-text, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "image x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "image": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "跨越医疗资源的鸿沟"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "OUR VISION"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "结束语"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > p",
+          "tarChars": 190,
+          "maxChars": 380,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "“我们无法在短期内为每一座乡村培养出十年临床经验的主任医师， 但我们可以用一行行代码，将最顶尖医学大脑的智慧，瞬间输送到这片土地的每一个角落。”"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

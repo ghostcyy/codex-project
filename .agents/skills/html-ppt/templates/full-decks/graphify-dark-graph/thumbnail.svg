@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="暗色图谱 template thumbnail">
+  <rect width="1280" height="720" fill="#07111f"/>
+  <circle cx="1040" cy="150" r="210" fill="#22d3ee" opacity="0.14"/>
+  <circle cx="180" cy="610" r="180" fill="#22d3ee" opacity="0.10"/>
+  <rect x="88" y="88" width="1104" height="544" rx="42" fill="white" opacity="0.72" stroke="#22d3ee" stroke-opacity="0.38" stroke-width="3"/>
+  <text x="128" y="172" fill="#22d3ee" font-family="Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="4">HTML-PPT V2 TEMPLATE</text>
+  <text x="128" y="310" fill="#f8fafc" font-family="Arial, sans-serif" font-size="82" font-weight="900">暗色图谱</text>
+  <text x="128" y="378" fill="#f8fafc" opacity="0.64" font-family="Arial, sans-serif" font-size="34" font-weight="700">Graphify Dark</text>
+  <rect x="128" y="462" width="260" height="18" rx="9" fill="#22d3ee" opacity="0.88"/>
+  <rect x="128" y="508" width="560" height="16" rx="8" fill="#f8fafc" opacity="0.16"/>
+  <rect x="128" y="548" width="440" height="16" rx="8" fill="#f8fafc" opacity="0.12"/>
+  <text x="1032" y="586" text-anchor="middle" fill="#22d3ee" font-family="Arial, sans-serif" font-size="44" font-weight="900">GRAPHIFY-DAR</text>
+</svg>

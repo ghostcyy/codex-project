@@ -1,0 +1,572 @@
+.tpl-edu {
+  --bg: #f8fafc; /* Very light slate/blue for a clean academic feel */
+  --surface: #ffffff;
+  --primary: #4f46e5; /* Vibrant Indigo */
+  --secondary: #ec4899; /* Playful Pink/Magenta */
+  --accent: #e0e7ff; /* Soft indigo background */
+  --accent-orange: #f97316; /* Energetic Orange for highlights */
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border: #f1f5f9;
+  --radius: 20px; /* Friendly rounded corners */
+  --font-sans: 'Nunito', 'Quicksand', 'Inter', system-ui, sans-serif;
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.tpl-edu .slide {
+  padding: 40px 60px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Playful Educational Background Shapes */
+.tpl-edu .slide::before {
+  content: "";
+  position: absolute;
+  top: -50px; left: -50px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tpl-edu .slide::after {
+  content: "";
+  position: absolute;
+  bottom: -100px; right: -50px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tpl-edu .slide.title-slide {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(236, 72, 153, 0.35), transparent 32%),
+    linear-gradient(135deg, #1e1b4b 0%, #6d28d9 45%, #ec4899 100%) !important;
+  color: #ffffff;
+}
+
+.tpl-edu .slide.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-edu .tc {
+  text-align: center;
+}
+
+.tpl-edu .title-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Neutral dark overlay for cover to maintain text readability without purple/pink tint */
+.tpl-edu .slide.title-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+  pointer-events: none;
+  width: 100%; height: 100%;
+}
+
+/* Remove the playful circles on the title slides since they don't fit the image background */
+.tpl-edu .slide.title-slide::after {
+  display: none;
+}
+
+.tpl-edu .slide.title-slide > * {
+  position: relative;
+  z-index: 1;
+}
+
+.tpl-edu .header {
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tpl-edu .kicker {
+  display: inline-block;
+  padding: 8px 18px;
+  background: linear-gradient(90deg, var(--primary) 0%, #6366f1 100%);
+  color: #ffffff;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+.tpl-edu .slide.title-slide .kicker {
+  background: rgba(255,255,255,0.2);
+  box-shadow: none;
+}
+
+.tpl-edu .h1 {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-main);
+  margin: 0 0 16px 0;
+  letter-spacing: -1px;
+}
+.tpl-edu .slide.title-slide .h1 { color: #ffffff; }
+
+.tpl-edu .h2 {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* Content Area filling */
+.tpl-edu .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+}
+
+.tpl-edu .grid-2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0, 1fr); gap: 24px; flex: 1; min-height: 0; }
+.tpl-edu .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: minmax(0, 1fr); gap: 24px; flex: 1; min-height: 0; }
+.tpl-edu .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: minmax(0, 1fr); gap: 20px; flex: 1; min-height: 0; }
+.tpl-edu .grid-layout-sidebar { display: grid; grid-template-columns: 1fr 2fr; grid-template-rows: minmax(0, 1fr); gap: 30px; flex: 1; min-height: 0; }
+
+.tpl-edu .img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  width: 100%;
+  height: 180px;
+  margin-top: 15px;
+  flex-shrink: 0;
+}
+
+.tpl-edu .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tpl-edu .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.tpl-edu .card > * {
+  min-height: 0;
+}
+
+.tpl-edu .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.12);
+  border-color: rgba(79, 70, 229, 0.2);
+}
+
+.tpl-edu .card-icon {
+  width: 54px;
+  height: 54px;
+  background: var(--accent);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-size: 26px;
+}
+
+.tpl-edu .card h3 {
+  font-size: 22px;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.tpl-edu .card p {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tpl-edu .card ul {
+  padding-left: 20px;
+  margin: 12px 0 0 0;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.tpl-edu .card ul li { margin-bottom: 8px; }
+
+/* Timeline/Path Styles */
+.tpl-edu .path-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.tpl-edu .path-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 45px;
+  bottom: -15px;
+  width: 2px;
+  background: var(--accent);
+}
+.tpl-edu .path-number {
+  width: 42px; height: 42px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+/* Stat Box - Playful and bright */
+.tpl-edu .stat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: var(--radius);
+  border: 2px solid var(--accent);
+  text-align: center;
+}
+.tpl-edu .stat-box .number {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--secondary);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.tpl-edu .stat-box .label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.tpl-edu .image-ph {
+  background: var(--accent);
+  border: 2px dashed rgba(79, 70, 229, 0.3);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 160px;
+  width: 100%;
+}
+
+.tpl-edu .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tpl-edu .footer {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+.tpl-edu .slide.title-slide .footer {
+  color: rgba(255,255,255,0.9);
+}
+
+.tpl-edu .pill {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(249, 115, 22, 0.1);
+  color: var(--accent-orange);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+/* Data Table */
+.tpl-edu .data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.05);
+  border: 1px solid var(--border);
+}
+.tpl-edu .data-table th {
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 800;
+  text-align: left;
+  padding: 18px 24px;
+  font-size: 15px;
+}
+.tpl-edu .data-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  font-size: 15px;
+}
+.tpl-edu .data-table tr:last-child td { border-bottom: none; }
+
+/* Animations - Playful Pop In */
+.tpl-edu .slide.is-active .header,
+.tpl-edu .slide.is-active .content-area > *,
+.tpl-edu .slide.is-active .path-step {
+  animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.tpl-edu .slide.is-active .header { animation-delay: 0.1s; }
+.tpl-edu .slide.is-active .content-area > .card:nth-child(1),
+.tpl-edu .slide.is-active .content-area > .grid-2 > .card:nth-child(1),
+.tpl-edu .slide.is-active .content-area > .grid-3 > .card:nth-child(1),
+.tpl-edu .slide.is-active .content-area > .grid-4 > .card:nth-child(1) { animation-delay: 0.2s; }
+
+.tpl-edu .slide.is-active .content-area > .card:nth-child(2),
+.tpl-edu .slide.is-active .content-area > .grid-2 > .card:nth-child(2),
+.tpl-edu .slide.is-active .content-area > .grid-3 > .card:nth-child(2),
+.tpl-edu .slide.is-active .content-area > .grid-4 > .card:nth-child(2),
+.tpl-edu .slide.is-active .path-step:nth-child(2) { animation-delay: 0.3s; }
+
+.tpl-edu .slide.is-active .content-area > .card:nth-child(3),
+.tpl-edu .slide.is-active .content-area > .grid-3 > .card:nth-child(3),
+.tpl-edu .slide.is-active .content-area > .grid-4 > .card:nth-child(3),
+.tpl-edu .slide.is-active .path-step:nth-child(3) { animation-delay: 0.4s; }
+
+.tpl-edu .slide.is-active .content-area > .card:nth-child(4),
+.tpl-edu .slide.is-active .content-area > .grid-4 > .card:nth-child(4),
+.tpl-edu .slide.is-active .path-step:nth-child(4) { animation-delay: 0.5s; }
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --- NEW DIVERSIFIED LAYOUTS --- */
+
+/* 1. Layout Sticky (Slide 11, 14, 17) */
+.tpl-edu .layout-sticky {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  padding: 40px;
+}
+.tpl-edu .layout-sticky .card:nth-child(1) { rotate: -2deg; }
+.tpl-edu .layout-sticky .card:nth-child(2) { rotate: 2deg; translate: 0 20px; }
+.tpl-edu .layout-sticky .card:nth-child(3) { rotate: -1deg; translate: 0 -10px; }
+
+.tpl-edu .layout-sticky .card:hover {
+  rotate: 0deg;
+  transform: translateY(-10px) scale(1.05) !important;
+  border-color: var(--primary);
+  z-index: 100;
+  background: white;
+}
+
+/* 2. Layout Zig-Zag (Slide 4, 12, 19) */
+.tpl-edu .layout-zigzag {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 40px 0;
+}
+.tpl-edu .layout-zigzag .card:nth-child(odd) { translate: 0 25px; }
+.tpl-edu .layout-zigzag .card:nth-child(even) { translate: 0 -25px; }
+
+.tpl-edu .layout-zigzag .card:hover {
+  translate: 0 0 !important;
+  transform: translateY(-10px) scale(1.05) !important;
+  z-index: 100;
+  border-color: var(--secondary);
+}
+
+/* 3. Layout Staircase (Slide 14) */
+.tpl-edu .layout-staircase {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  padding: 20px 0 20px 10%;
+}
+.tpl-edu .layout-staircase .card {
+  width: 75%;
+  border-left: 4px solid var(--primary);
+}
+.tpl-edu .layout-staircase .card:nth-child(1) { translate: 0 0; }
+.tpl-edu .layout-staircase .card:nth-child(2) { translate: 80px 0; border-left-color: var(--secondary); }
+.tpl-edu .layout-staircase .card:nth-child(3) { translate: 160px 0; border-left-color: var(--primary); }
+
+/* 4. Layout Quad (Slide 12) */
+.tpl-edu .layout-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-edu .layout-quad .card:nth-child(1) { translate: -15px -15px; border-color: var(--primary); }
+.tpl-edu .layout-quad .card:nth-child(2) { translate: 15px -15px; border-color: var(--secondary); }
+.tpl-edu .layout-quad .card:nth-child(3) { translate: -15px 15px; border-color: var(--primary); }
+.tpl-edu .layout-quad .card:nth-child(4) { translate: 15px 15px; border-color: var(--secondary); }
+
+.tpl-edu .layout-quad .card:hover {
+  translate: 0 0 !important;
+  transform: scale(1.05) !important;
+  z-index: 100;
+  box-shadow: 0 20px 40px rgba(79, 70, 229, 0.15);
+}
+
+/* --- Diversity Layouts (v2) --- */
+.tpl-edu .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-edu .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-edu .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-edu .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-edu .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-edu .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--surface);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-edu .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 0;
+}
+.tpl-edu .layout-split-v2 .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+.tpl-edu .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  margin-right: -10%;
+  z-index: 2;
+}
+.tpl-edu .layout-split-v2 .card:nth-child(2) {
+  background: var(--primary);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  color: #fff;
+  z-index: 1;
+  padding-left: 120px;
+}
+.tpl-edu .layout-split-v2 .card:hover { transform: scale(1.02); z-index: 10; }
+
+.tpl-edu .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-edu .layout-overlap-diag .card {
+  position: absolute;
+  width: 45%;
+  height: 60%;
+  padding: 40px;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-edu .layout-overlap-diag .card:nth-child(1) {
+  top: 10%; left: 10%;
+  background: var(--surface);
+  border: 4px solid var(--primary);
+  z-index: 1;
+}
+.tpl-edu .layout-overlap-diag .card:nth-child(2) {
+  bottom: 10%; right: 10%;
+  background: var(--bg);
+  border: 2px solid var(--secondary);
+  z-index: 2;
+  box-shadow: -20px -20px 0 rgba(0,0,0,0.2);
+}
+.tpl-edu .layout-overlap-diag .card:hover {
+  transform: translate(-10px, -10px);
+  z-index: 100;
+  box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+}

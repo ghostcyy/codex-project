@@ -239,6 +239,22 @@ export interface PptDeckRender {
   previewUrl: string;
   downloadUrl: string;
   createdAt: string;
+  pipeline?: "html-ppt-v1" | "html-ppt-v2";
+  manifestUrl?: string;
+  verificationReportUrl?: string;
+  verificationMode?: "static" | "playwright";
+  verificationStatus?: "clean" | "warning" | "failed";
+  screenshotCount?: number;
+  screenshots?: Array<{ slideIndex: number; url: string }>;
+  auxiliaryArtifacts?: Record<string, string>;
+  outputDir?: string;
+  templateSelection?: {
+    mode: "pinned" | "auto-deterministic" | "auto-llm";
+    chosenTemplateId: string;
+    shortlist: string[];
+    rationale: string;
+    confidence: "high" | "medium" | "low";
+  };
 }
 
 export interface PptGenerationStep {
@@ -248,6 +264,10 @@ export interface PptGenerationStep {
   startedAt: string;
   endedAt: string;
   detail: string;
+  durationMs?: number;
+  modelCalls?: number;
+  retryCount?: number;
+  failureReason?: string;
 }
 
 export interface PptGenerationOrchestration {

@@ -1,0 +1,3054 @@
+{
+  "schemaVersion": 2,
+  "id": "05-art-nft",
+  "deckClass": "tpl-art",
+  "label": {
+    "zh-CN": "模板 05-art-nft",
+    "en": "Template 05-art-nft"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "assets/animations/animations.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "封面",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "数字艺术与 NFT的文艺复兴"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-content:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "WEB3 DIGITAL RENAISSANCE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "METAVERSE ART GALLERY"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content:nth-of-type(1) > p",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "0x7F...3B9A // THE FUTURE OF DIGITAL OWNERSHIP"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 20,
+      "sourceSlideTitle": "结束",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.title-content:nth-of-type(1) > h1.h1",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "WAGMI"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.title-content:nth-of-type(1) > div > span.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "Connect Wallet: art.metaverse.eth"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(2) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "METAVERSE ART GALLERY"
+        },
+        {
+          "slotId": "subtitle",
+          "selector": "div.title-content:nth-of-type(1) > p",
+          "tarChars": 26,
+          "maxChars": 51,
+          "optional": true,
+          "kind": "title",
+          "sourceText": "We're All Gonna Make It. 共同构建去中心化艺术的未来。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "传统艺术痛点",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x3",
+            "selector": ".grid-3",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x3": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 86,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "传统艺术市场的三大系统性瓶颈"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "01 // THE LEGACY SYSTEM"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 01: INDUSTRY CONTEXT"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "真伪鉴定 (Provenance)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(1) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "传统艺术品的流传有序（Provenance）完全依赖纸质证书和专家肉眼鉴定。伪造技术日益精进，导致市场上充斥着大量赝品，信任成本极高。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "中间商盘剥 (Middlemen)"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(2) > p",
+          "tarChars": 188,
+          "maxChars": 376,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "画廊、拍卖行等中心化机构垄断了藏家资源，往往抽成高达 30% 到 50%。青年艺术家极难获得曝光，且几乎永远无法享受作品二次转手带来的升值红利。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > h3",
+          "tarChars": 11,
+          "maxChars": 22,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "极度缺乏流动性 (Illiquid)"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-3 > div.card:nth-of-type(3) > p",
+          "tarChars": 156,
+          "maxChars": 312,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "一幅实体油画的运输、保险、保管、拍卖流程长达数月，资金占用严重。实物艺术品是典型的非标资产，极难实现快速变现与全球流通。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "什么是NFT",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x1 + stat x4; pageType:sidebar, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x1 + stat x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-2x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "stat-1",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-2",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-3",
+            "kind": "stat",
+            "subtype": "stat"
+          },
+          {
+            "id": "stat-4",
+            "kind": "stat",
+            "subtype": "stat"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-2x2": 1,
+          "card": 2,
+          "stat": 8
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 1,
+      "topicSlotMaxChars": 122,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "非同质化代币：确权数字资产"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "02 // PARADIGM SHIFT"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 02: THE TECHNOLOGY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "让一串代码变得“稀缺”"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 244,
+          "maxChars": 488,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "NFT (Non-Fungible Token) 是一种架构在区块链上的智能合约。它第一次在人类历史上，以密码学的方式证明了某个人对一段数字内容（如图片、视频、甚至一行文本）的唯一所有权。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "这就像数字世界的“蒙娜丽莎”：任何人都可以无限复制（右键保存），但区块链上的所有权证书只有一张。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "%"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "/7"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1) > span",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "中介"
+        },
+        {
+          "slotId": "stat-number-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.number:nth-of-type(1)",
+          "tarChars": 7,
+          "maxChars": 13,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "100%"
+        },
+        {
+          "slotId": "stat-number-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "0中介"
+        },
+        {
+          "slotId": "stat-number-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.number:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "statNumber",
+          "sourceText": "ERC"
+        },
+        {
+          "slotId": "stat-label-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(1) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "透明的交易记录"
+        },
+        {
+          "slotId": "stat-label-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(2) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "全球无许可交易"
+        },
+        {
+          "slotId": "stat-label-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(3) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "点对点直接结算"
+        },
+        {
+          "slotId": "stat-label-4",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.grid-2:nth-of-type(2) > div.stat-box:nth-of-type(4) > div.label:nth-of-type(2)",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "statLabel",
+          "sourceText": "统一的协议标准"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 12,
+          "maxChars": 23,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "CORE CONCEPT"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "核心底层技术",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 89,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "支撑 NFT 的底层协议"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "03 // UNDER THE HOOD"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 02: THE TECHNOLOGY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "独一无二"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 174,
+          "maxChars": 348,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "最经典的 NFT 标准。每一个 Token 都有一个唯一的 TokenID。常用于 1-of-1 的纯艺术品和高净值 PFP（头像）。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "批量与同质化融合"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 154,
+          "maxChars": 308,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "由 Enjin 开发的标准。允许在一个合约中同时发行可同质化代币（如金币）和非同质化代币（如宝剑），极其适合游戏道具。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "星际文件系统"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 188,
+          "maxChars": 376,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "区块链存储成本极高，所以图片本身不会上链。NFT 合约只记录一个 Hash 值，指向去中心化存储网络 IPFS 上的元数据(Metadata)。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "以太坊扩容"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > p",
+          "tarChars": 198,
+          "maxChars": 396,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "为了解决高昂的 Gas 费（矿工费），现代 NFT 大多部署在 Polygon、Arbitrum 或 Base 等二层网络上，实现毫秒级几乎免费的铸造。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 9,
+          "maxChars": 17,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "ERC-721"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 9,
+          "maxChars": 18,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "ERC-1155"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "IPFS"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 9,
+          "maxChars": 17,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "Layer 2"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "艺术家创作链条",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "text page with text x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "数字艺术家的去中心化发布路径"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "04 // CREATOR ECONOMY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 03: THE CREATORS"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(1) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "创作与元数据 (Creation)"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(2) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "去中心化部署 (Minting)"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(3) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "多平台挂售 (Listing)"
+        },
+        {
+          "slotId": "title-4",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(4) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "被动版税收入 (Royalties)"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(1) > div:nth-of-type(2) > p",
+          "tarChars": 180,
+          "maxChars": 360,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "使用 Cinema4D, Blender 或 AI 工具创作数字文件，并编写 JSON 格式的元数据（包含作品名称、属性、高管图链接）。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(2) > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "艺术家通过 Metamask 钱包与以太坊网络交互，将元数据的 Hash 值写入智能合约，完成“铸造 (Mint)”。"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(3) > div:nth-of-type(2) > p",
+          "tarChars": 166,
+          "maxChars": 332,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "资产一旦上链，便可无缝同步在 OpenSea, Blur, Magic Eden 等全球任何聚合交易市场上，由市场自由定价。"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(4) > div:nth-of-type(2) > p",
+          "tarChars": 176,
+          "maxChars": 352,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "无需再求助律师，智能合约中写死了 10% 的版税规则。此后每一次藏家间的换手，系统都会自动扣除 10% 的 ETH 打入创作者钱包。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "市场交易量走势",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 69,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "全球 NFT 交易量周期性波动"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "05 // MARKET METRICS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 04: MARKET ANALYSIS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "穿越泡沫的去泡沫化"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 138,
+          "maxChars": 276,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "经历了 2021 年“万物皆可 NFT”的狂热泡沫（牛市峰值）后，市场在 2023 年进入了深度的清洗期。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 236,
+          "maxChars": 472,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "劣质的“土狗”项目彻底归零，而真正具有艺术共识与社区基础的蓝筹项目（Blue-chips）则确立了其数字古董的地位。目前的市场更趋于理性，资金主要流向顶级艺术与 GameFi 资产。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "DATA INSIGHTS"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "image-text",
+      "sourcePageType": "image-text",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "生成艺术",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "media page with grid:1x2 x1 + card x2 + image x1; pageType:image-text, layout:media, grid:1x2",
+        "layoutFamily": "media",
+        "componentSignature": "grid:1x2 x1 + card x2 + image x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "image": 2
+        },
+        "tags": [
+          "pageType:image-text",
+          "layout:media",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 145,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "代码即画笔：AIGC 与链上生成艺术"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "06 // GENERATIVE ART"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 05: NEW AESTHETICS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "Art Blocks 与算法美学"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p",
+          "tarChars": 278,
+          "maxChars": 556,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "与传统的提前画好再上传不同，生成艺术（如 Art Blocks 平台）是将 P5.js 代码写入区块链。当藏家点击“Mint”的那一刻，交易的 Hash 值会作为随机数种子注入代码，现场“长”出一幅独一无二的画作。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "AIGC 协作创作"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 302,
+          "maxChars": 604,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "随着 Midjourney、Stable Diffusion 等 AI 模型的爆发，艺术家不再是单纯的手绘者，而变成了“提示词工程师 (Prompt Engineer)”与“策展人”。AI 提供无限的视觉组合，NFT 提供确权载体。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "蓝筹项目对比",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "chart page with chart:unknown x1 + card x2; pageType:chart, layout:chart, chart:unknown",
+        "layoutFamily": "chart",
+        "componentSignature": "chart:unknown x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:chart",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 116,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "顶级社区：蓝筹 NFT 地板价对比"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "07 // BLUE-CHIP ASSETS"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 04: MARKET ANALYSIS"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "数字时代的“劳力士”"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 232,
+          "maxChars": 464,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "地板价 (Floor Price) 是指某系列中最便宜的 NFT 价格。图中展示的 CryptoPunks、BAYC 等顶级蓝筹，不仅是艺术品，更是进入顶级富豪俱乐部的“门票”。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "持有特定的 NFT，意味着你在元宇宙中拥有了特定的阶级属性、审美认同与身份象征 (Flexing)。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 14,
+          "maxChars": 28,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "CULTURE & STATUS"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "chart",
+      "sourcePageType": "chart",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "碎片化所有权",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "mixed page with grid:1x2 x1 + chart:unknown x1 + card x2; pageType:chart, layout:mixed, mixed:grid+chart, grid:1x2",
+        "layoutFamily": "mixed",
+        "componentSignature": "grid:1x2 x1 + chart:unknown x1 + card x2",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "chart-1",
+            "kind": "chart",
+            "subtype": "unknown-chart",
+            "selector": "canvas[data-chart-slot='primary']",
+            "chartSlotId": "primary"
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "chart": 1,
+          "unknown-chart": 1,
+          "chart:unknown": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:chart",
+          "layout:mixed",
+          "mixed:grid+chart",
+          "grid:1x2",
+          "chart:unknown"
+        ],
+        "useCases": [
+          "数据分析"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 69,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "打破门槛：顶级艺术品的碎片化"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "08 // LIQUIDITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 06: FINANCIALIZATION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "让散户拥有“蒙娜丽莎”"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 138,
+          "maxChars": 276,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "当一件加密艺术品（如 Beeple 的画作或原版 Doge 照片）价值数千万美元时，普通藏家根本无法参与。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "碎片化后散户持仓分布模拟"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 302,
+          "maxChars": 604,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "通过智能合约的“碎片化 (Fractionalization)”协议，可以将 1 个 NFT 拆分为 1,000,000 个 ERC-20 碎片代币（如 $DOG）。所有人都可以花 10 美元买下这件艺术品的百万分之一，并享受其升值红利。"
+        }
+      ],
+      "chartCanvasSelector": "canvas[data-chart-slot='primary']",
+      "chartSlots": [
+        {
+          "slotId": "primary",
+          "selector": "canvas[data-chart-slot='primary']",
+          "kind": "unknown",
+          "defaultRenderType": "line",
+          "componentId": "chart-1"
+        }
+      ],
+      "imageSlotSelectors": [],
+      "mediaKinds": [
+        "chart"
+      ]
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "版税机制",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 83,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "不可篡改的被动版税机制"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "09 // CREATOR ECONOMY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 03: THE CREATORS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "痛点：一次性买卖"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 162,
+          "maxChars": 324,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "传统画家中了梵高的诅咒：生前画作无人问津，几百美金卖出；死后画作拍出上亿美金，但这些暴利与艺术家后代毫无关系，全被画商赚走。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "破局：EIP-2981"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 166,
+          "maxChars": 332,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "以太坊版税标准允许将分成比例（如 5% 或 10%）直接硬编码进智能合约。无论这件作品未来被转手多少次，创作者永远能分得一杯羹。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "争议：零版税战争"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 172,
+          "maxChars": 344,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "近期 Blur 等新型交易所为了抢夺市场份额，推出了“零版税”或“可选版税”功能，引发了艺术家阵营与交易员阵营的激烈对抗与行业反思。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "超越小图片",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:2x2 x1 + card x4; pageType:grid-4, layout:grid, grid:2x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:2x2 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-quad",
+            "kind": "grid",
+            "subtype": "layout-quad",
+            "selector": ".layout-quad",
+            "layout": {
+              "rows": 2,
+              "cols": 2,
+              "items": 4,
+              "orientation": "matrix"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-quad": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:2x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 74,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "不仅仅是图片：效用拓展 (Utility)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "10 // UTILITIES"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 06: FINANCIALIZATION"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "不可伪造门票"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > p",
+          "tarChars": 130,
+          "maxChars": 260,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "黄牛的克星。演唱会门票作为 NFT 发行，不仅能彻底杜绝假票，还能作为活动后具有纪念意义的数字徽章。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "跨游戏资产"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > p",
+          "tarChars": 154,
+          "maxChars": 308,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "你在这款游戏中打出的极品宝剑 (NFT)，不归游戏开发商所有，而是储存在你的钱包里，甚至能带入下一款元宇宙游戏中使用。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "封闭社区通行证"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > p",
+          "tarChars": 162,
+          "maxChars": 324,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "利用“Token-gated”技术，只有你的钱包中持有该 NFT，才能解锁专属的 Discord 频道或线下私人派对入场权。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "抵押借贷"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "不想卖掉心爱的艺术品但急需用钱？在 NFTfi 等平台上，你可以将蓝筹 NFT 作为抵押品，直接从协议中借出以太坊。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 10,
+          "maxChars": 19,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "TICKETING"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "GAMING"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "MEMBERSHIP"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-quad > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "DeFi"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "安全与审计",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-staircase",
+            "kind": "grid",
+            "subtype": "layout-staircase",
+            "selector": ".layout-staircase",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-staircase": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 95,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "黑暗森林中的黑客与安全防线"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "11 // SECURITY"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 07: RISKS & SECURITY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "钓鱼链接攻击 (Phishing)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(1) > p",
+          "tarChars": 202,
+          "maxChars": 404,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "90% 的 NFT 失窃并非因为智能合约漏洞，而是用户在虚假网站（如假造的 Mint 页面）上点击了“授权 (Approve)”按钮，将转账权限交给了黑客。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "智能合约漏洞"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(2) > p",
+          "tarChars": 190,
+          "maxChars": 380,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "重入攻击 (Reentrancy)、随机数被矿工操纵等技术漏洞. 一个未经过 CertiK 等顶级安全机构审计的合约，极易导致项目资金池被瞬间抽干。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "冷热钱包隔离"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-staircase > div.card:nth-of-type(3) > p",
+          "tarChars": 180,
+          "maxChars": 360,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "资深藏家的标准操作：使用联网的“热钱包”进行高频交互，而将高价值的蓝筹 NFT 存放在物理断网的硬件“冷钱包” (如 Ledger) 中。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "去中心化存储",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2 + list x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "card": 4,
+          "list": 2
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 60,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "你的图片到底存在哪里？"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "12 // INFRASTRUCTURE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 07: RISKS & SECURITY"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > h3",
+          "tarChars": 13,
+          "maxChars": 25,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "伪区块链：中心化服务器 (AWS/阿里云)"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(1)",
+          "tarChars": 148,
+          "maxChars": 296,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "很多早期或不负责任的项目，虽然合约在链上，但 Metadata 和图片链接只是一个普通的 https:// 后缀。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > h3",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "真去中心化：IPFS 与 Arweave"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > p",
+          "tarChars": 120,
+          "maxChars": 240,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "顶级项目会将数据切片并分布式存储在全球成千上万的节点上。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(1) > p:nth-of-type(2)",
+          "tarChars": 180,
+          "maxChars": 360,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "风险：一旦项目方跑路、域名到期或服务器欠费关机，你花几万美金买的 NFT 就会变成一张无法显示的破损图片（404 Not Found）。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "IPFS:"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Arweave:"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 25,
+          "maxChars": 50,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "IPFS: 基于内容寻址，只要全球还有一台电脑存有该文件，就不会消失。"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-2 > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 59,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Arweave: 真正意义上的“永久存储”协议，一次付费，写入区块链底层保存数百年。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "sidebar",
+      "sourcePageType": "sidebar",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "元宇宙展厅",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "media page with card x2 + image x1 + list x1; pageType:sidebar, layout:media",
+        "layoutFamily": "media",
+        "componentSignature": "card x2 + image x1 + list x1",
+        "density": "medium",
+        "components": [
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "image-1",
+            "kind": "image",
+            "subtype": "image"
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "card": 4,
+          "image": 2,
+          "list": 2
+        },
+        "tags": [
+          "pageType:sidebar",
+          "layout:media"
+        ],
+        "useCases": [
+          "视觉展示"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 112,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "3D 沉浸式的虚拟画廊展览"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "13 // THE METAVERSE"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 08: FUTURE APPLICATIONS"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "超越物理限制的策展"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > p",
+          "tarChars": 224,
+          "maxChars": 448,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "在 Decentraland, Sandbox 或 OnCyber 这样的元宇宙平台中，藏家可以购买虚拟土地，一键导入自己的钱包资产，构建悬浮在太空或深海的 3D 美术馆。"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "社交炫耀："
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "打破重力："
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 37,
+          "maxChars": 74,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "社交炫耀： 将展览链接发送给 Twitter 好友，他们可以控制虚拟化身 (Avatar) 在你的画廊中漫游。"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content-area:nth-of-type(2) > div.grid-layout-sidebar > div.card:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 39,
+          "maxChars": 77,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "打破重力： 艺术品不再受限于现实的重力、尺寸或材质，可以是动态的 3D 雕塑，甚至是随参观者心跳而改变的互动装置。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [
+        "img[data-image-slot='0']"
+      ],
+      "mediaKinds": [
+        "image"
+      ]
+    },
+    "slide-15": {
+      "fragmentId": "slide-15",
+      "pageType": "grid-3",
+      "sourcePageType": "grid-3",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "法律与IP授权",
+      "htmlFile": "fragments/slide-15.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x3 x1 + card x3; pageType:grid-3, layout:grid, grid:1x3",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x3 x1 + card x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-sticky",
+            "kind": "grid",
+            "subtype": "layout-sticky",
+            "selector": ".layout-sticky",
+            "layout": {
+              "rows": 1,
+              "cols": 3,
+              "items": 3,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-sticky": 1,
+          "card": 6
+        },
+        "tags": [
+          "pageType:grid-3",
+          "layout:grid",
+          "grid:1x3"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 3,
+      "topicSlotMaxChars": 74,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "购买 NFT，你究竟买到了什么版权？"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "14 // LEGAL & IP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 09: COMPLIANCE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "仅限个人展示"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(1) > p",
+          "tarChars": 136,
+          "maxChars": 272,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "最严苛的协议。你只拥有该 NFT 的数字所有权，但不能将其印在 T 恤上出售，或者用于任何商业盈利目的。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "全量商业授权"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(2) > p",
+          "tarChars": 144,
+          "maxChars": 288,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "如 BAYC (无聊猿)。持有者可以将这只猴子印在咖啡包装上开店，或者做成潮牌出售。引发了庞大的衍生品经济圈。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "CC0 公共领域"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-sticky > div.card:nth-of-type(3) > p",
+          "tarChars": 166,
+          "maxChars": 332,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "如 Mfers 等项目。创作者完全放弃版权，任何人（无论是否持有该 NFT）都可以随意使用、二创和商业化，彻底走向开源文化传播。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-16": {
+      "fragmentId": "slide-16",
+      "pageType": "table",
+      "sourcePageType": "table",
+      "sourceSlideIndex": 16,
+      "sourceSlideTitle": "历史拍卖纪录",
+      "htmlFile": "fragments/slide-16.html",
+      "pagePortrait": {
+        "summary": "table page with table x1; pageType:table, layout:table",
+        "layoutFamily": "table",
+        "componentSignature": "table x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "table-1",
+            "kind": "table",
+            "subtype": "table"
+          }
+        ],
+        "componentCounts": {
+          "table": 2
+        },
+        "tags": [
+          "pageType:table",
+          "layout:table"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "颠覆传统：天价数字艺术拍卖纪录"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "15 // HISTORICAL DATA"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 04: MARKET ANALYSIS"
+        },
+        {
+          "slotId": "table-header-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(1)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "作品名称 / 项目方"
+        },
+        {
+          "slotId": "table-header-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(2)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "艺术家"
+        },
+        {
+          "slotId": "table-header-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(3)",
+          "tarChars": 5,
+          "maxChars": 10,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "成交平台与日期"
+        },
+        {
+          "slotId": "table-header-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > thead > tr > th:nth-of-type(4)",
+          "tarChars": 6,
+          "maxChars": 12,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "成交金额 (USD)"
+        },
+        {
+          "slotId": "table-row-1-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(1)",
+          "tarChars": 32,
+          "maxChars": 64,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "《Everydays: The First 5000 Days》"
+        },
+        {
+          "slotId": "table-row-1-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Beeple (Mike Winkelmann)"
+        },
+        {
+          "slotId": "table-row-1-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "佳士得 (Christie's) / 2021.3"
+        },
+        {
+          "slotId": "table-row-1-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(1) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "$69,346,250"
+        },
+        {
+          "slotId": "table-row-2-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 30,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "《Clock》"
+        },
+        {
+          "slotId": "table-row-2-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Pak & Julian Assange"
+        },
+        {
+          "slotId": "table-row-2-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "AssangeDAO / 2022.2"
+        },
+        {
+          "slotId": "table-row-2-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(2) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "$52,700,000"
+        },
+        {
+          "slotId": "table-row-3-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(1)",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "《Human One》 (动态实体雕塑)"
+        },
+        {
+          "slotId": "table-row-3-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Beeple"
+        },
+        {
+          "slotId": "table-row-3-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "佳士得 (Christie's) / 2021.11"
+        },
+        {
+          "slotId": "table-row-3-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(3) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "$28,985,000"
+        },
+        {
+          "slotId": "table-row-4-col-1",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(1)",
+          "tarChars": 24,
+          "maxChars": 48,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "CryptoPunk #5822 (外星人属性)"
+        },
+        {
+          "slotId": "table-row-4-col-2",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(2)",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Larva Labs"
+        },
+        {
+          "slotId": "table-row-4-col-3",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(3)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "链上原生交易 / 2022.2"
+        },
+        {
+          "slotId": "table-row-4-col-4",
+          "selector": "div.content-area:nth-of-type(2) > table.data-table > tbody > tr:nth-of-type(4) > td:nth-of-type(4)",
+          "tarChars": 100,
+          "maxChars": 200,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "$23,700,000"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-17": {
+      "fragmentId": "slide-17",
+      "pageType": "grid-4",
+      "sourcePageType": "grid-4",
+      "sourceSlideIndex": 17,
+      "sourceSlideTitle": "DAO 与社区治理",
+      "htmlFile": "fragments/slide-17.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x4 x1 + card x4; pageType:grid-4, layout:grid, grid:1x4",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x4 x1 + card x4",
+        "density": "medium",
+        "components": [
+          {
+            "id": "layout-zigzag",
+            "kind": "grid",
+            "subtype": "layout-zigzag",
+            "selector": ".layout-zigzag",
+            "layout": {
+              "rows": 1,
+              "cols": 4,
+              "items": 4,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-3",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-4",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-zigzag": 1,
+          "card": 8
+        },
+        "tags": [
+          "pageType:grid-4",
+          "layout:grid",
+          "grid:1x4"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 4,
+      "topicSlotMaxChars": 70,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "没有公司的组织：去中心化自治 (DAO)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "16 // COMMUNITY & DAO"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 08: FUTURE APPLICATIONS"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "国库资金库"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > p",
+          "tarChars": 132,
+          "maxChars": 264,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "每次交易产生的手续费不再归创始人，而是流入多重签名控制的 DAO 金库，由全体持有者共同决定如何花费。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "代币投票治理"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > p",
+          "tarChars": 150,
+          "maxChars": 300,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "利用 Snapshot 等工具，1 个 NFT 代表 1 票。决定下一期发售规则、资助哪些周边衍生品开发等重大事项。"
+        },
+        {
+          "slotId": "card-3-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "模因 (Meme) 传播"
+        },
+        {
+          "slotId": "card-3-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > p",
+          "tarChars": 136,
+          "maxChars": 272,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "社区成员自发地换上统一头像（GM/GN），在推特上形成强大的文化共识和病毒式营销，取代了传统的广告公司。"
+        },
+        {
+          "slotId": "card-4-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "分叉与对抗"
+        },
+        {
+          "slotId": "card-4-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > p",
+          "tarChars": 138,
+          "maxChars": 276,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "如果社区对创始团队不满，他们可以将合约的图像素材完全硬分叉 (Fork)，重新发币，用脚投票罢免原管理层。"
+        },
+        {
+          "slotId": "meta-badge-1",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(1) > span.pill",
+          "tarChars": 9,
+          "maxChars": 18,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "TREASURY"
+        },
+        {
+          "slotId": "meta-badge-2",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(2) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "VOTING"
+        },
+        {
+          "slotId": "meta-badge-3",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(3) > span.pill",
+          "tarChars": 9,
+          "maxChars": 17,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "CULTURE"
+        },
+        {
+          "slotId": "meta-badge-4",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-zigzag > div.card:nth-of-type(4) > span.pill",
+          "tarChars": 8,
+          "maxChars": 16,
+          "optional": false,
+          "kind": "badge",
+          "sourceText": "FORK"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-18": {
+      "fragmentId": "slide-18",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 18,
+      "sourceSlideTitle": "环保与ESG",
+      "htmlFile": "fragments/slide-18.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + card x2; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + card x2",
+        "density": "low",
+        "components": [
+          {
+            "id": "layout-overlap-diag",
+            "kind": "grid",
+            "subtype": "layout-overlap-diag",
+            "selector": ".layout-overlap-diag",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "card-1",
+            "kind": "card",
+            "subtype": "card"
+          },
+          {
+            "id": "card-2",
+            "kind": "card",
+            "subtype": "card"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "layout-overlap-diag": 1,
+          "card": 4
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 2,
+      "topicSlotMaxChars": 124,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "摆脱“碳排放”污名：PoS 机制的胜利"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "KINETIC_OVERLAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 09: COMPLIANCE"
+        },
+        {
+          "slotId": "card-1-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "曾经的痛点：PoW 工作量证明"
+        },
+        {
+          "slotId": "card-1-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(1) > p",
+          "tarChars": 192,
+          "maxChars": 384,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "早期的以太坊采用挖矿模式（与比特币一样），导致铸造一枚 NFT 会消耗相当于一个美国家庭一星期的电量。这让大量主流环保主义艺术家拒绝进入 Web3。"
+        },
+        {
+          "slotId": "card-2-heading",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > h3",
+          "tarChars": 10,
+          "maxChars": 20,
+          "optional": false,
+          "kind": "cardHeading",
+          "sourceText": "以太坊合并 (The Merge)"
+        },
+        {
+          "slotId": "card-2-body",
+          "selector": "div.content-area:nth-of-type(2) > div.layout-overlap-diag > div.card:nth-of-type(2) > p",
+          "tarChars": 304,
+          "maxChars": 608,
+          "optional": false,
+          "kind": "cardBody",
+          "sourceText": "2022年9月，以太坊成功完成历史性升级，全面转向 PoS (权益证明) 机制。**全网能耗瞬间降低了 99.95%**，现在的每一笔 NFT 交易，其碳排放仅相当于播放一段 YouTube 视频，彻底扫清了机构进场的 ESG 障碍。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-19": {
+      "fragmentId": "slide-19",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 19,
+      "sourceSlideTitle": "项目路线图",
+      "htmlFile": "fragments/slide-19.html",
+      "pagePortrait": {
+        "summary": "text page with text x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title",
+          "selector": "div.header:nth-of-type(1) > h2.h2",
+          "tarChars": 30,
+          "maxChars": 60,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "典型 NFT 项目的运营路线图 (Roadmap)"
+        },
+        {
+          "slotId": "kicker",
+          "selector": "div.header:nth-of-type(1) > div.kicker",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": true,
+          "kind": "kicker",
+          "sourceText": "18 // ROADMAP"
+        },
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "SECTION 08: FUTURE APPLICATIONS"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(1) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "OG 启动与白名单 (Allowlist)"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(2) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "盲盒发售与开图 (Reveal)"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(3) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "空投与快照 (Airdrop)"
+        },
+        {
+          "slotId": "title-4",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(4) > div:nth-of-type(2) > h3",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "品牌跨界与实体赋能 (Phygital)"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(1) > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "艺术家公布视觉风格，开启 Discord。早期活跃贡献者获得“白名单”资格，保证其能以最低折扣在公售前优先铸造。"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(2) > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "发售日大家铸造的都是相同的盲盒图。三天后团队在链上更新元数据，所有图片瞬间“开盲盒”，揭晓稀有度。"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(3) > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "对长期未抛售的“钻石手 (Diamond Hands)”持有者进行链上快照，免费向其钱包空投第二代伴生宠物或治理代币。"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content-area:nth-of-type(2) > div.path-step:nth-of-type(4) > div:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "与阿迪达斯、蒂芙尼等潮牌合作，推出仅限 NFT 持有者购买的限量版联名实体奢侈品。"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [
+      "line",
+      "bar",
+      "pie",
+      "gantt"
+    ],
+    "hasImagePages": true,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

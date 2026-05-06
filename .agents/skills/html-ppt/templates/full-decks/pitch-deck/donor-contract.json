@@ -1,6 +1,6 @@
 {
-  "forbiddenTextExamples": [],
-  "forbiddenTextPatterns": [],
+  "forbiddenTextExamples": ["Lumen Seed round · 2026", "The operating system for solo founders"],
+  "forbiddenTextPatterns": ["Lumen\\s+Seed\\s+round", "operating\\s+system\\s+for\\s+solo\\s+founders"],
   "forbiddenClasses": [],
   "coverOnlyClasses": ["cover-blob", "cover-bg"],
   "decorativeOnlyClasses": [],

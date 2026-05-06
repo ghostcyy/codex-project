@@ -20,8 +20,16 @@ interface LlmConfigRow extends QueryResultRow {
   total_tokens?: string;
 }
 
-const DEFAULT_PROVIDER_TYPE = "openai-compatible";
+const DEFAULT_PROVIDER_TYPE = "minimax-cli";
 const DEFAULT_ENCRYPTION_KEY = "local-dev-llm-config-encryption-key-change-me";
+const SUPPORTED_PROVIDER_TYPES = new Set([
+  "minimax-cli",
+  "minimax",
+  "openai-compatible",
+  "openai",
+  "openrouter",
+  "azure-openai"
+]);
 
 @Injectable()
 export class LlmConfigService {
@@ -249,7 +257,10 @@ export class LlmConfigService {
   }
 
   private normalizeProviderType(input: unknown) {
-    const value = this.normalizeRequiredString(input, "providerType");
+    const value = this.normalizeRequiredString(input, "providerType").toLowerCase();
+    if (!SUPPORTED_PROVIDER_TYPES.has(value)) {
+      throw new BadRequestException(`Provider type ${value} is not supported.`);
+    }
     return value;
   }
 

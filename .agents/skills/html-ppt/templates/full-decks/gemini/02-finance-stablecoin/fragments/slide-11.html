@@ -1,0 +1,26 @@
+<section class="slide" data-title="技术审计" data-page-type="grid-3">
+            <div class="header">
+                <div class="kicker">TECHNICAL SECURITY</div>
+                <h2 class="h2">智能合约的安全与审计要求</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>代码级形式化验证</h3>
+                        <p>监管不仅要求业务合规，更强制要求部署前进行数学级别的“形式化验证”，确保合约逻辑不存在整数溢出、重入攻击等底层漏洞。</p>
+                    </div>
+                    <div class="card">
+                        <h3>可升级合约权限控制</h3>
+                        <p>禁止单点私钥控制可升级代理合约(Proxy)。必须实施强制的多签(Multi-sig)与时间锁(Timelock)机制，并向监管机构报备多签持有人身份。</p>
+                    </div>
+                    <div class="card">
+                        <h3>应急暂停与黑名单</h3>
+                        <p>合约层必须硬编码 <code>pause()</code> 和 <code>blacklist()</code> 功能。在发生黑客攻击或收到法院禁令时，合规官需能够一键阻断非法资金转移。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>Section 7: 风险控制</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>

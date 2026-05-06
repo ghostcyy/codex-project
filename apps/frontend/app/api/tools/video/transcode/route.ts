@@ -17,6 +17,7 @@ import {
   type VideoOutputManifest
 } from "../../../../../lib/video-server";
 import { DEFAULT_GEOMETRY_STATE, type GeometryState } from "../../../../../lib/video-geometry";
+import { getCurrentUser } from "../../../../../lib/server-auth";
 import type { OutputContainer } from "../../../../../lib/video-transcode";
 
 export const runtime = "nodejs";
@@ -159,6 +160,11 @@ function runPythonTranscode(args: string[]) {
 }
 
 export async function POST(request: Request) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const formData = await request.formData().catch(() => null);
   const uploadedFile = formData?.get("file");
   const outputContainer = (formData?.get("outputContainer") as OutputContainer | null) ?? "MP4";

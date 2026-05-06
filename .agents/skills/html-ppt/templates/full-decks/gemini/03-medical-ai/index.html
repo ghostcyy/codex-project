@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI辅助诊断在基层医院的应用实践</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="tpl-medical">
+    <div class="deck">
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">SMART HEALTHCARE INITIATIVE</div>
+                <h1 class="h1">AI辅助诊断在<br>基层医院的应用实践</h1>
+                <p style="font-size: 22px; margin-top: 24px; font-weight: 500;">科技赋能，让优质医疗资源触手可及</p>
+            </div>
+            <div class="footer">
+                <span>中华医学会 · 智能医疗分会</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 背景痛点 (3栏) -->
+        <section class="slide" data-title="基层医疗痛点">
+            <div class="header">
+                <div class="kicker">BACKGROUND & CHALLENGES</div>
+                <h2 class="h2">当前基层医疗面临的核心困境</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-icon">🏥</div>
+                        <h3>优质医生资源匮乏</h3>
+                        <p>县级及乡镇卫生院极度缺乏经验丰富的影像科、病理科主任医师。常见病的漏诊误诊率远高于三甲医院。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">⏱️</div>
+                        <h3>筛查诊断效率低下</h3>
+                        <p>面对庞大的基层初诊人群，单日几十至上百份的 CT 与心电图阅片量让仅有的几位全科医生不堪重负。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📉</div>
+                        <h3>设备闲置与能力错配</h3>
+                        <p>虽然国家补贴采购了先进的 DR/CT 硬件设备，但由于缺乏能准确解读高阶影像的专家，导致设备长期闲置。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>01 项目背景</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 执行摘要 (侧边栏) -->
+        <section class="slide" data-title="方案概述">
+            <div class="header">
+                <div class="kicker">EXECUTIVE SUMMARY</div>
+                <h2 class="h2">AI 辅助诊断系统的战略介入</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">核心价值</span>
+                        <h3>打造永不疲倦的“数字专家”</h3>
+                        <p>通过在基层 HIS 和 PACS 系统中无缝嵌入深度学习算法，AI 可以在医生阅片前完成 90% 的病灶标记与初筛工作。</p>
+                        <p style="margin-top:16px;">这并非替代医生，而是为全科医生配备了一位具有三甲医院专家水平的“副手(Copilot)”。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="stat-box">
+                            <div class="number">94.5<span style="font-size:24px">%</span></div>
+                            <div class="label">肺结节综合检出率</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">持平省级三甲水平
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">2.3<span style="font-size:24px">min</span></div>
+                            <div class="label">平均单例耗时缩短</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">相较于纯人工阅片
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">15<span style="font-size:24px">+</span></div>
+                            <div class="label">覆盖常见病种群</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">涵盖心肺、眼底、骨龄
+                            </div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="number">0</div>
+                            <div class="label">基层硬件改造成本</div>
+                            <div class="desc" style="color:var(--text-muted);font-size:12px;margin-top:8px;">基于云端API直连部署
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>01 项目背景</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 系统架构 (4栏) -->
+        <section class="slide" data-title="系统架构">
+            <div class="header">
+                <div class="kicker">SYSTEM ARCHITECTURE</div>
+                <h2 class="h2">云-边-端 一体化医疗架构</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <span class="pill">01 终端接入 (Terminal)</span>
+                        <h3>基层 PACS 直连</h3>
+                        <p>兼容院内老旧的 DICOM 影像格式，拍摄完成后自动触发脱敏推流，无需医生额外点击导出上传。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">02 边缘计算 (Edge)</span>
+                        <h3>前置脱敏网关</h3>
+                        <p>在医院内网部署轻量级网关，自动剔除患者姓名、身份证号等敏感信息，仅保留纯净影像特征。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">03 云端算力 (Cloud)</span>
+                        <h3>GPU 弹性推理集群</h3>
+                        <p>汇聚数百万三甲医院金标准病历训练出的三维卷积神经网络(3D-CNN)，在毫秒级生成病灶三维重建。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">04 结果回传 (Output)</span>
+                        <h3>结构化报告生成</h3>
+                        <p>自动高亮可疑区域并出具标准化(如 BI-RADS/Lung-RADS)的辅助文本报告，供主治医生审核签字。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>02 技术实现</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 临床场景一：肺结节 (折线图) -->
+        <section class="slide" data-title="肺部筛查">
+            <div class="header">
+                <div class="kicker">CLINICAL SCENARIO 01</div>
+                <h2 class="h2">早期肺癌/肺结节精准筛查</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span class="pill">应用成效</span>
+                        <h3>极大降低漏诊率</h3>
+                        <p>对于 3mm 以下的微小磨玻璃结节(GGO)，人工在疲劳状态下极易漏诊。AI 系统通过层间连续性分析，可实现像素级的三维捕捉。</p>
+                        <p style="margin-top:12px;">右图展示了某基层试点医院引入 AI 系统后 6 个月内，早期微小结节检出数量的显著爬坡趋势。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="text-align:center;">AI 引入前后早期肺结节月度检出例数对比</h3>
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>03 核心临床应用</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 临床场景二：糖网病 (2栏) -->
+        <section class="slide" data-title="眼底筛查">
+            <div class="header">
+                <div class="kicker">CLINICAL SCENARIO 02</div>
+                <h2 class="h2">糖尿病视网膜病变 (DR) 自动分级</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>痛点：无眼科专家的慢病管理</h3>
+                        <p>中国有上亿糖尿病患者，基层慢病管理严重缺乏眼底阅片能力，导致大量患者错过最佳治疗期走向失明。</p>
+                        <div class='img-wrap'><img src='img/surgery.png'
+                                style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                    <div class="card">
+                        <h3>方案：便携眼底机 + AI 秒级分级</h3>
+                        <p>只需基层护士操作免散瞳眼底相机，图像自动上传。AI 在 5 秒内精准标定微血管瘤、硬性渗出，并输出国际标准的 5 级分类建议。</p>
+                        <div class='img-wrap'><img src='img/surgery.png'
+                                style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>03 核心临床应用</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 临床场景三：心电图 (3栏) -->
+        <section class="slide" data-title="心电筛查">
+            <div class="header">
+                <div class="kicker">CLINICAL SCENARIO 03</div>
+                <h2 class="h2">动态心电图(Holter)异常捕捉</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>海量数据挑战</h3>
+                        <p>24 小时动态心电图会产生超过 10 万个心动周期，人工逐一排查不仅耗时极长，且极易疲劳出错。</p>
+                    </div>
+                    <div class="card">
+                        <h3>毫秒级波形识别</h3>
+                        <p>基于 RNN/LSTM 时序模型，AI 可在 1 分钟内完成全天数据分析，精准捕捉早搏、房颤、房室传导阻滞等 30 多种异常。</p>
+                    </div>
+                    <div class="card">
+                        <h3>急救绿色通道</h3>
+                        <p>当系统检测到急性心肌梗死(STEMI)高危波段时，将直接触发院内短信熔断报警，为抢救赢下黄金时间。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>03 核心临床应用</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 效率对比 (柱状图) -->
+        <section class="slide" data-title="效率提升对比">
+            <div class="header">
+                <div class="kicker">EFFICIENCY METRICS</div>
+                <h2 class="h2">医生工作流耗时对比评估</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span class="pill">显著释放生产力</span>
+                        <h3>将时间还给医患沟通</h3>
+                        <p>数据表明，在引入 AI 辅助后，全科医生在“影像寻找病灶”与“书写标准报告”环节的耗时减少了 70%。</p>
+                        <p style="margin-top:16px;">医生不再是“看片机器”，而是成为最终结果的“复核者(Reviewer)”，从而有更多时间用于对患者进行病情解释和人文关怀。</p>
+                        <ul style="margin-top:20px;">
+                            <li>单日门诊吞吐量提升 45%</li>
+                            <li>医疗纠纷投诉率下降 12%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>04 效能评估报告</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 病种分布 (饼图) -->
+        <section class="slide" data-title="检出病种分布">
+            <div class="header">
+                <div class="kicker">DIAGNOSTIC DISTRIBUTION</div>
+                <h2 class="h2">基层 AI 辅助检出高频阳性病种占比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>防范“因病致贫”的公共卫生防线</h3>
+                        <p>通过长达一年的区域卫生数据追踪，我们发现 AI 极大地提升了慢病和早期重症在基层的“首诊拦截率”。</p>
+                        <p style="margin-top:16px;">这有效阻断了小病拖成大病，真正落实了国家“分级诊疗，首诊在基层”的宏观医改目标。</p>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>04 效能评估报告</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 医疗协同 MDT (5栏) -->
+        <section class="slide" data-title="多学科协同">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">基于云端 AI 报告的远程 MDT 协同</h2>
+            </div>
+            <div class="content-area">
+                <p style="font-size:16px; margin-bottom:12px;">当 AI 在基层给出高危预警后，系统将自动触发向三甲医联体上级医院的远程会诊请求流。</p>
+                <div class="grid-5">
+                    <div class="card">
+                        <div class="card-icon">01</div>
+                        <h3 style="font-size:16px;">基层初筛</h3>
+                        <p style="font-size:13px;">全科医生使用 AI 发现疑难阴影并勾选“发起会诊”。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">02</div>
+                        <h3 style="font-size:16px;">数据封包</h3>
+                        <p style="font-size:13px;">包含原始 DICOM 及 AI 三维渲染标注的资料自动云端加密。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">03</div>
+                        <h3 style="font-size:16px;">专家复核</h3>
+                        <p style="font-size:13px;">上级三甲医院专家在移动端/PC端直接查看结构化高亮病历。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">04</div>
+                        <h3 style="font-size:16px;">结论下发</h3>
+                        <p style="font-size:13px;">专家出具权威诊断指导，报告同步至基层 HIS 系统。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">05</div>
+                        <h3 style="font-size:16px;">双向转诊</h3>
+                        <p style="font-size:13px;">确诊重症直接开通住院绿色通道；轻症则留存基层随访。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>05 医联体业务流</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 数据挖掘 NLP (4栏) -->
+        <section class="slide" data-title="文本NLP处理">
+            <div class="header">
+                <div class="kicker">CLINICAL NLP</div>
+                <h2 class="h2">电子病历 (EMR) 的自然语言理解</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <h3>非结构化破壁</h3>
+                        <p>基层医生书写的门诊日志多为自由文本。大语言模型(LLM)可自动提取其中的主诉、现病史等关键医学实体。</p>
+                    </div>
+                    <div class="card">
+                        <h3>ICD-10 自动编码</h3>
+                        <p>精准理解医生的口语化描述，并自动映射为标准的 ICD-10 疾病分类代码，规范医保结算。</p>
+                    </div>
+                    <div class="card">
+                        <h3>用药冲突预警</h3>
+                        <p>关联提取处方数据，实时比对医学知识图谱，拦截基层常见的配伍禁忌 and 超适应症开药。</p>
+                    </div>
+                    <div class="card">
+                        <h3>随访表单自动填充</h3>
+                        <p>基于本次就诊对话，自动为高血压/糖尿病患者生成国家要求的公卫标准化随访建档表单。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>05 医联体业务流</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 数据安全与合规 (3栏) -->
+        <section class="slide" data-title="数据安全与合规">
+            <div class="header">
+                <div class="kicker">SECURITY & COMPLIANCE</div>
+                <h2 class="h2">坚守医疗隐私底线的合规架构</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>院内脱敏机制</h3>
+                        <p>所有医学影像在离开医院防火墙前，必须经过前置机对 DICOM 头部标签进行不可逆哈希模糊，确保“可用不可见”。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">📜</div>
+                        <h3>等保三级与合规</h3>
+                        <p>云端计算节点全部部署于通过国家信息安全等级保护三级认证的医疗专属云，符合《数据安全法》要求。</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🧠</div>
+                        <h3>联邦学习模型进化</h3>
+                        <p>采用联邦学习(Federated Learning)技术，各基层医院数据不出域，仅在本地更新模型梯度，实现联合训练。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>06 基础设施支撑</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13 医生人机协作 (2栏) -->
+        <section class="slide" data-title="人机协作模式">
+            <div class="header">
+                <div class="kicker">HUMAN-IN-THE-LOOP</div>
+                <h2 class="h2">医生主导的人机协作新范式</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="color:var(--secondary)">传统迷思：AI 会取代医生吗？</h3>
+                        <p>不会。医学具有强烈的伦理属性与复杂性，代码无法承担最终的生命责任。我们设计的原则是：AI 负责“地毯式搜索与概率提示”，医生负责“最终判决与治疗决策”。</p>
+                        <p style="margin-top:16px;">AI 就像自动驾驶的 L2 级别，它不是为了让司机睡觉，而是为了让司机在长途驾驶中不致疲劳撞车。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color:var(--primary)">系统闭环反馈</h3>
+                        <p>当医生在软件界面修改了 AI 的错误勾画框时，这些“修正”行为将被匿名化收集，成为下一代模型最宝贵的困难样本(Hard Examples)训练集。</p>
+                        <div class='img-wrap'><img src='img/surgery.png'
+                                style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>07 临床人文思考</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 14 ROI 数据表格 -->
+        <section class="slide" data-title="投资回报率">
+            <div class="header">
+                <div class="kicker">RETURN ON INVESTMENT</div>
+                <h2 class="h2">某县级医院引入 AI 后的年度成本评估</h2>
+            </div>
+            <div class="content-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">指标维度</th>
+                            <th style="width:25%">引入前 (人工模式)</th>
+                            <th style="width:25%">引入后 (AI 辅助)</th>
+                            <th style="width:25%">年度经济效益转化</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>外包阅片支出</td>
+                            <td>约 ¥350,000 /年</td>
+                            <td>仅支付 API 调用费 ¥80,000</td>
+                            <td style="color:var(--primary); font-weight:bold;">节省 ¥270,000 纯支出</td>
+                        </tr>
+                        <tr>
+                            <td>DR/CT 设备运转率</td>
+                            <td>单台设备日均 30 人次</td>
+                            <td>单台设备日均 85 人次</td>
+                            <td style="color:var(--primary); font-weight:bold;">硬件资产利用率提升 180%</td>
+                        </tr>
+                        <tr>
+                            <td>本院初诊截留率</td>
+                            <td>45% (大量轻症流失至市级)</td>
+                            <td>72% (有底气给出初步诊断)</td>
+                            <td style="color:var(--primary); font-weight:bold;">门诊及后续治疗收入大幅增加</td>
+                        </tr>
+                        <tr>
+                            <td>漏诊引发的医疗赔偿</td>
+                            <td>年均发生 1-2 起纠纷</td>
+                            <td>系统全覆盖二次复核，降至 0</td>
+                            <td style="color:var(--primary); font-weight:bold;">规避了不可估量的法律风险</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <span>08 商业与社会价值</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 基层培训 (3栏) -->
+        <section class="slide" data-title="基层人员培训">
+            <div class="header">
+                <div class="kicker">STAFF ONBOARDING</div>
+                <h2 class="h2">零门槛的用户培训落地策略</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card">
+                        <h3>侵入感极低的 UI</h3>
+                        <p>不要求医生切换学习新的独立软件。我们将 AI 结果以悬浮插件的形式直接打入现有的医生工作站浏览器，保持原有工作习惯不变。</p>
+                    </div>
+                    <div class="card">
+                        <h3>驻场护士辅导</h3>
+                        <p>前期派遣临床实施工程师下乡驻场一周，手把手教会乡镇卫生院的护士或技师如何规范拍摄设备并上传影像。</p>
+                    </div>
+                    <div class="card">
+                        <h3>线上 CME 认证</h3>
+                        <p>将系统的熟练使用教程与国家级继续医学教育(CME)学分挂钩，极大调动基层医生主动学习新技术的积极性。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>08 商业与社会价值</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 政策支持 (侧边栏) -->
+        <section class="slide" data-title="政策支持">
+            <div class="header">
+                <div class="kicker">GOVERNMENT SUPPORT</div>
+                <h2 class="h2">国家宏观政策红利与财政补贴</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class='img-wrap'><img src='img/surgery.png'
+                                style='width:100%; height:100%; object-fit: cover;'></div>
+                    </div>
+                    <div class="card">
+                        <h3>顺应医改大势</h3>
+                        <p>国家卫健委明确提出要“推动人工智能技术在医疗影像、病理分析、医学影像辅助诊断中的应用”，并将其作为衡量区域紧密型医共体建设水平的核心指标。</p>
+                        <ul style="margin-top:16px;">
+                            <li><strong>专项资金：</strong> 各省市设立了“基层医疗数字化转型”专项财政拨款，可全额覆盖软硬件采购。</li>
+                            <li><strong>医保物价：</strong> 部分省份已将“AI 辅助阅片”纳入医保单独收费目录。</li>
+                            <li><strong>考核加分：</strong> 使用智能系统可提升乡镇卫生院在“优质服务基层行”评比中的综合评分。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>08 商业与社会价值</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 推广蓝图 (4栏) -->
+        <section class="slide" data-title="推广蓝图">
+            <div class="header">
+                <div class="kicker">EXPANSION ROADMAP</div>
+                <h2 class="h2">未来三年的全域推广路线图</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-zigzag">
+                    <div class="card">
+                        <span class="pill">Phase 1: 破冰</span>
+                        <h3>树立标杆</h3>
+                        <p>在东部医疗发达省份挑选 5 个强基县进行深度试点，打磨出经得起考验的基层产品形态与实施交付标准化 SOP。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Phase 2: 复制</span>
+                        <h3>医共体打包</h3>
+                        <p>以“1家县医院 + 10家乡镇卫生院”为单元，利用县域紧密型医共体的行政力量进行整包式的 SaaS 云化推广。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Phase 3: 下沉</span>
+                        <h3>村医终端</h3>
+                        <p>将超轻量化的辅助诊断模型部署到便携式设备(如智能平板+手持超声)，使先进诊断能力跨越最后一公里抵达村卫生室。</p>
+                    </div>
+                    <div class="card">
+                        <span class="pill">Phase 4: 演进</span>
+                        <h3>多模态大模型</h3>
+                        <p>融合影像、文本病历与基因组学数据，向真正的全科医疗大脑(Generalist Medical AI)方向持续进化升级。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>09 未来展望</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 典型案例 (2栏) -->
+        <section class="slide" data-title="典型案例">
+            <div class="header">
+                <div class="kicker">CORE_INFO</div>
+                <h2 class="h2">改变命运的“五分钟”</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>真实案例回溯</h3>
+                        <p>贵州某偏远山区卫生院，一名 65 岁患者因轻微胸痛就诊。由于缺乏专科经验，值班医生初步判断为普通胃食管反流，拟开具胃药让其回家。</p>
+                        <p style="margin-top:12px;">但在将常规心电图接入 AI 系统后，系统在 5 秒内爆发最高级红色警报：<strong>疑似广泛前壁心肌梗死超急性期</strong>。
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>结果反馈</h3>
+                        <p>该预警立刻触发了市级胸痛中心的强制接管。急救车在患者离开卫生院前赶到，3小时内完成了 PCI 支架手术，成功挽救了生命。</p>
+                        <div class="stat-box" style="margin-top: 16px;">
+                            <div class="label" style="text-align:center; color:var(--primary); font-size:16px;">
+                                “这就是我们为之奋斗的意义”</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>09 未来展望</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 核心愿景 (1栏大字) -->
+        <section class="slide" data-title="核心愿景">
+            <div class="header">
+                <div class="kicker">OUR VISION</div>
+                <h2 class="h2">跨越医疗资源的鸿沟</h2>
+            </div>
+            <div class="content-area" style="align-items:center; text-align:center;">
+                <p style="font-size:32px; font-weight:300; line-height:1.6; color:var(--text-main); margin:40px 10%;">
+                    “我们无法在短期内为每一座乡村培养出十年临床经验的主任医师，<br>
+                    <strong style="color:var(--primary);">但我们可以用一行行代码，将最顶尖医学大脑的智慧，<br>瞬间输送到这片土地的每一个角落。</strong>”
+                </p>
+                <div class='img-wrap'><img src='img/surgery.png' style='width:100%; height:100%; object-fit: cover;'>
+                </div>
+            </div>
+            <div class="footer">
+                <span>结束语</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">感谢您的聆听</h1>
+                <p style="font-size: 22px; color: rgba(255,255,255,0.9); margin-top: 24px;">携手推进中国基层医疗数字化普惠</p>
+                <div style="margin-top: 40px;">
+                    <span class="pill"
+                        style="font-size: 14px; padding: 10px 24px; background: rgba(255,255,255,0.2);">商务合作：bd@smart-med-ai.com</span>
+                </div>
+            </div>
+            <div class="footer">
+                <span>中华医学会 · 智能医疗分会</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 图表全局配置
+            Chart.defaults.color = '#607d8b';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            // 5页：折线图
+            const ctxLine = document.getElementById('lineChart');
+            if (ctxLine) {
+                new Chart(ctxLine.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['1月', '2月', '3月(系统上线)', '4月', '5月', '6月'],
+                        datasets: [
+                            {
+                                label: '早期结节检出例数',
+                                data: [12, 15, 45, 82, 95, 110],
+                                borderColor: '#00796b',
+                                backgroundColor: 'rgba(0, 121, 107, 0.1)',
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: '漏诊投诉率(右轴)',
+                                data: [5, 4, 1, 0, 0, 0],
+                                borderColor: '#ffb300',
+                                borderDash: [5, 5],
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'top' } }
+                    }
+                });
+            }
+
+            // 8页：柱状图
+            const ctxBar = document.getElementById('barChart');
+            if (ctxBar) {
+                new Chart(ctxBar.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['胸部CT寻找病灶', '眼底筛查阅片', '心电图波形排查', '书写标准化报告'],
+                        datasets: [
+                            {
+                                label: '纯人工耗时 (分钟)',
+                                data: [12, 8, 15, 6],
+                                backgroundColor: '#b0bec5',
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'AI辅助耗时 (分钟)',
+                                data: [2.5, 0.5, 1.2, 1.5],
+                                backgroundColor: '#26a69a',
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { title: { display: true, text: '单例平均耗时 (分钟)' } }
+                        }
+                    }
+                });
+            }
+
+            // 9页：饼图
+            const ctxPie = document.getElementById('pieChart');
+            if (ctxPie) {
+                new Chart(ctxPie.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['肺部可疑微小结节', '糖尿病视网膜病变', '心律失常高危', '骨关节早期退变', '其他'],
+                        datasets: [{
+                            data: [45, 25, 15, 10, 5],
+                            backgroundColor: [
+                                '#00796b',
+                                '#26a69a',
+                                '#4db6ac',
+                                '#80cbc4',
+                                '#e0f2f1'
+                            ],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '60%',
+                        plugins: { legend: { position: 'right' } }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

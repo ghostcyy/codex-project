@@ -1,0 +1,1732 @@
+{
+  "schemaVersion": 2,
+  "id": "13-academic-lecture",
+  "deckClass": "tpl-academic-lecture",
+  "label": {
+    "zh-CN": "模板 13-academic-lecture",
+    "en": "Template 13-academic-lecture"
+  },
+  "description": {
+    "zh-CN": "（待填写）",
+    "en": "(to be filled)"
+  },
+  "shellHtmlFile": "shell.html",
+  "cssFiles": [
+    "assets/fonts.css",
+    "assets/base.css",
+    "style.css"
+  ],
+  "jsFiles": [
+    "assets/runtime.js",
+    "assets/edit-mode.js"
+  ],
+  "assetDirs": [
+    "assets",
+    "img"
+  ],
+  "fixed": {
+    "cover": {
+      "fragmentId": "cover",
+      "pageType": "cover",
+      "sourcePageType": "cover",
+      "sourceSlideIndex": 1,
+      "sourceSlideTitle": "01 Title",
+      "htmlFile": "fragments/cover.html",
+      "pagePortrait": {
+        "summary": "cover page with text x1; pageType:cover, layout:cover",
+        "layoutFamily": "cover",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:cover",
+          "layout:cover"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title-1",
+          "selector": "h1",
+          "tarChars": 38,
+          "maxChars": 76,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "The Impact of Deep Learning on Computational Linguistics"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.author",
+          "tarChars": 45,
+          "maxChars": 90,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Dr. Jane SmithDepartment of Computer ScienceUniversity of Technology"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "closing": {
+      "fragmentId": "closing",
+      "pageType": "closing",
+      "sourcePageType": "closing",
+      "sourceSlideIndex": 15,
+      "sourceSlideTitle": "15 Conclusion",
+      "htmlFile": "fragments/closing.html",
+      "pagePortrait": {
+        "summary": "closing page with text x1; pageType:closing, layout:closing",
+        "layoutFamily": "closing",
+        "componentSignature": "text x1",
+        "density": "low",
+        "components": [],
+        "componentCounts": {},
+        "tags": [
+          "pageType:closing",
+          "layout:closing"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "title-1",
+          "selector": "h1",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Thank You"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.author",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Questions & Answerscontact: jane.smith@university.edu"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "pool": {
+    "slide-02": {
+      "fragmentId": "slide-02",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 2,
+      "sourceSlideTitle": "02 Outline",
+      "htmlFile": "fragments/slide-02.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Outline"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Lecture Outline"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 31,
+          "maxChars": 61,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "1. Introduction to Computational Linguistics"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 37,
+          "maxChars": 73,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "2. Historical Background and Pre-Deep Learning Methods"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "3. Literature Review"
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(4)",
+          "tarChars": 29,
+          "maxChars": 58,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "4. Methodology: Transformer Architectures"
+        },
+        {
+          "slotId": "list-item-5",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(5)",
+          "tarChars": 26,
+          "maxChars": 52,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "5. Data Collection and Preprocessing"
+        },
+        {
+          "slotId": "list-item-6",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(6)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "6. Experimental Setup"
+        },
+        {
+          "slotId": "list-item-7",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(7)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "7. Results and Analysis"
+        },
+        {
+          "slotId": "list-item-8",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(8)",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "8. Discussion and Limitations"
+        },
+        {
+          "slotId": "list-item-9",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(9)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "9. Future Directions"
+        },
+        {
+          "slotId": "list-item-10",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(10)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "10. Conclusion"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-03": {
+      "fragmentId": "slide-03",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 3,
+      "sourceSlideTitle": "03 Introduction",
+      "htmlFile": "fragments/slide-03.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Introduction"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "1. Introduction"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p:nth-of-type(1)",
+          "tarChars": 408,
+          "maxChars": 816,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Computational linguistics is an interdisciplinary field concerned with the statistical or rule-based modeling of natural language from a computational perspective."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > p:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Key Questions:"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 38,
+          "maxChars": 76,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "How can computers process and understand human language?"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 40,
+          "maxChars": 79,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "What are the limitations of traditional rule-based systems?"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 43,
+          "maxChars": 85,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "How has the paradigm shifted with the advent of neural networks?"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-04": {
+      "fragmentId": "slide-04",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 4,
+      "sourceSlideTitle": "04 Background",
+      "htmlFile": "fragments/slide-04.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Background"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "2. Historical Background"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(1) > h4",
+          "tarChars": 24,
+          "maxChars": 47,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Rule-Based Systems (1950s-1980s)"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(2) > h4",
+          "tarChars": 22,
+          "maxChars": 43,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Statistical NLP (1990s-2010s)"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(1) > p",
+          "tarChars": 286,
+          "maxChars": 572,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Relied heavily on hand-crafted grammar rules. Brittle and unable to scale to broad coverage of natural language."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(2) > p",
+          "tarChars": 298,
+          "maxChars": 596,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Utilized probabilistic models (e.g., Hidden Markov Models). Better generalization but limited by feature engineering."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-05": {
+      "fragmentId": "slide-05",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 5,
+      "sourceSlideTitle": "05 Lit Review 1",
+      "htmlFile": "fragments/slide-05.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Lit Review"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 28,
+          "maxChars": 55,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "3. Literature Review: Early Neural Nets"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Bengio et al. (2003):"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Mikolov et al. (2013):"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Sutskever et al. (2014):"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Bengio et al. (2003): A Neural Probabilistic Language Model. Introduced distributed representations for words (word embeddings)."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Mikolov et al. (2013): Efficient Estimation of Word Representations in Vector Space (Word2Vec). Scaled up embedding generation."
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Sutskever et al. (2014): Sequence to Sequence Learning with Neural Networks. Established the encoder-decoder architecture for translation."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-06": {
+      "fragmentId": "slide-06",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 6,
+      "sourceSlideTitle": "06 Lit Review 2",
+      "htmlFile": "fragments/slide-06.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Lit Review"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 29,
+          "maxChars": 58,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "3. Literature Review: The Transformer Era"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Vaswani et al. (2017):"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Devlin et al. (2018):"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Brown et al. (2020):"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Vaswani et al. (2017): Attention Is All You Need. Replaced recurrent layers with self-attention mechanisms."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Devlin et al. (2018): BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding."
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Brown et al. (2020): Language Models are Few-Shot Learners (GPT-3). Demonstrated the power of massive scaling."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-07": {
+      "fragmentId": "slide-07",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 7,
+      "sourceSlideTitle": "07 Methodology",
+      "htmlFile": "fragments/slide-07.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Methodology"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "4. Methodology"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content:nth-of-type(2) > div.box > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "The Approach"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p",
+          "tarChars": 242,
+          "maxChars": 484,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Our research focuses on fine-tuning pre-trained transformer models for low-resource languages."
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > div.box > ol > li:nth-of-type(1)",
+          "tarChars": 37,
+          "maxChars": 73,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Select a multilingual base model (e.g., mBERT, XLM-R)."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > div.box > ol > li:nth-of-type(2)",
+          "tarChars": 38,
+          "maxChars": 76,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Compile a domain-specific corpus in the target language."
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > div.box > ol > li:nth-of-type(3)",
+          "tarChars": 44,
+          "maxChars": 88,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Apply continued pre-training using Masked Language Modeling (MLM)."
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content:nth-of-type(2) > div.box > ol > li:nth-of-type(4)",
+          "tarChars": 38,
+          "maxChars": 76,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Fine-tune on downstream tasks (NER, Sentiment Analysis)."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-08": {
+      "fragmentId": "slide-08",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 8,
+      "sourceSlideTitle": "08 Data",
+      "htmlFile": "fragments/slide-08.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Data Collection"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "5. Data Collection"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p",
+          "tarChars": 200,
+          "maxChars": 400,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Data is the bottleneck for low-resource NLP. We utilized several strategies:"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Web Scraping:"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Crowdsourcing:"
+        },
+        {
+          "slotId": "body-4",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Synthetic Data:"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 49,
+          "maxChars": 97,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Web Scraping: Automated crawlers targeting local news websites and forums."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Crowdsourcing: Engaging native speakers for annotation and validation tasks."
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Synthetic Data: Utilizing high-resource language models to generate parallel corpora via translation, followed by human filtering."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-09": {
+      "fragmentId": "slide-09",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 9,
+      "sourceSlideTitle": "09 Experiment",
+      "htmlFile": "fragments/slide-09.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1 + list x3; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1 + list x3",
+        "density": "medium",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          },
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-2",
+            "kind": "list",
+            "subtype": "list"
+          },
+          {
+            "id": "list-3",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1,
+          "list": 6
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Experiment Setup"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "6. Experimental Setup"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(1) > strong:nth-of-type(1)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Hardware Configuration:"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(1) > strong:nth-of-type(2)",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Software Stack:"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Hyperparameters:"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "4x NVIDIA A100 GPUs"
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "512GB System RAM"
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "PyTorch 2.0"
+        },
+        {
+          "slotId": "list-item-4",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(1) > ul:nth-of-type(2) > li:nth-of-type(2)",
+          "tarChars": 19,
+          "maxChars": 37,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "HuggingFace Transformers"
+        },
+        {
+          "slotId": "list-item-5",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Batch size: 32"
+        },
+        {
+          "slotId": "list-item-6",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Learning rate: 2e-5"
+        },
+        {
+          "slotId": "list-item-7",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 25,
+          "maxChars": 50,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Epochs: 10 (early stopping applied)"
+        },
+        {
+          "slotId": "list-item-8",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div:nth-of-type(2) > ul > li:nth-of-type(4)",
+          "tarChars": 18,
+          "maxChars": 36,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Optimizer: AdamW"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-10": {
+      "fragmentId": "slide-10",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 10,
+      "sourceSlideTitle": "10 Results 1",
+      "htmlFile": "fragments/slide-10.html",
+      "pagePortrait": {
+        "summary": "table page with table x1; pageType:title-text, layout:table",
+        "layoutFamily": "table",
+        "componentSignature": "table x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "table-1",
+            "kind": "table",
+            "subtype": "table"
+          }
+        ],
+        "componentCounts": {
+          "table": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:table"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Results"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 26,
+          "maxChars": 52,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "7. Results: Named Entity Recognition"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p",
+          "tarChars": 166,
+          "maxChars": 332,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Evaluation using standard CoNLL-2003 metrics (Macro F1-Score)."
+        },
+        {
+          "slotId": "table-cell-1",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(1) > th:nth-of-type(1)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Model"
+        },
+        {
+          "slotId": "table-cell-2",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(1) > th:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Precision"
+        },
+        {
+          "slotId": "table-cell-3",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(1) > th:nth-of-type(3)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Recall"
+        },
+        {
+          "slotId": "table-cell-4",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(1) > th:nth-of-type(4)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "F1-Score"
+        },
+        {
+          "slotId": "table-cell-5",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(2) > td:nth-of-type(1)",
+          "tarChars": 17,
+          "maxChars": 34,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Baseline (BiLSTM-CRF)"
+        },
+        {
+          "slotId": "table-cell-6",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(2) > td:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "68.4"
+        },
+        {
+          "slotId": "table-cell-7",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(2) > td:nth-of-type(3)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "65.2"
+        },
+        {
+          "slotId": "table-cell-8",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(2) > td:nth-of-type(4)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "66.8"
+        },
+        {
+          "slotId": "table-cell-9",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(3) > td:nth-of-type(1)",
+          "tarChars": 15,
+          "maxChars": 29,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "mBERT (Zero-shot)"
+        },
+        {
+          "slotId": "table-cell-10",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(3) > td:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "72.1"
+        },
+        {
+          "slotId": "table-cell-11",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(3) > td:nth-of-type(3)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "70.5"
+        },
+        {
+          "slotId": "table-cell-12",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(3) > td:nth-of-type(4)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "71.3"
+        },
+        {
+          "slotId": "table-cell-13",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(4) > td:nth-of-type(1)",
+          "tarChars": 18,
+          "maxChars": 35,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "Our Model (Fine-tuned)"
+        },
+        {
+          "slotId": "table-cell-14",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(4) > td:nth-of-type(2)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "84.5"
+        },
+        {
+          "slotId": "table-cell-15",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(4) > td:nth-of-type(3)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "86.1"
+        },
+        {
+          "slotId": "table-cell-16",
+          "selector": "div.content:nth-of-type(2) > table > tr:nth-of-type(4) > td:nth-of-type(4)",
+          "tarChars": 12,
+          "maxChars": 24,
+          "optional": false,
+          "kind": "tableCell",
+          "sourceText": "85.3"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-11": {
+      "fragmentId": "slide-11",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 11,
+      "sourceSlideTitle": "11 Results 2",
+      "htmlFile": "fragments/slide-11.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Results"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 22,
+          "maxChars": 44,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "7. Results: Sentiment Analysis"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(1) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "74.2%"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(2) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "89.7%"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p",
+          "tarChars": 176,
+          "maxChars": 352,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Accuracy on a manually annotated dataset of 5,000 product reviews."
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(1) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "mBERT Baseline Accuracy"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(2) > p",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Our Model Accuracy"
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-12": {
+      "fragmentId": "slide-12",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 12,
+      "sourceSlideTitle": "12 Discussion",
+      "htmlFile": "fragments/slide-12.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Discussion"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "8. Discussion"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p",
+          "tarChars": 320,
+          "maxChars": 640,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "The significant performance gains demonstrate the efficacy of continued pre-training on domain-specific, low-resource corpora."
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 45,
+          "maxChars": 89,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Transfer learning mitigates the lack of massive annotated datasets."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "However, the model still struggles with idiomatic expressions and code-switching, which are prevalent in the target language."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-13": {
+      "fragmentId": "slide-13",
+      "pageType": "title-text",
+      "sourcePageType": "title-text",
+      "sourceSlideIndex": 13,
+      "sourceSlideTitle": "13 Limitations",
+      "htmlFile": "fragments/slide-13.html",
+      "pagePortrait": {
+        "summary": "text page with list x1; pageType:title-text, layout:text",
+        "layoutFamily": "text",
+        "componentSignature": "list x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "list-1",
+            "kind": "list",
+            "subtype": "list"
+          }
+        ],
+        "componentCounts": {
+          "list": 2
+        },
+        "tags": [
+          "pageType:title-text",
+          "layout:text"
+        ],
+        "useCases": [
+          "正文说明"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Limitations"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "9. Limitations"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Dataset Bias:"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Computational Cost:"
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3) > strong",
+          "tarChars": 160,
+          "maxChars": 320,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Evaluation Scope:"
+        },
+        {
+          "slotId": "list-item-1",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(1)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Dataset Bias: Our web-scraped corpus heavily over-represents formal news text, potentially reducing performance on informal social media text."
+        },
+        {
+          "slotId": "list-item-2",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(2)",
+          "tarChars": 50,
+          "maxChars": 100,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Computational Cost: Fine-tuning large language models requires significant GPU resources, making deployment difficult in resource-constrained environments."
+        },
+        {
+          "slotId": "list-item-3",
+          "selector": "div.content:nth-of-type(2) > ul > li:nth-of-type(3)",
+          "tarChars": 48,
+          "maxChars": 96,
+          "optional": false,
+          "kind": "listItem",
+          "sourceText": "Evaluation Scope: The study is currently limited to two downstream tasks."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    },
+    "slide-14": {
+      "fragmentId": "slide-14",
+      "pageType": "grid-2",
+      "sourcePageType": "grid-2",
+      "sourceSlideIndex": 14,
+      "sourceSlideTitle": "14 Future Work",
+      "htmlFile": "fragments/slide-14.html",
+      "pagePortrait": {
+        "summary": "grid page with grid:1x2 x1; pageType:grid-2, layout:grid, grid:1x2",
+        "layoutFamily": "grid",
+        "componentSignature": "grid:1x2 x1",
+        "density": "low",
+        "components": [
+          {
+            "id": "grid-1",
+            "kind": "grid",
+            "subtype": "grid-1x2",
+            "selector": ".grid-2",
+            "layout": {
+              "rows": 1,
+              "cols": 2,
+              "items": 2,
+              "orientation": "row"
+            }
+          }
+        ],
+        "componentCounts": {
+          "grid": 1,
+          "grid-1x2": 1
+        },
+        "tags": [
+          "pageType:grid-2",
+          "layout:grid",
+          "grid:1x2"
+        ],
+        "useCases": [
+          "结构对比"
+        ]
+      },
+      "topicSlots": 0,
+      "topicSlotMaxChars": 0,
+      "anchors": [
+        {
+          "slotId": "footer",
+          "selector": "div.footer:nth-of-type(3) > span:nth-of-type(1)",
+          "tarChars": 40,
+          "maxChars": 80,
+          "optional": true,
+          "kind": "footer",
+          "sourceText": "Future Work"
+        },
+        {
+          "slotId": "title-1",
+          "selector": "div.header:nth-of-type(1) > h2",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "10. Future Directions"
+        },
+        {
+          "slotId": "title-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(1) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Model Distillation"
+        },
+        {
+          "slotId": "title-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(2) > h4",
+          "tarChars": 20,
+          "maxChars": 40,
+          "optional": false,
+          "kind": "title",
+          "sourceText": "Multimodal Expansion"
+        },
+        {
+          "slotId": "body-1",
+          "selector": "div.content:nth-of-type(2) > p",
+          "tarChars": 172,
+          "maxChars": 344,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Subsequent research will focus on addressing current limitations:"
+        },
+        {
+          "slotId": "body-2",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(1) > p",
+          "tarChars": 224,
+          "maxChars": 448,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Compressing the fine-tuned model to run efficiently on mobile devices or edge servers."
+        },
+        {
+          "slotId": "body-3",
+          "selector": "div.content:nth-of-type(2) > div.grid-2 > div.box:nth-of-type(2) > p",
+          "tarChars": 240,
+          "maxChars": 480,
+          "optional": false,
+          "kind": "body",
+          "sourceText": "Integrating acoustic and visual data to improve context understanding in spoken interactions."
+        }
+      ],
+      "chartSlots": [],
+      "imageSlotSelectors": [],
+      "mediaKinds": []
+    }
+  },
+  "capabilities": {
+    "chartTypes": [],
+    "hasImagePages": false,
+    "hasVideoPages": false,
+    "hasAudioPages": false
+  }
+}

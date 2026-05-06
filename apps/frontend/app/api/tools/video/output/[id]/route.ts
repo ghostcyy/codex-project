@@ -1,10 +1,16 @@
 import { readFile } from "node:fs/promises";
 import { NextResponse } from "next/server";
+import { getCurrentUser } from "../../../../../../lib/server-auth";
 import { readManifest } from "../../../../../../lib/video-server";
 
 export const runtime = "nodejs";
 
 export async function GET(request: Request, context: { params: Promise<{ id: string }> }) {
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   const { id } = await context.params;
   const manifest = readManifest(id);
 

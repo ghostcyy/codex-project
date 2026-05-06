@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Informal Lab: Creative Experimental Layouts</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-experimental">
+    <div class="deck">
+        <canvas id="experimental-canvas"></canvas>
+
+        <!-- 01 封面 (强制双轴居中) -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker" style="color: var(--primary);">UNFILTERED CREATIVITY // v3.0</div>
+                <h1 class="h1" style="font-size: 100px; font-weight: 900; color: #fff; text-shadow: 4px 4px 0 var(--secondary);">RAW<br>IDEAS</h1>
+                <p style="font-size: 20px; color: var(--accent); margin-top: 30px; font-family: monospace;">[ NO_ASSETS ] [ NO_MULTIMEDIA ] [ PURE_LAYOUT ]</p>
+            </div>
+            <div class="footer">
+                <span>EXPERIMENTAL BRANCH</span>
+                <span class="slide-number" data-current="1" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 02 原第六页: Zig-Zag Flow (交错流) -->
+        <section class="slide" data-title="Zig-Zag Flow">
+            <div class="header">
+                <div class="kicker">PRESERVED_STYLE: ZIG_ZAG</div>
+                <h2 class="h2">交错律动：打破水平基准</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-zigzag" style="padding: 50px 0;">
+                    <div class="card">
+                        <h3 style="color: var(--primary);">动态 A</h3>
+                        <p>保留自上一版本的核心布局，通过垂直错位产生视觉韵律。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--secondary);">动态 B</h3>
+                        <p>纯文本模式下，这种错落感能更好地支撑信息块的独立性。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent);">动态 C</h3>
+                        <p>消除了对图片的依赖，仅靠网格张力维持视觉吸引力。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--text-main);">动态 D</h3>
+                        <p>适合头脑风暴、灵感碎片或非线性的叙事结构。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 01</span>
+                <span class="slide-number" data-current="2" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 03 新样式 1: Sticky Notes (便利贴墙) -->
+        <section class="slide" data-title="Sticky Notes">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: STICKY_WALL</div>
+                <h2 class="h2">灵感墙：随机旋转与堆叠</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-sticky">
+                    <div class="card" style="background: rgba(0, 255, 136, 0.1);">
+                        <h3>备忘 A</h3>
+                        <p>像便利贴一样随手粘贴。微小的旋转角度模拟了手工感，减少了严肃性。</p>
+                    </div>
+                    <div class="card" style="background: rgba(255, 0, 119, 0.1);">
+                        <h3>关键点</h3>
+                        <p>卡片之间的重叠关系可以通过 Z-index 动态调整，产生真实的物理进深。</p>
+                    </div>
+                    <div class="card" style="background: rgba(0, 204, 255, 0.1);">
+                        <h3>待办项</h3>
+                        <p>这种非正式的排列非常适合团队讨论、创意提案或非正式汇报。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 02</span>
+                <span class="slide-number" data-current="3" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 04 新样式 2: The Dialogue (对话流) -->
+        <section class="slide" data-title="The Dialogue">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: DIALOGUE</div>
+                <h2 class="h2">对话体：交互式的观点碰撞</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-chat">
+                    <div class="chat-bubble left">
+                        <h3 style="font-size: 14px; margin-bottom: 5px;">PROPOSER</h3>
+                        <p>我们是否可以彻底摒弃沉重的高清素材，只靠纯文字排版来赢得观众？</p>
+                    </div>
+                    <div class="chat-bubble right">
+                        <h3 style="font-size: 14px; margin-bottom: 5px;">ANALYST</h3>
+                        <p>当然可以。优秀的版式布局本身就是一种极其强大的视觉语言，它能让内容更加纯粹。</p>
+                    </div>
+                    <div class="chat-bubble left">
+                        <h3 style="font-size: 14px; margin-bottom: 5px;">PROPOSER</h3>
+                        <p>这种对话式的布局能让枯燥的陈述变得像社交软件聊天一样亲切、好读。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 03</span>
+                <span class="slide-number" data-current="4" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 05 新样式 3: The Spotlight (聚光灯) -->
+        <section class="slide" data-title="The Spotlight">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: SPOTLIGHT</div>
+                <h2 class="h2">聚光灯：极端层级化展示</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-spotlight">
+                    <div class="card hero">
+                        <h3 style="font-size: 50px; color: var(--primary);">聚焦核心</h3>
+                        <p>通过极致的大小对比，强迫观众首先关注最核心的一句话或一个数字。</p>
+                    </div>
+                    <div class="card"><h3>子项 A</h3><p>辅助性说明。</p></div>
+                    <div class="card"><h3>子项 B</h3><p>辅助性说明。</p></div>
+                    <div class="card"><h3>子项 C</h3><p>辅助性说明。</p></div>
+                    <div class="card"><h3>子项 D</h3><p>辅助性说明。</p></div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 04</span>
+                <span class="slide-number" data-current="5" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 06 新样式 4: Terminal Console (终端控制台) -->
+        <section class="slide" data-title="Terminal Console">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: TERMINAL</div>
+                <h2 class="h2">控制台：低保真技术的极客美学</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-terminal">
+                    <div class="terminal-line">INITIATING CREATIVE_SCAN...</div>
+                    <div class="terminal-line">ANALYZING LAYOUT DENSITY... 98%</div>
+                    <div class="terminal-line">DETACHING MULTIMEDIA ASSETS... DONE.</div>
+                    <div class="terminal-line" style="color: var(--primary); margin-top: 20px;">[SUMMARY]</div>
+                    <div class="terminal-line">这种极客风格的版式不需要任何修饰，它本身就代表了专业与底层逻辑。</div>
+                    <div class="terminal-line">适合展示技术方案、开发日志或数据分析结果。</div>
+                    <div class="terminal-line" style="margin-top: auto; color: var(--secondary);">_ CURSOR BLINKING</div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 05</span>
+                <span class="slide-number" data-current="6" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 07 新样式 5: Random Scatter (随机散射) -->
+        <section class="slide" data-title="Random Scatter">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: SCATTER</div>
+                <h2 class="h2">散射分布：自由意志的排版实验</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-scatter">
+                    <div class="card" style="top: 10%; left: 5%; border-color: var(--primary);">
+                        <h3>自由 A</h3>
+                        <p>卡片不再受制于严苛的网格线，而是像星星一样散落在画布上。</p>
+                    </div>
+                    <div class="card" style="top: 50%; left: 40%; width: 300px; border-color: var(--secondary);">
+                        <h3>重心</h3>
+                        <p>通过精心的位置排布，虽然散乱但依然保持整体的平衡感。</p>
+                    </div>
+                    <div class="card" style="top: 20%; left: 65%; border-color: var(--accent);">
+                        <h3>漂浮</h3>
+                        <p>这种呼吸感极强的布局，最适合展示那些需要沉思与留白的内容。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 06</span>
+                <span class="slide-number" data-current="7" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 08 新样式 6: Quad Grid (四分格) -->
+        <section class="slide" data-title="Quad Grid">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: QUAD_MATRIX</div>
+                <h2 class="h2">四分矩阵：对称与偏移的博弈</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-quad">
+                    <div class="card">
+                        <h3 style="font-size: 24px;">逻辑 A</h3>
+                        <p>严谨的二分法。左侧区域保持负向偏移，打破绝对的中心对称感。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 24px;">变量 B</h3>
+                        <p>右侧区域正向偏移。通过这种“推拉”关系，版面产生了呼吸感。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 24px;">维度 C</h3>
+                        <p>适合展示两组对比数据，或者四个平行的核心观点。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 24px;">边界 D</h3>
+                        <p>无边框与细线边框的交替，强化了实验性的视觉语言。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 07</span>
+                <span class="slide-number" data-current="8" data-total="15"></span>
+            </div>
+        </section>
+
+
+        <!-- 10 新样式 8: Staircase (阶梯列表) -->
+        <section class="slide" data-title="Staircase">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: STAIRCASE_FLOW</div>
+                <h2 class="h2">阶梯流：深度的递进与逻辑演放</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-staircase">
+                    <div class="card">
+                        <h3 style="color: var(--primary);">01 发起阶段</h3>
+                        <p>逻辑的起点，位于最左侧，作为所有推导的基础。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--secondary);">02 演化过程</h3>
+                        <p>产生位移，暗示逻辑的深入与复杂性的增加。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--accent);">03 最终结论</h3>
+                        <p>最大程度的缩进，象征着深度思考后的核心产出。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 08</span>
+                <span class="slide-number" data-current="9" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 08 图表页 (标准 Chart.js 仍需保留) -->
+        <section class="slide" data-title="数据呈现">
+            <div class="header">
+                <div class="kicker">DATA_MODE</div>
+                <h2 class="h2">纯净数据：无干扰的可视化实验</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-zigzag" style="grid-template-columns: 1fr 1fr; padding: 40px 0;">
+                    <div class="card">
+                        <h3>增长趋势</h3>
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>结构比例</h3>
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 09</span>
+                <span class="slide-number" data-current="10" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 09-19 填充页面 (省略重复结构) -->
+        <section class="slide" data-title="更多图表">
+            <div class="header">
+                <div class="kicker">DATA_MODE</div>
+                <h2 class="h2">性能对比与进度追踪</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-zigzag" style="grid-template-columns: 1fr 1fr; padding: 40px 0;">
+                    <div class="card">
+                        <div class="chart-container"><canvas id="barChart"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container"><canvas id="ganttChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer"><span>STYLE 10</span><span class="slide-number" data-current="11" data-total="15"></span></div>
+        </section>
+
+        <!-- 12 新样式 10: Pentagon (5卡) -->
+        <section class="slide" data-title="Pentagon Focus">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: PENTAGON</div>
+                <h2 class="h2">核心环绕：多维度的向心力</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-pentagon">
+                    <div class="card"><h3>维度 A</h3><p>外部支撑点 A，提供基础数据输入。</p></div>
+                    <div class="card"><h3>维度 B</h3><p>外部支撑点 B，负责环境因素分析。</p></div>
+                    <div class="card"><h3>维度 C</h3><p>外部支撑点 C，执行逻辑校验。</p></div>
+                    <div class="card"><h3>维度 D</h3><p>外部支撑点 D，进行风险评估。</p></div>
+                    <div class="card">
+                        <h3 style="font-size: 32px; color: var(--primary);">CORE</h3>
+                        <p>所有维度的最终交汇点。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 11</span>
+                <span class="slide-number" data-current="12" data-total="15"></span>
+            </div>
+        </section>
+
+
+        <!-- 14 新样式 12: Split-v2 (2卡) -->
+        <section class="slide" data-title="Interlocking Split">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: INTERLOCK_SPLIT</div>
+                <h2 class="h2">互锁分割：对立统一的二元论</h2>
+            </div>
+            <div class="content-area" style="padding: 0;">
+                <div class="layout-split-v2">
+                    <div class="card">
+                        <h3 style="font-size: 40px; color: var(--primary);">RAW</h3>
+                        <p>最纯粹的初始意图。没有修饰，没有掩盖，只有逻辑的骨架。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 40px; color: var(--secondary);">REFINED</h3>
+                        <p>经过实验性排版的重塑。将混乱转化为秩序，将信号从噪声中提取。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 12</span>
+                <span class="slide-number" data-current="13" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 15 新样式 13: Overlap-Diag (2卡) -->
+        <section class="slide" data-title="Kinetic Overlap">
+            <div class="header">
+                <div class="kicker">NEW_STYLE: OVERLAP_DIAG</div>
+                <h2 class="h2">对角重叠：动量与留白的博弈</h2>
+            </div>
+            <div class="content-area">
+                <div class="layout-overlap-diag">
+                    <div class="card" style="border-color: var(--accent);">
+                        <h3 style="font-size: 32px;">CONTEXT</h3>
+                        <p>背景信息层。作为画面的底色，为核心观点提供必要的支撑环境与逻辑闭环。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 32px; color: var(--secondary);">ACTION</h3>
+                        <p>执行动作层。打破静止，通过强烈的物理存在感驱动观者的注意力转向最终目标。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STYLE 13</span>
+                <span class="slide-number" data-current="14" data-total="15"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1" style="color: var(--primary);">Think<br>Raw</h1>
+                <p style="font-size: 24px; color: var(--secondary); margin-top: 40px; font-weight: 900; letter-spacing: 12px;">CREATIVE_LAB_CLOSED</p>
+                <div style="margin-top: 50px;">
+                    <code style="background: #222; padding: 10px 20px; color: var(--accent);">EXIT STATUS: 0 // SUCCESS</code>
+                </div>
+            </div>
+            <div class="footer">
+                <span>EXPERIMENTAL BRANCH // 2026</span>
+                <span class="slide-number" data-current="15" data-total="15"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Floating Code Bits) ---
+            const canvas = document.getElementById('experimental-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                let chars = "01010101<>[]{}+-*/".split("");
+                let drops = [];
+                for(let i=0; i<30; i++) drops.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    s: Math.random() * 15 + 10,
+                    v: Math.random() * 2 + 1,
+                    t: chars[Math.floor(Math.random() * chars.length)]
+                });
+
+                function draw() {
+                    ctx.clearRect(0,0,canvas.width, canvas.height);
+                    ctx.fillStyle = 'rgba(0, 255, 136, 0.4)';
+                    ctx.font = "14px monospace";
+                    drops.forEach(d => {
+                        ctx.fillText(d.t, d.x, d.y);
+                        d.y += d.v;
+                        if(d.y > canvas.height) d.y = -20;
+                    });
+                    requestAnimationFrame(draw);
+                }
+                draw();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#666';
+            Chart.defaults.font.family = "monospace";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            const opt = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['A', 'B', 'C', 'D'],
+                    datasets: [{ data: [10, 40, 20, 80], borderColor: '#00ff88', tension: 0.4, fill: false }]
+                },
+                options: opt
+            });
+
+            createChart('pieChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['X', 'Y', 'Z'],
+                    datasets: [{ data: [30, 50, 20], backgroundColor: ['#00ff88', '#ff0077', '#00ccff'], borderWidth: 0 }]
+                },
+                options: { ...opt, cutout: '70%' }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['P1', 'P2', 'P3'],
+                    datasets: [{ data: [65, 45, 90], backgroundColor: '#ff0077' }]
+                },
+                options: opt
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['DEV', 'TEST', 'PROD'],
+                    datasets: [
+                        { data: [0, 3, 6], backgroundColor: 'transparent', stack: 's' },
+                        { data: [4, 4, 4], backgroundColor: '#00ccff', stack: 's' }
+                    ]
+                },
+                options: { indexAxis: 'y', ...opt, scales: { x: { stacked: true }, y: { stacked: true } } }
+            });
+        });
+    </script>
+</body>
+</html>

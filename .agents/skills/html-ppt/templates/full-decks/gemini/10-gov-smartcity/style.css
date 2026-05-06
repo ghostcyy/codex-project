@@ -1,0 +1,409 @@
+.tpl-gov {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --primary: #0a2e5c; /* Deep Navy Official Blue */
+  --secondary: #1e4b8a;
+  --accent: #b0c4de; /* Silver Blue Gray */
+  --text-main: #1a2b4b;
+  --text-muted: #64748b;
+  --border: #cbd5e1;
+  --radius: 4px; /* More formal, less rounded */
+  --font-serif: 'Noto Serif SC', 'Source Serif Pro', serif;
+  --font-sans: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+}
+
+.tpl-gov * { box-sizing: border-box; }
+
+.tpl-gov .slide {
+  position: absolute;
+  inset: 0;
+  padding: 60px 100px;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(10, 46, 92, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 46, 92, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  overflow: hidden;
+}
+
+/* Title Slide - Symmetrical & Centered */
+.tpl-gov .slide.title-slide {
+  background: linear-gradient(135deg, #0a2e5c 0%, #1e4b8a 100%);
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center;
+  color: white;
+}
+
+.tpl-gov .title-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.2);
+  margin: 40px;
+  padding: 60px;
+}
+
+.tpl-gov .title-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 2px solid rgba(255,255,255,0.1);
+  pointer-events: none;
+}
+
+.tpl-gov .h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.tpl-gov .slide.title-slide .h1 {
+  color: #ffffff;
+}
+
+.tpl-gov .kicker {
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.tpl-gov .header {
+  margin-bottom: 40px;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.tpl-gov .h2 {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.tpl-gov .h2 span.num {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  color: var(--secondary);
+  margin-right: 15px;
+  opacity: 0.6;
+}
+
+.tpl-gov .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  min-height: 0;
+}
+
+/* Grids */
+.tpl-gov .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; height: 100%; }
+.tpl-gov .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; height: 100%; }
+.tpl-gov .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; height: 100%; }
+.tpl-gov .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; height: 100%; }
+.tpl-gov .grid-sidebar { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; height: 100%; }
+
+/* Cards - Formal & Structured */
+.tpl-gov .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 30px;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.tpl-gov .card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 20px rgba(10, 46, 92, 0.1);
+}
+
+.tpl-gov .card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 4px; height: 0;
+  background: var(--primary);
+  transition: height 0.3s ease;
+}
+
+.tpl-gov .card:hover::after {
+  height: 100%;
+}
+
+.tpl-gov .card h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--primary);
+  margin: 0 0 15px 0;
+  font-weight: 700;
+  border-bottom: 1px solid var(--bg);
+  padding-bottom: 10px;
+}
+
+.tpl-gov .card p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Policy Clause Box */
+.tpl-gov .policy-box {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  padding: 20px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-main);
+  position: relative;
+}
+
+.tpl-gov .policy-box::before {
+  content: "条文";
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-style: normal;
+  font-family: var(--font-sans);
+}
+
+.tpl-gov .footer {
+  margin-top: auto;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* Charts */
+.tpl-gov .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 20px;
+}
+
+/* Animations */
+.tpl-gov .slide.is-active .h2,
+.tpl-gov .slide.is-active .card {
+  animation: govFadeIn 0.8s ease-out both;
+}
+
+@keyframes govFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tpl-gov .slide.is-active .card:nth-child(2) { animation-delay: 0.1s; }
+.tpl-gov .slide.is-active .card:nth-child(3) { animation-delay: 0.2s; }
+
+/* --- NEW DIVERSIFIED LAYOUTS --- */
+
+/* 1. Layout Sticky (Slide 10, 17) */
+.tpl-gov .layout-sticky {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 35px;
+  padding: 40px;
+}
+.tpl-gov .layout-sticky .card:nth-child(1) { rotate: -1.5deg; }
+.tpl-gov .layout-sticky .card:nth-child(2) { rotate: 1.5deg; translate: 0 15px; }
+.tpl-gov .layout-sticky .card:nth-child(3) { rotate: -1deg; translate: 0 -10px; }
+
+.tpl-gov .layout-sticky .card:hover {
+  rotate: 0deg;
+  transform: translateY(-8px) scale(1.03) !important;
+  z-index: 100;
+  border-color: var(--primary);
+}
+
+/* 2. Layout Zig-Zag (Slide 13, 16) */
+.tpl-gov .layout-zigzag {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  flex: 1;
+  padding: 40px 0;
+}
+.tpl-gov .layout-zigzag .card:nth-child(odd) { translate: 0 30px; }
+.tpl-gov .layout-zigzag .card:nth-child(even) { translate: 0 -30px; }
+
+.tpl-gov .layout-zigzag .card:hover {
+  translate: 0 0 !important;
+  transform: scale(1.04) !important;
+  z-index: 100;
+  border-color: var(--secondary);
+}
+
+/* 3. Layout Staircase (Slide 10) */
+.tpl-gov .layout-staircase {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  padding: 20px 0 20px 10%;
+}
+.tpl-gov .layout-staircase .card {
+  width: 75%;
+  border-left: 4px solid var(--primary);
+}
+.tpl-gov .layout-staircase .card:nth-child(1) { translate: 0 0; }
+.tpl-gov .layout-staircase .card:nth-child(2) { translate: 80px 0; border-left-color: var(--secondary); }
+.tpl-gov .layout-staircase .card:nth-child(3) { translate: 160px 0; border-left-color: var(--primary); }
+
+/* 4. Layout Quad (Slide 13) */
+.tpl-gov .layout-quad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 30px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-gov .layout-quad .card:nth-child(1) { translate: -15px -15px; border-color: var(--primary); }
+.tpl-gov .layout-quad .card:nth-child(2) { translate: 15px -15px; border-color: var(--secondary); }
+.tpl-gov .layout-quad .card:nth-child(3) { translate: -15px 15px; border-color: var(--primary); }
+.tpl-gov .layout-quad .card:nth-child(4) { translate: 15px 15px; border-color: var(--secondary); }
+
+.tpl-gov .layout-quad .card:hover {
+  translate: 0 0 !important;
+  transform: scale(1.05) !important;
+  z-index: 100;
+  box-shadow: 0 15px 30px rgba(10, 46, 92, 0.15);
+}
+
+
+/* --- Diversity Layouts (v2) --- */
+.tpl-gov .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-gov .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-gov .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-gov .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-gov .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-gov .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--surface);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-gov .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 0;
+}
+.tpl-gov .layout-split-v2 .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+.tpl-gov .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  margin-right: -10%;
+  z-index: 2;
+}
+.tpl-gov .layout-split-v2 .card:nth-child(2) {
+  background: var(--primary);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  color: #fff;
+  z-index: 1;
+  padding-left: 120px;
+}
+.tpl-gov .layout-split-v2 .card:hover { transform: scale(1.02); z-index: 10; }
+
+.tpl-gov .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-gov .layout-overlap-diag .card {
+  position: absolute;
+  width: 45%;
+  height: 60%;
+  padding: 40px;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-gov .layout-overlap-diag .card:nth-child(1) {
+  top: 10%; left: 10%;
+  background: var(--surface);
+  border: 4px solid var(--primary);
+  z-index: 1;
+}
+.tpl-gov .layout-overlap-diag .card:nth-child(2) {
+  bottom: 10%; right: 10%;
+  background: var(--bg);
+  border: 2px solid var(--secondary);
+  z-index: 2;
+  box-shadow: -20px -20px 0 rgba(0,0,0,0.2);
+}
+.tpl-gov .layout-overlap-diag .card:hover {
+  transform: translate(-10px, -10px);
+  z-index: 100;
+  box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+}

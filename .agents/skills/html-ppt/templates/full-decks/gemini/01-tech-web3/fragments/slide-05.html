@@ -1,0 +1,27 @@
+<section class="slide" data-title="数据吞吐" data-page-type="chart">
+            <div class="header">
+                <span class="kicker">METRICS</span>
+                <h2 class="h2">数据流量<strong>并发处理能力</strong></h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas data-chart-slot="primary" data-chart-kind="unknown"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>高并发下的稳定性</h3>
+                        <p>系统采用异步并发处理机制，确保在智慧交通等高频传感器场景下，数据处理延迟保持在 50ms 以内。</p>
+                        <div class="code-box">
+                            $ stress-test --nodes 10k --duration 1h<br>
+                            [RESULT] 99.99% Availability
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PAGE_05 // PERFORMANCE_LOGS</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>

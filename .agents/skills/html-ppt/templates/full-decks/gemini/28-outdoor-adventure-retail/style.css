@@ -1,0 +1,380 @@
+.tpl-outdoor {
+  --bg: #121412;
+  --surface: #1c1f1c;
+  --primary: #98be2c; /* Moss Green */
+  --secondary: #f97316; /* Burnt Orange */
+  --accent: #384338;
+  --text-main: #f0f2f0;
+  --text-muted: #9ca39c;
+  --border: rgba(152, 190, 44, 0.2);
+  --radius: 2px; /* Rugged, sharp feel */
+
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* Slide Positioning */
+.tpl-outdoor .slide {
+  position: absolute;
+  inset: 0;
+  padding: 60px 80px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Topographical Particles */
+#outdoor-canvas {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.25;
+}
+
+/* Header & Typography */
+.tpl-outdoor .header {
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 10;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 15px;
+}
+
+.tpl-outdoor .kicker {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tpl-outdoor .kicker::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.tpl-outdoor .h1 {
+  font-size: clamp(60px, 12vw, 130px);
+  font-weight: 900;
+  line-height: 0.85;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -4px;
+  color: #fff;
+  background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tpl-outdoor .h2 {
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -1px;
+}
+
+/* Title Slide Centering */
+.tpl-outdoor .slide.title-slide {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: radial-gradient(circle at center, #1c1f1c 0%, #121412 100%);
+}
+
+.tpl-outdoor .title-content-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+/* Content Area */
+.tpl-outdoor .content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  z-index: 10;
+  min-height: 0;
+}
+
+/* Grid Matrix */
+.tpl-outdoor .grid-2 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0, 1fr); gap: 24px; flex: 1; min-height: 0; }
+.tpl-outdoor .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: minmax(0, 1fr); gap: 20px; flex: 1; min-height: 0; }
+.tpl-outdoor .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: minmax(0, 1fr); gap: 16px; flex: 1; min-height: 0; }
+.tpl-outdoor .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: minmax(0, 1fr); gap: 12px; flex: 1; min-height: 0; }
+.tpl-outdoor .grid-layout-sidebar { display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: minmax(0, 1fr); gap: 30px; flex: 1; min-height: 0; }
+
+/* Card System (Rugged) */
+.tpl-outdoor .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  transition: all 0.3s ease;
+}
+
+.tpl-outdoor .card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+.tpl-outdoor .card h3 {
+  font-size: 22px;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tpl-outdoor .card p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Image Standards */
+.tpl-outdoor .img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  background: #000;
+}
+
+.tpl-outdoor .img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.tpl-outdoor .card:hover .img-wrap img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Chart Integration */
+.tpl-outdoor .chart-container {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+/* Policy Box */
+.tpl-outdoor .policy-box {
+  border-left: 4px solid var(--secondary);
+  background: rgba(249, 115, 22, 0.05);
+  padding: 24px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+/* Footer (Absolute for Centering) */
+.tpl-outdoor .footer {
+  position: absolute;
+  bottom: 40px;
+  left: 80px;
+  right: 80px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  z-index: 10;
+}
+
+/* Animations */
+.tpl-outdoor .slide.is-active .card {
+  animation: outdoorFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes outdoorFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tpl-outdoor .slide.is-active .card:nth-child(1) { animation-delay: 0.1s; }
+.tpl-outdoor .slide.is-active .card:nth-child(2) { animation-delay: 0.2s; }
+.tpl-outdoor .slide.is-active .card:nth-child(3) { animation-delay: 0.3s; }
+.tpl-outdoor .slide.is-active .card:nth-child(4) { animation-delay: 0.4s; }
+.tpl-outdoor .slide.is-active .card:nth-child(5) { animation-delay: 0.5s; }
+
+/* --- Diversity Layouts (v2) --- */
+.tpl-outdoor .layout-pentagon {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  flex: 1;
+  padding: 20px;
+}
+.tpl-outdoor .layout-pentagon .card:nth-child(1) { grid-area: 1 / 1 / 2 / 2; transform: translate(20px, 20px); border-bottom: 4px solid var(--primary); }
+.tpl-outdoor .layout-pentagon .card:nth-child(2) { grid-area: 1 / 3 / 2 / 4; transform: translate(-20px, 20px); border-bottom: 4px solid var(--secondary); }
+.tpl-outdoor .layout-pentagon .card:nth-child(3) { grid-area: 2 / 1 / 3 / 2; transform: translate(20px, -20px); border-top: 4px solid var(--accent); }
+.tpl-outdoor .layout-pentagon .card:nth-child(4) { grid-area: 2 / 3 / 3 / 4; transform: translate(-20px, -20px); border-top: 4px solid var(--primary); }
+.tpl-outdoor .layout-pentagon .card:nth-child(5) {
+  grid-area: 1 / 2 / 3 / 3;
+  z-index: 20;
+  background: var(--surface);
+  border: 2px solid var(--text-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.tpl-outdoor .layout-split-v2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  gap: 0;
+}
+.tpl-outdoor .layout-split-v2 .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  border: none;
+  border-radius: 0;
+  transition: all 0.5s ease;
+}
+.tpl-outdoor .layout-split-v2 .card:nth-child(1) {
+  background: var(--surface);
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  margin-right: -10%;
+  z-index: 2;
+}
+.tpl-outdoor .layout-split-v2 .card:nth-child(2) {
+  background: var(--primary);
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  color: #fff;
+  z-index: 1;
+  padding-left: 120px;
+}
+.tpl-outdoor .layout-split-v2 .card:hover { transform: scale(1.02); z-index: 10; }
+
+.tpl-outdoor .layout-overlap-diag {
+  position: relative;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-outdoor .layout-overlap-diag .card {
+  position: absolute;
+  width: 45%;
+  height: 60%;
+  padding: 40px;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.tpl-outdoor .layout-overlap-diag .card:nth-child(1) {
+  top: 10%; left: 10%;
+  background: var(--surface);
+  border: 4px solid var(--primary);
+  z-index: 1;
+}
+.tpl-outdoor .layout-overlap-diag .card:nth-child(2) {
+  bottom: 10%; right: 10%;
+  background: var(--bg);
+  border: 2px solid var(--secondary);
+  z-index: 2;
+  box-shadow: -20px -20px 0 rgba(0,0,0,0.2);
+}
+.tpl-outdoor .layout-overlap-diag .card:hover {
+  transform: translate(-10px, -10px);
+  z-index: 100;
+  box-shadow: 20px 20px 40px rgba(0,0,0,0.3);
+}
+
+/* 3. Layout Sticky (Slide 4, 16) */
+.tpl-outdoor .layout-sticky {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+.tpl-outdoor .layout-sticky .card:nth-child(1) { rotate: -2deg; }
+.tpl-outdoor .layout-sticky .card:nth-child(2) { rotate: 2deg; translate: 0 10px; }
+.tpl-outdoor .layout-sticky .card:nth-child(3) { rotate: -1deg; translate: 0 -5px; }
+
+.tpl-outdoor .layout-sticky .card:hover {
+  rotate: 0deg;
+  transform: translateY(-5px) scale(1.02) !important;
+  border-color: var(--secondary);
+  z-index: 100;
+  background: var(--surface);
+}
+
+/* 4. Layout Zig-Zag (Slide 13, 18) */
+.tpl-outdoor .layout-zigzag {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  flex: 1;
+  padding: 20px 0;
+}
+.tpl-outdoor .layout-zigzag .card:nth-child(odd) { translate: 0 15px; }
+.tpl-outdoor .layout-zigzag .card:nth-child(even) { translate: 0 -15px; }
+
+.tpl-outdoor .layout-zigzag .card:hover {
+  translate: 0 0 !important;
+  transform: translateY(-5px) scale(1.02) !important;
+  z-index: 100;
+  border-color: var(--primary);
+}
+
+/* 5. Layout Staircase (Slide 15) */
+.tpl-outdoor .layout-staircase {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  padding: 10px 0 10px 10%;
+}
+.tpl-outdoor .layout-staircase .card {
+  width: 75%;
+  padding: 15px 25px;
+  border-left: 4px solid var(--primary);
+}
+.tpl-outdoor .layout-staircase .card h3 { margin-bottom: 5px; font-size: 20px; }
+.tpl-outdoor .layout-staircase .card .card-icon { font-size: 24px; margin-bottom: 5px; }
+.tpl-outdoor .layout-staircase .card p { font-size: 14px; line-height: 1.4; }
+.tpl-outdoor .layout-staircase .card:nth-child(1) { translate: 0 0; }
+.tpl-outdoor .layout-staircase .card:nth-child(2) { translate: 80px 0; border-left-color: var(--secondary); }
+.tpl-outdoor .layout-staircase .card:nth-child(3) { translate: 160px 0; border-left-color: var(--primary); }

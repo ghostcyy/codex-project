@@ -1,0 +1,79 @@
+{
+  "id": "xhs-post",
+  "label": {
+    "zh-CN": "小红书图文",
+    "en": "XHS Post"
+  },
+  "description": {
+    "zh-CN": "适合轻知识、生活方式、消费内容和社媒图文的强标题模板。",
+    "en": "A social-content template for light knowledge, lifestyle topics, consumer explainers, and image-text posts."
+  },
+  "donorTemplateId": "xhs-post",
+  "deckClass": "tpl-xhs-post",
+  "aspectRatio": "3:4",
+  "rendererProfile": "social-portrait",
+  "themeId": "xhs-pastel",
+  "themeAlternates": [
+    "sunset-warm",
+    "editorial-serif",
+    "magazine-bold"
+  ],
+  "layoutPolicy": {
+    "cover": "cover",
+    "toc": "toc",
+    "body": [
+      "image-hero",
+      "bullet-list",
+      "stat-highlight",
+      "quote"
+    ],
+    "closing": "cta"
+  },
+  "audienceFit": [
+    "consumers",
+    "general-public",
+    "designers"
+  ],
+  "formatFit": [
+    "showcase",
+    "briefing",
+    "tutorial"
+  ],
+  "toneFit": [
+    "friendly",
+    "narrative",
+    "inspirational"
+  ],
+  "defaultDensity": "sparse",
+  "defaultSlideCount": 9,
+  "defaultAnimationBudget": {
+    "allowedAnims": [
+      "zoom-pop",
+      "fade-up",
+      "stagger-list",
+      "none"
+    ],
+    "allowedFx": [
+      "soft-glow",
+      "none"
+    ],
+    "maxAccentSlides": 4
+  },
+  "embeddingPrompt": "Xiaohongshu style image-text post, consumer education, lifestyle guide, catchy title, swipeable cards.",
+  "promptSignals": [
+    "小红书",
+    "图文",
+    "种草",
+    "生活方式",
+    "消费",
+    "swipe",
+    "social",
+    "lifestyle",
+    "guide"
+  ],
+  "forbidPromptSignals": [
+    "严肃审计",
+    "事故复盘"
+  ],
+  "thumbnailFile": "thumbnail.png"
+}

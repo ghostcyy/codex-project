@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fresh Life: Sustainable Ecommerce Strategy</title>
+    <link rel="stylesheet" href="assets/fonts.css">
+    <link rel="stylesheet" href="assets/base.css">
+    <link rel="stylesheet" href="assets/animations/animations.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="tpl-fresh">
+    <div class="deck">
+        <canvas id="fresh-canvas"></canvas>
+
+        <!-- 01 封面 -->
+        <section class="slide title-slide center tc" data-title="封面">
+            <div class="title-content-wrapper">
+                <div class="kicker">SUSTAINABLE LIVING // 2026</div>
+                <h1 class="h1">Fresh<br>Life</h1>
+                <p style="font-size: 24px; color: var(--text-muted); margin-top: 20px; font-weight: 300; letter-spacing: 2px;">THE FUTURE OF ETHICAL COMMERCE</p>
+                <div style="margin-top: 40px;">
+                    <span style="display: inline-block; width: 60px; height: 4px; background: var(--primary); border-radius: 2px;"></span>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ECO-LIFE RETAIL GROUP</span>
+                <span class="slide-number" data-current="1" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 02 概述 (侧边栏) -->
+        <section class="slide" data-title="项目概述">
+            <div class="header">
+                <div class="kicker">MISSION OVERVIEW</div>
+                <h2 class="h2">鲜活生活：重定义人与消费的关系</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap" style="margin-bottom: 20px;">
+                            <img src="img/title.png" alt="Lifestyle">
+                        </div>
+                        <h3>可持续的选择</h3>
+                        <p>在 Fresh Life，我们相信每一次消费都是在为你想要的未来投票。我们精选全球环保品牌，让绿色生活变得简单而愉悦。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>零浪费供应链</h3>
+                            <p>从生产源头到配送末端，我们致力于消除一切不必要的包装与塑料消耗。</p>
+                        </div>
+                        <div class="card">
+                            <h3>透明溯源系统</h3>
+                            <p>每一件商品都包含其环境足迹报告，让用户清晰感知其对地球的影响。</p>
+                        </div>
+                        <div class="card">
+                            <h3>社区驱动增长</h3>
+                            <p>建立极高粘性的生活方式社群，通过真实分享而非营销驱动品牌成长。</p>
+                        </div>
+                        <div class="card">
+                            <h3>循环经济闭环</h3>
+                            <p>提供官方回收与闲置流转平台，让每一件商品都能在生命周期内发挥最大价值。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>PURE & SIMPLE</span>
+                <span class="slide-number" data-current="2" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 03 产品展示 (2栏) -->
+        <section class="slide" data-title="产品展示">
+            <div class="header">
+                <div class="kicker">PRODUCT CURATION</div>
+                <h2 class="h2">自然馈赠：有机生活精选</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="img-wrap">
+                            <img src="img/grid1.jpg" alt="Nature">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; font-weight: 700; color: var(--accent);">OUR PRIDE</span>
+                        <h3>Pure Linen Collection</h3>
+                        <p>采用 100% 有机亚麻，天然染料着色。不含任何化学添加，给予肌肤最温和的触感，同时在生产过程中节约 60% 的水资源。</p>
+                        <div class="policy-box" style="margin-top: 30px;">
+                            "取之于自然，还之于自然。"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ECO-SELECTION</span>
+                <span class="slide-number" data-current="3" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 04 服务理念 (3栏) -->
+        <section class="slide" data-title="服务理念">
+            <div class="header">
+                <div class="kicker">SERVICE PHILOSOPHY</div>
+                <h2 class="h2">有温度的绿色服务体验</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <div style="font-size: 36px; margin-bottom: 20px;">📦</div>
+                        <h3>可循环包装箱</h3>
+                        <p>快递盒不再是垃圾，而是可以折叠回收、多次使用的耐用容器。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 36px; margin-bottom: 20px;">🥗</div>
+                        <h3>营养搭配建议</h3>
+                        <p>为每份有机生鲜提供科学的食谱方案，减少食物浪费。</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size: 36px; margin-bottom: 20px;">🌱</div>
+                        <h3>碳积分奖励</h3>
+                        <p>用户的每一次环保行为都将转化为积分，用于兑换公益林种植名额。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SERVICE EXCELLENCE</span>
+                <span class="slide-number" data-current="4" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 05 营销布局 (4栏) -->
+        <section class="slide" data-title="营销布局">
+            <div class="header">
+                <div class="kicker">MARKETING LAYOUT</div>
+                <h2 class="h2">全方位渗透的生活方式营销</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/grid2.jpg"></div>
+                        <h3>内容电商</h3>
+                        <p>深耕小红书等社群，打造高颜值内容。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/grid3.jpg"></div>
+                        <h3>联名限定</h3>
+                        <p>与插画师合作推出限定款包装。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/title.png"></div>
+                        <h3>会员私域</h3>
+                        <p>基于微信群的深度社区运营。</p>
+                    </div>
+                    <div class="card">
+                        <div class="img-wrap" style="height: 120px; margin-bottom: 15px;"><img src="img/grid1.jpg"></div>
+                        <h3>线下快闪</h3>
+                        <p>城市绿洲主题的线下快闪店体验。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>STRATEGY 2026</span>
+                <span class="slide-number" data-current="5" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 06 评价维度 (5栏) -->
+        <section class="slide" data-title="评价维度">
+            <div class="header">
+                <div class="kicker">SYSTEM_ARCHITECTURE</div>
+                <h2 class="h2">平衡商业与生态的评价体系</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-5">
+                    <div class="card">
+                        <h3 style="font-size: 14px;">GMV</h3>
+                        <p style="font-size: 12px;">成交总额稳步提升。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">CAC</h3>
+                        <p style="font-size: 12px;">获客成本显著降低。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">RETENTION</h3>
+                        <p style="font-size: 12px;">用户复购率处于高位。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">CARBON</h3>
+                        <p style="font-size: 12px;">单均碳减排量目标。</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="font-size: 14px;">SATISFIED</h3>
+                        <p style="font-size: 12px;">用户满意度评价。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>METRICS & KPI</span>
+                <span class="slide-number" data-current="6" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 07 折线图: 业务增长 -->
+        <section class="slide" data-title="业务增长">
+            <div class="header">
+                <div class="kicker">GROWTH TRENDS</div>
+                <h2 class="h2">绿色消费意识觉醒与销售规模增长曲线</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <h3>市场渗透加速</h3>
+                        <p>越来越多的核心家庭开始转向有机的、可持续的消费选择。我们的用户基数在过去两年中实现了 150% 的增长。</p>
+                        <div style="margin-top: 30px; display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 24px;">📈</div>
+                            <div>
+                                <div style="font-size: 28px; font-weight: 900; color: var(--primary);">+150%</div>
+                                <div style="font-size: 12px; color: var(--text-muted);">USER BASE GROWTH</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="lineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA INSIGHTS</span>
+                <span class="slide-number" data-current="7" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 08 饼图: 品类占比 -->
+        <section class="slide" data-title="品类占比">
+            <div class="header">
+                <div class="kicker">CATEGORY DISTRIBUTION</div>
+                <h2 class="h2">Fresh Life 各核心品类销售占比分析</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>生鲜与家居领跑</h3>
+                        <p>有机生鲜作为高频刚需品类，是平台流量的核心引擎；而可持续家居则贡献了最高的单客价值。</p>
+                        <ul style="margin-top: 20px; line-height: 2; font-weight: 700;">
+                            <li><span style="color:#19beb8">●</span> 有机生鲜: 35%</li>
+                            <li><span style="color:#fcdfc5">●</span> 可持续家居: 30%</li>
+                            <li><span style="color:#98be2c">●</span> 环保洗护: 20%</li>
+                            <li><span style="color:#e2e8f0">●</span> 其它生活件: 15%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA INSIGHTS</span>
+                <span class="slide-number" data-current="8" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 09 柱状图: 渠道表现 -->
+        <section class="slide" data-title="渠道表现">
+            <div class="header">
+                <div class="kicker">CHANNEL ANALYSIS</div>
+                <h2 class="h2">2026 年度全渠道营销转化效率对比</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 1fr 1.5fr;">
+                    <div class="card">
+                        <h3>私域流量的高效转化</h3>
+                        <p>通过深度社群运营，我们的私域流量转化率远高于传统公域投放。未来将持续加大对内容种草的投入。</p>
+                        <div class="policy-box" style="margin-top: 20px; font-size: 14px;">
+                            "信任是成交的唯一基石。"
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>DATA INSIGHTS</span>
+                <span class="slide-number" data-current="9" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 10 甘特图: 扩展蓝图 -->
+        <section class="slide" data-title="扩展蓝图">
+            <div class="header">
+                <div class="kicker">EXPANSION BLUEPRINT</div>
+                <h2 class="h2">Fresh Life 2.0: 从电商向生态跨越</h2>
+            </div>
+            <div class="content-area">
+                <div class="card">
+                    <div class="chart-container">
+                        <canvas id="ganttChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>FUTURE VISION</span>
+                <span class="slide-number" data-current="10" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 11 音频 Exhibit -->
+        <section class="slide" data-title="品牌原声">
+            <div class="header">
+                <div class="kicker">AUDIO EXHIBIT</div>
+                <h2 class="h2">自然物语：Fresh Life 品牌主题音景</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>声音的疗愈力</h3>
+                        <p>我们将森林的呼吸、溪流的灵动融入品牌音频中。让用户在浏览网页时，能获得片刻的心灵静谧与自然的连接感。</p>
+                    </div>
+                    <div class="card center" style="background: linear-gradient(135deg, #f0fdf4, #f8fafc);">
+                        <div style="font-size: 50px; margin-bottom: 25px;">🍃</div>
+                        <audio controls style="width: 80%;">
+                            <source src="audio/fresh_ambient.mp3" type="audio/mpeg">
+                        </audio>
+                        <p style="margin-top: 15px; font-weight: 700; color: var(--primary);">TRACK: FOREST_BREATH_01.MP3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>SENSORY BRANDING</span>
+                <span class="slide-number" data-current="11" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 12 视频 Case Study -->
+        <section class="slide" data-title="视频纪实">
+            <div class="header">
+                <div class="kicker">VIDEO CASE STUDY</div>
+                <h2 class="h2">溯源实录：走进有机亚麻种植基地</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar" style="grid-template-columns: 2fr 1fr;">
+                    <div class="card" style="padding: 0; background: #eee;">
+                        <video controls style="width: 100%; height: 100%; object-fit: contain;">
+                            <source src="video/trace_back.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="card">
+                        <span style="font-size: 12px; font-weight: 700; color: var(--primary); border: 1px solid var(--primary); padding: 4px 8px; border-radius: 4px; display: inline-block;">ORIGIN STORY</span>
+                        <h3 style="margin-top: 15px;">看见生长的力量</h3>
+                        <p>跟随镜头深入北纬 45 度的有机农场，亲历从一颗种子到一件成衣的诞生全过程。真实展示我们对土地的敬畏与承诺。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>BRAND STORY</span>
+                <span class="slide-number" data-current="12" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 13-19 填充 -->
+        <section class="slide" data-title="合作伙伴">
+            <div class="header">
+                <div class="kicker">GLOBAL PARTNERS</div>
+                <h2 class="h2">志同道合：与全球绿色先锋共筑未来</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>认证农场</h3>
+                        <p>严苛筛选具备全球有机认证的顶级原材料基地。</p>
+                    </div>
+                    <div class="card">
+                        <h3>先锋设计师</h3>
+                        <p>邀请崇尚极简主义与环保理念的跨界艺术家。</p>
+                    </div>
+                    <div class="card">
+                        <h3>绿色物流</h3>
+                        <p>联手采用新能源配送集群的智慧物流伙伴。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ECOSYSTEM NETWORK</span>
+                <span class="slide-number" data-current="13" data-total="20"></span>
+            </div>
+        </section>
+
+        <section class="slide" data-title="社会责任">
+            <div class="header">
+                <div class="kicker">SOCIAL RESPONSIBILITY</div>
+                <h2 class="h2">除了销售，我们更关心明天</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <div class="img-wrap"><img src="img/grid2.jpg"></div>
+                    </div>
+                    <div class="card">
+                        <h3>一元公益计划</h3>
+                        <p>用户每完成一笔订单，我们将捐赠一元用于荒漠绿化项目。截至目前，我们已成功在西北地区种植超过 10 万棵防护林。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>GIVING BACK</span>
+                <span class="slide-number" data-current="14" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 15 技术支撑 (2栏) -->
+        <section class="slide" data-title="技术支撑">
+            <div class="header">
+                <div class="kicker">CORE_INFO</div>
+                <h2 class="h2">智慧中台：驱动绿色增长的数字引擎</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>智能库存算法</h3>
+                        <p>通过精准销量预测，降低生鲜损耗率至 3% 以下，极大减少食物浪费。</p>
+                    </div>
+                    <div class="card">
+                        <h3>个性化推荐 2.0</h3>
+                        <p>基于用户生活阶段与环保偏好的深度学习模型，让每一次推荐都恰到好处。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>INFRASTRUCTURE</span>
+                <span class="slide-number" data-current="15" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 16 仓储配送 (3栏) -->
+        <section class="slide" data-title="仓储配送">
+            <div class="header">
+                <div class="kicker">LOGISTICS SYSTEM</div>
+                <h2 class="h2">零碳仓储与智慧交付网络</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>全光伏冷链仓</h3>
+                        <p>仓储能源 100% 由屋顶光伏提供，实现运营期零碳排放。</p>
+                    </div>
+                    <div class="card">
+                        <h3>去塑化包装</h3>
+                        <p>采用水性油墨印刷与生物可降解胶带，彻底告别白色污染。</p>
+                    </div>
+                    <div class="card">
+                        <h3>邻里自助点</h3>
+                        <p>推广社区共享交付模式，减少最后一公里的重复往返配送。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OPERATIONS</span>
+                <span class="slide-number" data-current="16" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 17 会员体系 (侧边栏) -->
+        <section class="slide" data-title="会员体系">
+            <div class="header">
+                <div class="kicker">MEMBERSHIP PRIVILEGE</div>
+                <h2 class="h2">Fresh Club：不仅仅是折扣，更是归属</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-layout-sidebar">
+                    <div class="card">
+                        <span style="font-size: 11px; padding: 2px 8px; background: var(--secondary); color: var(--text-main); font-weight: 700; border-radius: 4px;">VIP EXPERIENCE</span>
+                        <h3>尊享特权矩阵</h3>
+                        <p>会员享有专属客服、新品优先抢购权，以及每年一次的线下有机农场采摘之旅。</p>
+                    </div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>免费试用</h3>
+                            <p>每月一次的环保新品免费申领计划。</p>
+                        </div>
+                        <div class="card">
+                            <h3>生态游学</h3>
+                            <p>深度参与品牌组织的全球环保公益考察。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>COMMUNITY</span>
+                <span class="slide-number" data-current="17" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 18 组织架构 (3栏) -->
+        <section class="slide" data-title="组织架构">
+            <div class="header">
+                <div class="kicker">OUR ORGANIZATION</div>
+                <h2 class="h2">跨学科团队共同构建理想生活</h2>
+            </div>
+            <div class="content-area">
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>环保科学家</h3>
+                        <p>负责原材料的环境足迹评估与新型包装材料研发。</p>
+                    </div>
+                    <div class="card">
+                        <h3>生活美学顾问</h3>
+                        <p>把控平台整体视觉与产品调性，提升用户感官体验。</p>
+                    </div>
+                    <div class="card">
+                        <h3>社区运营官</h3>
+                        <p>连接万千用户，传递有温度的品牌内容与生活态度。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>TEAM POWER</span>
+                <span class="slide-number" data-current="18" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 19 核心价值观 (1栏) -->
+        <section class="slide" data-title="核心价值观">
+            <div class="header">
+                <div class="kicker">CORE VALUES</div>
+                <h2 class="h2">我们选择的路，虽远必达</h2>
+            </div>
+            <div class="content-area">
+                <div class="card center" style="background: transparent; border: none; box-shadow: none;">
+                    <div class="policy-box" style="font-size: 32px; max-width: 900px; text-align: center;">
+                        "美，不应以破坏为代价。我们致力于创造一个让自然与商业和谐共生的数字零售新范式。"
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <span>OUR BELIEF</span>
+                <span class="slide-number" data-current="19" data-total="20"></span>
+            </div>
+        </section>
+
+        <!-- 20 结束页 -->
+        <section class="slide title-slide center tc" data-title="结束">
+            <div class="title-content-wrapper">
+                <h1 class="h1">Start<br>Fresh</h1>
+                <p style="font-size: 28px; color: var(--primary); margin-top: 30px; font-weight: 700; letter-spacing: 5px;">LIVE THE CONSCIOUS LIFE</p>
+                <div style="margin-top: 60px;">
+                    <button style="padding: 18px 50px; background: var(--primary); color: #fff; border: none; font-weight: 800; cursor: pointer; border-radius: 50px; box-shadow: 0 10px 20px rgba(25, 190, 184, 0.3);">GO TO SHOP</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span>ECO-LIFE RETAIL GROUP // 2026</span>
+                <span class="slide-number" data-current="20" data-total="20"></span>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="assets/runtime.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Particle System (Soft Blobs) ---
+            const canvas = document.getElementById('fresh-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let blobs = [];
+                function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+                window.addEventListener('resize', resize);
+                resize();
+
+                class Blob {
+                    constructor() { this.init(); }
+                    init() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.radius = Math.random() * 40 + 20;
+                        this.color = Math.random() > 0.5 ? '#19beb8' : '#fcdfc5';
+                        this.speedX = (Math.random() - 0.5) * 0.5;
+                        this.speedY = (Math.random() - 0.5) * 0.5;
+                        this.alpha = Math.random() * 0.3 + 0.1;
+                    }
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                    }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.globalAlpha = this.alpha;
+                        ctx.fillStyle = this.color;
+                        ctx.fill();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+                for (let i = 0; i < 15; i++) blobs.push(new Blob());
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    blobs.forEach(b => { b.update(); b.draw(); });
+                    requestAnimationFrame(animate);
+                }
+                animate();
+            }
+
+            // --- Charts ---
+            Chart.defaults.color = '#64748b';
+            Chart.defaults.font.family = "'Inter', sans-serif";
+
+            const createChart = (id, config) => {
+                const el = document.getElementById(id);
+                if (el) new Chart(el, config);
+            };
+
+            createChart('lineChart', {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2022', '2024', '2026'],
+                    datasets: [{
+                        label: 'Revenue Growth',
+                        data: [100, 250, 600, 1500],
+                        borderColor: '#19beb8',
+                        backgroundColor: 'rgba(25, 190, 184, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('pieChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['生鲜', '家居', '洗护', '其它'],
+                    datasets: [{
+                        data: [35, 30, 20, 15],
+                        backgroundColor: ['#19beb8', '#fcdfc5', '#98be2c', '#cbd5e1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+            });
+
+            createChart('barChart', {
+                type: 'bar',
+                data: {
+                    labels: ['私域社群', '内容种草', '搜索推广', '线下联动'],
+                    datasets: [{
+                        label: 'Conversion Rate (%)',
+                        data: [18, 12, 5, 15],
+                        backgroundColor: '#19beb8',
+                        borderRadius: 8
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+
+            createChart('ganttChart', {
+                type: 'bar',
+                data: {
+                    labels: ['品牌升级', '生态社区上线', '全国冷链铺设', '海外市场进入'],
+                    datasets: [
+                        { data: [0, 2, 4, 7], backgroundColor: 'transparent', stack: 's' },
+                        { data: [3, 4, 5, 6], backgroundColor: '#fcdfc5', stack: 's', borderRadius: 20 }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { stacked: true }, y: { stacked: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
