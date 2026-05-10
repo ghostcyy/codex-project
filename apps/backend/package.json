@@ -35,6 +35,7 @@
     "verify:html-ppt-v3-templates": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-template-fragments.ts",
     "verify:html-ppt-v3-stage1": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-stage1-planner.ts",
     "verify:html-ppt-v3-stage2": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-stage2-writer.ts",
+    "verify:html-ppt-v3-stage21": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-stage21-speaker-notes.ts",
     "verify:html-ppt-v3-image-gen": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-image-generation.ts",
     "verify:html-ppt-v3-stage25": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-stage25-image-generation.ts",
     "verify:html-ppt-v3-stage3": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-stage3-injector.ts",
@@ -46,7 +47,8 @@
     "verify:html-ppt-v3-live-smoke": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-live-llm-smoke.ts",
     "verify:html-ppt-v3-matrix": "tsx src/modules/ppt-chat/html-ppt-v3/tests/verify-matrix.ts",
     "html-ppt-v3:img-audit": "tsx src/modules/ppt-chat/html-ppt-v3/manifest/img-audit.ts",
-    "verify:html-ppt-v3": "npm run verify:html-ppt-v3-shared && npm run verify:html-ppt-v3-llm-client && npm run verify:html-ppt-v3-templates && npm run html-ppt-v3:img-audit && npm run verify:html-ppt-v3-stage1 && npm run verify:html-ppt-v3-stage2 && npm run verify:html-ppt-v3-image-gen && npm run verify:html-ppt-v3-stage25 && npm run verify:html-ppt-v3-stage3 && npm run verify:html-ppt-v3-no-residue && npm run verify:html-ppt-v3-jobs && npm run verify:html-ppt-v3-projects && npm run verify:html-ppt-v3-preview && npm run verify:html-ppt-v3-agent && npm run verify:html-ppt-v3-matrix && npm run verify:html-ppt-v3-live-smoke",
+    "html-ppt-v3:baseline-diversity": "tsx src/modules/ppt-chat/html-ppt-v3/tests/baseline-diversity-metrics.ts",
+    "verify:html-ppt-v3": "npm run verify:html-ppt-v3-shared && npm run verify:html-ppt-v3-llm-client && npm run verify:html-ppt-v3-templates && npm run html-ppt-v3:img-audit && npm run verify:html-ppt-v3-stage1 && npm run verify:html-ppt-v3-stage2 && npm run verify:html-ppt-v3-stage21 && npm run verify:html-ppt-v3-image-gen && npm run verify:html-ppt-v3-stage25 && npm run verify:html-ppt-v3-stage3 && npm run verify:html-ppt-v3-no-residue && npm run verify:html-ppt-v3-jobs && npm run verify:html-ppt-v3-projects && npm run verify:html-ppt-v3-preview && npm run verify:html-ppt-v3-agent && npm run verify:html-ppt-v3-matrix && npm run verify:html-ppt-v3-live-smoke",
     "generate:html-ppt-v3-manifests": "tsx src/modules/ppt-chat/html-ppt-v3/manifest/manifest-v2.parser.ts",
     "generate:html-ppt-v3-manifest": "tsx src/modules/ppt-chat/html-ppt-v3/manifest/manifest-v2.parser.ts"
   },

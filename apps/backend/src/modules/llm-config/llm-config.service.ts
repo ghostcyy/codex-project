@@ -2,7 +2,17 @@ import { BadRequestException, Inject, Injectable, Logger, ServiceUnavailableExce
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "node:crypto";
 import type { QueryResultRow } from "pg";
 import { DatabaseService } from "../database/database.service";
-import type { ActiveLlmConfig, LlmConfigInput, LlmConfigSummary, LlmStageModelOverrides, LlmStageModelRole } from "./llm-config.types";
+import type {
+  ActiveLlmConfig,
+  ImageModelConfigInput,
+  ImageModelConfigSummary,
+  JsonModelConfigInput,
+  JsonModelConfigSummary,
+  LlmConfigInput,
+  LlmConfigSummary,
+  LlmStageModelOverrides,
+  LlmStageModelRole
+} from "./llm-config.types";
 
 const STAGE_MODEL_ROLES = ["research", "plan", "visual", "section", "css", "qa"] as const satisfies readonly LlmStageModelRole[];
 
@@ -11,13 +21,35 @@ interface LlmConfigRow extends QueryResultRow {
   name: string;
   provider_type: string;
   base_url: string;
+  image_base_url: string | null;
   api_key_ciphertext: string;
+  image_api_key_ciphertext: string | null;
   model: string;
   stage_model_overrides?: unknown;
   enabled: boolean;
   updated_at: Date | string;
   call_count?: string;
   total_tokens?: string;
+}
+
+interface ImageModelConfigRow extends QueryResultRow {
+  id: string;
+  name: string;
+  provider_type: string;
+  base_url: string;
+  api_key_ciphertext: string;
+  model: string;
+  updated_at: Date | string;
+}
+
+interface JsonModelConfigRow extends QueryResultRow {
+  id: string;
+  name: string;
+  provider_type: string;
+  base_url: string;
+  api_key_ciphertext: string;
+  model: string;
+  updated_at: Date | string;
 }
 
 const DEFAULT_PROVIDER_TYPE = "minimax-cli";
@@ -46,6 +78,7 @@ export class LlmConfigService {
           c.provider_type,
           c.base_url,
           c.api_key_ciphertext,
+          c.image_api_key_ciphertext,
           c.model,
           c.stage_model_overrides,
           c.enabled,
@@ -60,7 +93,7 @@ export class LlmConfigService {
     );
 
     return result.rows.map((row) => {
-      const apiKey = row.api_key_ciphertext && row.api_key_ciphertext.trim().length > 0 ? this.decrypt(row.api_key_ciphertext) : "";
+      const apiKey = this.decryptOptionalApiKey(row.api_key_ciphertext);
       return {
         id: row.id,
         name: row.name,
@@ -114,7 +147,16 @@ export class LlmConfigService {
         VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8, NOW(), NOW())
         RETURNING id
       `,
-      [name, providerType, baseUrl, apiKeyCiphertext, model, JSON.stringify(stageModelOverrides), enabled, updatedBy]
+      [
+        name,
+        providerType,
+        baseUrl,
+        apiKeyCiphertext,
+        model,
+        JSON.stringify(stageModelOverrides),
+        enabled,
+        updatedBy
+      ]
     );
 
     const newId = result.rows[0]?.id;
@@ -164,7 +206,17 @@ export class LlmConfigService {
           updated_at = NOW()
         WHERE id = $9
       `,
-      [name, providerType, baseUrl, apiKeyCiphertext, model, JSON.stringify(stageModelOverrides), enabled, updatedBy, id]
+      [
+        name,
+        providerType,
+        baseUrl,
+        apiKeyCiphertext,
+        model,
+        JSON.stringify(stageModelOverrides),
+        enabled,
+        updatedBy,
+        id
+      ]
     );
 
     return this.getConfigSummaryById(id);
@@ -172,6 +224,78 @@ export class LlmConfigService {
 
   async deleteConfig(id: string): Promise<void> {
     await this.databaseService.query("DELETE FROM llm_provider_settings WHERE id = $1", [id]);
+  }
+
+  async getImageConfig(): Promise<ImageModelConfigSummary> {
+    const row = await this.getImageConfigRow();
+    return this.mapImageConfigSummary(row);
+  }
+
+  async getJsonModelConfig(): Promise<JsonModelConfigSummary> {
+    const row = await this.getJsonConfigRow();
+    return this.mapJsonConfigSummary(row);
+  }
+
+  async updateImageConfig(input: ImageModelConfigInput, updatedBy: number): Promise<ImageModelConfigSummary> {
+    const current = await this.getImageConfigRow();
+    const name = this.normalizeRequiredString(input.name ?? current.name, "name");
+    const providerType = this.normalizeProviderType(input.providerType ?? current.provider_type);
+    const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? current.base_url);
+    const model = this.normalizeRequiredString(input.model ?? current.model, "model");
+    const apiKey =
+      typeof input.apiKey === "string" && input.apiKey.trim().length > 0
+        ? input.apiKey.trim()
+        : this.decryptOptionalApiKey(current.api_key_ciphertext);
+    const apiKeyCiphertext = apiKey ? this.encrypt(apiKey) : "";
+
+    await this.databaseService.query(
+      `
+        UPDATE llm_image_provider_settings
+        SET
+          name = $1,
+          provider_type = $2,
+          base_url = $3,
+          api_key_ciphertext = $4,
+          model = $5,
+          updated_by = $6,
+          updated_at = NOW()
+        WHERE id = 1
+      `,
+      [name, providerType, baseUrl, apiKeyCiphertext, model, updatedBy]
+    );
+
+    return this.getImageConfig();
+  }
+
+  async updateJsonModelConfig(input: JsonModelConfigInput, updatedBy: number): Promise<JsonModelConfigSummary> {
+    const current = await this.getJsonConfigRow();
+    const name = this.normalizeRequiredString(input.name ?? current.name, "name");
+    const providerType = this.normalizeProviderType(input.providerType ?? current.provider_type);
+    const baseUrl = this.normalizeBaseUrl(input.baseUrl ?? current.base_url);
+    const model = this.normalizeRequiredString(input.model ?? current.model, "model");
+    const apiKey =
+      typeof input.apiKey === "string" && input.apiKey.trim().length > 0
+        ? input.apiKey.trim()
+        : this.decryptOptionalApiKey(current.api_key_ciphertext);
+    const apiKeyCiphertext = apiKey ? this.encrypt(apiKey) : "";
+
+    await this.databaseService.query(
+      `
+        UPDATE llm_json_provider_settings
+        SET
+          name = $1,
+          provider_type = $2,
+          base_url = $3,
+          api_key_ciphertext = $4,
+          model = $5,
+          updated_by = $6,
+          updated_at = NOW()
+        WHERE id = 1
+      `,
+      [name, providerType, baseUrl, apiKeyCiphertext, model, updatedBy]
+    );
+
+    return this.getJsonModelConfig();
   }
 
   async getActiveConfig(): Promise<ActiveLlmConfig> {
@@ -182,7 +306,9 @@ export class LlmConfigService {
           name,
           provider_type,
           base_url,
+          image_base_url,
           api_key_ciphertext,
+          image_api_key_ciphertext,
           model,
           stage_model_overrides,
           enabled,
@@ -202,16 +328,47 @@ export class LlmConfigService {
     if (!apiKey) {
       throw new ServiceUnavailableException("模型 API Key 尚未配置。");
     }
+    const imageConfig = await this.getImageConfigRow();
+    const imageApiKey = this.decryptOptionalApiKey(imageConfig.api_key_ciphertext) || this.decryptOptionalApiKey(row.image_api_key_ciphertext);
 
     return {
       id: row.id,
       name: row.name,
       providerType: row.provider_type,
       baseUrl: row.base_url,
+      imageBaseUrl: imageConfig.base_url || this.normalizeOptionalBaseUrl(row.image_base_url) || undefined,
       apiKey,
+      imageApiKey: imageApiKey || undefined,
+      imageModel: imageConfig.model,
       model: row.model,
       stageModelOverrides: this.normalizeStageModelOverrides(row.stage_model_overrides),
       enabled: row.enabled
+    };
+  }
+
+  async getJsonConfig(): Promise<ActiveLlmConfig> {
+    const active = await this.getActiveConfig();
+    // Default back to the normal text model for prompt-level JSON. The dedicated
+    // JSON model is kept as an opt-in path for providers that truly support JSON
+    // schema mode, e.g. MiniMax-Text-01 with a compatible official token plan.
+    if (process.env.HTML_PPT_V3_USE_DEDICATED_JSON_MODEL !== "1") {
+      return active;
+    }
+
+    const jsonConfig = await this.getJsonConfigRow();
+    const jsonApiKey = this.decryptOptionalApiKey(jsonConfig.api_key_ciphertext) || active.apiKey;
+    if (!jsonApiKey) {
+      throw new ServiceUnavailableException("JSON 模型 API Key 尚未配置。");
+    }
+
+    return {
+      ...active,
+      // Keep the active text config id so existing llm_call_payloads foreign-key logging remains valid.
+      name: jsonConfig.name,
+      providerType: jsonConfig.provider_type,
+      baseUrl: jsonConfig.base_url,
+      apiKey: jsonApiKey,
+      model: jsonConfig.model
     };
   }
 
@@ -224,6 +381,7 @@ export class LlmConfigService {
           provider_type,
           base_url,
           api_key_ciphertext,
+          image_api_key_ciphertext,
           model,
           stage_model_overrides,
           enabled,
@@ -237,11 +395,104 @@ export class LlmConfigService {
     return result.rows[0] ?? null;
   }
 
+  private async getImageConfigRow(): Promise<ImageModelConfigRow> {
+    await this.databaseService.query(`
+      INSERT INTO llm_image_provider_settings (id)
+      VALUES (1)
+      ON CONFLICT (id) DO NOTHING
+    `);
+
+    const result = await this.databaseService.query<ImageModelConfigRow>(
+      `
+        SELECT
+          id,
+          name,
+          provider_type,
+          base_url,
+          api_key_ciphertext,
+          model,
+          updated_at
+        FROM llm_image_provider_settings
+        WHERE id = 1
+      `
+    );
+    const row = result.rows[0];
+    if (!row) throw new BadRequestException("Image model config not found.");
+    return row;
+  }
+
+  private async getJsonConfigRow(): Promise<JsonModelConfigRow> {
+    await this.databaseService.query(`
+      CREATE TABLE IF NOT EXISTS llm_json_provider_settings (
+        id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+        name VARCHAR(128) NOT NULL DEFAULT 'Default JSON Model',
+        provider_type VARCHAR(64) NOT NULL DEFAULT 'minimax',
+        base_url TEXT NOT NULL DEFAULT 'https://api.minimax.io/v1',
+        api_key_ciphertext TEXT NOT NULL DEFAULT '',
+        model VARCHAR(128) NOT NULL DEFAULT 'MiniMax-Text-01',
+        updated_by BIGINT REFERENCES users (id) ON DELETE SET NULL,
+        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      )
+    `);
+    await this.databaseService.query(`
+      INSERT INTO llm_json_provider_settings (id)
+      VALUES (1)
+      ON CONFLICT (id) DO NOTHING
+    `);
+
+    const result = await this.databaseService.query<JsonModelConfigRow>(
+      `
+        SELECT
+          id,
+          name,
+          provider_type,
+          base_url,
+          api_key_ciphertext,
+          model,
+          updated_at
+        FROM llm_json_provider_settings
+        WHERE id = 1
+      `
+    );
+    const row = result.rows[0];
+    if (!row) throw new BadRequestException("JSON model config not found.");
+    return row;
+  }
+
+  private mapImageConfigSummary(row: ImageModelConfigRow): ImageModelConfigSummary {
+    const apiKey = this.decryptOptionalApiKey(row.api_key_ciphertext);
+    return {
+      id: row.id,
+      name: row.name,
+      providerType: row.provider_type,
+      baseUrl: row.base_url,
+      model: row.model,
+      hasApiKey: apiKey.length > 0,
+      apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
+      updatedAt: new Date(row.updated_at).toISOString()
+    };
+  }
+
+  private mapJsonConfigSummary(row: JsonModelConfigRow): JsonModelConfigSummary {
+    const apiKey = this.decryptOptionalApiKey(row.api_key_ciphertext);
+    return {
+      id: row.id,
+      name: row.name,
+      providerType: row.provider_type,
+      baseUrl: row.base_url,
+      model: row.model,
+      hasApiKey: apiKey.length > 0,
+      apiKeyMasked: apiKey ? this.maskApiKey(apiKey) : null,
+      updatedAt: new Date(row.updated_at).toISOString()
+    };
+  }
+
   private async getConfigSummaryById(id: string): Promise<LlmConfigSummary> {
     const row = await this.getConfigRowById(id);
     if (!row) throw new BadRequestException("Config not found.");
 
-    const apiKey = row.api_key_ciphertext.trim().length > 0 ? this.decrypt(row.api_key_ciphertext) : "";
+    const apiKey = this.decryptOptionalApiKey(row.api_key_ciphertext);
     return {
       id: row.id,
       name: row.name,
@@ -272,6 +523,19 @@ export class LlmConfigService {
       return parsed.toString().replace(/\/+$/, "");
     } catch {
       throw new BadRequestException("Base URL format is invalid.");
+    }
+  }
+
+  private normalizeOptionalBaseUrl(input: unknown) {
+    if (typeof input !== "string" || input.trim().length === 0) {
+      return null;
+    }
+
+    try {
+      const parsed = new URL(input.trim());
+      return parsed.toString().replace(/\/+$/, "");
+    } catch {
+      throw new BadRequestException("Text-to-Image Base URL format is invalid.");
     }
   }
 
@@ -383,6 +647,10 @@ export class LlmConfigService {
     ]);
 
     return decrypted.toString("utf8");
+  }
+
+  private decryptOptionalApiKey(ciphertext?: string | null) {
+    return ciphertext && ciphertext.trim().length > 0 ? this.decrypt(ciphertext) : "";
   }
 
   private maskApiKey(apiKey: string) {

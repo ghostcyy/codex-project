@@ -44,6 +44,18 @@ a {
   text-decoration: none;
 }
 
+.icp-beian-link {
+  color: #6b7280;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.icp-beian-link:hover,
+.icp-beian-link:focus-visible {
+  color: #374151;
+  text-decoration: underline;
+}
+
 button,
 input,
 textarea,

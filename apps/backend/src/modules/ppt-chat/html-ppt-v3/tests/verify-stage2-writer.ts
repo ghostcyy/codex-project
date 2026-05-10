@@ -94,6 +94,24 @@ const manifest: TemplateManifestV2 = {
         { slotId: "primary", selector: "canvas[data-chart-slot='primary']", kind: "line", defaultRenderType: "line", componentId: "chart-1" },
         { slotId: "chart-2", selector: "canvas[data-chart-slot='chart-2']", kind: "bar", defaultRenderType: "bar", componentId: "chart-2" }
       ]
+    },
+    "slide-04": {
+      fragmentId: "slide-04",
+      pageType: "image-text",
+      sourcePageType: "image-text",
+      sourceSlideIndex: 4,
+      sourceSlideTitle: "Image Variant",
+      htmlFile: "fragments/slide-04.html",
+      pagePortrait: buildPortrait("图文页，包含一个图片槽", "media", "image x1 + text x2"),
+      mediaKinds: ["image"],
+      topicSlots: 1,
+      topicSlotMaxChars: 80,
+      imageSlotSelectors: ["img[data-image-slot='primary']"],
+      chartSlots: [],
+      anchors: [
+        { slotId: "title", selector: ".title", tarChars: 5, maxChars: 10, optional: false, kind: "title", sourceText: "Legacy Image Title" },
+        { slotId: "body", selector: ".body", tarChars: 20, maxChars: 40, optional: false, kind: "body", sourceText: "Legacy image body" }
+      ]
     }
   },
   capabilities: {
@@ -256,8 +274,17 @@ if (!noChartPrompt.systemPrompt.includes("注意！！！\n注意！！！\n注�
 if (!noChartPrompt.systemPrompt.includes("所有带 tarChars 的正文类 slot 必须超过 anchors[].tarChars；除非 maxChars 更小；同时绝不能超过 maxChars")) {
   throw new Error("Stage 2 prompt should use the required tarChars hard-target wording.");
 }
-if (!noChartPrompt.systemPrompt.includes("slides 数量必须等于 pageCount")) {
-  throw new Error("Stage 2 prompt should explicitly emphasize the pageCount/slides length hard requirement.");
+if (noChartPrompt.systemPrompt.includes("全量合并后 slides 数量必须等于 pageCount")) {
+  throw new Error("Stage 2 batch prompt should not tell the model to return full-deck slides for each batch.");
+}
+if (!noChartPrompt.systemPrompt.includes("本批 slides 数量必须等于 batchSlideCount")) {
+  throw new Error("Stage 2 prompt should emphasize the batch slide count, not the full deck page count.");
+}
+if (!noChartPrompt.systemPrompt.includes("imageHints 是 slide 顶层字段，禁止写入 slotFills") || !noChartPrompt.systemPrompt.includes("slotFills 只能包含 anchors[].slotId")) {
+  throw new Error("Stage 2 prompt should explicitly separate imageHints from slotFills.");
+}
+if (noChartPrompt.systemPrompt.includes("videoHint") || noChartPrompt.userPrompt.includes("videoHint") || noChartPrompt.userPrompt.includes("requiresVideoHint")) {
+  throw new Error("Stage 2 prompt should not expose videoHint fields or instructions when the batch has no video slides.");
 }
 if (!/必须返回 templateId 和 slides/.test(noChartPrompt.systemPrompt) || !/禁止改 fragmentId、pageType/.test(noChartPrompt.systemPrompt)) {
   throw new Error("Stage 2 prompt should explicitly lock ContentIR top-level shape and slide identity fields.");
@@ -340,6 +367,47 @@ if (emptyPayload.slideSpecs.some((spec) => spec.anchors.length !== 0)) {
   throw new Error("Stage 2 should handle selectedTarCharsTotal=0 without exposing page targets or throwing.");
 }
 
+const videoManifest = JSON.parse(JSON.stringify(manifest)) as TemplateManifestV2;
+videoManifest.pool["slide-video"] = {
+  fragmentId: "slide-video",
+  pageType: "video",
+  sourcePageType: "video",
+  sourceSlideIndex: 6,
+  sourceSlideTitle: "Video Variant",
+  htmlFile: "fragments/slide-video.html",
+  pagePortrait: buildPortrait("视频页", "media", "video x1 + text x1"),
+  mediaKinds: ["video"],
+  topicSlots: 1,
+  topicSlotMaxChars: 80,
+  imageSlotSelectors: [],
+  videoSlotSelector: "video[data-video-slot='primary']",
+  chartSlots: [],
+  anchors: [
+    { slotId: "title", selector: ".title", tarChars: 5, maxChars: 10, optional: false, kind: "title" },
+    { slotId: "body", selector: ".body", tarChars: 20, maxChars: 40, optional: false, kind: "body" }
+  ]
+};
+const videoPlan: PlanIR = {
+  templateId: "mock-template",
+  totalChars: 900,
+  pageCount: 3,
+  slides: [
+    { slideIndex: 1, pageType: "cover", slideTitle: "视频测试封面", topicPoints: ["总览"], charBudget: 180 },
+    { slideIndex: 2, fragmentId: "slide-video", pageType: "video", slideTitle: "视频演示", topicPoints: ["演示"], charBudget: 360 },
+    { slideIndex: 3, pageType: "closing", slideTitle: "视频测试收尾", topicPoints: ["总结"], charBudget: 180 }
+  ]
+};
+const videoPrompt = buildStage2WriterPrompt({ plan: videoPlan, manifest: videoManifest });
+const videoPayload = JSON.parse(videoPrompt.userPrompt) as {
+  slideSpecs: Array<{ slideIndex: number; requiresVideoHint?: boolean }>;
+};
+if (!videoPrompt.systemPrompt.includes("videoHint") || !videoPayload.slideSpecs.some((spec) => spec.slideIndex === 2 && spec.requiresVideoHint === true)) {
+  throw new Error("Stage 2 prompt should expose videoHint instructions only when a batch includes a video slide.");
+}
+if (videoPayload.slideSpecs.some((spec) => spec.slideIndex !== 2 && "requiresVideoHint" in spec)) {
+  throw new Error("Stage 2 prompt should expose requiresVideoHint only on actual video slides.");
+}
+
 const missingFragmentPlan: PlanIR = {
   ...plan,
   slides: plan.slides.map((slide) => slide.slideIndex === 2
@@ -420,8 +488,62 @@ async function main() {
   }
 
   await verifyBatchedConcurrentStage2();
+  await verifyImageHintsFieldPlacementNormalization();
 
   console.log("HTML-PPT v3 Stage 2 writer verification passed.");
+}
+
+async function verifyImageHintsFieldPlacementNormalization() {
+  const imagePlan: PlanIR = {
+    templateId: "mock-template",
+    totalChars: 900,
+    pageCount: 3,
+    slides: [
+      { slideIndex: 1, pageType: "cover", slideTitle: "图像测试封面", topicPoints: ["总览"], charBudget: 180 },
+      { slideIndex: 2, fragmentId: "slide-04", pageType: "image-text", slideTitle: "图像场景", topicPoints: ["视觉"], charBudget: 360 },
+      { slideIndex: 3, pageType: "closing", slideTitle: "图像测试收尾", topicPoints: ["总结"], charBudget: 180 }
+    ]
+  };
+  const imageHintMisplacedLlm: HtmlPptV3LLMClient = {
+    async callStructured<T extends z.ZodTypeAny>(args: { schema: T }): Promise<z.infer<T>> {
+      return args.schema.parse({
+        templateId: imagePlan.templateId,
+        slides: [
+          { slideIndex: 1, pageType: "cover", slotFills: { title: "图像测试封面", subtitle: "视觉生成链路" } },
+          {
+            slideIndex: 2,
+            fragmentId: "slide-04",
+            pageType: "image-text",
+            videoHint: null,
+            slotFills: {
+              title: "图像场景",
+              body: "通过主题化画面呈现核心业务场景。",
+              imageHints: [
+                { slotId: "primary", prompt: "智慧城市数据中枢的蓝色科技插画" },
+                "管理者查看实时仪表盘"
+              ]
+            }
+          },
+          { slideIndex: 3, pageType: "closing", videoHint: "不应保留的视频提示", slotFills: { title: "形成视觉闭环" } }
+        ]
+      });
+    }
+  };
+
+  const result = await runStage2Writer({ plan: imagePlan, manifest, llm: imageHintMisplacedLlm });
+  if (result.source !== "model") {
+    throw new Error(`Stage 2 should normalize misplaced imageHints instead of falling back; got ${result.source}: ${result.validationErrors.join("; ")}`);
+  }
+  const imageSlide = result.content.slides.find((slide) => slide.slideIndex === 2);
+  if (!imageSlide?.imageHints?.length || imageSlide.slotFills.imageHints) {
+    throw new Error(`Stage 2 should move slotFills.imageHints to top-level imageHints; got ${JSON.stringify(imageSlide)}`);
+  }
+  if (!imageSlide.imageHints.some((hint) => hint.includes("智慧城市数据中枢"))) {
+    throw new Error(`Stage 2 should preserve object prompt text when normalizing imageHints; got ${imageSlide.imageHints.join(" | ")}`);
+  }
+  if ("videoHint" in imageSlide || result.content.slides.some((slide) => "videoHint" in slide)) {
+    throw new Error(`Stage 2 should drop null or unexpected videoHint fields when the plan has no video slides: ${JSON.stringify(result.content.slides)}`);
+  }
 }
 
 async function verifyBatchedConcurrentStage2() {

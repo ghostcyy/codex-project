@@ -4,12 +4,17 @@ import type { AnyNode, Element } from "domhandler";
 const STRONG_MARKER = "|STRONG|";
 
 export function parseStrongText(text: string): AnyNode[] {
-  const markerIndex = text.indexOf(STRONG_MARKER);
-  if (markerIndex < 0) return parseInlineHtml(escapeHtml(text));
+  if (!text.includes(STRONG_MARKER)) return parseInlineHtml(escapeHtml(text));
 
-  const strongText = text.slice(0, markerIndex);
-  const restText = text.slice(markerIndex + STRONG_MARKER.length);
-  const html = `${strongText ? `<strong>${escapeHtml(strongText)}</strong>` : ""}${escapeHtml(restText)}`;
+  const parts = text.split(STRONG_MARKER);
+  const html = parts
+    .map((part, index) => {
+      if (!part) return "";
+      return index < parts.length - 1
+        ? `<strong>${escapeHtml(part)}</strong>`
+        : escapeHtml(part);
+    })
+    .join("");
   return parseInlineHtml(html);
 }
 

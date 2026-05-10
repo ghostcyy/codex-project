@@ -3,7 +3,7 @@ import type { JobStatus, PptV3StageHistoryEntry, RunningJobStatus } from "./job.
 type RunningStage = RunningJobStatus;
 
 export type SSEEvent =
-  | { event: "job-created"; data: { jobId: string } }
+  | { event: "job-created"; data: { jobId: string; warnings?: string[] } }
   | {
       event: "stage-start";
       data: {

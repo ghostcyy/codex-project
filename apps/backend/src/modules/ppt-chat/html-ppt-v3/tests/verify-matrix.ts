@@ -98,7 +98,16 @@ class MatrixFakeLlm implements HtmlPptV3LLMClient {
           slides: slideSpecs ?? buildPlan(this.request, this.manifest).slides
         };
       }
-      const content = buildContent(this.plan, this.manifest);
+      const batchSlideIndexes = Array.isArray(payload["batchSlideIndexes"])
+        ? new Set((payload["batchSlideIndexes"] as unknown[]).map((value) => Number(value)))
+        : new Set(((payload["slideSpecs"] as Array<{ slideIndex?: number }> | undefined) ?? []).map((slide) => Number(slide.slideIndex)));
+      const batchPlan = {
+        ...this.plan,
+        slides: batchSlideIndexes.size
+          ? this.plan.slides.filter((slide) => batchSlideIndexes.has(slide.slideIndex))
+          : this.plan.slides
+      };
+      const content = buildContent(batchPlan, this.manifest);
       return args.schema.parse(content);
     }
     throw new Error("Unexpected V3 matrix prompt payload.");
@@ -121,7 +130,11 @@ const matrixImageClient: V3ImageGenerationClient = {
 async function main() {
   const allTemplateIds = await listAvailableTemplateV2Ids();
   const templateIds = allTemplateIds.slice(0, EXPECTED_TEMPLATE_COUNT);
-  const cases = buildCases(templateIds);
+  const manifestByTemplateId = new Map<string, TemplateManifestV2>();
+  for (const templateId of templateIds) {
+    manifestByTemplateId.set(templateId, await loadManifestV2(templateId));
+  }
+  const cases = buildCases(templateIds, manifestByTemplateId);
   const service = new HtmlPptV3AgentService();
   const reports: MatrixCaseReport[] = [];
 
@@ -198,7 +211,8 @@ async function runCase(
     includeImages: matrixCase.includeImages,
     includeVideo: matrixCase.includeVideo,
     includeChart: matrixCase.includeChart,
-    includeAudio: matrixCase.includeAudio
+    includeAudio: matrixCase.includeAudio,
+    includeSpeakerNotes: false
   };
   const manifest = await loadManifestV2(matrixCase.templateId);
   const outputDir = join(HTML_PPT_V3_OUTPUT_DIR, "workdirs", jobId);
@@ -239,23 +253,42 @@ async function runCase(
   }
 }
 
-function buildCases(templateIds: string[]): MatrixCase[] {
+function buildCases(templateIds: string[], manifestByTemplateId: Map<string, TemplateManifestV2>): MatrixCase[] {
   return templateIds.flatMap((templateId) =>
     PAGE_COUNTS.flatMap((pageCount) =>
-      MEDIA_COMBINATIONS.map((media) => ({ templateId, pageCount, ...media }))
+      MEDIA_COMBINATIONS
+        .filter((media) => {
+          const manifest = manifestByTemplateId.get(templateId);
+          return !media.includeImages || (manifest ? templateHasImageSlots(manifest) : false);
+        })
+        .map((media) => ({ templateId, pageCount, ...media }))
     )
+  );
+}
+
+function templateHasImageSlots(manifest: TemplateManifestV2): boolean {
+  return Object.values(manifest.pool).some((fragment) =>
+    fragment.mediaKinds.includes("image") && (fragment.imageSlotSelectors?.length ?? 0) > 0
   );
 }
 
 function buildPlan(request: GenerateRequest, manifest: TemplateManifestV2): PlanIR {
   const pool = buildAvailablePool(manifest, request);
   const middleFragments = Object.values(pool.middle);
+  const requiredImage = request.includeImages
+    ? middleFragments.find((summary) => summary.isImage && summary.imageSlotCount > 0)
+    : undefined;
   const preferred = middleFragments.filter((summary) => {
     return summary?.isChart ||
       (request.includeImages && summary?.isImage) ||
       (request.includeVideo && summary?.isVideo);
   });
-  const rotation = [...preferred, ...middleFragments.filter((summary) => !preferred.includes(summary))];
+  const requiredFirst = requiredImage ? [requiredImage] : [];
+  const rotation = [
+    ...requiredFirst,
+    ...preferred.filter((summary) => summary !== requiredImage),
+    ...middleFragments.filter((summary) => summary !== requiredImage && !preferred.includes(summary))
+  ];
   const usableMiddle = rotation.length ? rotation : [];
   const perPage = Math.max(50, Math.round(request.wordBudget / request.pageCount));
   const slides: PlanIR["slides"] = [];

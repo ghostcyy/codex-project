@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ConfirmSubmitButton } from "../../../components/admin/confirm-submit-button";
-import { getAdminLlmConfigs, getAdminLlmLogs, getAdminLlmStats, requireLlmManagerUser } from "../../../lib/server-auth";
-import { createLlmConfigAction, deleteLlmConfigAction, updateLlmConfigAction } from "./actions";
+import { getAdminImageModelConfig, getAdminJsonModelConfig, getAdminLlmConfigs, getAdminLlmLogs, getAdminLlmStats, requireLlmManagerUser } from "../../../lib/server-auth";
+import { createLlmConfigAction, deleteLlmConfigAction, updateImageModelConfigAction, updateJsonModelConfigAction, updateLlmConfigAction } from "./actions";
 
 const HTML_PPT_MODEL_STAGES = [
   { key: "research", label: "Research", hint: "02 资料整理" },
@@ -28,6 +28,8 @@ type PageProps = {
 export default async function AdminLlmPage({ searchParams }: PageProps) {
   await requireLlmManagerUser("/admin/llm");
   const configs = (await getAdminLlmConfigs()) ?? [];
+  const imageConfig = await getAdminImageModelConfig();
+  const jsonConfig = await getAdminJsonModelConfig();
   const stats = (await getAdminLlmStats()) ?? { totalCalls: 0, totalTokens: 0, todayCalls: 0, todayTokens: 0 };
   const logs = (await getAdminLlmLogs()) ?? [];
   const params = (await searchParams) ?? {};
@@ -81,6 +83,136 @@ export default async function AdminLlmPage({ searchParams }: PageProps) {
           </div>
         ))}
       </div>
+
+      <section className="space-y-8 reveal-up" style={{ animationDelay: '180ms' }}>
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-2xl font-semibold text-[var(--ink)] tracking-tight">Image Model Configuration</h2>
+          <span className="text-sm font-medium text-[var(--muted)]">Default Image Model</span>
+        </div>
+        <div className="glass-panel rounded-[32px] border border-cyan-100 bg-cyan-50/35 p-8">
+          {imageConfig ? (
+            <form action={updateImageModelConfigAction} className="grid gap-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-[var(--ink)]">{imageConfig.name}</h3>
+                  <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
+                    This model is used only by HTML-PPT v3 Stage 2.5 text-to-image generation. It is independent from the default text model.
+                  </p>
+                </div>
+                <div className="rounded-full bg-cyan-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-cyan-700">
+                  Image
+                </div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Display Name</span>
+                  <input name="name" defaultValue={imageConfig.name} className="text-input h-12 text-sm" required />
+                </label>
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Provider Type</span>
+                  <select name="providerType" defaultValue={imageConfig.providerType || "openai-compatible"} className="text-input h-12 text-sm">
+                    {LLM_PROVIDER_OPTIONS.map((provider) => (
+                      <option key={provider.value} value={provider.value}>{provider.label}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Image Base URL</span>
+                  <input name="baseUrl" defaultValue={imageConfig.baseUrl} className="text-input h-12 text-sm" placeholder="https://mimimax.cn/v1" required />
+                </label>
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Image Model ID</span>
+                  <input name="model" defaultValue={imageConfig.model} className="text-input h-12 text-sm" placeholder="image-01" required />
+                </label>
+                <label className="grid gap-2 md:col-span-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Image API Key</span>
+                  <input
+                    name="apiKey"
+                    type="password"
+                    className="text-input h-12 text-sm"
+                    placeholder={imageConfig.hasApiKey ? `Encrypted (Masked: ${imageConfig.apiKeyMasked})` : "Enter text-to-image API Key"}
+                  />
+                  <span className="px-1 text-[10px] leading-4 text-[var(--muted)]">
+                    编辑时留空会保留当前文生图 Key。此 Key 不会用于文本模型调用。
+                  </span>
+                </label>
+              </div>
+              <div className="flex justify-end border-t border-[var(--line)] pt-6">
+                <button type="submit" className="primary-button h-12 px-8 text-sm shadow-lg shadow-cyan-900/10">
+                  Save Image Model
+                </button>
+              </div>
+            </form>
+          ) : (
+            <p className="text-sm font-medium text-[var(--muted)]">Failed to load image model configuration.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="space-y-8 reveal-up" style={{ animationDelay: '190ms' }}>
+        <div className="flex items-center justify-between px-2">
+          <h2 className="text-2xl font-semibold text-[var(--ink)] tracking-tight">JSON Model Configuration</h2>
+          <span className="text-sm font-medium text-[var(--muted)]">Default JSON Model</span>
+        </div>
+        <div className="glass-panel rounded-[32px] border border-amber-100 bg-amber-50/35 p-8">
+          {jsonConfig ? (
+            <form action={updateJsonModelConfigAction} className="grid gap-6">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-[var(--ink)]">{jsonConfig.name}</h3>
+                  <p className="mt-1 text-sm leading-6 text-[var(--muted)]">
+                    This model is used by HTML-PPT v3 intent parsing and Stage 1 planning where official JSON Schema output is required.
+                  </p>
+                </div>
+                <div className="rounded-full bg-amber-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-700">
+                  JSON
+                </div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Display Name</span>
+                  <input name="name" defaultValue={jsonConfig.name} className="text-input h-12 text-sm" required />
+                </label>
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">Provider Type</span>
+                  <select name="providerType" defaultValue={jsonConfig.providerType || "minimax"} className="text-input h-12 text-sm">
+                    {LLM_PROVIDER_OPTIONS.map((provider) => (
+                      <option key={provider.value} value={provider.value}>{provider.label}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">JSON Base URL</span>
+                  <input name="baseUrl" defaultValue={jsonConfig.baseUrl} className="text-input h-12 text-sm" placeholder="https://api.minimax.io/v1" required />
+                </label>
+                <label className="grid gap-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">JSON Model ID</span>
+                  <input name="model" defaultValue={jsonConfig.model} className="text-input h-12 text-sm" placeholder="MiniMax-Text-01" required />
+                </label>
+                <label className="grid gap-2 md:col-span-2">
+                  <span className="px-1 text-[11px] font-bold uppercase tracking-wider text-[var(--muted)]">JSON API Key</span>
+                  <input
+                    name="apiKey"
+                    type="password"
+                    className="text-input h-12 text-sm"
+                    placeholder={jsonConfig.hasApiKey ? `Encrypted (Masked: ${jsonConfig.apiKeyMasked})` : "Enter JSON model API Key, or leave blank to use the active model key"}
+                  />
+                  <span className="px-1 text-[10px] leading-4 text-[var(--muted)]">
+                    编辑时留空会保留当前 JSON Key；如果未单独配置，后端会回退使用当前默认文本模型 Key。
+                  </span>
+                </label>
+              </div>
+              <div className="flex justify-end border-t border-[var(--line)] pt-6">
+                <button type="submit" className="primary-button h-12 px-8 text-sm shadow-lg shadow-amber-900/10">
+                  Save JSON Model
+                </button>
+              </div>
+            </form>
+          ) : (
+            <p className="text-sm font-medium text-[var(--muted)]">Failed to load JSON model configuration.</p>
+          )}
+        </div>
+      </section>
 
       <section className="space-y-8 reveal-up" style={{ animationDelay: '200ms' }}>
         <div className="flex items-center justify-between px-2">

@@ -7,6 +7,7 @@ import {
   type PagePortrait,
   type PlanIR,
   type TemplateManifestV2,
+  buildRequiredImageSlidePlan,
   validatePlanIR
 } from "../shared";
 import type { HtmlPptV3LLMClient } from "../orchestration/html-ppt-v3-llm-client";
@@ -19,7 +20,8 @@ const request: GenerateRequest = {
   includeImages: false,
   includeVideo: false,
   includeChart: true,
-  includeAudio: false
+  includeAudio: false,
+  includeSpeakerNotes: false
 };
 
 const manifest = buildMockManifest();
@@ -71,6 +73,135 @@ try {
   }
 }
 
+const imageEnabledRequest: GenerateRequest = { ...request, pageCount: 6, wordBudget: 1440, includeImages: true };
+const { pool: imageEnabledPool } = runStage0PoolBuild({ request: imageEnabledRequest, manifest });
+const imageEnabledPrompt = buildStage1PlannerPrompt({ request: imageEnabledRequest, pool: imageEnabledPool });
+const imageEnabledPayload = JSON.parse(imageEnabledPrompt.userPrompt) as {
+  imageRequired?: boolean;
+  imageFragmentIds?: string[];
+  nonImageFragmentIds?: string[];
+  fragmentPageTypeMap?: Record<string, string>;
+  imageRequirement?: {
+    required?: boolean;
+    targetCount?: number;
+    rule?: string;
+    countFormula?: string;
+    allowedImageFragmentIds?: string[];
+    nonImageFragmentIds?: string[];
+    requiredImageSlides?: Array<{ slideIndex: number; fragmentId: string; pageType: string }>;
+  };
+  availableMiddleFragments: Array<{ fragmentId: string; isImage?: boolean }>;
+  requiredImageSlides?: Array<{ slideIndex: number; fragmentId: string; pageType: string }>;
+};
+const expectedImageSlides = buildRequiredImageSlidePlan(imageEnabledRequest, imageEnabledPool);
+if (
+  imageEnabledPayload.imageRequired !== true ||
+  !imageEnabledPayload.imageFragmentIds?.includes("slide-04") ||
+  !imageEnabledPayload.nonImageFragmentIds?.includes("slide-02") ||
+  imageEnabledPayload.nonImageFragmentIds?.includes("slide-04") ||
+  imageEnabledPayload.fragmentPageTypeMap?.["slide-04"] !== "image-full" ||
+  imageEnabledPayload.imageRequirement?.required !== true ||
+  imageEnabledPayload.imageRequirement?.targetCount !== 3 ||
+  !imageEnabledPayload.imageRequirement?.countFormula?.includes("slides.filter") ||
+  !imageEnabledPayload.imageRequirement?.allowedImageFragmentIds?.includes("slide-04") ||
+  !imageEnabledPayload.imageRequirement?.nonImageFragmentIds?.includes("slide-02") ||
+  imageEnabledPayload.availableMiddleFragments.some((entry) => entry.isImage === true) ||
+  JSON.stringify(imageEnabledPayload.requiredImageSlides) !== JSON.stringify(expectedImageSlides) ||
+  JSON.stringify(imageEnabledPayload.imageRequirement?.requiredImageSlides) !== JSON.stringify(expectedImageSlides) ||
+  !imageEnabledPrompt.systemPrompt.includes("includeImages=true") ||
+  !imageEnabledPrompt.systemPrompt.includes("图片页是硬性要求") ||
+  !imageEnabledPrompt.systemPrompt.includes("必须且只能选择 3 页图片页") ||
+  !imageEnabledPrompt.systemPrompt.includes("否则 PlanIR 无效") ||
+  !imageEnabledPrompt.systemPrompt.includes("requiredImageSlides") ||
+  !imageEnabledPrompt.systemPrompt.includes("除 requiredImageSlides 指定页面外") ||
+  !imageEnabledPrompt.systemPrompt.includes("pageType 必须从 fragmentPageTypeMap 复制")
+) {
+  throw new Error("Stage 1 prompt should reserve exactly three fixed image slides and hide image fragments from regular choices.");
+}
+const retryPrompt = buildStage1PlannerPrompt({
+  request: imageEnabledRequest,
+  pool: imageEnabledPool,
+  previousError: "includeImages=true requires exactly 3 planned image fragments from: slide-04; got 2."
+});
+if (!retryPrompt.systemPrompt.includes("上一次输出无效") || !retryPrompt.systemPrompt.includes("必须先修正这些错误")) {
+  throw new Error("Stage 1 retry prompt should promote previous validation errors into the system instructions.");
+}
+const noImagePlan: PlanIR = {
+  templateId: imageEnabledRequest.templateId,
+  totalChars: imageEnabledRequest.wordBudget,
+  pageCount: imageEnabledRequest.pageCount,
+  slides: [
+    { slideIndex: 1, pageType: "cover", slideTitle: "AI城市韧性", topicPoints: ["主题引入"], charBudget: 240 },
+    { slideIndex: 2, fragmentId: "slide-02", pageType: "grid-2", slideTitle: "风险画像", topicPoints: ["数据汇聚", "动态研判"], charBudget: 240 },
+    { slideIndex: 3, fragmentId: "slide-03", pageType: "chart", slideTitle: "响应效率", topicPoints: ["协同提升"], chartType: "bar", charBudget: 240 },
+    { slideIndex: 4, fragmentId: "slide-02", pageType: "grid-2", slideTitle: "治理闭环", topicPoints: ["预警触发", "复盘优化"], charBudget: 240 },
+    { slideIndex: 5, fragmentId: "slide-02", pageType: "grid-2", slideTitle: "行动排期", topicPoints: ["试点推进", "复盘扩展"], charBudget: 240 },
+    { slideIndex: 6, pageType: "closing", slideTitle: "走向韧性城市", topicPoints: ["行动总结"], charBudget: 240 }
+  ]
+};
+const noImageValidation = validatePlanIR(noImagePlan, imageEnabledRequest, imageEnabledPool);
+if (noImageValidation.ok || !noImageValidation.reasons.some((reason) => reason.includes("includeImages=true"))) {
+  throw new Error("PlanIR validation should reject plans without an image fragment when includeImages=true.");
+}
+const oneImagePlan: PlanIR = {
+  ...noImagePlan,
+  slides: noImagePlan.slides.map((slide) => slide.slideIndex === 2
+    ? { ...slide, fragmentId: "slide-04", pageType: "image-full", topicPoints: ["场景视觉化"] }
+    : slide)
+};
+const oneImageValidation = validatePlanIR(oneImagePlan, imageEnabledRequest, imageEnabledPool);
+if (oneImageValidation.ok || !oneImageValidation.reasons.some((reason) => reason.includes("exactly 3"))) {
+  throw new Error("PlanIR validation should reject exactly one image fragment when includeImages=true.");
+}
+const wrongPositionTwoImagePlan: PlanIR = {
+  ...noImagePlan,
+  slides: noImagePlan.slides.map((slide) => {
+    if (slide.slideIndex === 2 || slide.slideIndex === 4) {
+      return { ...slide, fragmentId: "slide-04", pageType: "image-full", topicPoints: [`图片叙事 ${slide.slideIndex}`] };
+    }
+    return slide;
+  })
+};
+const wrongPositionTwoImageValidation = validatePlanIR(wrongPositionTwoImagePlan, imageEnabledRequest, imageEnabledPool);
+if (wrongPositionTwoImageValidation.ok || !wrongPositionTwoImageValidation.reasons.some((reason) => reason.includes("required image slide"))) {
+  throw new Error("PlanIR validation should reject image fragments placed outside requiredImageSlides.");
+}
+const fixedImagePlan: PlanIR = {
+  ...noImagePlan,
+  slides: noImagePlan.slides.map((slide) => {
+    const fixed = expectedImageSlides.find((entry) => entry.slideIndex === slide.slideIndex);
+    if (fixed) {
+      return { ...slide, fragmentId: fixed.fragmentId, pageType: fixed.pageType as "image-full", topicPoints: [`图片叙事 ${slide.slideIndex}`] };
+    }
+    return slide;
+  })
+};
+const fixedImageValidation = validatePlanIR(fixedImagePlan, imageEnabledRequest, imageEnabledPool);
+if (!fixedImageValidation.ok) {
+  throw new Error(`PlanIR validation should accept image fragments only at requiredImageSlides: ${fixedImageValidation.reasons.join("; ")}`);
+}
+const fourImagePlan: PlanIR = {
+  ...fixedImagePlan,
+  slides: fixedImagePlan.slides.map((slide) => slide.slideIndex === 2
+    ? { ...slide, fragmentId: "slide-04", pageType: "image-full", topicPoints: ["额外图片页"], chartType: undefined }
+    : slide)
+};
+const fourImageValidation = validatePlanIR(fourImagePlan, imageEnabledRequest, imageEnabledPool);
+if (fourImageValidation.ok || !fourImageValidation.reasons.some((reason) => reason.includes("exactly 3"))) {
+  throw new Error("PlanIR validation should reject more than three image fragments when includeImages=true.");
+}
+try {
+  runStage0PoolBuild({
+    request: imageEnabledRequest,
+    manifest: buildNoImageManifest()
+  });
+  throw new Error("Stage 0 should fail when includeImages=true but the template has no available image fragments.");
+} catch (err) {
+  if (!(err instanceof Error) || !/No available image fragments/i.test(err.message)) {
+    throw err;
+  }
+}
+
 const modelPlan: PlanIR = {
   templateId: request.templateId,
   totalChars: request.wordBudget,
@@ -114,9 +245,11 @@ expectInvalidPlan(
 );
 
 const stage1CallStages: Array<string | undefined> = [];
+const stage1StructuredNames: Array<string | undefined> = [];
 const fakeLlm: HtmlPptV3LLMClient = {
-  async callStructured<T extends z.ZodTypeAny>(args: { schema: T; stage?: string }): Promise<z.infer<T>> {
+  async callStructured<T extends z.ZodTypeAny>(args: { schema: T; stage?: string; structuredOutputName?: string }): Promise<z.infer<T>> {
     stage1CallStages.push(args.stage);
+    stage1StructuredNames.push(args.structuredOutputName);
     return args.schema.parse(modelPlan);
   }
 };
@@ -132,6 +265,9 @@ async function main() {
   if (result.source !== "model") throw new Error("Stage 1 should prefer valid model output.");
   if (stage1CallStages[0] !== "v3-stage1-planner") {
     throw new Error(`Stage 1 LLM calls should be tagged v3-stage1-planner, got ${stage1CallStages[0] ?? "undefined"}.`);
+  }
+  if (stage1StructuredNames[0] !== "html_ppt_v3_stage1_plan") {
+    throw new Error(`Stage 1 LLM calls should request the PlanIR JSON schema name, got ${stage1StructuredNames[0] ?? "undefined"}.`);
   }
   if (result.plan.slides.length !== request.pageCount) throw new Error("Stage 1 should preserve requested page count.");
   if (result.plan.slides[0]?.pageType !== "cover") throw new Error("Stage 1 first slide should be cover.");
@@ -326,6 +462,21 @@ function buildMediaOnlyManifest(): TemplateManifestV2 {
       "slide-03": manifest.pool["slide-03"]!,
       "slide-04": manifest.pool["slide-04"]!,
       "slide-05": manifest.pool["slide-05"]!
+    }
+  };
+}
+
+function buildNoImageManifest(): TemplateManifestV2 {
+  const manifest = buildMockManifest();
+  return {
+    ...manifest,
+    pool: {
+      "slide-02": manifest.pool["slide-02"]!,
+      "slide-03": manifest.pool["slide-03"]!
+    },
+    capabilities: {
+      ...manifest.capabilities,
+      hasImagePages: false
     }
   };
 }

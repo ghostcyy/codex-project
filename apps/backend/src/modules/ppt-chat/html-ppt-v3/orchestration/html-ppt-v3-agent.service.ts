@@ -5,6 +5,7 @@ import { packageDeck } from "../packager/zip-packager";
 import { runStage0PoolBuild } from "../stages/stage0-pool-build";
 import { runStage1Planner } from "../stages/stage1-planner";
 import { runStage25ImageGeneration, type V3ImageGenerationClient } from "../stages/stage2_5-image-generation";
+import { runStage21SpeakerNotes, type Stage21SpeakerNotesResult } from "../stages/stage2_1-speaker-notes";
 import { runStage2Writer } from "../stages/stage2-writer";
 import { runStage3Injector } from "../stages/stage3-injector";
 import { MiniMaxImageClient } from "../image-gen";
@@ -18,6 +19,7 @@ export type HtmlPptV3AgentInput = {
   jobId: string;
   request: GenerateRequest;
   llmConfig: ActiveLlmConfig;
+  jsonLlmConfig?: ActiveLlmConfig;
   userId?: number;
   projectId?: string | null;
   messageId?: string | null;
@@ -25,6 +27,7 @@ export type HtmlPptV3AgentInput = {
   loggingService?: LlmLoggingService;
   llm?: HtmlPptV3LLMClient;
   allowModelFallback?: boolean;
+  initialWarnings?: string[];
   imageClient?: V3ImageGenerationClient;
   maxGeneratedImages?: number;
   onProgress?: (event: V3ProgressEvent) => void | Promise<void>;
@@ -63,9 +66,18 @@ export type HtmlPptV3AgentResult = {
 export class HtmlPptV3AgentService {
   async generate(input: HtmlPptV3AgentInput): Promise<HtmlPptV3AgentResult> {
     const request = normalizeGenerateRequest(input.request);
-    const warnings: string[] = [];
-    const llm = input.llm ?? new HtmlPptV3LlmClient(
+    const warnings: string[] = [...(input.initialWarnings ?? [])];
+    const writerLlm = input.llm ?? new HtmlPptV3LlmClient(
       input.llmConfig,
+      input.logger,
+      input.loggingService,
+      input.userId,
+      input.projectId,
+      input.messageId,
+      input.jobId
+    );
+    const plannerLlm = input.llm ?? new HtmlPptV3LlmClient(
+      input.jsonLlmConfig ?? input.llmConfig,
       input.logger,
       input.loggingService,
       input.userId,
@@ -86,39 +98,63 @@ export class HtmlPptV3AgentService {
       const poolResult = runStage0PoolBuild({ request, manifest });
       const poolDetail = this.formatPoolBuildDetail(request, poolResult.pool);
       input.logger?.log?.(`[html-ppt-v3] ${poolDetail}`);
-      await this.emit(input, "00-pool-build", "completed", poolDetail);
+      await this.emit(input, "00-pool-build", "completed", poolDetail, { warnings: input.initialWarnings });
 
       await this.emit(input, "01-planner", "running", "Planning slide structure");
-      const planResult = await runStage1Planner({ request, pool: poolResult.pool, llm });
+      const planResult = await runStage1Planner({ request, pool: poolResult.pool, llm: plannerLlm });
       if (planResult.source === "fallback" && !input.allowModelFallback) {
         const message = formatModelFallbackError("planner", planResult.validationErrors);
         await this.emit(input, "01-planner", "failed", message, {
           source: "fallback",
           warnings: planResult.validationErrors,
-          modelCallCount: getModelCallCount(llm)
+          modelCallCount: getTotalModelCallCount(plannerLlm, writerLlm)
         });
         throw new Error(message);
       }
       await input.onPlan?.(planResult.plan);
       await this.emit(input, "01-planner", "completed",
         `Planner source=${planResult.source}; ${planResult.plan.slides.length} slides planned.`,
-        { source: planResult.source, warnings: planResult.validationErrors, modelCallCount: getModelCallCount(llm) });
+        { source: planResult.source, warnings: planResult.validationErrors, modelCallCount: getTotalModelCallCount(plannerLlm, writerLlm) });
 
       await this.emit(input, "02-writer", "running", "Writing slide content");
-      const writeResult = await runStage2Writer({ plan: planResult.plan, manifest, llm });
+      const writeResult = await runStage2Writer({ plan: planResult.plan, manifest, llm: writerLlm });
       if (writeResult.source === "fallback" && !input.allowModelFallback) {
         const message = formatModelFallbackError("writer", writeResult.validationErrors);
         await this.emit(input, "02-writer", "failed", message, {
           source: "fallback",
           warnings: writeResult.validationErrors,
-          modelCallCount: getModelCallCount(llm)
+          modelCallCount: getTotalModelCallCount(plannerLlm, writerLlm)
         });
         throw new Error(message);
       }
       await input.onContent?.(writeResult.content);
       await this.emit(input, "02-writer", "completed",
         `Writer source=${writeResult.source}; ${writeResult.content.slides.length} slides written.`,
-        { source: writeResult.source, warnings: writeResult.validationErrors, modelCallCount: getModelCallCount(llm) });
+        { source: writeResult.source, warnings: writeResult.validationErrors, modelCallCount: getTotalModelCallCount(plannerLlm, writerLlm) });
+
+      let speakerNotesResult: Stage21SpeakerNotesResult = {
+        requested: false,
+        source: "skipped",
+        warnings: [],
+        batchCount: 0
+      };
+      if (request.includeSpeakerNotes) {
+        await this.emit(input, "02_1-speaker-notes", "running", "Generating speaker notes for presenter mode");
+        speakerNotesResult = await runStage21SpeakerNotes({
+          request,
+          plan: planResult.plan,
+          content: writeResult.content,
+          llm: writerLlm
+        });
+        warnings.push(...speakerNotesResult.warnings);
+        await this.emit(input, "02_1-speaker-notes", "completed",
+          `Speaker notes ${speakerNotesResult.source}; batches=${speakerNotesResult.batchCount}.`,
+          {
+            source: speakerNotesResult.source === "model" ? "model" : "fallback",
+            warnings: speakerNotesResult.warnings,
+            modelCallCount: getTotalModelCallCount(plannerLlm, writerLlm)
+          });
+      }
 
       await rm(workdir, { recursive: true, force: true });
       await mkdir(workdir, { recursive: true });
@@ -147,6 +183,7 @@ export class HtmlPptV3AgentService {
         workdir,
         jobId: input.jobId,
         generatedImages: imageResult.generatedImages,
+        speakerNotes: speakerNotesResult.speakerNotes,
       });
       warnings.push(...injected.warnings);
       await this.emit(input, "03-injector", "completed",
@@ -177,7 +214,7 @@ export class HtmlPptV3AgentService {
           totalSlides: planResult.plan.slides.length,
           plannerSource: planResult.source,
           writerSource: writeResult.source,
-          modelCallCount: getModelCallCount(llm),
+          modelCallCount: getTotalModelCallCount(plannerLlm, writerLlm),
           injectorWarnings: injected.warnings
         }
       };
@@ -208,6 +245,7 @@ export class HtmlPptV3AgentService {
       `includeVideo=${request.includeVideo}`,
       `includeChart=${request.includeChart}`,
       `includeAudio=${request.includeAudio}`,
+      `includeSpeakerNotes=${request.includeSpeakerNotes}`,
       `availableMiddleFragments=${availableMiddleFragments.join(", ") || "none"}`,
     ].join("; ");
   }
@@ -226,6 +264,10 @@ export class HtmlPptV3AgentService {
 function getModelCallCount(llm: HtmlPptV3LLMClient): number {
   const maybeCounting = llm as HtmlPptV3LLMClient & { getModelCallCount?: () => number };
   return typeof maybeCounting.getModelCallCount === "function" ? maybeCounting.getModelCallCount() : 0;
+}
+
+function getTotalModelCallCount(...llms: HtmlPptV3LLMClient[]): number {
+  return Array.from(new Set(llms)).reduce((total, llm) => total + getModelCallCount(llm), 0);
 }
 
 function formatModelFallbackError(stage: "planner" | "writer", validationErrors: string[]): string {

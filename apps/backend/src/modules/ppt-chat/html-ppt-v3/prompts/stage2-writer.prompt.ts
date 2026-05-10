@@ -25,6 +25,10 @@ export function buildStage2WriterPrompt(input: Stage2WriterPromptInput): Stage2W
   const allowedChartTypes = Array.from(new Set(plannedChartTypes));
   const anchorTargets = buildAnchorTargets(input.plan, input.manifest);
   const exampleSlide = batchSlides[0] ?? input.plan.slides[0];
+  const batchHasVideoSlides = batchSlides.some((slide) => {
+    const fragment = getFragment(input.manifest, slide);
+    return slide.pageType === "video" || Boolean(fragment && fragmentHasMediaKind(fragment, "video"));
+  });
   const validJsonExample = {
     templateId: input.plan.templateId,
     slides: [{
@@ -32,6 +36,9 @@ export function buildStage2WriterPrompt(input: Stage2WriterPromptInput): Stage2W
       ...(exampleSlide?.fragmentId ? { fragmentId: exampleSlide.fragmentId } : {}),
       pageType: exampleSlide?.pageType ?? "cover",
       slotFills: { title: "主题标题" },
+      ...(batchHasVideoSlides && (exampleSlide?.pageType === "video")
+        ? { videoHint: "横版业务场景短视频，突出主题行动" }
+        : {}),
       ...(exampleSlide?.pageType === "chart"
         ? {
             chartDataBySlot: {
@@ -78,7 +85,7 @@ export function buildStage2WriterPrompt(input: Stage2WriterPromptInput): Stage2W
       })),
       requiresChartData,
       imageSlots,
-      requiresVideoHint
+      ...(requiresVideoHint ? { requiresVideoHint: true } : {})
     };
   });
   const deckOutline = buildDeckOutline(input.plan);
@@ -86,25 +93,36 @@ export function buildStage2WriterPrompt(input: Stage2WriterPromptInput): Stage2W
     ? `本批是第 ${input.batchIndex}/${input.totalBatches} 批，batchSlideIndexes=[${batchSlideIndexes.join(", ")}]。`
     : `本批覆盖全部页面，batchSlideIndexes=[${batchSlideIndexes.join(", ")}]。`;
 
+  const contentIRShape = batchHasVideoSlides
+    ? "{templateId,slides:[{slideIndex,fragmentId?,pageType,slotFills,chartData?,chartDataBySlot?,imageHints?,videoHint?}]}"
+    : "{templateId,slides:[{slideIndex,fragmentId?,pageType,slotFills,chartData?,chartDataBySlot?,imageHints?}]}";
+  const stage2Writes = batchHasVideoSlides
+    ? "slotFills/chartData/imageHints/videoHint"
+    : "slotFills/chartData/imageHints";
+  const mediaRules = [
+    "只要 slideSpecs.imageSlots > 0 就必须输出 imageHints，数量应覆盖图片槽；imageHints 是 slide 顶层字段，禁止写入 slotFills。",
+    ...(batchHasVideoSlides ? ["只要 slideSpecs.requiresVideoHint=true 就必须输出 videoHint。"] : [])
+  ];
+
   const systemPrompt = [
     "你是 PPT 正文撰稿人。",
     "你只执行 Stage 2：根据 PlanIR 撰写 ContentIR，不重新规划页面，不输出 HTML、Markdown、CSS 或代码。",
     "必须使用简体中文，除专有名词外不要输出英文句子。",
     "必须只输出一个严格 JSON 对象，不能有解释、注释、代码块、Markdown fences（```）或多余文本。",
     "输出必须可被 JSON.parse 直接解析；禁止尾随逗号，禁止 undefined，禁止单引号。",
-    "JSON 必须符合 ContentIR：{templateId,slides:[{slideIndex,fragmentId?,pageType,slotFills,chartData?,chartDataBySlot?,imageHints?,videoHint?}]}。",
+    `JSON 必须符合 ContentIR：${contentIRShape}。`,
     "顶层 JSON 只能包含 ContentIR 结果；必须返回 templateId 和 slides，禁止返回 slideSpecs、输入参数副本、数组外壳或嵌套 content/result 包裹。",
-    `全量合并后 slides 数量必须等于 pageCount=${input.plan.pageCount}。`,
+    `全 deck pageCount=${input.plan.pageCount}，但本批只返回 batchSlideCount=${batchSlideCount} 页。`,
     `本批只能返回 batchSlideIndexes 中的页面；本批 slides 数量必须等于 batchSlideCount=${batchSlideCount}。`,
-    "不得新增、遗漏、合并或重排页面。",
+    "不得新增、遗漏、合并或重排页面；禁止返回 full deck，禁止把多页内容合并成一个 slide object。",
     batchDescription,
-    "slides 必须逐页复制 slideSpecs 中的 slideIndex、fragmentId、pageType；Stage 2 只写 slotFills/chartData/imageHints/videoHint，禁止改 fragmentId、pageType 或页序。",
+    `slides 必须逐页复制 slideSpecs 中的 slideIndex、fragmentId、pageType；Stage 2 只写 ${stage2Writes}，禁止改 fragmentId、pageType 或页序。`,
     `允许的 pageType 只能来自 slideSpecs：${allowedPageTypes.join(", ")}。`,
     `允许的 chartData.type 只能是：${allowedChartTypes.join(", ")}。`,
-    "slotFills 是 slotId 到文本的对象；每个必填 slot 都必须提供文本。",
+    "slotFills 是 slotId 到文本的对象；slotFills 只能包含 anchors[].slotId，每个必填 slot 都必须提供文本。",
     "每个 slot 文本长度必须严格小于或等于 anchors 中的 maxChars。",
     "注意！！！\n注意！！！\n注意！！！\n\ntarChars 是硬指标：所有带 tarChars 的正文类 slot 必须超过 anchors[].tarChars；除非 maxChars 更小；同时绝不能超过 maxChars。",
-    "再次强调：tarChars 和 pageCount 是本阶段最重要的两个硬指标；先满足页数完整，再让每个带 tarChars 的正文 slot 写足目标长度。",
+    "再次强调：tarChars 和 batchSlideCount 是本阶段最重要的两个硬指标；先满足本批页数完整，再让每个带 tarChars 的正文 slot 写足目标长度。",
     "标题、页眉、页脚、badge、cta、stat、codeLine、mediaLabel 等补充元素不会提供 tarChars，不承担凑字数任务，不要为了字数刻意拉长。",
     "如果无法精确命中 tarChars，仍然只输出 ContentIR JSON，不要输出错误、解释或额外说明。",
     "anchors.kind 表示文本用途：title/subtitle/kicker/body/cardHeading/cardBody/listItem/statNumber/statLabel/tableCell/quote/caption/footer/badge/cta/codeLine/mediaLabel；请按用途写对应长度和语气。",
@@ -113,7 +131,7 @@ export function buildStage2WriterPrompt(input: Stage2WriterPromptInput): Stage2W
     "重点词可以使用 关键词|STRONG| 后续描述 标记；不要使用任何 HTML 标签。",
     "带 chartSlots 的页必须输出 chartDataBySlot，key 必须覆盖每个 chartSlots[].slotId；labels 长度必须等于每个 dataset.data 长度。",
     "没有 chartSlots 的 legacy chart 页才使用 chartData；chartData.type 必须等于计划中的 chartType。",
-    "只要 slideSpecs.imageSlots > 0 就必须输出 imageHints，数量应覆盖图片槽；只要 requiresVideoHint=true 就必须输出 videoHint。",
+    ...mediaRules,
     `有效 JSON 示例：${JSON.stringify(validJsonExample)}`
   ].join("\n");
 

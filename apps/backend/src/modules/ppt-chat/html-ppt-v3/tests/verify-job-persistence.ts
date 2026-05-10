@@ -28,6 +28,37 @@ class FakeDatabaseService {
     });
   }
 
+  seedRunningJob(id: string, request: Record<string, unknown>) {
+    this.rows.set(id, {
+      id,
+      user_id: null,
+      owner_user_id: 1,
+      project_id: null,
+      request,
+      template_id: request.templateId,
+      status: "writing",
+      output_dir: previewPath,
+      zip_path: zipPath,
+      preview_path: previewPath,
+      plan: null,
+      content: null,
+      error: null,
+      stage_history: [
+        {
+          stage: "writing",
+          status: "running",
+          startedAt: "2026-05-02T00:00:10.000Z",
+          completedAt: null,
+          elapsedMs: null,
+          detail: "Writing slide content",
+          summary: null
+        }
+      ],
+      created_at: new Date("2026-05-02T00:00:00.000Z"),
+      completed_at: null
+    });
+  }
+
   async query(text: string, values: unknown[] = []) {
     this.calls.push({ text, values });
     const normalized = text.replace(/\s+/g, " ").trim().toLowerCase();
@@ -60,6 +91,34 @@ class FakeDatabaseService {
     if (normalized.startsWith("select") && normalized.includes("from ppt_v3_jobs")) {
       const row = this.rows.get(String(values[0]));
       return { rows: row ? [row] : [], rowCount: row ? 1 : 0 };
+    }
+
+    if (normalized.startsWith("update ppt_v3_jobs") && normalized.includes("where status in")) {
+      const message = String(values[0]);
+      const completedAt = String(values[1]);
+      const updated: Record<string, unknown>[] = [];
+      for (const row of this.rows.values()) {
+        if (!["planning", "writing", "imaging", "injecting", "packaging"].includes(String(row.status))) continue;
+        row.status = "failed";
+        row.error = message;
+        row.output_dir = null;
+        row.zip_path = null;
+        row.preview_path = null;
+        row.completed_at = new Date("2026-05-02T00:01:00.000Z");
+        row.stage_history = Array.isArray(row.stage_history)
+          ? row.stage_history.map((entry) => {
+              if (!entry || typeof entry !== "object" || (entry as Record<string, unknown>).status !== "running") return entry;
+              return {
+                ...(entry as Record<string, unknown>),
+                status: "failed",
+                completedAt,
+                detail: message
+              };
+            })
+          : [];
+        updated.push(row);
+      }
+      return { rows: updated, rowCount: updated.length };
     }
 
     if (normalized.startsWith("update ppt_v3_jobs")) {
@@ -100,8 +159,31 @@ writeFileSync(zipPath, "zip");
 
 async function main() {
   const db = new FakeDatabaseService();
+  db.seedRunningJob("interrupted-job", {
+    theme: "中断任务",
+    pageCount: 8,
+    wordBudget: 1600,
+    templateId: "01-tech-web3",
+    includeImages: false,
+    includeVideo: false,
+    includeChart: false,
+    includeAudio: false
+  });
   const service = new PptV3JobService(db as never);
   await service.onModuleInit();
+
+  const interrupted = await service.getJob("interrupted-job");
+  if (
+    !interrupted ||
+    interrupted.status !== "failed" ||
+    !interrupted.error?.includes("backend restart") ||
+    interrupted.outputDir ||
+    interrupted.previewPath ||
+    interrupted.zipPath ||
+    interrupted.stageHistory[0]?.status !== "failed"
+  ) {
+    throw new Error("Startup should mark interrupted running jobs as failed and clear stale output paths.");
+  }
 
   const request: GenerateRequest = {
     theme: "AI Agent落地路线",
@@ -111,7 +193,8 @@ async function main() {
     includeImages: false,
     includeVideo: false,
     includeChart: false,
-    includeAudio: false
+    includeAudio: false,
+    includeSpeakerNotes: false
   };
 
   const created = await service.createJob(request, "user-1");

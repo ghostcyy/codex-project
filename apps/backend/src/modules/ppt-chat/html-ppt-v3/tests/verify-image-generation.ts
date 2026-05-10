@@ -36,8 +36,12 @@ async function main() {
   verifyImageExtraction();
   verifyPathSafety();
   await verifyBase64Generation();
+  await verifyImageApiKeyOverride();
+  await verifyImageBaseUrlOverride();
+  await verifyImageModelFromConfig();
   await verifyUrlGenerationDownload();
   await verifyMissingImageReturnsWarnings();
+  await verifyBaseRespMissingImageWarning();
 
   console.log("HTML-PPT v3 image generation verification passed.");
 }
@@ -57,6 +61,21 @@ function verifyEndpointNormalization() {
     normalizeMiniMaxImageEndpoint("https://api.minimax.io"),
     "https://api.minimax.io/v1/image_generation",
     "baseUrl without /v1 should append /v1/image_generation"
+  );
+  assertEqual(
+    normalizeMiniMaxImageEndpoint("https://mimimax.cn/v1"),
+    "https://mimimax.cn/v1/images/generations",
+    "mimimax.cn relay should use the OpenAI-compatible image generation endpoint"
+  );
+  assertEqual(
+    normalizeMiniMaxImageEndpoint("https://mimimax.cn"),
+    "https://mimimax.cn/v1/images/generations",
+    "mimimax.cn relay without /v1 should append /v1/images/generations"
+  );
+  assertEqual(
+    normalizeMiniMaxImageEndpoint("https://v2.aicodee.com/v1", "openai-compatible"),
+    "https://v2.aicodee.com/v1/images/generations",
+    "OpenAI-compatible relays should use the /images/generations endpoint"
   );
 }
 
@@ -136,6 +155,68 @@ async function verifyBase64Generation() {
   assert(saved.equals(PNG_BYTES), "should save decoded image bytes");
 }
 
+async function verifyImageApiKeyOverride() {
+  const workdir = makeWorkdir("image-key");
+  const calls: Array<{ url: string; init?: RequestInit }> = [];
+  const fetchImpl: typeof fetch = async (input, init) => {
+    calls.push({ url: stringifyFetchInput(input), init });
+    return jsonResponse({ data: { image_base64: [PNG_BASE64] } });
+  };
+
+  await generateMiniMaxImage({
+    config: { ...config, imageApiKey: "image-key" },
+    prompt: "use the dedicated image key",
+    workdir,
+    slideIndex: 3,
+    slotIndex: 0,
+    fetchImpl
+  });
+
+  const headers = calls[0]?.init?.headers as Record<string, string>;
+  assertEqual(headers.Authorization, "Bearer image-key", "should prefer dedicated image API key when configured");
+}
+
+async function verifyImageBaseUrlOverride() {
+  const workdir = makeWorkdir("image-base-url");
+  const calls: Array<{ url: string; init?: RequestInit }> = [];
+  const fetchImpl: typeof fetch = async (input, init) => {
+    calls.push({ url: stringifyFetchInput(input), init });
+    return jsonResponse({ data: { image_base64: [PNG_BASE64] } });
+  };
+
+  await generateMiniMaxImage({
+    config: { ...config, providerType: "openai-compatible", baseUrl: "https://text.example.test/v1", imageBaseUrl: "https://mimimax.cn/v1" },
+    prompt: "use the dedicated image base URL",
+    workdir,
+    slideIndex: 4,
+    slotIndex: 0,
+    fetchImpl
+  });
+
+  assertEqual(calls[0]?.url, "https://mimimax.cn/v1/images/generations", "should prefer dedicated image base URL when configured");
+}
+
+async function verifyImageModelFromConfig() {
+  const workdir = makeWorkdir("image-model");
+  const calls: Array<{ url: string; init?: RequestInit }> = [];
+  const fetchImpl: typeof fetch = async (input, init) => {
+    calls.push({ url: stringifyFetchInput(input), init });
+    return jsonResponse({ data: { image_base64: [PNG_BASE64] } });
+  };
+
+  await generateMiniMaxImage({
+    config: { ...config, imageModel: "default-image-model" },
+    prompt: "use dedicated default image model",
+    workdir,
+    slideIndex: 4,
+    slotIndex: 1,
+    fetchImpl
+  });
+
+  const body = JSON.parse(String(calls[0]?.init?.body)) as Record<string, unknown>;
+  assertEqual(body.model, "default-image-model", "should use image model from active image config when no explicit override is passed");
+}
+
 async function verifyUrlGenerationDownload() {
   const workdir = makeWorkdir("url");
   const calls: Array<{ url: string; init?: RequestInit }> = [];
@@ -184,7 +265,7 @@ async function verifyMissingImageReturnsWarnings() {
 
   assertEqual(result.relativePath, null, "missing image data should not claim a saved path");
   assert(
-    result.warnings.some((warning) => warning.includes("did not include image data")),
+    result.warnings.some((warning) => warning.includes("did not include image data") || warning.includes("returned no image")),
     "missing image data should return a warning instead of throwing"
   );
 
@@ -192,6 +273,32 @@ async function verifyMissingImageReturnsWarnings() {
   assert(
     !existsSync(generatedDir) || readdirSync(generatedDir).length === 0,
     "missing image data should not write placeholder files"
+  );
+}
+
+async function verifyBaseRespMissingImageWarning() {
+  const workdir = makeWorkdir("base-resp-warning");
+  const fetchImpl: typeof fetch = async () => jsonResponse({
+    data: null,
+    base_resp: {
+      status_code: 2013,
+      status_msg: "invalid params, prompt length must be less than 1500"
+    }
+  });
+
+  const result = await generateMiniMaxImage({
+    config,
+    prompt: "prompt that is too long",
+    workdir,
+    slideIndex: 1,
+    slotIndex: 0,
+    fetchImpl
+  });
+
+  assertEqual(result.relativePath, null, "base_resp no-image response should not claim a saved path");
+  assert(
+    result.warnings.some((warning) => warning.includes("2013") && warning.includes("prompt length must be less than 1500")),
+    "base_resp no-image warning should expose MiniMax status_code and status_msg"
   );
 }
 

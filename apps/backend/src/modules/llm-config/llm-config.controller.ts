@@ -4,7 +4,7 @@ import { RequirePermissions } from "../../common/auth/permissions.decorator";
 import { RequireRoles } from "../../common/auth/roles.decorator";
 import type { AuthenticatedUser } from "../auth/auth.types";
 import { LlmConfigService } from "./llm-config.service";
-import type { LlmConfigInput } from "./llm-config.types";
+import type { ImageModelConfigInput, JsonModelConfigInput, LlmConfigInput } from "./llm-config.types";
 
 @Controller("admin/llm-config")
 @RequireRoles("ADMIN")
@@ -15,6 +15,28 @@ export class LlmConfigController {
   @Get()
   getConfigList() {
     return this.llmConfigService.getConfigList();
+  }
+
+  @Get("image/default")
+  getImageConfig() {
+    return this.llmConfigService.getImageConfig();
+  }
+
+  @Put("image/default")
+  updateImageConfig(@Body() body: ImageModelConfigInput, @CurrentUser() user?: AuthenticatedUser) {
+    if (!user) throw new UnauthorizedException("Authenticated user context is unavailable.");
+    return this.llmConfigService.updateImageConfig(body, user.id);
+  }
+
+  @Get("json/default")
+  getJsonModelConfig() {
+    return this.llmConfigService.getJsonModelConfig();
+  }
+
+  @Put("json/default")
+  updateJsonModelConfig(@Body() body: JsonModelConfigInput, @CurrentUser() user?: AuthenticatedUser) {
+    if (!user) throw new UnauthorizedException("Authenticated user context is unavailable.");
+    return this.llmConfigService.updateJsonModelConfig(body, user.id);
   }
 
   @Post()

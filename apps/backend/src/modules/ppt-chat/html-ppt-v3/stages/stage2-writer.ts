@@ -174,7 +174,7 @@ function mergeStage2BatchResults(plan: PlanIR, batchContents: ContentIR[]): { ok
 
 function buildStage2ModelContentSchema(plan: PlanIR, manifest: TemplateManifestV2) {
   return z.preprocess(
-    (raw) => normalizeStage2ModelOutput(raw, plan),
+    (raw) => normalizeStage2ModelOutput(raw, plan, manifest),
     contentIRSchema.superRefine((content, ctx) => {
       const slideByIndex = new Map(content.slides.map((slide, index) => [slide.slideIndex, { slide, index }]));
       for (const planSlide of plan.slides) {
@@ -197,9 +197,9 @@ function buildStage2ModelContentSchema(plan: PlanIR, manifest: TemplateManifestV
   );
 }
 
-function normalizeStage2ModelOutput(raw: unknown, plan: PlanIR): unknown {
+function normalizeStage2ModelOutput(raw: unknown, plan: PlanIR, manifest: TemplateManifestV2): unknown {
   if (Array.isArray(raw)) {
-    return normalizeContentLike({ templateId: plan.templateId, slides: raw }, plan);
+    return normalizeContentLike({ templateId: plan.templateId, slides: raw }, plan, manifest);
   }
 
   if (!isRecord(raw)) {
@@ -207,13 +207,13 @@ function normalizeStage2ModelOutput(raw: unknown, plan: PlanIR): unknown {
   }
 
   if (Array.isArray(raw.slides)) {
-    return normalizeContentLike(raw, plan);
+    return normalizeContentLike(raw, plan, manifest);
   }
 
   for (const key of ["contentIR", "content", "result", "output", "data"]) {
     const nested = raw[key];
     if (Array.isArray(nested) || isRecord(nested)) {
-      const normalized = normalizeStage2ModelOutput(nested, plan);
+      const normalized = normalizeStage2ModelOutput(nested, plan, manifest);
       if (isRecord(normalized) && Array.isArray(normalized.slides)) {
         return normalized;
       }
@@ -223,16 +223,16 @@ function normalizeStage2ModelOutput(raw: unknown, plan: PlanIR): unknown {
   return raw;
 }
 
-function normalizeContentLike(raw: Record<string, unknown>, plan: PlanIR): unknown {
+function normalizeContentLike(raw: Record<string, unknown>, plan: PlanIR, manifest: TemplateManifestV2): unknown {
   const slides = Array.isArray(raw.slides) ? raw.slides : [];
   return {
     ...raw,
     templateId: typeof raw.templateId === "string" && raw.templateId.trim() ? raw.templateId : plan.templateId,
-    slides: slides.map((slide, index) => normalizeSlideIdentity(slide, index, plan))
+    slides: slides.map((slide, index) => normalizeSlideIdentity(slide, index, plan, manifest))
   };
 }
 
-function normalizeSlideIdentity(rawSlide: unknown, index: number, plan: PlanIR): unknown {
+function normalizeSlideIdentity(rawSlide: unknown, index: number, plan: PlanIR, manifest: TemplateManifestV2): unknown {
   if (!isRecord(rawSlide)) {
     return rawSlide;
   }
@@ -246,13 +246,69 @@ function normalizeSlideIdentity(rawSlide: unknown, index: number, plan: PlanIR):
   if (!planSlide) {
     return rawSlide;
   }
+  const fragment = getFragment(manifest, planSlide);
+  const normalizedFields = normalizeSlideFieldPlacement(rawSlide, planSlide, fragment);
 
   return {
-    ...rawSlide,
+    ...normalizedFields,
     slideIndex: planSlide.slideIndex,
     fragmentId: planSlide.fragmentId,
     pageType: planSlide.pageType
   };
+}
+
+function normalizeSlideFieldPlacement(rawSlide: Record<string, unknown>, planSlide: PlanIR["slides"][number], fragment?: PageFragment): Record<string, unknown> {
+  const normalized: Record<string, unknown> = { ...rawSlide };
+  const rawSlotFills = isRecord(rawSlide.slotFills) ? { ...rawSlide.slotFills } : rawSlide.slotFills;
+
+  if (isRecord(rawSlotFills) && "imageHints" in rawSlotFills) {
+    const movedHints = normalizeImageHintsValue(rawSlotFills.imageHints);
+    delete rawSlotFills.imageHints;
+    normalized.slotFills = rawSlotFills;
+    if (!normalized.imageHints && movedHints.length) {
+      normalized.imageHints = movedHints;
+    }
+  }
+
+  if (isRecord(rawSlotFills) && "videoHint" in rawSlotFills) {
+    delete rawSlotFills.videoHint;
+    normalized.slotFills = rawSlotFills;
+  }
+
+  const normalizedHints = normalizeImageHintsValue(normalized.imageHints);
+  if (normalizedHints.length) {
+    normalized.imageHints = normalizedHints;
+  } else if ("imageHints" in normalized) {
+    delete normalized.imageHints;
+  }
+
+  const expectsVideoHint = planSlide.pageType === "video" || Boolean(fragment && fragmentHasMediaKind(fragment, "video"));
+  if (!expectsVideoHint || typeof normalized.videoHint !== "string" || !normalized.videoHint.trim()) {
+    delete normalized.videoHint;
+  }
+
+  return normalized;
+}
+
+function normalizeImageHintsValue(value: unknown): string[] {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? [trimmed] : [];
+  }
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => normalizeImageHintsValue(item));
+  }
+  if (isRecord(value)) {
+    for (const key of ["prompt", "description", "text", "label", "hint", "slotId"]) {
+      const maybeText = value[key];
+      if (typeof maybeText === "string" && maybeText.trim()) {
+        return [maybeText.trim()];
+      }
+    }
+    const json = JSON.stringify(value);
+    return json && json !== "{}" ? [json] : [];
+  }
+  return [];
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

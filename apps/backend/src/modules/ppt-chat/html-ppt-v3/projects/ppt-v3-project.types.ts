@@ -47,6 +47,7 @@ export type PostPptV3ProjectMessageInput = {
   includeVideo?: unknown;
   includeChart?: unknown;
   includeAudio?: unknown;
+  includeSpeakerNotes?: unknown;
 };
 
 export type PptV3PostMessageResult = {
@@ -54,5 +55,6 @@ export type PptV3PostMessageResult = {
   userMessage: PptV3Message;
   assistantMessage: PptV3Message;
   request?: GenerateRequest;
+  warnings?: string[];
   job?: PptV3Job;
 };

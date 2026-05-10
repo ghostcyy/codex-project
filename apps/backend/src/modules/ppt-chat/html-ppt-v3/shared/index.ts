@@ -6,4 +6,6 @@ export * from "./sse.types";
 export * from "./paths";
 export * from "./test-utils";
 export * from "./generated-image.types";
+export * from "./speaker-notes-ir.types";
 export * from "./template-stale-error";
+export * from "./request-media-normalizer";

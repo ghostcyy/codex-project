@@ -35,6 +35,7 @@ export async function runStage1Planner(input: Stage1PlannerInput): Promise<Stage
     try {
       const candidate = await input.llm.callStructured({
         stage: "v3-stage1-planner",
+        structuredOutputName: "html_ppt_v3_stage1_plan",
         systemPrompt: prompt.systemPrompt,
         userPrompt: prompt.userPrompt,
         schema: planIRSchema,

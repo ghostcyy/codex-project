@@ -3,8 +3,9 @@ import { join } from "node:path";
 import { z } from "zod";
 import { HtmlPptV3AgentService } from "../orchestration/html-ppt-v3-agent.service";
 import { runStage3Injector as runStage3Wrapper } from "../stages/stage3-injector";
+import type { V3ImageGenerationClient } from "../stages/stage2_5-image-generation";
 import { loadManifestV2 } from "../manifest/manifest-v2.loader";
-import { buildAvailablePool, HTML_PPT_V3_OUTPUT_DIR, type ContentIR, type GenerateRequest, type PageFragment, type PlanIR, type TemplateManifestV2 } from "../shared";
+import { buildAvailablePool, buildRequiredImageSlidePlan, HTML_PPT_V3_OUTPUT_DIR, type ContentIR, type GenerateRequest, type PageFragment, type PlanIR, type TemplateManifestV2 } from "../shared";
 import { parsePptV3MessageRequest } from "../projects/ppt-v3-message-parser";
 import type { ActiveLlmConfig } from "../../../llm-config/llm-config.types";
 import type { HtmlPptV3LLMClient } from "../orchestration/html-ppt-v3-llm-client";
@@ -17,7 +18,8 @@ const request: GenerateRequest = {
   includeImages: false,
   includeVideo: false,
   includeChart: false,
-  includeAudio: false
+  includeAudio: false,
+  includeSpeakerNotes: false
 };
 const jobId = "00000000-0000-4000-8000-00000000v3e2".replace("v", "0");
 const outputRoot = join(HTML_PPT_V3_OUTPUT_DIR, "workdirs", jobId);
@@ -98,6 +100,20 @@ async function main() {
   if (existsSync(join(result.outputDir, "fragments", "grid-3.html"))) {
     throw new Error("Agent should clear stale grid pageType fragments before starting a new generation.");
   }
+  for (const artifact of ["fragments", "manifest-v2.json", "shell.html", "manifest.json"]) {
+    if (existsSync(join(result.outputDir, artifact))) {
+      throw new Error(`Agent output should not publish template engineering artifact ${artifact}.`);
+    }
+  }
+  const zipBytes = readFileSync(result.zipPath);
+  for (const artifact of ["fragments/", "manifest-v2.json", "shell.html", "manifest.json"]) {
+    if (zipBytes.includes(Buffer.from(artifact))) {
+      throw new Error(`Zip package should not include template engineering artifact ${artifact}.`);
+    }
+  }
+  if (!zipBytes.includes(Buffer.from("assets/edit-mode.js"))) {
+    throw new Error("Zip package should include assets/edit-mode.js for exported deck editing.");
+  }
   const html = readFileSync(join(result.outputDir, "index.html"), "utf8");
   if (!html.includes('data-html-ppt-v3-output="fragment-id"')) {
     throw new Error("Generated HTML should include the current fragment-id output marker.");
@@ -107,6 +123,21 @@ async function main() {
   }
   if (!html.includes('id="quantum-canvas"') || !html.includes("data-html-ppt-v3-deck-effects")) {
     throw new Error("Generated quantum template deck should preserve deck-level particle canvas and runtime.");
+  }
+  if (!html.includes('src="assets/edit-mode.js"') || !html.includes("data-html-ppt-v3-edit-mode")) {
+    throw new Error("Generated HTML should load edit-mode.js so exported decks support E edit mode.");
+  }
+  if (html.includes('"<script src="assets/edit-mode.js"')) {
+    throw new Error("Generated HTML should inject edit-mode.js into the final document, not inside a presenter runtime string.");
+  }
+  if (html.includes('src="assets/runtime.js"')) {
+    throw new Error("Generated HTML should not load legacy runtime.js because V3 owns navigation and presenter support.");
+  }
+  if (!html.includes("html-ppt-v3-presenter") || !html.includes("?preview=")) {
+    throw new Error("Generated HTML should include V3 presenter mode and preview support.");
+  }
+  if (!existsSync(join(result.outputDir, "assets", "edit-mode.js"))) {
+    throw new Error("Generated output should publish assets/edit-mode.js.");
   }
   if (/createChart\s*\(|getElementById\(["'](?:lineChart|pieChart|barChart|ganttChart)["']\)/i.test(html)) {
     throw new Error("Generated deck should not restore legacy template chart initialization scripts.");
@@ -173,6 +204,7 @@ async function main() {
     includeVideo: false
   } as GenerateRequest, "legacy-realestate-no-image-background");
 
+  await verifyImageGenerationCase();
   await verifyPromptResidueCase();
   verifyLegacyStage3Rejected();
   await verifyPlannerFallbackDoesNotPublish();
@@ -305,9 +337,36 @@ async function verifyPromptResidueCase() {
   const parsed = parsePptV3MessageRequest({
     content:
       "制作一个16页HTML PPT，主题为AI Agent在中小企业的落地路线，约2500字，面向企业管理者，包含场景、成本、风险与90天实施计划。模板 01-tech-web3，不要图片，不要视频，不要图表，不要音频。",
-    metadata: {},
+    metadata: {
+      templateId: "01-tech-web3",
+      includeImages: false,
+      includeVideo: false,
+      includeChart: false,
+      includeAudio: false
+    },
     projectSelectedTemplateId: null,
-    llmParse: null
+    llmParse: {
+      schemaVersion: "html-ppt-v3.intent.v1",
+      action: "generate_deck",
+      status: "complete",
+      deck: {
+        contentTheme: "AI Agent在中小企业的落地路线",
+        title: "AI Agent在中小企业的落地路线",
+        pageCount: 16,
+        wordBudget: 2500,
+        audience: "企业管理者",
+        purpose: "包含场景、成本、风险与90天实施计划",
+        tone: null,
+        mustInclude: [],
+        mustAvoid: []
+      },
+      quality: {
+        confidence: 0.95,
+        missingFields: [],
+        ambiguities: []
+      },
+      extensions: {}
+    }
   });
   if (!parsed.ok) throw new Error(`prompt-residue case should parse: ${parsed.issues.join("; ")}`);
   if (parsed.request.theme !== "AI Agent在中小企业的落地路线") {
@@ -374,25 +433,89 @@ async function verifyLegacyNoMediaCase(legacyRequest: GenerateRequest, jobId: st
   }
 }
 
+async function verifyImageGenerationCase() {
+  const imageRequest: GenerateRequest = {
+    theme: "智慧社区适老化服务路径",
+    pageCount: 6,
+    wordBudget: 1200,
+    templateId: "06-realestate-smart",
+    includeImages: true,
+    includeVideo: false,
+    includeChart: false,
+    includeAudio: false,
+    includeSpeakerNotes: false
+  };
+  const jobId = "image-generation-required";
+  const generatedPrompts: string[] = [];
+  rmSync(join(HTML_PPT_V3_OUTPUT_DIR, "workdirs", jobId), { recursive: true, force: true });
+  rmSync(join(HTML_PPT_V3_OUTPUT_DIR, "output", `${jobId}.zip`), { force: true });
+  const result = await new HtmlPptV3AgentService().generate({
+    jobId,
+    request: imageRequest,
+    llm: new FakeLlm(imageRequest),
+    imageClient: fakeImageClient(generatedPrompts),
+    llmConfig: {
+      id: "1",
+      name: "fake",
+      providerType: "openai",
+      baseUrl: "http://localhost",
+      apiKey: "fake",
+      model: "fake",
+      stageModelOverrides: {},
+      enabled: true,
+    } satisfies ActiveLlmConfig
+  });
+  const imagePool = buildAvailablePool(await loadManifestV2(imageRequest.templateId), imageRequest);
+  const plannedImageSlides = result.plan.slides.filter((slide) => slide.fragmentId && imagePool.middle[slide.fragmentId]?.isImage);
+  if (plannedImageSlides.length !== 3) {
+    throw new Error(`includeImages=true should plan exactly three image fragments, got ${plannedImageSlides.length}.`);
+  }
+  const html = readFileSync(join(result.outputDir, "index.html"), "utf8");
+  if (!html.includes("img/generated/slide-")) {
+    throw new Error("Generated image paths should be injected before local template image fallback.");
+  }
+  if (/https?:\/\/.+\.(?:png|jpe?g|webp|gif)/i.test(html)) {
+    throw new Error("Generated HTML should not reference remote image URLs.");
+  }
+  if (!existsSync(join(result.outputDir, "img", "generated"))) {
+    throw new Error("Generated image files should be packaged under img/generated.");
+  }
+  if (!generatedPrompts[0]?.includes("整套 PPT 主题") || !generatedPrompts[0]?.includes("当前页标题")) {
+    throw new Error("Agent image generation should pass deck theme and current slide context into Stage 2.5 prompts.");
+  }
+  if (generatedPrompts[0]?.includes("整套 PPT 大纲")) {
+    throw new Error("Agent image generation should not pass the full deck outline into Stage 2.5 prompts.");
+  }
+  if ((generatedPrompts[0]?.length ?? 0) >= 1500) {
+    throw new Error(`Agent image generation prompt should stay below MiniMax limit, got ${generatedPrompts[0]?.length}.`);
+  }
+}
+
 async function buildPlan(request: GenerateRequest): Promise<PlanIR> {
   const manifest = await loadManifestV2(request.templateId);
   const pool = buildAvailablePool(manifest, request);
   const middleFragments = Object.values(pool.middle);
-  const fallbackMiddle = middleFragments.find((summary) => summary.pageType === "grid-2") ?? middleFragments[0];
+  const requiredImageSlides = buildRequiredImageSlidePlan(request, pool);
+  const requiredImageSlideByIndex = new Map(requiredImageSlides.map((entry) => [entry.slideIndex, entry]));
+  const fallbackMiddle = middleFragments.find((summary) => summary.pageType === "grid-2" && !summary.isImage)
+    ?? middleFragments.find((summary) => !summary.isImage)
+    ?? middleFragments[0];
   const perPage = Math.round(request.wordBudget / request.pageCount);
   const slides: PlanIR["slides"] = [];
 
   for (let index = 1; index <= request.pageCount; index++) {
     const isMiddle = index > 1 && index < request.pageCount;
+    const requiredImageSlide = requiredImageSlideByIndex.get(index);
+    const selectedMiddle = requiredImageSlide ? pool.middle[requiredImageSlide.fragmentId] : fallbackMiddle;
     const pageType = index === 1
       ? "cover"
       : index === request.pageCount
         ? "closing"
-        : fallbackMiddle?.pageType ?? "title-text";
-    const summary = pageType === "cover" ? pool.cover : pageType === "closing" ? pool.closing : fallbackMiddle;
+        : selectedMiddle?.pageType ?? "title-text";
+    const summary = pageType === "cover" ? pool.cover : pageType === "closing" ? pool.closing : selectedMiddle;
     slides.push({
       slideIndex: index,
-      fragmentId: isMiddle ? fallbackMiddle?.fragmentId : undefined,
+      fragmentId: isMiddle ? selectedMiddle?.fragmentId : undefined,
       pageType: pageType as PlanIR["slides"][number]["pageType"],
       slideTitle: index === 1 ? request.theme.slice(0, 60) : index === request.pageCount ? "总结与行动" : `学习路径模块 ${index - 1}`,
       topicPoints: Array.from({ length: summary?.topicSlots ?? 1 }, (_, pointIndex) => `个性化学习要点 ${pointIndex + 1}`),
@@ -426,14 +549,34 @@ async function buildContent(request: GenerateRequest, plan: PlanIR, slideIndexes
             datasets: [{ label: slide.slideTitle, data: [42, 67, 88] }]
           }]))
         : undefined;
+      const imageHints = fragment?.imageSlotSelectors.length
+        ? fragment.imageSlotSelectors.map((_selector, index) => `${request.theme} 配图 ${index + 1}`)
+        : undefined;
       return {
         slideIndex: slide.slideIndex,
         fragmentId: slide.fragmentId,
         pageType: slide.pageType,
         slotFills,
-        chartDataBySlot
+        chartDataBySlot,
+        imageHints
       };
     })
+  };
+}
+
+function fakeImageClient(prompts: string[]): V3ImageGenerationClient {
+  return {
+    async generateImage(args) {
+      prompts.push(args.prompt);
+      const absolutePath = join(args.outputDir, `${args.fileBaseName}.png`);
+      mkdirSync(args.outputDir, { recursive: true });
+      writeFileSync(absolutePath, Buffer.from("fake image"));
+      return {
+        relativePath: `img/generated/${args.fileBaseName}.png`,
+        absolutePath,
+        warnings: []
+      };
+    }
   };
 }
 

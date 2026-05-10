@@ -10,7 +10,8 @@ export const generateRequestSchema = z.object({
   includeImages: z.boolean().default(false),
   includeVideo: z.boolean().default(false),
   includeChart: z.boolean().default(false),
-  includeAudio: z.boolean().default(false)
+  includeAudio: z.boolean().default(false),
+  includeSpeakerNotes: z.boolean().default(false)
 });
 export type GenerateRequest = z.infer<typeof generateRequestSchema>;
 
@@ -24,7 +25,8 @@ export function normalizeGenerateRequest(raw: unknown): GenerateRequest {
     includeImages: body.includeImages ?? body.wantsImageSlides ?? false,
     includeVideo: body.includeVideo ?? body.wantsVideoSlides ?? false,
     includeChart: body.includeChart ?? body.wantsChartSlides ?? false,
-    includeAudio: body.includeAudio ?? body.wantsAudioSlides ?? false
+    includeAudio: body.includeAudio ?? body.wantsAudioSlides ?? false,
+    includeSpeakerNotes: body.includeSpeakerNotes ?? body.wantsSpeakerNotes ?? body.speakerNotes ?? false
   });
 }
 
@@ -32,6 +34,7 @@ export const JOB_STATUSES = [
   "pending",
   "planning",
   "writing",
+  "speaking",
   "imaging",
   "injecting",
   "packaging",

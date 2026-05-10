@@ -1,5 +1,5 @@
-import { existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { cpSync, existsSync, mkdirSync, readdirSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { selectAll } from "css-select";
 import type { AnyNode, Element } from "domhandler";
 import { getGeneratedImage, type GeneratedImageMap, type PageFragment, type SlideContent } from "../shared";
@@ -35,8 +35,47 @@ export function resolveImages(args: {
     }
     const hint = args.content.imageHints?.[index] ?? "";
     const fileName = matchImageFile(hint, imageFiles);
-    matches[0]!.attribs = { ...matches[0]!.attribs, src: `img/${fileName}` };
+    const targetRelativePath = stableGeneratedImagePath(args.content.slideIndex, index);
+    materializeImageSlotFallback({
+      workdir: args.templateDir,
+      sourceFileName: fileName,
+      targetRelativePath,
+      slideIndex: args.content.slideIndex,
+      slotIndex: index,
+      warnings: args.warnings,
+    });
+    matches[0]!.attribs = { ...matches[0]!.attribs, src: targetRelativePath };
   }
+}
+
+function stableGeneratedImagePath(slideIndex: number, slotIndex: number) {
+  const slidePart = String(slideIndex).padStart(2, "0");
+  const slotPart = String(slotIndex + 1).padStart(2, "0");
+  return `img/generated/slide-${slidePart}-slot-${slotPart}.png`;
+}
+
+function materializeImageSlotFallback(args: {
+  workdir: string;
+  sourceFileName: string;
+  targetRelativePath: string;
+  slideIndex: number;
+  slotIndex: number;
+  warnings: string[];
+}) {
+  const sourceRelativePath = `img/${args.sourceFileName}`;
+  const sourcePath = join(args.workdir, sourceRelativePath);
+  const targetPath = join(args.workdir, args.targetRelativePath);
+  if (!existsSync(sourcePath)) {
+    args.warnings.push(
+      `Slide ${args.slideIndex} image ${args.slotIndex + 1}: fallback source ${sourceRelativePath} is missing; expected ${args.targetRelativePath}.`
+    );
+    return;
+  }
+  mkdirSync(dirname(targetPath), { recursive: true });
+  cpSync(sourcePath, targetPath);
+  args.warnings.push(
+    `Slide ${args.slideIndex} image ${args.slotIndex + 1}: fallback copied from ${sourceRelativePath} to ${args.targetRelativePath}.`
+  );
 }
 
 function listImageFiles(imgDir: string) {

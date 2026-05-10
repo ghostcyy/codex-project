@@ -19,7 +19,8 @@ const request: GenerateRequest = {
   includeImages: false,
   includeVideo: false,
   includeChart: false,
-  includeAudio: false
+  includeAudio: false,
+  includeSpeakerNotes: false
 };
 
 main().catch((err) => {

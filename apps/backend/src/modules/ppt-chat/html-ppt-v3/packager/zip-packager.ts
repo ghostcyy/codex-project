@@ -1,7 +1,7 @@
 /**
  * html-ppt-v3 :: packager/zip-packager.ts
  *
- * Copies the template directory into a temp output folder,
+ * Copies runtime template assets into a temp output folder,
  * writes the injected index.html, and produces a .zip file.
  *
  * Uses only Node.js built-ins + the archiver-compatible approach:
@@ -49,10 +49,10 @@ export async function packageDeck(input: PackagerInput): Promise<PackagerResult>
   } else {
     await rm(outDir, { recursive: true, force: true });
     await mkdir(outDir, { recursive: true });
-    // Copy entire template directory (assets/, img/, style.css, *.js, etc.).
-    await copyDirectory(input.templateDir, outDir, ["manifest.json"]);
+    // Copy only runtime files. manifest/shell/fragments are authoring inputs, not deliverables.
+    await copyDirectory(input.templateDir, outDir, TEMPLATE_ENGINEERING_ENTRIES);
   }
-  await assertNoLegacyFragmentFiles(outDir);
+  await assertNoEngineeringArtifacts(outDir);
 
   // Overwrite index.html with the injected version and a structure marker.
   await writeFile(join(outDir, "index.html"), addOutputMarker(input.injectedHtml), "utf8");
@@ -74,21 +74,17 @@ export async function packageDeck(input: PackagerInput): Promise<PackagerResult>
 }
 
 function assertPreparedWorkdir(outDir: string) {
-  for (const required of ["manifest-v2.json", "shell.html", "fragments"]) {
-    if (!existsSync(join(outDir, required))) {
-      throw new Error(`Prepared HTML-PPT v3 workdir is missing ${required}.`);
-    }
+  if (!existsSync(outDir)) {
+    throw new Error("Prepared HTML-PPT v3 workdir is missing.");
   }
 }
 
-async function assertNoLegacyFragmentFiles(outDir: string) {
-  const fragmentsDir = join(outDir, "fragments");
-  if (!existsSync(fragmentsDir)) return;
-  const entries = await readdir(fragmentsDir, { withFileTypes: true });
-  for (const entry of entries) {
-    if (!entry.isFile() || !entry.name.toLowerCase().endsWith(".html")) continue;
-    if (/^(cover|closing|deck-effects|slide-\d{2,3})\.html$/i.test(entry.name)) continue;
-    throw new Error(`Legacy pageType fragment '${entry.name}' is not allowed in HTML-PPT v3 output.`);
+async function assertNoEngineeringArtifacts(outDir: string) {
+  for (const name of TEMPLATE_ENGINEERING_ENTRIES) {
+    if (name === "index.html") continue;
+    if (existsSync(join(outDir, name))) {
+      throw new Error(`HTML-PPT v3 output must not include template engineering artifact '${name}'.`);
+    }
   }
 }
 
@@ -98,6 +94,14 @@ function addOutputMarker(html: string) {
 }
 
 /* ─── Directory copy (recursive) ────────────────────────────────── */
+
+const TEMPLATE_ENGINEERING_ENTRIES = [
+  "fragments",
+  "index.html",
+  "manifest.json",
+  "manifest-v2.json",
+  "shell.html"
+];
 
 async function copyDirectory(src: string, dest: string, excludeNames: string[]): Promise<void> {
   const entries = await readdir(src, { withFileTypes: true });

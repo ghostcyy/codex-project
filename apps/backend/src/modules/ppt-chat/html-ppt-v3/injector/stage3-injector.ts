@@ -1,11 +1,15 @@
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import type { ContentIR, GeneratedImageMap, PlanIR, TemplateManifestV2 } from "../shared";
+import { selectAll } from "css-select";
+import type { AnyNode, Element as DomElement } from "domhandler";
+import { Element } from "domhandler";
+import type { ContentIR, GeneratedImageMap, PlanIR, SpeakerNotesIR, TemplateManifestV2 } from "../shared";
 import { injectCharts } from "./chart-injector";
 import { stitchDeck, renderSlides } from "./deck-stitcher";
 import { resolveImages } from "./image-resolver";
 import { applyPostStitchClean } from "./post-stitch-cleaner";
 import { fillSlots } from "./slot-filler";
+import { attachChildren, parseStrongText } from "./strong-parser";
 
 export type Stage3InjectorInput = {
   manifest: TemplateManifestV2;
@@ -15,6 +19,7 @@ export type Stage3InjectorInput = {
   workdir: string;
   jobId: string;
   generatedImages?: GeneratedImageMap;
+  speakerNotes?: SpeakerNotesIR;
 };
 
 export type Stage3InjectorResult = {
@@ -32,10 +37,11 @@ export function runStage3Injector(input: Stage3InjectorInput): Stage3InjectorRes
   const stitchedDeck = stitchDeck({
     manifest: input.manifest,
     plan: input.plan,
-    templateDir: input.workdir
+    templateDir: input.templateDir
   });
   const contentByIndex = new Map(input.content.slides.map((slide) => [slide.slideIndex, slide]));
   const planByIndex = new Map(input.plan.slides.map((slide) => [slide.slideIndex, slide]));
+  const speakerNotesByIndex = new Map((input.speakerNotes?.slides ?? []).map((slide) => [slide.slideIndex, slide]));
   const chartScripts: string[] = [];
 
   for (const slide of stitchedDeck.slides) {
@@ -57,6 +63,7 @@ export function runStage3Injector(input: Stage3InjectorInput): Stage3InjectorRes
     });
     const chartInits = injectCharts({ section: slide.section, fragment: slide.fragment, plannedSlide, content, warnings });
     chartScripts.push(...chartInits.map((chartInit) => chartInit.script));
+    injectSpeakerNotes(slide.section, speakerNotesByIndex.get(slide.slideIndex));
   }
 
   applyPostStitchClean({ slides: stitchedDeck.slides, totalSlides: input.plan.slides.length, warnings });
@@ -78,6 +85,37 @@ export function runStage3Injector(input: Stage3InjectorInput): Stage3InjectorRes
   };
 }
 
+function injectSpeakerNotes(section: DomElement, speakerNotes?: SpeakerNotesIR["slides"][number]) {
+  removeExistingSpeakerNotes(section);
+  if (!speakerNotes?.notes.length) return;
+
+  const aside = new Element("aside", {
+    class: "notes",
+    "data-html-ppt-v3-speaker-notes": "true"
+  }, []);
+  const paragraphs = speakerNotes.notes
+    .map((note) => note.trim())
+    .filter(Boolean)
+    .map((note) => {
+      const paragraph = new Element("p", {}, []);
+      attachChildren(paragraph, parseStrongText(note));
+      return paragraph;
+    });
+  attachChildren(aside, paragraphs);
+  aside.parent = section;
+  section.children.push(aside);
+}
+
+function removeExistingSpeakerNotes(section: DomElement) {
+  const existingNotes = selectAll(".notes, aside.notes, .speaker-notes", section as unknown as AnyNode) as DomElement[];
+  for (const note of existingNotes) {
+    const parent = note.parent as DomElement | null;
+    if (!parent?.children) continue;
+    parent.children = parent.children.filter((child) => child !== note);
+    note.parent = null;
+  }
+}
+
 function copyGeneratedImages(generatedImages: GeneratedImageMap | undefined, workdir: string, warnings: string[]) {
   if (!generatedImages) return;
   for (const asset of Object.values(generatedImages)) {
@@ -95,7 +133,45 @@ function copyGeneratedImages(generatedImages: GeneratedImageMap | undefined, wor
 function prepareWorkdir(templateDir: string, workdir: string) {
   rmSync(workdir, { recursive: true, force: true });
   mkdirSync(workdir, { recursive: true });
-  cpSync(templateDir, workdir, { recursive: true });
+  copyRuntimeTemplateFiles(templateDir, workdir);
+  ensureEditModeAsset(workdir);
+}
+
+const TEMPLATE_ENGINEERING_ENTRIES = new Set([
+  "fragments",
+  "index.html",
+  "manifest.json",
+  "manifest-v2.json",
+  "shell.html"
+]);
+
+function copyRuntimeTemplateFiles(templateDir: string, workdir: string) {
+  for (const entry of readdirSync(templateDir)) {
+    if (TEMPLATE_ENGINEERING_ENTRIES.has(entry)) continue;
+    const source = join(templateDir, entry);
+    const target = join(workdir, entry);
+    const stat = statSync(source);
+    if (stat.isDirectory()) {
+      cpSync(source, target, { recursive: true });
+    } else if (stat.isFile()) {
+      cpSync(source, target);
+    }
+  }
+}
+
+function ensureEditModeAsset(workdir: string) {
+  const target = join(workdir, "assets", "edit-mode.js");
+  if (existsSync(target)) return;
+
+  const fallbackCandidates = [
+    join(process.cwd(), ".agents", "skills", "html-ppt", "assets", "edit-mode.js"),
+    join(process.cwd(), "..", "..", ".agents", "skills", "html-ppt", "assets", "edit-mode.js")
+  ];
+  const fallback = fallbackCandidates.find((candidate) => existsSync(candidate));
+  if (!fallback) return;
+
+  mkdirSync(dirname(target), { recursive: true });
+  cpSync(fallback, target);
 }
 
 function buildIndexHtml(shellHtml: string, slidesHtml: string, chartInitsHtml: string, deckTitle: string) {

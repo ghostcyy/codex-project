@@ -87,6 +87,9 @@ export function parsePptV3MessageRequest(input: {
       partialRequest[field] = value;
     }
   }
+  if (metadata.includeSpeakerNotes !== undefined) {
+    partialRequest.includeSpeakerNotes = metadata.includeSpeakerNotes;
+  }
 
   const missingFields = uniqueMissingFields([
     ...findMissingFields(partialRequest, metadata.explicitMediaFields),
@@ -136,6 +139,16 @@ function extractMetadataRequest(metadata: Record<string, unknown>): ExtractedReq
   setMetadataMedia(extracted, "includeVideo", metadata.includeVideo, metadata.wantsVideoSlides, media.includeVideo, media.video);
   setMetadataMedia(extracted, "includeChart", metadata.includeChart, metadata.wantsChartSlides, media.includeChart, media.chart);
   setMetadataMedia(extracted, "includeAudio", metadata.includeAudio, metadata.wantsAudioSlides, media.includeAudio, media.audio);
+  const includeSpeakerNotes = firstBoolean(
+    booleanValue(metadata.includeSpeakerNotes),
+    booleanValue(metadata.wantsSpeakerNotes),
+    booleanValue(metadata.speakerNotes),
+    booleanValue(media.includeSpeakerNotes),
+    booleanValue(media.speakerNotes)
+  );
+  if (includeSpeakerNotes !== undefined) {
+    extracted.includeSpeakerNotes = includeSpeakerNotes;
+  }
 
   extracted.used = Object.keys(extracted).some((key) => key !== "explicitMediaFields" && key !== "used" && extracted[key as keyof ExtractedRequest] !== undefined);
   return extracted;
