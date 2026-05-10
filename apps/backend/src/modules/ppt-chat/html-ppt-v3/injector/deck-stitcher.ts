@@ -51,7 +51,7 @@ export function stitchDeck(args: {
     return { slideIndex: plannedSlide.slideIndex, fragment, section };
   });
 
-  return { shellHtml: injectNavRuntime(shellHtml), slides };
+  return { shellHtml: injectEditModeScript(injectNavRuntime(shellHtml)), slides };
 }
 
 export function renderSlides(slides: StitchedSlide[]) {
@@ -75,6 +75,17 @@ function injectNavRuntime(shellHtml: string): string {
     return shellHtml.replace("<!-- CHART_INITS -->", `<!-- CHART_INITS -->\n${runtimeScript}`);
   }
   return shellHtml.replace("</body>", `${runtimeScript}\n</body>`);
+}
+
+function injectEditModeScript(shellHtml: string): string {
+  if (shellHtml.includes("assets/edit-mode.js") || shellHtml.includes("data-html-ppt-v3-edit-mode")) return shellHtml;
+  const scriptTag = `<script src="assets/edit-mode.js" data-html-ppt-v3-edit-mode></script>`;
+  const bodyCloseMatches = [...shellHtml.matchAll(/<\/body>/gi)];
+  const lastBodyClose = bodyCloseMatches.at(-1);
+  if (lastBodyClose?.index !== undefined) {
+    return `${shellHtml.slice(0, lastBodyClose.index)}${scriptTag}\n${shellHtml.slice(lastBodyClose.index)}`;
+  }
+  return `${shellHtml}\n${scriptTag}`;
 }
 
 function ensureDeckEffects(shellHtml: string, manifest: TemplateManifestV2, templateDir: string) {

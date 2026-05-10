@@ -53,11 +53,12 @@ type WorkbenchMessage = {
   stages?: StageProgress[];
   warnings?: string[];
   localOnly?: boolean;
+  mediaOptions?: MediaOptions;
 };
 
 type V3JobSummary = {
   id: string;
-  status: ProjectSummary["status"] | "planning" | "writing" | "imaging" | "injecting" | "packaging" | "pending";
+  status: ProjectSummary["status"] | "planning" | "writing" | "speaking" | "imaging" | "injecting" | "packaging" | "pending";
   templateId?: string;
   previewUrl?: string;
   downloadUrl?: string;
@@ -65,6 +66,7 @@ type V3JobSummary = {
   stageHistory: StageProgress[];
   createdAt?: string;
   completedAt?: string;
+  mediaOptions?: MediaOptions;
 };
 
 type ProjectApiState = "checking" | "ready" | "fallback";
@@ -78,24 +80,26 @@ type GenerateRequest = {
   includeVideo: boolean;
   includeChart: boolean;
   includeAudio: boolean;
+  includeSpeakerNotes: boolean;
 };
 
-type MediaOptions = Pick<GenerateRequest, "includeImages" | "includeVideo" | "includeChart" | "includeAudio">;
+type MediaOptions = Pick<GenerateRequest, "includeImages" | "includeVideo" | "includeChart" | "includeAudio" | "includeSpeakerNotes">;
 
 const DEFAULT_PROMPT = "制作一个8页HTML PPT，主题为AI Agent在中小企业的落地路线，约1800字，面向企业管理者，包含场景、成本、风险与90天实施计划。";
 const STALE_TEMPLATE_ERROR_CODE = "HTML_PPT_V3_STALE_TEMPLATE";
 const STALE_TEMPLATE_ERROR_MESSAGE = "该历史结果使用旧模板结构，无法继续预览，请重新生成。";
 const DEFAULT_MEDIA_OPTIONS: MediaOptions = {
-  includeImages: false,
+  includeImages: true,
   includeVideo: false,
   includeChart: false,
-  includeAudio: false
+  includeAudio: false,
+  includeSpeakerNotes: true
 };
 const MEDIA_OPTION_DEFS: Array<{ key: keyof MediaOptions; label: string }> = [
   { key: "includeImages", label: "图片页" },
-  { key: "includeChart", label: "图表页" },
+  { key: "includeSpeakerNotes", label: "讲稿" },
   { key: "includeVideo", label: "视频页" },
-  { key: "includeAudio", label: "音频页" }
+  { key: "includeChart", label: "图表页" }
 ];
 const COLUMN_WIDTH_STORAGE_KEY = "html-ppt-v3-column-widths-v4";
 const DEFAULT_COLUMN_WIDTHS = { projects: 260, templates: 532 };
@@ -111,6 +115,7 @@ const PROGRESS_REFRESH_MS = 10_000;
 const V3_STAGES = [
   { stage: "planning", label: "规划大纲", detail: "识别主题、页数、素材需求和叙事结构" },
   { stage: "writing", label: "撰写内容", detail: "生成每页内容、讲述节奏和页面文案" },
+  { stage: "speaking", label: "生成讲稿", detail: "为 S 演讲者视图生成逐页讲稿" },
   { stage: "imaging", label: "生成图片", detail: "为已选择的图片页调用 MiniMax 生成配图" },
   { stage: "injecting", label: "注入页面", detail: "将内容写入选定模板并处理媒体占位" },
   { stage: "packaging", label: "打包输出", detail: "发布预览并生成可下载 zip" }
@@ -191,6 +196,13 @@ export default function HtmlPptV3Page() {
   useEffect(() => {
     messagesByProjectRef.current = messagesByProject;
   }, [messagesByProject]);
+
+  useEffect(() => {
+    if (!selectedTemplate) return;
+    const includeImages = templateSupportsImagePages(selectedTemplate);
+    setMediaOptions((current) => current.includeImages === includeImages ? current : { ...current, includeImages });
+    setNotice((current) => current.includes("当前模板没有图片页") ? "" : current);
+  }, [selectedTemplate?.id]);
 
   useEffect(() => {
     setProgressNow(Date.now());
@@ -394,10 +406,10 @@ export default function HtmlPptV3Page() {
         }
         throw new Error(readPayloadMessage(payload) || "消息列表读取失败。");
       }
-      const nextMessages = mergeJobProgressIntoMessages(
-        normalizeMessages(payload),
-        await loadProjectJobs(projectId)
-      );
+      const projectJobs = await loadProjectJobs(projectId);
+      const nextMessages = mergeJobProgressIntoMessages(normalizeMessages(payload), projectJobs);
+      const nextMediaOptions = findMediaOptionsFromProject(nextMessages, projectJobs);
+      if (nextMediaOptions) setMediaOptions(nextMediaOptions);
       setMessagesByProject((current) => ({ ...current, [projectId]: nextMessages }));
       reconnectRunningJob(projectId, nextMessages);
     } catch (err) {
@@ -478,6 +490,9 @@ export default function HtmlPptV3Page() {
     if (project?.templateId && templates.some((template) => template.id === project.templateId)) {
       setTemplateId(project.templateId);
     }
+    const cachedMessages = messagesByProjectRef.current[projectId] ?? [];
+    const nextMediaOptions = findMediaOptionsFromProject(cachedMessages, []);
+    if (nextMediaOptions) setMediaOptions(nextMediaOptions);
     if (!project?.localOnly && projectApiState !== "fallback" && !messagesByProject[projectId]) {
       void loadMessages(projectId);
     }
@@ -494,6 +509,10 @@ export default function HtmlPptV3Page() {
 
     setError("");
     setNotice("");
+    const effectiveMediaOptions = normalizeMediaOptionsForTemplate(mediaOptions, selectedTemplate);
+    if (effectiveMediaOptions !== mediaOptions) {
+      setMediaOptions(effectiveMediaOptions);
+    }
     setPrompt("");
     setIsSubmitting(true);
 
@@ -503,7 +522,8 @@ export default function HtmlPptV3Page() {
       role: "user",
       content,
       createdAt: new Date().toISOString(),
-      templateId
+      templateId,
+      mediaOptions: effectiveMediaOptions
     };
     const assistantMessage: WorkbenchMessage = {
       id: createClientId("assistant"),
@@ -513,7 +533,8 @@ export default function HtmlPptV3Page() {
       templateId,
       status: "running",
       stages: initialStages(),
-      localOnly: project.localOnly || projectApiState === "fallback"
+      localOnly: project.localOnly || projectApiState === "fallback",
+      mediaOptions: effectiveMediaOptions
     };
 
     appendMessages(project.id, [userMessage, assistantMessage]);
@@ -525,7 +546,7 @@ export default function HtmlPptV3Page() {
     });
 
     if (project.localOnly || projectApiState === "fallback") {
-      const request = buildGenerateRequest(content, templateId, mediaOptions);
+      const request = buildGenerateRequest(content, templateId, effectiveMediaOptions);
       await startDirectGenerate(project.id, assistantMessage.id, request);
       return;
     }
@@ -538,10 +559,11 @@ export default function HtmlPptV3Page() {
           content,
           prompt: content,
           templateId,
-          includeImages: mediaOptions.includeImages,
-          includeVideo: mediaOptions.includeVideo,
-          includeChart: mediaOptions.includeChart,
-          includeAudio: mediaOptions.includeAudio,
+          includeImages: effectiveMediaOptions.includeImages,
+          includeVideo: effectiveMediaOptions.includeVideo,
+          includeChart: effectiveMediaOptions.includeChart,
+          includeAudio: effectiveMediaOptions.includeAudio,
+          includeSpeakerNotes: effectiveMediaOptions.includeSpeakerNotes,
           template: selectedTemplate
             ? {
                 id: selectedTemplate.id,
@@ -551,11 +573,12 @@ export default function HtmlPptV3Page() {
             : { id: templateId },
           metadata: {
             templateId,
-            media: mediaOptions,
-            includeImages: mediaOptions.includeImages,
-            includeVideo: mediaOptions.includeVideo,
-            includeChart: mediaOptions.includeChart,
-            includeAudio: mediaOptions.includeAudio
+            media: effectiveMediaOptions,
+            includeImages: effectiveMediaOptions.includeImages,
+            includeVideo: effectiveMediaOptions.includeVideo,
+            includeChart: effectiveMediaOptions.includeChart,
+            includeAudio: effectiveMediaOptions.includeAudio,
+            includeSpeakerNotes: effectiveMediaOptions.includeSpeakerNotes
           }
         })
       });
@@ -619,7 +642,7 @@ export default function HtmlPptV3Page() {
         setProjectApiState("fallback");
         markProjectLocal(project.id);
         setNotice(`Project 消息接口不可用，改用 direct /generate：${err.message}`);
-        const request = buildGenerateRequest(content, templateId, mediaOptions);
+        const request = buildGenerateRequest(content, templateId, effectiveMediaOptions);
         await startDirectGenerate(project.id, assistantMessage.id, request);
         return;
       }
@@ -705,10 +728,12 @@ export default function HtmlPptV3Page() {
         throw new Error(readPayloadMessage(payload) || "direct /generate 任务创建失败。");
       }
 
+      const warnings = normalizeWarnings(payload.warnings);
       upsertAssistant(projectId, assistantMessageId, {
-        content: "direct /generate 任务已创建，正在监听 SSE 进度。",
+        content: warnings.length ? `direct /generate 任务已创建，正在监听 SSE 进度；警告 ${warnings.length} 条。` : "direct /generate 任务已创建，正在监听 SSE 进度。",
         status: "running",
-        jobId: payload.jobId
+        jobId: payload.jobId,
+        warnings
       });
       connectSse(payload.jobId, projectId, assistantMessageId);
     } catch (err) {
@@ -729,11 +754,14 @@ export default function HtmlPptV3Page() {
     const source = new EventSource(`/api/html-ppt-v3/sse/${encodeURIComponent(nextJobId)}`);
     eventSourceRef.current = source;
 
-    source.addEventListener("job-created", () => {
+    source.addEventListener("job-created", (event) => {
+      const data = parseEventData(event);
+      const warnings = normalizeWarnings(data.warnings);
       upsertAssistant(projectId, assistantMessageId, {
         jobId: nextJobId,
-        content: `任务 ${nextJobId} 已创建，等待阶段事件。`,
-        status: "running"
+        content: warnings.length ? `任务 ${nextJobId} 已创建，等待阶段事件；警告 ${warnings.length} 条。` : `任务 ${nextJobId} 已创建，等待阶段事件。`,
+        status: "running",
+        warnings
       });
     });
 
@@ -1073,21 +1101,34 @@ export default function HtmlPptV3Page() {
               placeholder="例如：制作一个10页HTML PPT，主题为新能源车出海策略，约2200字，包含市场对比、风险、路线图和结尾行动清单。"
             />
             <div className="v3-composer-side">
-              <span>功能待上线</span>
+              <span>媒体选项</span>
               <div className="v3-media-toggle-grid" aria-label="媒体页选择">
-                {MEDIA_OPTION_DEFS.map((option) => (
-                  <button
-                    key={option.key}
-                    type="button"
-                    className="v3-media-toggle is-disabled"
-                    aria-disabled="true"
-                    aria-pressed="false"
-                    title="该功能很快上线！"
-                    onClick={(event) => event.preventDefault()}
-                  >
-                    {option.label}
-                  </button>
-                ))}
+                {MEDIA_OPTION_DEFS.map((option) => {
+                  const isEnabled = option.key === "includeImages" || option.key === "includeSpeakerNotes";
+                  const isUnavailableImageOption = option.key === "includeImages" && selectedTemplate && !templateSupportsImagePages(selectedTemplate);
+                  const isDisabled = !isEnabled || Boolean(isUnavailableImageOption);
+                  const isActive = mediaOptions[option.key];
+                  return (
+                    <button
+                      key={option.key}
+                      type="button"
+                      className={`v3-media-toggle${isActive ? " is-active" : ""}${isDisabled ? " is-disabled" : ""}`}
+                      aria-disabled={isDisabled}
+                      aria-pressed={isActive}
+                      disabled={isDisabled}
+                      title={isUnavailableImageOption ? "当前模板没有图片页" : isEnabled ? `点击切换${option.label}` : "该功能很快上线！"}
+                      onClick={() => {
+                        if (isDisabled) return;
+                        setMediaOptions((current) => ({
+                          ...current,
+                          [option.key]: !current[option.key]
+                        }));
+                      }}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
               </div>
               <button type="submit" disabled={isSubmitting || !prompt.trim() || !templateId}>
                 {isSubmitting ? "生成中..." : "发送需求"}
@@ -1504,6 +1545,21 @@ export default function HtmlPptV3Page() {
           font-size: 10px;
           font-weight: 600;
         }
+        .v3-message-warnings {
+          display: grid;
+          gap: 5px;
+          margin-top: 10px;
+        }
+        .v3-message-warnings span {
+          border-radius: 10px;
+          background: #fff7e6;
+          border: 1px solid #f3d79b;
+          padding: 6px 8px;
+          color: #8a5a00;
+          font-size: 11px;
+          line-height: 1.45;
+          font-weight: 650;
+        }
         .v3-stage-card,
         .v3-preview-card {
           padding: 12px;
@@ -1749,7 +1805,7 @@ export default function HtmlPptV3Page() {
           background: #f3f4f6;
           box-shadow: none;
           color: #8a879e;
-          cursor: help;
+          cursor: pointer;
           font-size: 11px;
           font-weight: 600;
           letter-spacing: 0;
@@ -1757,15 +1813,27 @@ export default function HtmlPptV3Page() {
           transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
         }
         .v3-media-toggle-grid .v3-media-toggle:hover {
-          border-color: rgba(17, 12, 38, 0.12);
-          background: #eef0f6;
+          border-color: rgba(13, 133, 116, 0.28);
+          background: #edf8f5;
+          color: #0d6258;
         }
-        .v3-media-toggle-grid .v3-media-toggle.is-active,
+        .v3-media-toggle-grid .v3-media-toggle.is-active {
+          border-color: rgba(13, 133, 116, 0.38);
+          background: #dcf5ef;
+          color: #0d6258;
+          box-shadow: inset 0 0 0 1px rgba(13, 133, 116, 0.08);
+        }
         .v3-media-toggle-grid .v3-media-toggle.is-disabled {
           border-color: rgba(17, 12, 38, 0.08);
           background: #f3f4f6;
           color: #8a879e;
+          cursor: not-allowed;
           box-shadow: none;
+        }
+        .v3-media-toggle-grid .v3-media-toggle.is-disabled:hover {
+          border-color: rgba(17, 12, 38, 0.08);
+          background: #f3f4f6;
+          color: #8a879e;
         }
         .v3-media-toggle-grid .v3-media-toggle:focus-visible {
           outline: 2px solid rgba(99, 102, 241, 0.36);
@@ -2134,6 +2202,13 @@ function MessageBubble({ message, templates }: { message: WorkbenchMessage; temp
           {template ? <span>{templateLabel(template)}</span> : message.templateId ? <span>{message.templateId}</span> : null}
           <span>{formatDate(message.createdAt)}</span>
         </div>
+        {message.warnings?.length ? (
+          <div className="v3-message-warnings">
+            {message.warnings.map((warning) => (
+              <span key={warning}>{warning}</span>
+            ))}
+          </div>
+        ) : null}
       </div>
       {isUser ? <span className="v3-avatar">You</span> : null}
     </div>
@@ -2263,7 +2338,11 @@ function normalizeMessages(payload: unknown): WorkbenchMessage[] {
         downloadUrl: canUseArtifact ? normalizeArtifactUrl(item.downloadUrl ?? deckRender?.downloadUrl ?? meta?.downloadUrl) : undefined,
         stages,
         warnings: normalizeWarnings(item.warnings ?? meta?.warnings),
-        localOnly: Boolean(item.localOnly ?? meta?.localOnly)
+        localOnly: Boolean(item.localOnly ?? meta?.localOnly),
+        mediaOptions: readMediaOptions(readRecord(meta?.media)) ??
+          readMediaOptions(meta) ??
+          readMediaOptions(readRecord(meta?.request)) ??
+          undefined
       };
     });
 }
@@ -2289,10 +2368,17 @@ function normalizeJobs(payload: unknown): V3JobSummary[] {
         error: stringOrUndefined(item.error),
         stageHistory: normalizeStages(item.stageHistory) ?? [],
         createdAt: stringOrUndefined(item.createdAt),
-        completedAt: stringOrUndefined(item.completedAt)
+        completedAt: stringOrUndefined(item.completedAt),
+        mediaOptions: readMediaOptions(readRecord(item.request)) ?? undefined
       };
     })
     .filter((item) => Boolean(item.id));
+}
+
+function findMediaOptionsFromProject(messages: WorkbenchMessage[], jobs: V3JobSummary[]) {
+  const latestMessageMedia = latestMessage(messages, (message) => Boolean(message.mediaOptions))?.mediaOptions;
+  const latestJobMedia = jobs.find((job) => Boolean(job.mediaOptions))?.mediaOptions;
+  return latestMessageMedia ?? latestJobMedia ?? null;
 }
 
 function mergeJobProgressIntoMessages(messages: WorkbenchMessage[], jobs: V3JobSummary[]): WorkbenchMessage[] {
@@ -2460,7 +2546,8 @@ function buildGenerateRequest(prompt: string, templateId: string, mediaOptions: 
     includeImages: mediaOptions.includeImages,
     includeVideo: mediaOptions.includeVideo,
     includeChart: mediaOptions.includeChart,
-    includeAudio: mediaOptions.includeAudio
+    includeAudio: mediaOptions.includeAudio,
+    includeSpeakerNotes: mediaOptions.includeSpeakerNotes
   };
 }
 
@@ -2572,6 +2659,17 @@ function normalizeCapabilityLabels(capabilities: unknown, tags?: string[]) {
     .map(([key]) => key);
 }
 
+function templateSupportsImagePages(template: TemplateOption | null) {
+  const capabilities = readRecord(template?.capabilities);
+  return capabilities?.hasImagePages === true;
+}
+
+function normalizeMediaOptionsForTemplate(options: MediaOptions, template: TemplateOption | null): MediaOptions {
+  if (!template) return options;
+  if (!options.includeImages || templateSupportsImagePages(template)) return options;
+  return { ...options, includeImages: false };
+}
+
 function parseEventData(event: Event): Record<string, unknown> {
   const message = event as MessageEvent<string>;
   try {
@@ -2585,6 +2683,7 @@ function stageLabel(stage: string) {
   const labels: Record<string, string> = {
     planning: "规划大纲",
     writing: "撰写内容",
+    speaking: "生成讲稿",
     imaging: "生成图片",
     injecting: "注入页面",
     packaging: "打包输出",
@@ -2667,6 +2766,28 @@ function readRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === "object" ? value as Record<string, unknown> : null;
 }
 
+function readMediaOptions(value: Record<string, unknown> | null): MediaOptions | null {
+  if (!value) return null;
+  const next = {
+    includeImages: booleanOrUndefined(value.includeImages ?? value.wantsImageSlides ?? value.images),
+    includeVideo: booleanOrUndefined(value.includeVideo ?? value.wantsVideoSlides ?? value.video),
+    includeChart: booleanOrUndefined(value.includeChart ?? value.wantsChartSlides ?? value.chart),
+    includeAudio: booleanOrUndefined(value.includeAudio ?? value.wantsAudioSlides ?? value.audio),
+    includeSpeakerNotes: booleanOrUndefined(value.includeSpeakerNotes ?? value.wantsSpeakerNotes ?? value.speakerNotes) ?? false
+  };
+  return typeof next.includeImages === "boolean" &&
+    typeof next.includeVideo === "boolean" &&
+    typeof next.includeChart === "boolean" &&
+    typeof next.includeAudio === "boolean" &&
+    typeof next.includeSpeakerNotes === "boolean"
+    ? next as MediaOptions
+    : null;
+}
+
+function booleanOrUndefined(value: unknown) {
+  return typeof value === "boolean" ? value : undefined;
+}
+
 function stringOrUndefined(value: unknown) {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
@@ -2691,6 +2812,7 @@ function normalizeJobStatus(value: unknown): V3JobSummary["status"] {
     value === "pending" ||
     value === "planning" ||
     value === "writing" ||
+    value === "speaking" ||
     value === "imaging" ||
     value === "injecting" ||
     value === "packaging" ||
@@ -2708,7 +2830,7 @@ function normalizeJobStatus(value: unknown): V3JobSummary["status"] {
 function jobStatusToMessageStatus(status: V3JobSummary["status"]): WorkbenchMessage["status"] | undefined {
   if (status === "done" || status === "failed") return status;
   if (status === "pending") return "queued";
-  if (status === "planning" || status === "writing" || status === "imaging" || status === "injecting" || status === "packaging") return "running";
+  if (status === "planning" || status === "writing" || status === "speaking" || status === "imaging" || status === "injecting" || status === "packaging") return "running";
   return normalizeMessageStatus(status);
 }
 
@@ -2716,7 +2838,7 @@ function normalizeMessageStatus(value: unknown): WorkbenchMessage["status"] | un
   if (value === "queued" || value === "running" || value === "done" || value === "failed" || value === "info") return value;
   if (value === "completed") return "done";
   if (value === "pending") return "queued";
-  if (value === "planning" || value === "writing" || value === "imaging" || value === "injecting" || value === "packaging") return "running";
+  if (value === "planning" || value === "writing" || value === "speaking" || value === "imaging" || value === "injecting" || value === "packaging") return "running";
   return undefined;
 }
 

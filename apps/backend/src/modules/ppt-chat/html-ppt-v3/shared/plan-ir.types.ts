@@ -17,6 +17,8 @@ import {
 } from "./manifest-v2.types";
 import type { GenerateRequest } from "./job.types";
 
+const REQUIRED_IMAGE_FRAGMENT_COUNT = 3;
+
 export type PageTypeSummary = {
   fragmentId: string;
   pageType: PageType;
@@ -27,6 +29,7 @@ export type PageTypeSummary = {
   description: string;
   pagePortrait: PagePortrait;
   chartSlots: ChartSlot[];
+  imageSlotCount: number;
   isChart: boolean;
   isImage: boolean;
   isVideo: boolean;
@@ -39,6 +42,13 @@ export type AvailablePool = {
   cover: PageTypeSummary;
   closing: PageTypeSummary;
   chartTypesAvailable: ChartType[];
+};
+
+export type RequiredImageSlidePlan = {
+  slideIndex: number;
+  fragmentId: string;
+  pageType: PageType;
+  topicSlots: number;
 };
 
 export const plannedSlideSchema = z.object({
@@ -81,6 +91,36 @@ export function buildAvailablePool(manifest: TemplateManifestV2, req: GenerateRe
   };
 }
 
+export function buildRequiredImageSlidePlan(req: GenerateRequest, pool: AvailablePool): RequiredImageSlidePlan[] {
+  if (!req.includeImages || req.pageCount <= 3) return [];
+  const imageSummaries = Object.values(pool.middle).filter((summary) => summary.isImage && summary.imageSlotCount > 0);
+  if (!imageSummaries.length) return [];
+
+  const middleSlideIndexes = Array.from({ length: Math.max(0, req.pageCount - 2) }, (_value, index) => index + 2);
+  if (middleSlideIndexes.length < REQUIRED_IMAGE_FRAGMENT_COUNT) return [];
+
+  const positions: number[] = [];
+  for (let index = 0; index < REQUIRED_IMAGE_FRAGMENT_COUNT; index++) {
+    const target = Math.round(((middleSlideIndexes.length - 1) * (index + 1)) / (REQUIRED_IMAGE_FRAGMENT_COUNT + 1));
+    const candidates = middleSlideIndexes
+      .map((_slideIndex, position) => position)
+      .filter((position) => !positions.includes(position))
+      .sort((left, right) => Math.abs(left - target) - Math.abs(right - target) || left - right);
+    positions.push(candidates[0] ?? index);
+  }
+  const slideIndexes = positions.sort((left, right) => left - right).map((position) => middleSlideIndexes[position]!);
+
+  return slideIndexes.map((slideIndex, index) => {
+    const summary = imageSummaries[index % imageSummaries.length]!;
+    return {
+      slideIndex,
+      fragmentId: summary.fragmentId,
+      pageType: summary.pageType,
+      topicSlots: summary.topicSlots
+    };
+  });
+}
+
 export function validatePlanIR(
   plan: PlanIR,
   req: GenerateRequest,
@@ -97,6 +137,14 @@ export function validatePlanIR(
   const last = plan.slides.at(-1);
   if (first?.pageType !== "cover") reasons.push("slide 1 must use pageType cover.");
   if (last?.pageType !== "closing") reasons.push("last slide must use pageType closing.");
+  const availableImageFragmentIds = new Set(
+    Object.values(pool.middle)
+      .filter((summary) => summary.isImage && summary.imageSlotCount > 0)
+      .map((summary) => summary.fragmentId)
+  );
+  const requiredImageSlides = buildRequiredImageSlidePlan(req, pool);
+  const requiredImageSlideByIndex = new Map(requiredImageSlides.map((entry) => [entry.slideIndex, entry]));
+  let plannedImageFragmentCount = 0;
 
   const seen = new Set<number>();
   for (let index = 0; index < plan.slides.length; index++) {
@@ -130,6 +178,15 @@ export function validatePlanIR(
     if ((isImagePageType(slide.pageType) || summary?.isImage) && !req.includeImages) {
       reasons.push(`slide ${slide.slideIndex} uses image pageType while includeImages=false.`);
     }
+    if (summary?.isImage && summary.imageSlotCount > 0) {
+      plannedImageFragmentCount++;
+      const requiredImageSlide = requiredImageSlideByIndex.get(slide.slideIndex);
+      if (!requiredImageSlide) {
+        reasons.push(`slide ${slide.slideIndex} uses image fragment '${slide.fragmentId}' outside required image slide positions.`);
+      } else if (requiredImageSlide.fragmentId !== slide.fragmentId) {
+        reasons.push(`slide ${slide.slideIndex} required image slide must use fragment '${requiredImageSlide.fragmentId}'.`);
+      }
+    }
     if ((isVideoPageType(slide.pageType) || summary?.isVideo) && !req.includeVideo) {
       reasons.push(`slide ${slide.slideIndex} uses video pageType while includeVideo=false.`);
     }
@@ -145,6 +202,15 @@ export function validatePlanIR(
   const tolerance = Math.max(1, Math.round(req.wordBudget * 0.15));
   if (Math.abs(totalBudget - req.wordBudget) > tolerance) {
     reasons.push(`sum(charBudget) must be within 15% of wordBudget ${req.wordBudget}; got ${totalBudget}.`);
+  }
+  if (req.includeImages && availableImageFragmentIds.size > 0 && plannedImageFragmentCount !== REQUIRED_IMAGE_FRAGMENT_COUNT) {
+    reasons.push(`includeImages=true requires exactly ${REQUIRED_IMAGE_FRAGMENT_COUNT} planned image fragments from: ${Array.from(availableImageFragmentIds).join(", ")}; got ${plannedImageFragmentCount}.`);
+  }
+  for (const requiredImageSlide of requiredImageSlides) {
+    const slide = plan.slides[requiredImageSlide.slideIndex - 1];
+    if (slide?.fragmentId !== requiredImageSlide.fragmentId) {
+      reasons.push(`slide ${requiredImageSlide.slideIndex} required image slide must use fragment '${requiredImageSlide.fragmentId}'.`);
+    }
   }
 
   return reasons.length ? { ok: false, reasons } : { ok: true };
@@ -175,6 +241,7 @@ function summarizeFragment(fragment: PageFragment): PageTypeSummary {
     description: describePageType(fragment),
     pagePortrait,
     chartSlots: fragment.chartSlots ?? [],
+    imageSlotCount: fragment.imageSlotSelectors?.length ?? 0,
     isChart: fragment.pageType === "chart" || fragmentHasMediaKind(fragment, "chart"),
     isImage: isImagePageType(fragment.pageType) || fragmentHasMediaKind(fragment, "image"),
     isVideo: isVideoPageType(fragment.pageType) || fragmentHasMediaKind(fragment, "video"),

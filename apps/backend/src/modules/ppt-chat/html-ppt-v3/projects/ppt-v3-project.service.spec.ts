@@ -118,10 +118,18 @@ class OfflineLlmConfigService {
   async getActiveConfig() {
     throw new Error("LLM unavailable in verification.");
   }
+
+  async getJsonConfig() {
+    throw new Error("JSON LLM unavailable in verification.");
+  }
 }
 
 class OnlineLlmConfigService {
+  jsonConfigCalls = 0;
+  activeConfigCalls = 0;
+
   async getActiveConfig() {
+    this.activeConfigCalls++;
     return {
       id: "llm-config-1",
       name: "Mock OpenAI-compatible",
@@ -129,6 +137,20 @@ class OnlineLlmConfigService {
       baseUrl: "http://mock-llm.local/v1",
       apiKey: "test-key",
       model: "mock-json-model",
+      stageModelOverrides: {},
+      enabled: true
+    };
+  }
+
+  async getJsonConfig() {
+    this.jsonConfigCalls++;
+    return {
+      id: "json-config-1",
+      name: "Mock JSON Model",
+      providerType: "minimax",
+      baseUrl: "http://mock-json.local/v1",
+      apiKey: "test-key",
+      model: "MiniMax-Text-01",
       stageModelOverrides: {},
       enabled: true
     };
@@ -225,7 +247,8 @@ async function main() {
       includeImages: false,
       includeVideo: false,
       includeChart: false,
-      includeAudio: false
+      includeAudio: false,
+      includeSpeakerNotes: true
     },
     projectSelectedTemplateId: "04-edu-adaptive",
     llmParse: {
@@ -268,9 +291,10 @@ async function main() {
     intentParsedRequest.request.includeImages !== false ||
     intentParsedRequest.request.includeVideo !== false ||
     intentParsedRequest.request.includeChart !== false ||
-    intentParsedRequest.request.includeAudio !== false
+    intentParsedRequest.request.includeAudio !== false ||
+    intentParsedRequest.request.includeSpeakerNotes !== true
   ) {
-    throw new Error("intent parser should keep media choices controlled by metadata/UI.");
+    throw new Error("intent parser should keep media and speaker notes choices controlled by metadata/UI.");
   }
 
   const intentWithUiImage = parsePptV3MessageRequest({
@@ -395,10 +419,11 @@ async function main() {
 
   const onlineDb = new FakeDatabaseService();
   const onlineJobs = new FakeJobService();
+  const onlineLlmConfig = new OnlineLlmConfigService();
   const onlineService = new PptV3ProjectService(
     onlineDb as never,
     onlineJobs as never,
-    new OnlineLlmConfigService() as never,
+    onlineLlmConfig as never,
     { logPayload: async () => undefined } as never
   );
   await onlineService.onModuleInit();
@@ -425,7 +450,8 @@ async function main() {
       includeImages: true,
       includeVideo: false,
       includeChart: false,
-      includeAudio: false
+      includeAudio: false,
+      includeSpeakerNotes: true
     }
   });
   globalThis.fetch = originalFetch;
@@ -439,14 +465,21 @@ async function main() {
   ) {
     throw new Error(`postMessage should build request from LLM intent, got ${JSON.stringify(onlineJobs.createdRequests[0])}.`);
   }
-  if (onlineJobs.createdRequests[0]?.includeImages !== true || onlineJobs.createdRequests[0]?.includeAudio !== false) {
-    throw new Error("postMessage should keep media choices controlled by UI metadata.");
+  if (
+    onlineJobs.createdRequests[0]?.includeImages !== true ||
+    onlineJobs.createdRequests[0]?.includeAudio !== false ||
+    onlineJobs.createdRequests[0]?.includeSpeakerNotes !== true
+  ) {
+    throw new Error("postMessage should keep media and speaker notes choices controlled by UI metadata.");
   }
   if (jobResult.assistantMessage.metadata.parseSource !== "llm") {
     throw new Error(`postMessage should expose parseSource=llm, got ${String(jobResult.assistantMessage.metadata.parseSource)}.`);
   }
   if (onlineJobs.createdOwnerUserIds[0] !== 1) {
     throw new Error("postMessage should create jobs under the current owner user id.");
+  }
+  if (onlineLlmConfig.jsonConfigCalls !== 1 || onlineLlmConfig.activeConfigCalls !== 0) {
+    throw new Error(`postMessage intent parsing should use Default JSON Model only; json=${onlineLlmConfig.jsonConfigCalls}, active=${onlineLlmConfig.activeConfigCalls}.`);
   }
   const intentRequestText = JSON.stringify(intentRequestBodies[0] ?? {});
   if (

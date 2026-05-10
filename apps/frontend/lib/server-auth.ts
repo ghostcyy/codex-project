@@ -4,6 +4,8 @@ import type {
   AdminNewsArticle,
   AdminOverviewResponse,
   AdminUserSummary,
+  ImageModelConfigSummary,
+  JsonModelConfigSummary,
   LlmConfigSummary,
   PptMessageDto,
   PptProjectSummary,
@@ -112,6 +114,14 @@ export async function getAdminUsers() {
 
 export async function getAdminLlmConfigs() {
   return requestAuthenticated<LlmConfigSummary[]>("/admin/llm-config");
+}
+
+export async function getAdminImageModelConfig() {
+  return requestAuthenticated<ImageModelConfigSummary>("/admin/llm-config/image/default");
+}
+
+export async function getAdminJsonModelConfig() {
+  return requestAuthenticated<JsonModelConfigSummary>("/admin/llm-config/json/default");
 }
 
 export async function getAdminLlmLogs() {

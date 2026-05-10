@@ -28,20 +28,22 @@ export class MiniMaxImageClient implements V3ImageGenerationClient {
     imageModel?: string;
   }): Promise<{ relativePath: string | null; warnings: string[]; absolutePath?: string }> {
     validateImageRequest(this.options.config, args.prompt);
+    const apiKey = imageApiKeyFromConfig(this.options.config);
     const warnings: string[] = [];
 
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
 
     try {
-      const response = await this.fetchImpl(normalizeMiniMaxImageEndpoint(this.options.config.baseUrl), {
+      const imageBaseUrl = this.options.config.imageBaseUrl?.trim() || this.options.config.baseUrl;
+      const response = await this.fetchImpl(normalizeMiniMaxImageEndpoint(imageBaseUrl, this.options.config.providerType), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${this.options.config.apiKey}`,
+          Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: imageModelFromConfig(args.imageModel ?? this.options.imageModel),
+          model: imageModelFromConfig(args.imageModel ?? this.options.imageModel ?? this.options.config.imageModel),
           prompt: args.prompt,
           aspect_ratio: "16:9",
           response_format: "base64",
@@ -64,7 +66,7 @@ export class MiniMaxImageClient implements V3ImageGenerationClient {
       if (!image) {
         return {
           relativePath: null,
-          warnings: ["MiniMax image response did not include image data."]
+          warnings: [formatMissingImageWarning(payload)]
         };
       }
 
@@ -111,9 +113,28 @@ export class MiniMaxImageClient implements V3ImageGenerationClient {
   }
 }
 
-export function normalizeMiniMaxImageEndpoint(baseUrl: string) {
+export function normalizeMiniMaxImageEndpoint(baseUrl: string, providerType?: string) {
   const trimmed = baseUrl.trim().replace(/\/+$/, "");
   if (!trimmed) throw new Error("MiniMax image generation requires config.baseUrl.");
+  if (/\/(?:image_generation|images\/generations)$/i.test(trimmed)) return trimmed;
+
+  const host = (() => {
+    try {
+      return new URL(trimmed).hostname.toLowerCase();
+    } catch {
+      return "";
+    }
+  })();
+  if (host === "mimimax.cn" || host.endsWith(".mimimax.cn")) {
+    if (/\/v1$/i.test(trimmed)) return `${trimmed}/images/generations`;
+    return `${trimmed}/v1/images/generations`;
+  }
+
+  if (providerType === "openai-compatible") {
+    if (/\/v1$/i.test(trimmed)) return `${trimmed}/images/generations`;
+    return `${trimmed}/v1/images/generations`;
+  }
+
   if (/\/v1$/i.test(trimmed)) return `${trimmed}/image_generation`;
   return `${trimmed}/v1/image_generation`;
 }
@@ -191,6 +212,22 @@ export function extractImagePayload(payload: unknown): ExtractedImage | null {
     return { kind: "base64", mime: DEFAULT_IMAGE_MIME, value: found };
   }
   return null;
+}
+
+function formatMissingImageWarning(payload: unknown) {
+  const baseResp = payload && typeof payload === "object"
+    ? (payload as Record<string, unknown>).base_resp
+    : null;
+  if (baseResp && typeof baseResp === "object") {
+    const record = baseResp as Record<string, unknown>;
+    const statusCode = typeof record.status_code === "number" || typeof record.status_code === "string"
+      ? String(record.status_code)
+      : "";
+    const statusMsg = typeof record.status_msg === "string" ? record.status_msg.trim() : "";
+    const detail = [statusCode, statusMsg].filter(Boolean).join(" ");
+    if (detail) return `MiniMax image generation returned no image: ${detail}`;
+  }
+  return "MiniMax image response did not include image data.";
 }
 
 function findImageValue(value: unknown, visited: Set<unknown>): string | null {
@@ -271,7 +308,11 @@ function safeJsonParse(text: string): unknown | null {
 }
 
 function validateImageRequest(config: ActiveLlmConfig, prompt: string) {
-  if (!config.baseUrl?.trim()) throw new Error("MiniMax image generation requires config.baseUrl.");
-  if (!config.apiKey?.trim()) throw new Error("MiniMax image generation requires config.apiKey.");
+  if (!(config.imageBaseUrl?.trim() || config.baseUrl?.trim())) throw new Error("MiniMax image generation requires config.imageBaseUrl or config.baseUrl.");
+  if (!imageApiKeyFromConfig(config)) throw new Error("MiniMax image generation requires config.imageApiKey or config.apiKey.");
   if (!prompt.trim()) throw new Error("MiniMax image generation requires a non-empty prompt.");
+}
+
+function imageApiKeyFromConfig(config: ActiveLlmConfig) {
+  return config.imageApiKey?.trim() || config.apiKey?.trim() || "";
 }

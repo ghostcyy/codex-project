@@ -76,7 +76,7 @@ export async function convertTemplate(templateId: string): Promise<{ fragmentCou
 
   const indexHtml = await readFile(indexPath, "utf8");
   const sections = extractSections(indexHtml);
-  const legacy = await readTemplateSourceManifest(templateDir, sections);
+  const legacy = await readTemplateSourceManifest(templateDir, sections, indexHtml);
   const cssFiles = extractLocalCssFiles(indexHtml);
   const cssText = await readTemplateCss(templateDir, cssFiles);
   const deckEffects = await extractDeckEffects(templateDir, indexHtml);
@@ -182,8 +182,13 @@ async function writeFragment(templateDir: string, fragment: PageFragment, html: 
   await writeFile(join(templateDir, fragment.htmlFile), `${html.trim()}\n`, "utf8");
 }
 
-async function readTemplateSourceManifest(templateDir: string, sections: string[]): Promise<LegacyTemplateManifest> {
-  const manifestV2Raw = await readFile(join(templateDir, "manifest-v2.json"), "utf8");
+async function readTemplateSourceManifest(templateDir: string, sections: string[], indexHtml: string): Promise<LegacyTemplateManifest> {
+  const manifestV2Path = join(templateDir, "manifest-v2.json");
+  if (!existsSync(manifestV2Path)) {
+    return inferTemplateSourceManifest(templateDir, sections, indexHtml);
+  }
+
+  const manifestV2Raw = await readFile(manifestV2Path, "utf8");
   const parsed = await parseManifestV2Json(manifestV2Raw);
   if (!parsed.ok) {
     throw new Error(`manifest-v2 source failed schema validation: ${parsed.reasons.join("; ")}`);
@@ -218,6 +223,69 @@ async function readTemplateSourceManifest(templateDir: string, sections: string[
       };
     })
   };
+}
+
+function inferTemplateSourceManifest(templateDir: string, sections: string[], indexHtml: string): LegacyTemplateManifest {
+  const templateId = templateDir.split(/[\\/]/).at(-1) ?? "template";
+  const deckClass = inferDeckClass(indexHtml, sections) ?? `tpl-${templateId.replace(/^\d+-/, "").replace(/[^a-z0-9-]/gi, "-").toLowerCase()}`;
+  const label = readableTemplateLabel(templateId);
+  return {
+    id: templateId,
+    label: { "zh-CN": label, en: label },
+    description: {
+      "zh-CN": `Gemini template ${templateId}`,
+      en: `Gemini template ${templateId}`
+    },
+    deckClass,
+    slides: sections.map((sectionHtml, index) => {
+      const slideIndex = index + 1;
+      const pageType = inferPageTypeFromSection(sectionHtml, slideIndex, sections.length);
+      return {
+        slideIndex,
+        slideTitle: extractSectionTitle(sectionHtml) || extractSemanticTitle(sectionHtml) || `Slide ${slideIndex}`,
+        pageType,
+        topicSlots: inferTopicSlots(sectionHtml, pageType),
+        topicSlotMaxChars: pageType === "cover" || pageType === "closing" ? 0 : 120,
+        hasImage: detectMediaKinds(sectionHtml).includes("image"),
+        imageCount: [...sectionHtml.matchAll(/<img\b|data-image-slot=/gi)].length,
+        hasVideo: detectMediaKinds(sectionHtml).includes("video"),
+        hasChart: detectMediaKinds(sectionHtml).includes("chart"),
+        anchors: []
+      };
+    })
+  };
+}
+
+function inferDeckClass(indexHtml: string, sections: string[]) {
+  const bodyClassMatch = indexHtml.match(/<body\b[^>]*\bclass=(["'])(.*?)\1/i);
+  const bodyClass = bodyClassMatch?.[2]?.split(/\s+/).find((className) => /^tpl-[a-z0-9-]+$/i.test(className));
+  if (bodyClass) return bodyClass;
+  const sectionClass = sections.join("\n").match(/\bclass=(["'])(.*?)\1/i)?.[2]?.split(/\s+/).find((className) => /^tpl-[a-z0-9-]+$/i.test(className));
+  return sectionClass ?? null;
+}
+
+function readableTemplateLabel(templateId: string) {
+  return templateId
+    .replace(/^\d+-/, "")
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function extractSemanticTitle(sectionHtml: string) {
+  const match = sectionHtml.match(/<h[1-3]\b[^>]*>([\s\S]*?)<\/h[1-3]>/i);
+  if (!match) return null;
+  return match[1]!.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() || null;
+}
+
+function inferTopicSlots(sectionHtml: string, pageType: PageType) {
+  if (pageType === "cover" || pageType === "closing") return 0;
+  const cardCount = [...sectionHtml.matchAll(/\bclass=(["'])(?:(?!\1).)*\bcard\b(?:(?!\1).)*\1/gi)].length;
+  const listCount = [...sectionHtml.matchAll(/<li\b/gi)].length;
+  const headingCount = [...sectionHtml.matchAll(/<h[3-4]\b/gi)].length;
+  const candidate = Math.max(cardCount, Math.min(listCount, 5), Math.min(headingCount, 5), 3);
+  return Math.max(1, Math.min(candidate, 5));
 }
 
 function inferPageTypeFromSection(sectionHtml: string, slideIndex: number, slideCount: number): PageType {
@@ -275,12 +343,10 @@ function normalizeSection(sectionHtml: string, pageType: PageType): NormalizedSe
     return `<img${cleaned} data-image-slot="${imageIndex++}">`;
   });
 
-  if (pageType === "video") {
-    html = html.replace(/<video\b([^>]*)>/gi, (_match, attrs: string) => {
-      const cleaned = stripAttribute(stripAttribute(attrs, "src"), "data-video-slot");
-      return `<video${cleaned} data-video-slot="primary">`;
-    });
-  }
+  html = html.replace(/<video\b([^>]*)>/gi, (_match, attrs: string) => {
+    const cleaned = stripAttribute(stripAttribute(attrs, "src"), "data-video-slot");
+    return `<video${cleaned} data-video-slot="primary">`;
+  });
 
   return { html, chartSlots };
 }
@@ -465,6 +531,7 @@ async function extractDeckEffects(templateDir: string, indexHtml: string): Promi
     .filter((id): id is string => Boolean(id));
 
   const htmlFile = "fragments/deck-effects.html";
+  await mkdir(join(templateDir, "fragments"), { recursive: true });
   await writeFile(join(templateDir, htmlFile), `${html.trim()}\n`, "utf8");
 
   const scriptChunks = extractInlineDeckEffectScripts(indexHtml, elementIds);
@@ -997,7 +1064,7 @@ async function listTemplateIds() {
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
     .filter((templateId) =>
-      existsSync(join(TEMPLATES_ROOT, templateId, "manifest-v2.json"))
+      existsSync(join(TEMPLATES_ROOT, templateId, "index.html"))
     )
     .sort();
 }

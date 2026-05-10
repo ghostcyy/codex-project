@@ -23,5 +23,12 @@ export function runStage0PoolBuild(input: Stage0PoolBuildInput): Stage0PoolBuild
   if (request.pageCount > 2 && Object.keys(pool.middle).length === 0) {
     throw new Error("No available middle fragments after media filtering; enable at least one media option or choose another template.");
   }
+  if (
+    request.includeImages &&
+    request.pageCount > 2 &&
+    !Object.values(pool.middle).some((summary) => summary.isImage && summary.imageSlotCount > 0)
+  ) {
+    throw new Error("No available image fragments with image slots after media filtering; choose a template with image pages or adjust media options.");
+  }
   return { pool };
 }

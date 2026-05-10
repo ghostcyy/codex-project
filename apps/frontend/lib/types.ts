@@ -99,6 +99,28 @@ export interface LlmConfigSummary {
   tokenConsumption?: number;
 }
 
+export interface ImageModelConfigSummary {
+  id: string;
+  name: string;
+  providerType: string;
+  baseUrl: string;
+  model: string;
+  hasApiKey: boolean;
+  apiKeyMasked: string | null;
+  updatedAt: string | null;
+}
+
+export interface JsonModelConfigSummary {
+  id: string;
+  name: string;
+  providerType: string;
+  baseUrl: string;
+  model: string;
+  hasApiKey: boolean;
+  apiKeyMasked: string | null;
+  updatedAt: string | null;
+}
+
 export interface PptProjectSummary {
   id: string;
   name: string;

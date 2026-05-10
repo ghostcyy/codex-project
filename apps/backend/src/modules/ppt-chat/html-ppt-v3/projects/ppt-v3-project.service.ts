@@ -6,13 +6,15 @@ import { DatabaseService } from "../../../database/database.service";
 import { LlmConfigService } from "../../../llm-config/llm-config.service";
 import { LlmLoggingService } from "../../../llm-logging/llm-logging.service";
 import { PptV3JobService } from "../jobs/ppt-v3-job.service";
+import { loadManifestV2 } from "../manifest/manifest-v2.loader";
 import { HtmlPptV3LlmClient } from "../orchestration/html-ppt-v3-llm-client";
+import { normalizeRequestForTemplateMedia } from "../shared";
 import {
   parsePptV3MessageRequest,
   pptV3NaturalLanguageParseSchema,
   type PptV3NaturalLanguageParse
 } from "./ppt-v3-message-parser";
-import type { PptV3Job } from "../shared";
+import type { GenerateRequest, PptV3Job } from "../shared";
 import type {
   CreatePptV3ProjectInput,
   PostPptV3ProjectMessageInput,
@@ -253,18 +255,22 @@ export class PptV3ProjectService implements OnModuleInit {
       };
     }
 
-    const job = await this.jobService.createJob(parsed.request, ownerUserId, project.id);
-    const updatedProject = await this.setSelectedTemplate(project.id, parsed.request.templateId);
+    const prepared = await this.prepareRequest(parsed.request);
+    const job = await this.jobService.createJob(prepared.request, ownerUserId, project.id);
+    const updatedProject = await this.setSelectedTemplate(project.id, prepared.request.templateId);
     const assistantMessage = await this.createMessage(
       project.id,
       "assistant",
-      `Generation job ${job.id} created.`,
+      prepared.warnings.length
+        ? `Generation job ${job.id} created. ${prepared.warnings.join(" ")}`
+        : `Generation job ${job.id} created.`,
       "job",
       {
         jobId: job.id,
         status: job.status,
-        request: parsed.request,
+        request: prepared.request,
         parseSource: parsed.source,
+        warnings: prepared.warnings,
         previewUrl: `/html-ppt-v3/preview/${job.id}/index.html`,
         downloadUrl: `/html-ppt-v3/download/${job.id}`,
         sseUrl: `/html-ppt-v3/sse/${job.id}`
@@ -275,7 +281,8 @@ export class PptV3ProjectService implements OnModuleInit {
       project: updatedProject,
       userMessage,
       assistantMessage,
-      request: parsed.request,
+      request: prepared.request,
+      warnings: prepared.warnings,
       job
     };
   }
@@ -361,7 +368,7 @@ export class PptV3ProjectService implements OnModuleInit {
     metadata: Record<string, unknown>
   ): Promise<IntentParseResult> {
     try {
-      const activeConfig = await this.llmConfigService.getActiveConfig();
+      const activeConfig = await this.llmConfigService.getJsonConfig();
       const client = new HtmlPptV3LlmClient(
         activeConfig,
         this.logger,
@@ -372,6 +379,7 @@ export class PptV3ProjectService implements OnModuleInit {
       );
       const parsePromise: Promise<IntentParseResult> = client.callStructured({
         stage: "v3-intent-parse",
+        structuredOutputName: "html_ppt_v3_intent",
         systemPrompt: [
           "You extract only the user's textual HTML-PPT v3 generation intent.",
           "Return strict JSON matching schemaVersion html-ppt-v3.intent.v1.",
@@ -416,7 +424,8 @@ export class PptV3ProjectService implements OnModuleInit {
             includeImages: metadata.includeImages ?? null,
             includeVideo: metadata.includeVideo ?? null,
             includeChart: metadata.includeChart ?? null,
-            includeAudio: metadata.includeAudio ?? null
+            includeAudio: metadata.includeAudio ?? null,
+            includeSpeakerNotes: metadata.includeSpeakerNotes ?? null
           }
         }),
         schema: pptV3NaturalLanguageParseSchema,
@@ -449,6 +458,11 @@ export class PptV3ProjectService implements OnModuleInit {
         reason: formatError(error)
       };
     }
+  }
+
+  private async prepareRequest(request: GenerateRequest) {
+    const manifest = await loadManifestV2(request.templateId);
+    return normalizeRequestForTemplateMedia(request, manifest);
   }
 
   private ensureSchema(): Promise<void> {
@@ -543,7 +557,8 @@ function normalizeMessageMetadata(input: PostPptV3ProjectMessageInput): Record<s
     "includeImages",
     "includeVideo",
     "includeChart",
-    "includeAudio"
+    "includeAudio",
+    "includeSpeakerNotes"
   ] as const) {
     if (input[key] !== undefined && metadata[key] === undefined) {
       metadata[key] = input[key];

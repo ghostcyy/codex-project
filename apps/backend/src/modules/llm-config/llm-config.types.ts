@@ -32,8 +32,49 @@ export interface ActiveLlmConfig {
   name: string;
   providerType: string;
   baseUrl: string;
+  imageBaseUrl?: string;
   apiKey: string;
+  imageApiKey?: string;
+  imageModel?: string;
   model: string;
   stageModelOverrides: LlmStageModelOverrides;
   enabled: boolean;
+}
+
+export interface ImageModelConfigSummary {
+  id: string;
+  name: string;
+  providerType: string;
+  baseUrl: string;
+  model: string;
+  hasApiKey: boolean;
+  apiKeyMasked: string | null;
+  updatedAt: string | null;
+}
+
+export interface ImageModelConfigInput {
+  name?: unknown;
+  providerType?: unknown;
+  baseUrl?: unknown;
+  apiKey?: unknown;
+  model?: unknown;
+}
+
+export interface JsonModelConfigSummary {
+  id: string;
+  name: string;
+  providerType: string;
+  baseUrl: string;
+  model: string;
+  hasApiKey: boolean;
+  apiKeyMasked: string | null;
+  updatedAt: string | null;
+}
+
+export interface JsonModelConfigInput {
+  name?: unknown;
+  providerType?: unknown;
+  baseUrl?: unknown;
+  apiKey?: unknown;
+  model?: unknown;
 }

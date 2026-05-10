@@ -12,6 +12,7 @@ const request: GenerateRequest = {
   includeVideo: false,
   includeChart: false,
   includeAudio: false,
+  includeSpeakerNotes: false,
 };
 
 const manifest: TemplateManifestV2 = {
@@ -86,6 +87,40 @@ const plan: PlanIR = {
   ],
 };
 
+const longPlan: PlanIR = {
+  ...plan,
+  pageCount: 20,
+  slides: [
+    plan.slides[0]!,
+    ...Array.from({ length: 18 }, (_, index) => ({
+      slideIndex: index + 2,
+      fragmentId: "slide-02",
+      pageType: "image-text" as const,
+      slideTitle: `长大纲页面 ${index + 2}`,
+      topicPoints: [
+        `这是第 ${index + 2} 页的长主题点一，用于模拟二十页任务中的完整大纲膨胀`,
+        `这是第 ${index + 2} 页的长主题点二，用于验证生图提示词不会包含其他页面内容`
+      ],
+      charBudget: 100
+    })),
+    { slideIndex: 20, pageType: "closing" as const, slideTitle: "行动建议", topicPoints: ["next"], charBudget: 100 },
+  ],
+};
+
+const longContent: ContentIR = {
+  templateId: request.templateId,
+  slides: longPlan.slides.map((slide) => ({
+    slideIndex: slide.slideIndex,
+    fragmentId: slide.fragmentId,
+    pageType: slide.pageType,
+    slotFills: {
+      title: slide.slideTitle,
+      body: "这是一段很长的当前页正文，用于确认生图 prompt 会优先保留当前图片页文字，而不是塞入整套大纲。".repeat(20)
+    },
+    imageHints: ["当前页配图提示"]
+  }))
+};
+
 const content: ContentIR = {
   templateId: request.templateId,
   slides: [
@@ -111,6 +146,8 @@ const content: ContentIR = {
 async function main() {
   await verifyProviderMissing();
   await verifyProviderSuccess();
+  await verifyPromptLengthGuard();
+  await verifyProviderConcurrent();
   await verifyProviderFailure();
   await verifyCap();
   await verifyImagesDisabled();
@@ -144,17 +181,65 @@ async function verifyProviderMissing() {
 }
 
 async function verifyProviderSuccess() {
+  const prompts: string[] = [];
   const result = await runStage25ImageGeneration({
     request,
     plan,
     content,
     manifest,
     workdir: makeWorkdir("success"),
-    imageClient: fakeClient("success"),
+    imageClient: fakeClient("success", prompts),
   });
   assertEqual(result.generatedCount, 4, "successful provider should generate one image per slot");
   assertEqual(result.generatedImages["2:0"]?.relativePath, "img/generated/generated-1.png", "generated image map should key by slide and slot");
   assert(result.generatedImages["2:0"]?.prompt.includes("口袋公园"), "image prompt should include slide context");
+  assert(prompts[0]?.includes("整套 PPT 主题"), "image prompt should include the deck theme");
+  assert(prompts[0]?.includes("当前页标题：口袋公园"), "image prompt should include the current slide title");
+  assert(prompts[0]?.includes("当前页文字"), "image prompt should include current slide text");
+  assert(!prompts[0]?.includes("整套 PPT 大纲"), "image prompt should not include the full deck outline");
+  assert(!prompts[0]?.includes("3. 公共步道"), "image prompt should not include other planned slide titles");
+}
+
+async function verifyPromptLengthGuard() {
+  const prompts: string[] = [];
+  await runStage25ImageGeneration({
+    request: { ...request, pageCount: 20 },
+    plan: longPlan,
+    content: longContent,
+    manifest,
+    workdir: makeWorkdir("prompt-length"),
+    imageClient: fakeClient("success", prompts),
+    maxImages: 1,
+  });
+  assert((prompts[0]?.length ?? 0) < 1500, `image prompt should stay below MiniMax limit, got ${prompts[0]?.length ?? 0}`);
+  assert(prompts[0]?.includes("整套 PPT 主题"), "clipped prompt should retain deck theme");
+  assert(prompts[0]?.includes("当前页标题"), "clipped prompt should retain current slide title");
+  assert(!prompts[0]?.includes("长大纲页面 19"), "clipped prompt should not include full deck outline entries");
+}
+
+async function verifyProviderConcurrent() {
+  let active = 0;
+  let maxActive = 0;
+  let count = 0;
+  const result = await runStage25ImageGeneration({
+    request,
+    plan,
+    content,
+    manifest,
+    workdir: makeWorkdir("concurrent"),
+    imageClient: {
+      async generateImage() {
+        active++;
+        maxActive = Math.max(maxActive, active);
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        active--;
+        count++;
+        return { relativePath: `img/generated/concurrent-${count}.png`, warnings: [] };
+      },
+    },
+  });
+  assertEqual(result.generatedCount, 4, "concurrent provider should still generate all requested images");
+  assert(maxActive > 1, "Stage 2.5 should launch independent image generations concurrently");
 }
 
 async function verifyProviderFailure() {
@@ -199,11 +284,12 @@ async function verifyImagesDisabled() {
   assertEqual(result.generatedCount, 0, "includeImages=false should not generate images");
 }
 
-function fakeClient(mode: "success" | "failure"): V3ImageGenerationClient {
+function fakeClient(mode: "success" | "failure", prompts: string[] = []): V3ImageGenerationClient {
   let count = 0;
   return {
-    async generateImage() {
+    async generateImage(args) {
       count++;
+      prompts.push(args.prompt);
       if (mode === "failure") return { relativePath: null, warnings: [`provider failed ${count}`] };
       return { relativePath: `img/generated/generated-${count}.png`, warnings: [] };
     },

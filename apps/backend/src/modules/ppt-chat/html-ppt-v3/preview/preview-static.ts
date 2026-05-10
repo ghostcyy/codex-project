@@ -63,7 +63,13 @@ async function assertCurrentPreviewManifest(previewRoot: string, options: Resolv
   try {
     raw = await readFile(manifestPath, "utf8");
   } catch {
-    throw new HtmlPptV3StaleTemplateError("manifest-v2.json is missing from the preview workdir.");
+    // Final preview/zip output intentionally excludes template engineering files
+    // such as manifest-v2.json and fragments/. In that case the current output
+    // marker in index.html is the source of truth for freshness.
+    if (options.requireOutputMarker !== false) {
+      await assertCurrentPreviewIndex(root);
+    }
+    return;
   }
 
   let manifest: unknown;

@@ -38,6 +38,17 @@ writeFileSync(
 writeFileSync(join(previewRoot, "img", "_placeholder.jpg"), "not-really-a-jpeg");
 writeFileSync(join(previewRoot, "_shared", "nav.js"), "export {};");
 
+const packagedPreviewRoot = join(fixtureRoot, "packaged-job-output");
+mkdirSync(join(packagedPreviewRoot, "assets"), { recursive: true });
+writeFileSync(join(packagedPreviewRoot, "index.html"), [
+  '<!doctype html><html data-html-ppt-v3-output="fragment-id"><body>',
+  '<section class="slide" data-page-type="cover"></section>',
+  '<section class="slide" data-page-type="grid-2" data-fragment-id="slide-02"></section>',
+  '<section class="slide" data-page-type="closing"></section>',
+  "</body></html>"
+].join(""));
+writeFileSync(join(packagedPreviewRoot, "style.css"), "body{margin:0}");
+
 const stalePreviewRoot = join(fixtureRoot, "stale-job-output");
 mkdirSync(join(stalePreviewRoot, "fragments"), { recursive: true });
 writeFileSync(join(stalePreviewRoot, "index.html"), "<!doctype html><html><body>stale deck</body></html>");
@@ -94,6 +105,11 @@ async function main() {
     "text/css; charset=utf-8",
     join("assets", "themes", "dark", "tokens.css")
   );
+
+  const packagedIndex = await resolvePreviewFile(packagedPreviewRoot, "index.html");
+  if (!packagedIndex.absolutePath.endsWith("index.html")) {
+    throw new Error("Preview resolver should serve packaged V3 output without manifest-v2.json.");
+  }
 
   const joinedWildcardPath = getPreviewRequestPath({ params: { path: ["assets", "themes", "dark", "tokens.css"] } });
   if (joinedWildcardPath !== "assets/themes/dark/tokens.css") {

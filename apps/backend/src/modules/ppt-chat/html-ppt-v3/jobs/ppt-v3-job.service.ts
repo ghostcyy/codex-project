@@ -263,6 +263,7 @@ export class PptV3JobService implements OnModuleInit {
     await this.databaseService.query("ALTER TABLE ppt_v3_jobs ADD COLUMN IF NOT EXISTS owner_user_id BIGINT REFERENCES users(id) ON DELETE CASCADE");
     await this.databaseService.query("ALTER TABLE ppt_v3_jobs ADD COLUMN IF NOT EXISTS stage_history JSONB NOT NULL DEFAULT '[]'::jsonb");
     await this.backfillLegacyJobsToAdmin();
+    await this.failInterruptedRunningJobsOnStartup();
     await this.databaseService.query("CREATE INDEX IF NOT EXISTS idx_ppt_v3_user ON ppt_v3_jobs(user_id, created_at DESC)");
     await this.databaseService.query("CREATE INDEX IF NOT EXISTS idx_ppt_v3_jobs_owner_created ON ppt_v3_jobs(owner_user_id, created_at DESC)");
     await this.databaseService.query("CREATE INDEX IF NOT EXISTS idx_ppt_v3_jobs_owner_project ON ppt_v3_jobs(owner_user_id, project_id, created_at DESC)");
@@ -282,6 +283,41 @@ export class PptV3JobService implements OnModuleInit {
       ) admin
       WHERE ppt_v3_jobs.owner_user_id IS NULL
     `);
+  }
+
+  private async failInterruptedRunningJobsOnStartup() {
+    const message = "HTML-PPT v3 generation was interrupted by a backend restart. Please regenerate this deck.";
+    const completedAt = new Date().toISOString();
+    const result = await this.databaseService.query<{ id: string }>(`
+      UPDATE ppt_v3_jobs
+      SET status = 'failed',
+          error = $1,
+          output_dir = NULL,
+          zip_path = NULL,
+          preview_path = NULL,
+          completed_at = NOW(),
+          stage_history = (
+            SELECT COALESCE(jsonb_agg(
+              CASE
+                WHEN entry->>'status' = 'running' THEN
+                  jsonb_set(
+                    jsonb_set(
+                      jsonb_set(entry, '{status}', '"failed"'::jsonb),
+                      '{completedAt}', to_jsonb($2::text)
+                    ),
+                    '{detail}', to_jsonb($1::text)
+                  )
+                ELSE entry
+              END
+            ), '[]'::jsonb)
+            FROM jsonb_array_elements(COALESCE(stage_history, '[]'::jsonb)) entry
+          )
+      WHERE status IN ('planning', 'writing', 'speaking', 'imaging', 'injecting', 'packaging')
+      RETURNING id
+    `, [message, completedAt]);
+    if (result.rowCount) {
+      this.logger.warn(`Marked ${result.rowCount} interrupted HTML-PPT v3 job(s) as failed after backend startup.`);
+    }
   }
 }
 
@@ -388,5 +424,5 @@ function elapsedMsBetween(startedAt: string, completedAt: string): number {
 }
 
 function isRunningJobStatus(value: unknown): value is RunningJobStatus {
-  return value === "planning" || value === "writing" || value === "imaging" || value === "injecting" || value === "packaging";
+  return value === "planning" || value === "writing" || value === "speaking" || value === "imaging" || value === "injecting" || value === "packaging";
 }

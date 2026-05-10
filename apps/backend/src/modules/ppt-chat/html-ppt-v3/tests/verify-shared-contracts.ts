@@ -4,7 +4,9 @@ import {
   contentIRSchema,
   generateRequestSchema,
   normalizeGenerateRequest,
+  normalizeRequestForTemplateMedia,
   planIRSchema,
+  templateHasImageSlots,
   templateManifestV2Schema,
   validateContentIR,
   validatePlanIR
@@ -30,6 +32,20 @@ const legacyRequest = normalizeGenerateRequest({
 
 if (legacyRequest.includeChart !== false || legacyRequest.includeAudio !== false) {
   throw new Error("normalizeGenerateRequest should default missing includeChart/includeAudio to false.");
+}
+if (legacyRequest.includeSpeakerNotes !== false) {
+  throw new Error("normalizeGenerateRequest should default missing includeSpeakerNotes to false.");
+}
+
+const speakerNotesRequest = normalizeGenerateRequest({
+  theme: "AI驱动的个性化学习路径设计",
+  pageCount: 5,
+  wordBudget: 1200,
+  templateId: "01-tech-web3",
+  includeSpeakerNotes: true
+});
+if (speakerNotesRequest.includeSpeakerNotes !== true) {
+  throw new Error("normalizeGenerateRequest should preserve explicit includeSpeakerNotes=true.");
 }
 
 const manifest = templateManifestV2Schema.parse({
@@ -160,6 +176,30 @@ const manifest = templateManifestV2Schema.parse({
 });
 
 const pool = buildAvailablePool(manifest, request);
+
+const imageEnabledRequest = generateRequestSchema.parse({ ...request, includeImages: true });
+const imageSupportedNormalization = normalizeRequestForTemplateMedia(imageEnabledRequest, manifest);
+if (!imageSupportedNormalization.request.includeImages || imageSupportedNormalization.warnings.length) {
+  throw new Error("normalizeRequestForTemplateMedia should preserve includeImages when the template has image slots.");
+}
+
+const manifestWithoutImageSlots = {
+  ...manifest,
+  pool: {
+    "slide-02": manifest.pool["slide-02"]!
+  },
+  capabilities: {
+    ...manifest.capabilities,
+    hasImagePages: false
+  }
+};
+if (templateHasImageSlots(manifestWithoutImageSlots)) {
+  throw new Error("templateHasImageSlots should be false for templates without image-slot fragments.");
+}
+const imageUnsupportedNormalization = normalizeRequestForTemplateMedia(imageEnabledRequest, manifestWithoutImageSlots);
+if (imageUnsupportedNormalization.request.includeImages || imageUnsupportedNormalization.warnings.length !== 1) {
+  throw new Error("normalizeRequestForTemplateMedia should downgrade includeImages=false for templates without image slots.");
+}
 
 if (pool.middle["slide-04"] || pool.middle["slide-05"] || pool.middle["slide-06"] || pool.middle["slide-03"]) {
   throw new Error("AvailablePool should hard-filter image/video/chart/audio for the selected request.");

@@ -31,6 +31,7 @@ import {
   HTML_PPT_V3_STALE_TEMPLATE_MESSAGE,
   isHtmlPptV3StaleTemplateError,
   normalizeGenerateRequest,
+  normalizeRequestForTemplateMedia,
   type GenerateRequest,
   type JobStatus,
   type PptV3StageHistoryEntry,
@@ -64,6 +65,7 @@ const STAGE_MAP: Record<string, Exclude<JobStatus, "pending" | "done" | "failed"
   "00-pool-build": null,
   "01-planner": "planning",
   "02-writer": "writing",
+  "02_1-speaker-notes": "speaking",
   "02_5-image-generation": "imaging",
   "03-injector": "injecting",
   "04-packager": "packaging"
@@ -121,12 +123,12 @@ export class HtmlPptV3Controller {
 
   @Post("generate")
   async generate(@Body() rawBody: unknown, @CurrentUser() user: AuthenticatedUser) {
-    const request = parseGenerateRequestOrThrow(rawBody);
+    const prepared = await this.prepareRequest(parseGenerateRequestOrThrow(rawBody));
 
-    const job = await this.jobService.createJob(request, user.id);
-    this.emit(job.id, { event: "job-created", data: { jobId: job.id } });
-    void this.runJob(job.id, request, { ownerUserId: user.id });
-    return { jobId: job.id };
+    const job = await this.jobService.createJob(prepared.request, user.id);
+    this.emit(job.id, { event: "job-created", data: { jobId: job.id, warnings: prepared.warnings } });
+    void this.runJob(job.id, prepared.request, { ownerUserId: user.id, requestWarnings: prepared.warnings });
+    return { jobId: job.id, warnings: prepared.warnings };
   }
 
   @Get("projects")
@@ -183,11 +185,12 @@ export class HtmlPptV3Controller {
   ) {
     const result = await this.projectService.postMessage(projectId, user.id, body);
     if (result.job) {
-      this.emit(result.job.id, { event: "job-created", data: { jobId: result.job.id } });
+      this.emit(result.job.id, { event: "job-created", data: { jobId: result.job.id, warnings: result.warnings ?? [] } });
       void this.runJob(result.job.id, result.job.request, {
         ownerUserId: user.id,
         projectId: result.project.id,
-        messageId: result.assistantMessage.id
+        messageId: result.assistantMessage.id,
+        requestWarnings: result.warnings ?? []
       });
     }
     return result;
@@ -205,11 +208,11 @@ export class HtmlPptV3Controller {
     @CurrentUser() user: AuthenticatedUser
   ) {
     await this.projectService.requireProject(projectId, user.id);
-    const request = parseGenerateRequestOrThrow(rawBody);
-    const job = await this.jobService.createJob(request, user.id, projectId);
-    this.emit(job.id, { event: "job-created", data: { jobId: job.id } });
-    void this.runJob(job.id, request, { ownerUserId: user.id, projectId });
-    return { jobId: job.id };
+    const prepared = await this.prepareRequest(parseGenerateRequestOrThrow(rawBody));
+    const job = await this.jobService.createJob(prepared.request, user.id, projectId);
+    this.emit(job.id, { event: "job-created", data: { jobId: job.id, warnings: prepared.warnings } });
+    void this.runJob(job.id, prepared.request, { ownerUserId: user.id, projectId, requestWarnings: prepared.warnings });
+    return { jobId: job.id, warnings: prepared.warnings };
   }
 
   @Get("sse/:jobId")
@@ -256,18 +259,21 @@ export class HtmlPptV3Controller {
   private async runJob(
     jobId: string,
     request: GenerateRequest,
-    context: { ownerUserId?: number | null; projectId?: string | null; messageId?: string | null } = {}
+    context: { ownerUserId?: number | null; projectId?: string | null; messageId?: string | null; requestWarnings?: string[] } = {}
   ) {
     try {
       const llmConfig = await this.llmConfigService.getActiveConfig();
+      const jsonLlmConfig = await this.llmConfigService.getJsonConfig();
       const job = await this.jobService.getJob(jobId).catch(() => null);
       const result = await this.agentService.generate({
         jobId,
         request,
         llmConfig,
+        jsonLlmConfig,
         userId: context.ownerUserId ?? job?.ownerUserId ?? undefined,
         logger: this.logger,
         loggingService: this.llmLoggingService,
+        initialWarnings: context.requestWarnings ?? [],
         projectId: context.projectId ?? job?.projectId ?? null,
         messageId: context.messageId ?? null,
         onPlan: (plan) => this.jobService.savePlan(jobId, plan),
@@ -385,6 +391,11 @@ export class HtmlPptV3Controller {
     });
   }
 
+  private async prepareRequest(request: GenerateRequest): Promise<{ request: GenerateRequest; warnings: string[] }> {
+    const manifest = await loadManifestV2(request.templateId);
+    return normalizeRequestForTemplateMedia(request, manifest);
+  }
+
   private replayCurrentState(job: Awaited<ReturnType<PptV3JobService["requireJob"]>>, client: SseClient) {
     if (job.status === "done") {
       client.write({
@@ -482,7 +493,7 @@ function findStageHistoryEntry(stageHistory: PptV3StageHistoryEntry[] | undefine
 }
 
 function isRunningJobStatus(status: JobStatus): status is RunningJobStatus {
-  return status === "planning" || status === "writing" || status === "imaging" || status === "injecting" || status === "packaging";
+  return status === "planning" || status === "writing" || status === "speaking" || status === "imaging" || status === "injecting" || status === "packaging";
 }
 
 async function buildTemplatePreviewPayload(templateId: string, cssFiles: string[]) {

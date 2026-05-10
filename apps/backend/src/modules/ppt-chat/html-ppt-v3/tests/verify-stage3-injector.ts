@@ -1,11 +1,11 @@
-import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parseDocument } from "htmlparser2";
 import { selectAll, selectOne } from "css-select";
 import type { Element, AnyNode } from "domhandler";
 import { runStage3Injector } from "../stages/stage3-injector";
-import type { ContentIR, PagePortrait, PlanIR, TemplateManifestV2 } from "../shared";
+import { generatedImageKey, type ContentIR, type PagePortrait, type PlanIR, type TemplateManifestV2 } from "../shared";
 
 const fixtureRoot = join(tmpdir(), "html-ppt-v3-stage3-injector");
 const templateDir = join(fixtureRoot, "template");
@@ -17,6 +17,9 @@ mkdirSync(join(templateDir, "assets"), { recursive: true });
 mkdirSync(join(templateDir, "img"), { recursive: true });
 writeFileSync(join(templateDir, "img", "learning-path-01.jpg"), "fake image");
 writeFileSync(join(templateDir, "img", "_placeholder.jpg"), "placeholder");
+mkdirSync(join(fixtureRoot, "external-generated"), { recursive: true });
+const generatedImagePath = join(fixtureRoot, "external-generated", "slide-03-slot-01.png");
+writeFileSync(generatedImagePath, "generated image");
 writeFileSync(join(templateDir, "fragments", "deck-effects.html"), "<canvas id=\"fixture-particles\"></canvas>");
 writeFileSync(join(templateDir, "assets", "deck-effects.js"), "window.__fixtureDeckEffects = true;");
 writeFileSync(join(templateDir, "style.css"), ".deck{display:block}");
@@ -188,7 +191,33 @@ const content: ContentIR = {
 };
 
 async function main() {
-  const result = await runStage3Injector({ manifest, plan, content, templateDir, workdir, jobId: "fixture-job" });
+  const result = await runStage3Injector({
+    manifest,
+    plan,
+    content,
+    templateDir,
+    workdir,
+    jobId: "fixture-job",
+    generatedImages: {
+      [generatedImageKey(3, 0)]: {
+        slideIndex: 3,
+        slotIndex: 0,
+        relativePath: "img/generated/slide-03-slot-01.png",
+        absolutePath: generatedImagePath,
+        prompt: "fixture prompt",
+        source: "minimax"
+      }
+    },
+    speakerNotes: {
+      templateId: manifest.id,
+      slides: [
+        { slideIndex: 1, pageType: "cover", notes: ["先用开场说明 <script>alert(1)</script> 应被转义。"] },
+        { slideIndex: 2, fragmentId: "slide-02", pageType: "chart", notes: ["效果趋势|STRONG| 是这一页讲解重点，执行动作|STRONG| 需要同步说明。", "提醒听众关注趋势背后的执行动作。"] },
+        { slideIndex: 3, fragmentId: "slide-03", pageType: "image-full", notes: ["本页结合图片解释学习路径的实际体验。"] },
+        { slideIndex: 4, pageType: "closing", notes: ["最后收束到持续迭代和后续行动。"] }
+      ]
+    }
+  });
 
   if (!existsSync(result.indexHtmlPath)) {
     throw new Error("Stage3 should write index.html to the workdir.");
@@ -252,12 +281,104 @@ async function main() {
   if (!result.html.includes("progress-bar") || !result.html.includes("updateProgress")) {
     throw new Error("Navigation runtime should create and update the deck progress bar.");
   }
+  if (!result.html.includes("html-ppt-v3-presenter") || !result.html.includes("?preview=")) {
+    throw new Error("Navigation runtime should include V3 presenter mode and preview iframe support.");
+  }
+  if (!result.html.includes('src="assets/edit-mode.js"') || !result.html.includes("data-html-ppt-v3-edit-mode")) {
+    throw new Error("Stage3 output should load the reusable html-ppt edit-mode runtime.");
+  }
+  if (result.html.includes('"<script src="assets/edit-mode.js"')) {
+    throw new Error("Edit-mode script tag should be injected into the final document, not into a presenter runtime string.");
+  }
+  if (result.html.includes('src="assets/runtime.js"')) {
+    throw new Error("Stage3 output should not load the legacy html-ppt runtime.js because V3 owns navigation.");
+  }
+  if (!existsSync(join(workdir, "assets", "edit-mode.js"))) {
+    throw new Error("Stage3 should publish assets/edit-mode.js so exported decks support E edit mode offline.");
+  }
   if (!result.html.includes('id="fixture-particles"') || !result.html.includes("data-html-ppt-v3-deck-effects")) {
     throw new Error("Stage3 should preserve manifest-declared deck-level effect DOM and script.");
   }
+  const notes = selectAll("aside.notes[data-html-ppt-v3-speaker-notes='true']", root) as Element[];
+  if (notes.length !== 4) {
+    throw new Error(`Stage3 should inject one V3 speaker notes aside per slide, got ${notes.length}.`);
+  }
+  if (!selectOne("aside.notes strong", sections[1] as unknown as AnyNode)) {
+    throw new Error("Stage3 should parse |STRONG| markers inside speaker notes.");
+  }
+  if (result.html.includes("|STRONG|")) {
+    throw new Error("Stage3 output must not leak raw |STRONG| markers into the exported HTML.");
+  }
+  if (result.html.includes("<script>alert(1)</script>")) {
+    throw new Error("Stage3 speaker notes injection must escape model-provided HTML.");
+  }
+  if (flattenText(notes[1] ?? null).includes("MATERIAL_DATA")) {
+    throw new Error("Stage3 speaker notes should be generated content, not template residue.");
+  }
   const image = selectOne("img[data-image-slot='0']", sections[2] as unknown as AnyNode) as Element | null;
-  if (image?.attribs.src !== "img/learning-path-01.jpg") {
-    throw new Error(`Image placeholder should resolve locally, got '${image?.attribs.src ?? ""}'.`);
+  if (image?.attribs.src !== "img/generated/slide-03-slot-01.png") {
+    throw new Error(`Generated image should take priority over local image fallback, got '${image?.attribs.src ?? ""}'.`);
+  }
+  if (!existsSync(join(workdir, "img", "generated", "slide-03-slot-01.png"))) {
+    throw new Error("Generated image file should be copied into the final workdir img/generated folder.");
+  }
+
+  const fallbackWorkdir = join(fixtureRoot, "fallback-workdir");
+  const fallbackResult = await runStage3Injector({
+    manifest,
+    plan,
+    content,
+    templateDir,
+    workdir: fallbackWorkdir,
+    jobId: "fallback-fixture-job",
+  });
+  const fallbackDoc = parseDocument(fallbackResult.html, { decodeEntities: false });
+  const fallbackRoot = fallbackDoc as unknown as AnyNode;
+  const fallbackSections = selectAll("section.slide", fallbackRoot) as Element[];
+  const fallbackImage = selectOne("img[data-image-slot='0']", fallbackSections[2] as unknown as AnyNode) as Element | null;
+  if (fallbackImage?.attribs.src !== "img/generated/slide-03-slot-01.png") {
+    throw new Error(`Fallback image slot should still use stable generated path, got '${fallbackImage?.attribs.src ?? ""}'.`);
+  }
+  if (fallbackResult.html.includes('src="img/learning-path-01.jpg"') || fallbackResult.html.includes('src="img/_placeholder.jpg"')) {
+    throw new Error("Fallback image slots must not reference template image paths directly in HTML.");
+  }
+  const materializedFallbackPath = join(fallbackWorkdir, "img", "generated", "slide-03-slot-01.png");
+  if (!existsSync(materializedFallbackPath)) {
+    throw new Error("Fallback image should be materialized into img/generated with the stable slot filename.");
+  }
+  if (readFileSync(materializedFallbackPath, "utf8") !== "fake image") {
+    throw new Error("Fallback generated image file should copy the matched template image content.");
+  }
+  if (!fallbackResult.warnings.some((warning) => warning.includes("fallback copied from img/learning-path-01.jpg"))) {
+    throw new Error("Fallback materialization should report the copied template image source.");
+  }
+
+  const placeholderWorkdir = join(fixtureRoot, "placeholder-workdir");
+  const placeholderContent: ContentIR = {
+    ...content,
+    slides: content.slides.map((slide) =>
+      slide.slideIndex === 3
+        ? { ...slide, imageHints: ["no matching local artwork"] }
+        : slide,
+    ),
+  };
+  const placeholderResult = await runStage3Injector({
+    manifest,
+    plan,
+    content: placeholderContent,
+    templateDir,
+    workdir: placeholderWorkdir,
+    jobId: "placeholder-fixture-job",
+  });
+  const materializedPlaceholderPath = join(placeholderWorkdir, "img", "generated", "slide-03-slot-01.png");
+  if (!existsSync(materializedPlaceholderPath)) {
+    throw new Error("Placeholder fallback should be materialized into img/generated with the stable slot filename.");
+  }
+  if (readFileSync(materializedPlaceholderPath, "utf8") !== "placeholder") {
+    throw new Error("Unmatched fallback should copy the template placeholder content.");
+  }
+  if (!placeholderResult.warnings.some((warning) => warning.includes("fallback copied from img/_placeholder.jpg"))) {
+    throw new Error("Placeholder materialization should report the placeholder source.");
   }
 
   const staleManifest = JSON.parse(JSON.stringify(manifest)) as TemplateManifestV2;
